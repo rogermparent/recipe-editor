@@ -1,17 +1,19 @@
 import { readFile, readdir } from "fs/promises";
 import { open } from "lmdb";
-import { resolve } from "path";
+import { join, resolve } from "path";
 
 export interface Post {
   title: string;
   body: string;
   date: number;
+  image: string | undefined;
 }
 
 export type PostEntryKey = [date: number, slug: string];
 export interface PostEntryValue {
   title: string;
   body?: string;
+  image?: string;
 }
 
 export interface PostEntry {
@@ -28,12 +30,16 @@ export function getPostDatabase() {
 
 const postsDirectory = resolve("content", "posts");
 
-export function getPostDirectory(id: string) {
-  return resolve(postsDirectory, id);
+export function getPostDirectory(slug: string) {
+  return resolve(postsDirectory, slug);
 }
 
-export function getPostPath(id: string) {
-  return getPostDirectory(id) + "/post.json";
+export function getPostFilePath(basePath: string) {
+  return basePath + "/post.json";
+}
+
+export function getPostUploadsDirectory(basePath: string) {
+  return basePath + "/uploads";
 }
 
 export async function getFrontPagePosts({}) {}
@@ -67,25 +73,31 @@ export async function getPosts({
   return { posts, more };
 }
 
-export async function getPostBySlug(id: string) {
+export async function getPostBySlug(slug: string) {
   try {
-    const postData = JSON.parse(String(await readFile(getPostPath(id))));
+    const postData = JSON.parse(
+      String(await readFile(getPostFilePath(getPostDirectory(slug)))),
+    );
     return postData;
   } catch (e) {
-    return { message: "Failed to fetch post" };
+    throw new Error("Failed to get post");
   }
 }
 
-export async function resetPostsDatabase() {
+export function getPostIndexEntryValue(post: Post): PostEntryValue {
+  const { title, body, image } = post;
+  return { title, body, image };
+}
+
+export async function reloadPostsDatabase() {
   const db = getPostDatabase();
   await db.drop();
   const postDirectories = await readdir(postsDirectory);
   for (const slug of postDirectories) {
-    const postFileContents = JSON.parse(
-      String(await readFile(getPostPath(slug))),
-    );
-    const { title, body, date } = postFileContents as Post;
-    await db.put([date, slug], { title, body });
+    const postFilePath = getPostFilePath(getPostDirectory(slug));
+    const postFileContents = JSON.parse(String(await readFile(postFilePath)));
+    const { date } = postFileContents as Post;
+    await db.put([date, slug], getPostIndexEntryValue(postFileContents));
   }
   db.close();
 }

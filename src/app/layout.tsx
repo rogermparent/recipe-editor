@@ -6,8 +6,8 @@ import Link from "next/link";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "My LMDB-powered Microblog",
-  description: "A minimal microblog powered by LMDB and the filesystem.",
+  title: "My LMDB-powered Blog",
+  description: "A minimal blog powered by LMDB and the filesystem.",
 };
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
           <header>
             <Link href="/" className="block p-2">
               <h1 className="text-xl font-bold text-center">
-                My LMDB-powered Microblog
+                My LMDB-powered Blog
               </h1>
             </Link>
           </header>

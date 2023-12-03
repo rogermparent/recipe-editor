@@ -1,41 +1,80 @@
 "use server";
 
-import { mkdir, readFile, rm, writeFile } from "fs/promises";
+import { mkdir, open, readFile, rename, rm, writeFile } from "fs/promises";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import {
+  Post,
+  PostEntryValue,
   getPostDatabase,
   getPostDirectory,
-  getPostPath,
-  resetPostsDatabase,
+  getPostFilePath,
+  getPostIndexEntryValue,
+  getPostUploadsDirectory,
+  reloadPostsDatabase,
 } from "./data";
 import slugify from "@sindresorhus/slugify";
+import { createWriteStream } from "fs";
+import { Readable } from "node:stream";
+import { ReadableStream } from "node:stream/web";
+
+async function mkdirIfNeeded(dir: string) {
+  try {
+    await mkdir(dir);
+  } catch (e) {
+    if (((e as { code: string }).code as string) !== "EEXIST") {
+      throw e;
+    }
+  }
+}
+
+async function mkdirIfNotPresent(dir: string) {
+  try {
+    await mkdir(dir);
+  } catch (e) {
+    if (((e as { code: string }).code as string) === "EEXIST") {
+      throw new Error("Post already exists");
+    } else {
+      throw e;
+    }
+  }
+}
+
+async function writePostUpload(postBaseDirectory: string, file: File) {
+  await mkdirIfNeeded(getPostUploadsDirectory(postBaseDirectory));
+
+  const fileWriteStream = createWriteStream(
+    `${postBaseDirectory}/uploads/${file.name}`,
+  );
+  Readable.fromWeb(file.stream() as ReadableStream<any>).pipe(fileWriteStream);
+}
 
 export async function createPost(formData: FormData) {
   const givenDate = formData.get("date") as string;
   const date = givenDate ? Number(new Date(givenDate)) : Date.now();
   const title = formData.get("title") as string;
   const body = formData.get("body") as string;
+  const image = formData.get("image") as File;
   if (!title) {
     return { message: "Post needs title" };
   }
   const providedSlug = formData.get("slug");
   const slug = slugify(String(providedSlug || title));
-  const data = {
+  const data: Post = {
+    image: image?.size > 0 ? image.name : undefined,
     title,
     body,
     date,
   };
-  const destinationDir = getPostDirectory(slug);
-  try {
-    await mkdir(destinationDir);
-    await writeFile(`${destinationDir}/post.json`, JSON.stringify(data));
-  } catch (e) {
-    return null;
+  const postBaseDirectory = getPostDirectory(slug);
+  await mkdirIfNotPresent(postBaseDirectory);
+  await writeFile(getPostFilePath(postBaseDirectory), JSON.stringify(data));
+  if (image?.size) {
+    await writePostUpload(postBaseDirectory, image);
   }
   const db = getPostDatabase();
   try {
-    await db.put([date, slug], { title, body });
+    await db.put([date, slug], getPostIndexEntryValue(data));
   } catch (e) {
     return { message: "Failed to write post" };
   } finally {
@@ -49,54 +88,58 @@ export async function createPost(formData: FormData) {
 }
 
 export async function updatePost(
-  date: number,
-  slug: string,
+  currentDate: number,
+  currentSlug: string,
   formData: FormData,
 ) {
   const title = formData.get("title") as string;
   const newSlug = (formData.get("slug") as string) || slugify(title);
   const givenDate = formData.get("date") as string;
   const body = formData.get("body") as string;
-  const willRename = newSlug !== slug;
-  const finalDate = givenDate ? Number(new Date(givenDate + "Z")) : date;
-  const currentData = JSON.parse(String(await readFile(getPostPath(slug))));
+  const newDate = givenDate && Number(new Date(givenDate + "Z"));
+  const currentPostDirectory = getPostDirectory(currentSlug);
+  const currentPostPath = getPostFilePath(currentPostDirectory);
+  const image = formData.get("image") as File | null;
+
+  const finalSlug = (newSlug as string) || currentSlug;
+  const finalDate = newDate || currentDate;
+  const finalPostDirectory = getPostDirectory(finalSlug);
+
+  const willRename = currentPostDirectory !== finalPostDirectory;
+  const willChangeDate = newDate && currentDate !== newDate;
+
+  const currentData = JSON.parse(String(await readFile(currentPostPath)));
+
   const data = {
     ...currentData,
     date: finalDate,
+    image: image?.name || currentData.image,
     title,
     body,
   };
+
   if (willRename) {
-    const destinationDir = getPostDirectory(newSlug);
-    try {
-      await mkdir(destinationDir);
-      await writeFile(`${destinationDir}/post.json`, JSON.stringify(data));
-      await rm(getPostDirectory(slug), { recursive: true });
-    } catch (e) {
-      console.error(e);
-      throw new Error("Failed to rename post file");
-    }
+    await rename(currentPostDirectory, finalPostDirectory);
+    await writeFile(`${finalPostDirectory}/post.json`, JSON.stringify(data));
   } else {
-    try {
-      await writeFile(getPostPath(slug), JSON.stringify(data));
-    } catch (e) {
-      throw new Error("Failed to write post file");
-    }
+    await writeFile(currentPostPath, JSON.stringify(data));
   }
-  const finalSlug = (newSlug as string) || slug;
   const db = getPostDatabase();
   try {
-    if (willRename || finalDate !== currentData.date) {
-      db.remove([date, slug]);
+    if (willRename || willChangeDate) {
+      db.remove([currentDate, currentSlug]);
     }
-    db.put([finalDate, finalSlug], { title, body });
+    db.put([finalDate, finalSlug], getPostIndexEntryValue(data));
   } catch (e) {
     throw new Error("Failed to write post to index");
   } finally {
     db.close();
   }
+  if (image) {
+    await writePostUpload(finalPostDirectory, image);
+  }
   if (willRename) {
-    revalidatePath("/post/" + slug);
+    revalidatePath("/post/" + currentSlug);
   }
   revalidatePath("/post/" + finalSlug);
   revalidatePath("/");
@@ -115,19 +158,15 @@ export async function deletePost(
     await db.remove([date, slug]);
     revalidatePath("/post/" + slug);
     revalidatePath("/");
-    return { message: "Post removed" };
+    redirect("/");
   } catch (e) {
-    return { message: "Failed to remove post" };
+    throw e;
   } finally {
     db.close();
   }
 }
 
 export async function reloadPosts() {
-  try {
-    await resetPostsDatabase();
-    revalidatePath("/");
-  } catch (e) {
-    return { message: "Could not reset posts database" };
-  }
+  await reloadPostsDatabase();
+  revalidatePath("/");
 }

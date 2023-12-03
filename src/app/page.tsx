@@ -41,7 +41,7 @@ export default async function Home() {
           <p className="text-center my-4">There are no posts yet.</p>
         )}
       </div>
-      <div className="my-2">
+      <div className="p-2">
         <form action={reloadPosts}>
           <Button>Reload Database</Button>
         </form>
