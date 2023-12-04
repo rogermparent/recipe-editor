@@ -1,12 +1,12 @@
 import { readFile, readdir } from "fs/promises";
 import { open } from "lmdb";
-import { join, resolve } from "path";
+import { resolve } from "path";
 
 export interface Post {
   title: string;
-  body: string;
   date: number;
-  image: string | undefined;
+  body?: string;
+  image?: string;
 }
 
 export type PostEntryKey = [date: number, slug: string];
@@ -41,8 +41,6 @@ export function getPostFilePath(basePath: string) {
 export function getPostUploadsDirectory(basePath: string) {
   return basePath + "/uploads";
 }
-
-export async function getFrontPagePosts({}) {}
 
 export async function getPostCount() {
   const db = getPostDatabase();

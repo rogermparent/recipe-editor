@@ -1,5 +1,5 @@
 import { getPosts } from "@/app/lib/data";
-import { createPost, reloadPosts } from "@/app/lib/actions";
+import { createPost } from "@/app/lib/actions";
 import Link from "next/link";
 import { Button } from "@/components/Button";
 import { PostList } from "@/components/PostList";
@@ -40,11 +40,6 @@ export default async function Home() {
         ) : (
           <p className="text-center my-4">There are no posts yet.</p>
         )}
-      </div>
-      <div className="p-2">
-        <form action={reloadPosts}>
-          <Button>Reload Database</Button>
-        </form>
       </div>
     </main>
   );

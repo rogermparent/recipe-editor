@@ -1,11 +1,10 @@
 "use server";
 
-import { mkdir, open, readFile, rename, rm, writeFile } from "fs/promises";
+import { mkdir, readFile, rename, rm, writeFile } from "fs/promises";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import {
   Post,
-  PostEntryValue,
   getPostDatabase,
   getPostDirectory,
   getPostFilePath,
@@ -17,12 +16,23 @@ import slugify from "@sindresorhus/slugify";
 import { createWriteStream } from "fs";
 import { Readable } from "node:stream";
 import { ReadableStream } from "node:stream/web";
+import { z } from "zod";
+
+const FormSchema = z.object({
+  title: z.string(),
+  body: z.string().optional(),
+  image: z.instanceof(File).optional(),
+  givenDate: z
+    .union([z.enum([""]), z.coerce.date().transform(Number)])
+    .optional(),
+  givenSlug: z.string().optional(),
+});
 
 async function mkdirIfNeeded(dir: string) {
   try {
     await mkdir(dir);
   } catch (e) {
-    if (((e as { code: string }).code as string) !== "EEXIST") {
+    if ((e as { code: string }).code !== "EEXIST") {
       throw e;
     }
   }
@@ -32,7 +42,7 @@ async function mkdirIfNotPresent(dir: string) {
   try {
     await mkdir(dir);
   } catch (e) {
-    if (((e as { code: string }).code as string) === "EEXIST") {
+    if ((e as { code: string }).code === "EEXIST") {
       throw new Error("Post already exists");
     } else {
       throw e;
@@ -50,18 +60,37 @@ async function writePostUpload(postBaseDirectory: string, file: File) {
 }
 
 export async function createPost(formData: FormData) {
-  const givenDate = formData.get("date") as string;
-  const date = givenDate ? Number(new Date(givenDate)) : Date.now();
-  const title = formData.get("title") as string;
-  const body = formData.get("body") as string;
-  const image = formData.get("image") as File;
-  if (!title) {
-    return { message: "Post needs title" };
+  const validatedFields = FormSchema.safeParse({
+    title: formData.get("title"),
+    body: formData.get("body"),
+    image: formData.get("image"),
+    givenDate: formData.get("date"),
+    givenSlug: formData.get("slug"),
+  });
+
+  if (!validatedFields.success) {
+    throw new Error(
+      "Failed to create Post: " +
+        JSON.stringify(validatedFields.error.flatten().fieldErrors),
+    );
+    /*
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Invoice.',
+    };
+    */
   }
-  const providedSlug = formData.get("slug");
-  const slug = slugify(String(providedSlug || title));
+
+  const { givenDate, givenSlug, title, body, image } = validatedFields.data;
+
+  const date: number = givenDate || (Date.now() as number);
+  if (!title) {
+    throw new Error("Post needs title");
+  }
+  const slug = slugify(givenSlug || title);
+  const hasImage = image && image.size > 0;
   const data: Post = {
-    image: image?.size > 0 ? image.name : undefined,
+    image: hasImage ? image.name : undefined,
     title,
     body,
     date,
@@ -69,7 +98,7 @@ export async function createPost(formData: FormData) {
   const postBaseDirectory = getPostDirectory(slug);
   await mkdirIfNotPresent(postBaseDirectory);
   await writeFile(getPostFilePath(postBaseDirectory), JSON.stringify(data));
-  if (image?.size) {
+  if (hasImage) {
     await writePostUpload(postBaseDirectory, image);
   }
   const db = getPostDatabase();
@@ -92,28 +121,43 @@ export async function updatePost(
   currentSlug: string,
   formData: FormData,
 ) {
-  const title = formData.get("title") as string;
-  const newSlug = (formData.get("slug") as string) || slugify(title);
-  const givenDate = formData.get("date") as string;
-  const body = formData.get("body") as string;
-  const newDate = givenDate && Number(new Date(givenDate + "Z"));
+  const validatedFields = FormSchema.safeParse({
+    title: formData.get("title"),
+    body: formData.get("body"),
+    image: formData.get("image"),
+    givenDate: formData.get("date"),
+    givenSlug: formData.get("slug"),
+  });
+
+  if (!validatedFields.success) {
+    throw new Error("Failed to create Post");
+    /*
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Invoice.',
+    };
+    */
+  }
+
+  const { givenDate, givenSlug, title, body, image } = validatedFields.data;
+
   const currentPostDirectory = getPostDirectory(currentSlug);
   const currentPostPath = getPostFilePath(currentPostDirectory);
-  const image = formData.get("image") as File | null;
 
-  const finalSlug = (newSlug as string) || currentSlug;
-  const finalDate = newDate || currentDate;
+  const finalSlug = givenSlug || currentSlug;
+  const finalDate = givenDate || currentDate;
   const finalPostDirectory = getPostDirectory(finalSlug);
 
   const willRename = currentPostDirectory !== finalPostDirectory;
-  const willChangeDate = newDate && currentDate !== newDate;
+  const willChangeDate = givenDate && currentDate !== givenDate;
 
   const currentData = JSON.parse(String(await readFile(currentPostPath)));
+  const hasImage = image && image.size > 0;
 
   const data = {
     ...currentData,
     date: finalDate,
-    image: image?.name || currentData.image,
+    image: hasImage ? image.name : currentData.image,
     title,
     body,
   };
