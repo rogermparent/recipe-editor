@@ -1,9 +1,17 @@
 "use client";
 
-import { ChangeEventHandler, ReactNode, useEffect, useState } from "react";
+import {
+  ChangeEventHandler,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import slugify from "@sindresorhus/slugify";
 import { Post } from "@/app/lib/data";
 import clsx from "clsx";
+import { State } from "@/app/lib/actions";
+import Image from "next/image";
 
 const baseInputStyle =
   "text-black bg-slate-100 border border-slate-600 rounded-md";
@@ -39,6 +47,19 @@ function FieldWrapper({
   );
 }
 
+function Errors({ state, name }: { state: State; name: string }) {
+  return (
+    <div id="customer-error" aria-live="polite" aria-atomic="true">
+      {state.errors?.[name] &&
+        state.errors[name].map((error: string) => (
+          <p className="mt-2 text-sm text-red-500" key={error}>
+            {error}
+          </p>
+        ))}
+    </div>
+  );
+}
+
 function TextInput({
   name,
   id,
@@ -46,6 +67,7 @@ function TextInput({
   onChange,
   label,
   placeholder,
+  state,
 }: {
   name: string;
   id: string;
@@ -53,9 +75,11 @@ function TextInput({
   defaultValue?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   placeholder?: string;
+  state: State;
 }) {
   return (
     <FieldWrapper label={label} id={id}>
+      <Errors state={state} name={name} />
       <input
         type="text"
         name={name}
@@ -75,15 +99,18 @@ function TextAreaInput({
   defaultValue,
   onChange,
   label,
+  state,
 }: {
   name: string;
   id: string;
   label: string;
   defaultValue?: string;
   onChange?: ChangeEventHandler<HTMLTextAreaElement>;
+  state: State;
 }) {
   return (
     <FieldWrapper label={label} id={id}>
+      <Errors state={state} name={name} />
       <textarea
         name={name}
         id={id}
@@ -101,6 +128,7 @@ function DateTimeInput({
   date,
   label,
   currentTimezone,
+  state,
 }: {
   name: string;
   id: string;
@@ -108,12 +136,14 @@ function DateTimeInput({
   date?: number;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   currentTimezone?: string;
+  state: State;
 }) {
   const [currentDate, setCurrentDate] = useState(
     date ? new Date(date) : undefined,
   );
   return (
     <FieldWrapper label={label} id={id}>
+      <Errors state={state} name={name} />
       <input
         type="datetime-local"
         step="any"
@@ -143,6 +173,7 @@ function FileInput({
   onChange,
   label,
   placeholder,
+  state,
 }: {
   name: string;
   id: string;
@@ -150,9 +181,11 @@ function FileInput({
   defaultValue?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   placeholder?: string;
+  state: State;
 }) {
   return (
     <FieldWrapper label={label} id={id}>
+      <Errors state={state} name={name} />
       <div className={clsx(baseInputStyle, "p-1")}>
         <input
           type="file"
@@ -167,14 +200,37 @@ function FileInput({
   );
 }
 
-export function PostFields({ post, slug }: { post?: Post; slug?: string }) {
-  const { title, body, date } = post || {};
+export function PostFields({
+  post,
+  slug,
+  state,
+}: {
+  post?: Post;
+  slug?: string;
+  state: State;
+}) {
+  const { title, body, date, image } = post || {};
   const [defaultSlug, setDefaultSlug] = useState(title ? slugify(title) : "");
   const [currentTimezone, setCurrentTimezone] = useState<string>();
+  const [imagesToUpload, setImagesToUpload] = useState<FileList>();
+  const [imagePreviewURL, setImagePreviewURL] = useState<string>();
+  console.log({ selectedImage: imagesToUpload });
   useEffect(() => {
     const fetchedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     setCurrentTimezone(fetchedTimezone);
   }, []);
+  useEffect(() => {
+    if (imagesToUpload) {
+      const previewImage = imagesToUpload[0];
+      if (previewImage) {
+        const url = URL.createObjectURL(previewImage);
+        setImagePreviewURL(url);
+        return () => {
+          URL.revokeObjectURL(url);
+        };
+      }
+    }
+  }, [imagesToUpload]);
   return (
     <>
       <TextInput
@@ -183,13 +239,35 @@ export function PostFields({ post, slug }: { post?: Post; slug?: string }) {
         id="post-form-title"
         defaultValue={title}
         onChange={(e) => setDefaultSlug(slugify(e.target.value))}
+        state={state}
       />
-      <FileInput label="Image" name="image" id="post-form-image" />
+      <FileInput
+        label="Image"
+        name="image"
+        id="post-form-image"
+        state={state}
+        onChange={(e) => setImagesToUpload(e.target?.files || undefined)}
+      />
+      <div className="w-full">
+        {imagePreviewURL ? (
+          <img src={imagePreviewURL} alt="Image to upload" className="w-full" />
+        ) : (
+          image && (
+            <Image
+              src={`/post/${slug}/uploads/${image}`}
+              alt="Heading image"
+              width={850}
+              height={475}
+            />
+          )
+        )}
+      </div>
       <TextAreaInput
         label="Body"
         name="body"
         id="post-form-body"
         defaultValue={body}
+        state={state}
       />
       <details className="py-1 my-1">
         <summary className="text-sm font-semibold">Advanced</summary>
@@ -200,6 +278,7 @@ export function PostFields({ post, slug }: { post?: Post; slug?: string }) {
             id="post-form-slug"
             defaultValue={slug}
             placeholder={defaultSlug}
+            state={state}
           />
           <DateTimeInput
             label="Date (UTC)"
@@ -207,6 +286,7 @@ export function PostFields({ post, slug }: { post?: Post; slug?: string }) {
             id="post-form-date"
             date={date}
             currentTimezone={currentTimezone}
+            state={state}
           />
         </div>
       </details>

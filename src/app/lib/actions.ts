@@ -17,9 +17,10 @@ import { createWriteStream } from "fs";
 import { Readable } from "node:stream";
 import { ReadableStream } from "node:stream/web";
 import { z } from "zod";
+import path from "path";
 
 const FormSchema = z.object({
-  title: z.string(),
+  title: z.string().min(1),
   body: z.string().optional(),
   image: z.instanceof(File).optional(),
   givenDate: z
@@ -50,6 +51,17 @@ async function mkdirIfNotPresent(dir: string) {
   }
 }
 
+export type State = {
+  errors?: {
+    title?: string[];
+    body?: string[];
+    image?: string[];
+    date?: string[];
+    slug?: string[];
+  };
+  message: string;
+};
+
 async function writePostUpload(postBaseDirectory: string, file: File) {
   await mkdirIfNeeded(getPostUploadsDirectory(postBaseDirectory));
 
@@ -59,7 +71,7 @@ async function writePostUpload(postBaseDirectory: string, file: File) {
   Readable.fromWeb(file.stream() as ReadableStream<any>).pipe(fileWriteStream);
 }
 
-export async function createPost(formData: FormData) {
+export async function createPost(_prevState: State, formData: FormData) {
   const validatedFields = FormSchema.safeParse({
     title: formData.get("title"),
     body: formData.get("body"),
@@ -69,24 +81,15 @@ export async function createPost(formData: FormData) {
   });
 
   if (!validatedFields.success) {
-    throw new Error(
-      "Failed to create Post: " +
-        JSON.stringify(validatedFields.error.flatten().fieldErrors),
-    );
-    /*
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Create Invoice.',
+      message: "Failed to create Post.",
     };
-    */
   }
 
   const { givenDate, givenSlug, title, body, image } = validatedFields.data;
 
   const date: number = givenDate || (Date.now() as number);
-  if (!title) {
-    throw new Error("Post needs title");
-  }
   const slug = slugify(givenSlug || title);
   const hasImage = image && image.size > 0;
   const data: Post = {
@@ -119,6 +122,7 @@ export async function createPost(formData: FormData) {
 export async function updatePost(
   currentDate: number,
   currentSlug: string,
+  _prevState: State,
   formData: FormData,
 ) {
   const validatedFields = FormSchema.safeParse({
@@ -130,13 +134,10 @@ export async function updatePost(
   });
 
   if (!validatedFields.success) {
-    throw new Error("Failed to create Post");
-    /*
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Create Invoice.',
+      message: "Failed to update Post.",
     };
-    */
   }
 
   const { givenDate, givenSlug, title, body, image } = validatedFields.data;
@@ -152,14 +153,13 @@ export async function updatePost(
   const willChangeDate = givenDate && currentDate !== givenDate;
 
   const currentData = JSON.parse(String(await readFile(currentPostPath)));
-  const hasImage = image && image.size > 0;
+  const hasNewImage = image && image.size > 0;
 
-  const data = {
-    ...currentData,
-    date: finalDate,
-    image: hasImage ? image.name : currentData.image,
+  const data: Post = {
     title,
     body,
+    date: finalDate,
+    image: hasNewImage ? image.name : currentData.image,
   };
 
   if (willRename) {
@@ -175,12 +175,21 @@ export async function updatePost(
     }
     db.put([finalDate, finalSlug], getPostIndexEntryValue(data));
   } catch (e) {
-    throw new Error("Failed to write post to index");
+    return { message: "Failed to write post to index" };
   } finally {
     db.close();
   }
-  if (image) {
+  if (hasNewImage) {
+    const rmPromise =
+      currentData.image &&
+      rm(
+        path.join(
+          getPostUploadsDirectory(finalPostDirectory),
+          currentData.image,
+        ),
+      );
     await writePostUpload(finalPostDirectory, image);
+    await rmPromise;
   }
   if (willRename) {
     revalidatePath("/post/" + currentSlug);

@@ -1,26 +1,14 @@
 import { getPosts } from "@/app/lib/data";
-import { createPost } from "@/app/lib/actions";
 import Link from "next/link";
-import { Button } from "@/components/Button";
 import { PostList } from "@/components/PostList";
-import { PostFields } from "@/components/PostForm";
+import CreateForm from "./form";
 
 export default async function Home() {
   const { posts, more } = await getPosts({ limit: 3 });
 
   return (
     <main className="flex flex-col items-center h-full w-full p-2 max-w-prose mx-auto">
-      <form className="m-2 w-full" action={createPost}>
-        <h2 className="font-bold text-2xl mb-2">New Post</h2>
-        <div className="flex flex-col flex-nowrap">
-          <PostFields />
-          <div className="my-1">
-            <Button>
-              <span>Post</span>
-            </Button>
-          </div>
-        </div>
-      </form>
+      <CreateForm />
       <div className="m-2 text-left w-full grow">
         <h2 className="font-bold text-2xl">Latest Posts</h2>
         {posts && posts.length > 0 ? (
