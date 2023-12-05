@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="h-full flex flex-col flex-nowrap items-center">
+        <div className="h-full flex flex-col flex-nowrap items-center min-w-fit">
           <header>
             <Link href="/" className="block p-2">
               <h1 className="text-xl font-bold text-center">
