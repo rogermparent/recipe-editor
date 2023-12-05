@@ -214,7 +214,6 @@ export function PostFields({
   const [currentTimezone, setCurrentTimezone] = useState<string>();
   const [imagesToUpload, setImagesToUpload] = useState<FileList>();
   const [imagePreviewURL, setImagePreviewURL] = useState<string>();
-  console.log({ selectedImage: imagesToUpload });
   useEffect(() => {
     const fetchedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     setCurrentTimezone(fetchedTimezone);
