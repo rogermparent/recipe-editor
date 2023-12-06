@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  ChangeEventHandler,
-  ReactNode,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { ChangeEventHandler, ReactNode, useEffect, useState } from "react";
 import slugify from "@sindresorhus/slugify";
 import { Post } from "@/app/lib/data";
 import clsx from "clsx";
@@ -153,7 +147,10 @@ function DateTimeInput({
         defaultValue={
           currentDate ? currentDate.toISOString().slice(0, -1) : undefined
         }
-        onChange={(e) => setCurrentDate(new Date(e.target.value + "Z"))}
+        onChange={(e) => {
+          const value = e.target?.value;
+          setCurrentDate(value ? new Date(value + "Z") : undefined);
+        }}
       />
       <div className="text-sm font-semibold italic h-4 my-0.5">
         {currentTimezone && currentDate && (
@@ -209,7 +206,7 @@ export function PostFields({
   slug?: string;
   state: State;
 }) {
-  const { title, body, date, image } = post || {};
+  const { title, body, date, image, summary } = post || {};
   const [defaultSlug, setDefaultSlug] = useState(title ? slugify(title) : "");
   const [currentTimezone, setCurrentTimezone] = useState<string>();
   const [imagesToUpload, setImagesToUpload] = useState<FileList>();
@@ -261,6 +258,13 @@ export function PostFields({
           )
         )}
       </div>
+      <TextInput
+        label="Summary"
+        name="summary"
+        id="post-form-summary"
+        defaultValue={summary}
+        state={state}
+      />
       <TextAreaInput
         label="Body"
         name="body"

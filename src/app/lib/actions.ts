@@ -21,6 +21,7 @@ import path from "path";
 
 const FormSchema = z.object({
   title: z.string().min(1),
+  summary: z.string().optional(),
   body: z.string().optional(),
   image: z.instanceof(File).optional(),
   givenDate: z
@@ -31,7 +32,7 @@ const FormSchema = z.object({
 
 async function mkdirIfNeeded(dir: string) {
   try {
-    await mkdir(dir);
+    await mkdir(dir, { recursive: true });
   } catch (e) {
     if ((e as { code: string }).code !== "EEXIST") {
       throw e;
@@ -41,7 +42,7 @@ async function mkdirIfNeeded(dir: string) {
 
 async function mkdirIfNotPresent(dir: string) {
   try {
-    await mkdir(dir);
+    await mkdir(dir, { recursive: true });
   } catch (e) {
     if ((e as { code: string }).code === "EEXIST") {
       throw new Error("Post already exists");
@@ -75,6 +76,7 @@ export async function createPost(_prevState: State, formData: FormData) {
   const validatedFields = FormSchema.safeParse({
     title: formData.get("title"),
     body: formData.get("body"),
+    summary: formData.get("summary"),
     image: formData.get("image"),
     givenDate: formData.get("date"),
     givenSlug: formData.get("slug"),
@@ -87,13 +89,15 @@ export async function createPost(_prevState: State, formData: FormData) {
     };
   }
 
-  const { givenDate, givenSlug, title, body, image } = validatedFields.data;
+  const { givenDate, givenSlug, title, body, summary, image } =
+    validatedFields.data;
 
   const date: number = givenDate || (Date.now() as number);
   const slug = slugify(givenSlug || title);
   const hasImage = image && image.size > 0;
   const data: Post = {
     image: hasImage ? image.name : undefined,
+    summary,
     title,
     body,
     date,
@@ -128,6 +132,7 @@ export async function updatePost(
   const validatedFields = FormSchema.safeParse({
     title: formData.get("title"),
     body: formData.get("body"),
+    summary: formData.get("summary"),
     image: formData.get("image"),
     givenDate: formData.get("date"),
     givenSlug: formData.get("slug"),
@@ -140,7 +145,8 @@ export async function updatePost(
     };
   }
 
-  const { givenDate, givenSlug, title, body, image } = validatedFields.data;
+  const { givenDate, givenSlug, title, body, summary, image } =
+    validatedFields.data;
 
   const currentPostDirectory = getPostDirectory(currentSlug);
   const currentPostPath = getPostFilePath(currentPostDirectory);
@@ -157,6 +163,7 @@ export async function updatePost(
 
   const data: Post = {
     title,
+    summary,
     body,
     date: finalDate,
     image: hasNewImage ? image.name : currentData.image,

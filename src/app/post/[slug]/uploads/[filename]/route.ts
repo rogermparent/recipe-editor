@@ -1,5 +1,5 @@
 import { getPostDirectory, getPostUploadsDirectory } from "@/app/lib/data";
-import { ReadStream, createReadStream } from "fs";
+import { ReadStream } from "fs";
 import { open } from "fs/promises";
 import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";

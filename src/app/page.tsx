@@ -7,7 +7,7 @@ export default async function Home() {
   const { posts, more } = await getPosts({ limit: 3 });
 
   return (
-    <main className="flex flex-col items-center h-full w-full p-2 max-w-prose mx-auto">
+    <main className="flex flex-col items-center h-full w-full p-2 max-w-prose mx-auto grow bg-slate-950">
       <CreateForm />
       <div className="m-2 text-left w-full grow">
         <h2 className="font-bold text-2xl">Latest Posts</h2>

@@ -1,11 +1,12 @@
 import { deletePost } from "@/app/lib/actions";
-import { PostEntry } from "@/app/lib/data";
+import { PostEntry, PostEntryValue } from "@/app/lib/data";
 import Link from "next/link";
 import { ReactNode } from "react";
 import Markdown from "react-markdown";
 import styles from "@/components/Markdown/styles.module.css";
 import clsx from "clsx";
 import Image from "next/image";
+import { getPlaceholder } from "@/app/lib/placeholders";
 
 export function ButtonLink({
   href,
@@ -21,20 +22,15 @@ export function ButtonLink({
   );
 }
 
-export function PostListItem({
+export async function PostListItem({
   title,
   slug,
   date,
-  body,
+  summary,
   image,
-}: {
-  title: string;
-  slug: string;
-  date: number;
-  image?: string;
-  body?: string;
-}) {
+}: PostEntryValue & { date: number; slug: string }) {
   const deletePostWithId = deletePost.bind(null, date, slug);
+  const placeholderURL = image && (await getPlaceholder(slug, image));
 
   return (
     <div className="my-1 rounded-lg bg-slate-900 overflow-hidden w-full h-full">
@@ -47,6 +43,8 @@ export function PostListItem({
               width={400}
               height={400}
               className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+              placeholder="blur"
+              blurDataURL={placeholderURL}
             />
           )}
         </div>
@@ -54,7 +52,9 @@ export function PostListItem({
           {title || String(date)}
         </div>
       </Link>
-      <Markdown className={clsx(styles.content, "my-1 mx-3")}>{body}</Markdown>
+      <Markdown className={clsx(styles.content, "my-1 mx-3")}>
+        {summary}
+      </Markdown>
       <div className="text-sm italic px-2 text-gray-400 my-1">
         {new Date(date).toLocaleString()}
       </div>
@@ -81,7 +81,7 @@ export function PostList({ posts }: { posts: PostEntry[] }) {
       {posts.map((entry) => {
         const {
           key: [date, slug],
-          value: { title, body, image },
+          value: { title, summary, image },
         } = entry;
         return (
           <li key={slug} className="max-w-full w-96 sm:p-1 sm:w-1/2 lg:w-1/3">
@@ -89,7 +89,7 @@ export function PostList({ posts }: { posts: PostEntry[] }) {
               title={title}
               slug={slug}
               date={date}
-              body={body}
+              summary={summary}
               image={image}
             />
           </li>

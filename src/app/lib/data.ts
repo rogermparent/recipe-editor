@@ -5,6 +5,7 @@ import { resolve } from "path";
 export interface Post {
   title: string;
   date: number;
+  summary?: string;
   body?: string;
   image?: string;
 }
@@ -12,7 +13,7 @@ export interface Post {
 export type PostEntryKey = [date: number, slug: string];
 export interface PostEntryValue {
   title: string;
-  body?: string;
+  summary?: string;
   image?: string;
 }
 
@@ -22,16 +23,21 @@ export interface PostEntry {
   version?: number;
 }
 
-export function getPostDatabase() {
-  return open<PostEntryValue, PostEntryKey>({
-    path: "posts-db",
-  });
-}
+const contentDirectory = process.env.CONTENT_DIRECTORY || resolve("content");
 
-const postsDirectory = resolve("content", "posts");
+const postsBaseDirectory = resolve(contentDirectory, "posts");
+
+const postDataDirectory = resolve(postsBaseDirectory, "data");
+const postIndexDirectory = resolve(postsBaseDirectory, "index");
 
 export function getPostDirectory(slug: string) {
-  return resolve(postsDirectory, slug);
+  return resolve(postDataDirectory, slug);
+}
+
+export function getPostDatabase() {
+  return open<PostEntryValue, PostEntryKey>({
+    path: postIndexDirectory,
+  });
 }
 
 export function getPostFilePath(basePath: string) {
@@ -83,14 +89,14 @@ export async function getPostBySlug(slug: string) {
 }
 
 export function getPostIndexEntryValue(post: Post): PostEntryValue {
-  const { title, body, image } = post;
-  return { title, body, image };
+  const { title, summary, image } = post;
+  return { title, summary, image };
 }
 
 export async function reloadPostsDatabase() {
   const db = getPostDatabase();
   await db.drop();
-  const postDirectories = await readdir(postsDirectory);
+  const postDirectories = await readdir(postDataDirectory);
   for (const slug of postDirectories) {
     const postFilePath = getPostFilePath(getPostDirectory(slug));
     const postFileContents = JSON.parse(String(await readFile(postFilePath)));

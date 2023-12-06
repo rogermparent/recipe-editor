@@ -23,7 +23,7 @@ export default async function Posts({
   });
 
   return (
-    <main className="flex flex-col items-center w-full p-2 max-w-prose mx-auto">
+    <main className="flex flex-col items-center w-full p-2 max-w-prose mx-auto grow">
       <div className="m-2 text-left w-full grow">
         <h2 className="font-bold text-2xl">All Posts</h2>
         {posts && posts.length > 0 ? (
