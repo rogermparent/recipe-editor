@@ -35,3 +35,17 @@
 //     }
 //   }
 // }
+import "@testing-library/cypress/add-commands";
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      resetData(fixture?: string): Chainable<void>;
+    }
+  }
+}
+
+Cypress.Commands.add("resetData", (fixture) => {
+  cy.task("resetData", fixture);
+  fetch("http://localhost:3000/settings/invalidate-cache");
+});

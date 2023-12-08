@@ -52,14 +52,17 @@ async function mkdirIfNotPresent(dir: string) {
   }
 }
 
+export interface StateErrors {
+  title?: string[];
+  body?: string[];
+  summary?: string[];
+  image?: string[];
+  date?: string[];
+  slug?: string[];
+}
+
 export type State = {
-  errors?: {
-    title?: string[];
-    body?: string[];
-    image?: string[];
-    date?: string[];
-    slug?: string[];
-  };
+  errors?: StateErrors;
   message: string;
 };
 

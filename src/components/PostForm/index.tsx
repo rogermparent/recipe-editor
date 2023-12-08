@@ -4,7 +4,7 @@ import { ChangeEventHandler, ReactNode, useEffect, useState } from "react";
 import slugify from "@sindresorhus/slugify";
 import { Post } from "@/app/lib/data";
 import clsx from "clsx";
-import { State } from "@/app/lib/actions";
+import { State, StateErrors } from "@/app/lib/actions";
 import Image from "next/image";
 
 const baseInputStyle =
@@ -41,11 +41,12 @@ function FieldWrapper({
   );
 }
 
-function Errors({ state, name }: { state: State; name: string }) {
+function Errors({ state, name }: { state: State; name: keyof StateErrors }) {
+  const errors = state.errors?.[name] as string[] | undefined;
   return (
     <div id="customer-error" aria-live="polite" aria-atomic="true">
-      {state.errors?.[name] &&
-        state.errors[name].map((error: string) => (
+      {errors &&
+        errors.map((error: string) => (
           <p className="mt-2 text-sm text-red-500" key={error}>
             {error}
           </p>
@@ -63,7 +64,7 @@ function TextInput({
   placeholder,
   state,
 }: {
-  name: string;
+  name: keyof StateErrors;
   id: string;
   label: string;
   defaultValue?: string;
@@ -95,7 +96,7 @@ function TextAreaInput({
   label,
   state,
 }: {
-  name: string;
+  name: keyof StateErrors;
   id: string;
   label: string;
   defaultValue?: string;
@@ -124,7 +125,7 @@ function DateTimeInput({
   currentTimezone,
   state,
 }: {
-  name: string;
+  name: keyof StateErrors;
   id: string;
   label: string;
   date?: number;
@@ -172,7 +173,7 @@ function FileInput({
   placeholder,
   state,
 }: {
-  name: string;
+  name: keyof StateErrors;
   id: string;
   label: string;
   defaultValue?: string;
@@ -246,7 +247,11 @@ export function PostFields({
       />
       <div className="w-full">
         {imagePreviewURL ? (
-          <img src={imagePreviewURL} alt="Image to upload" className="w-full" />
+          <Image
+            src={imagePreviewURL}
+            alt="Image to upload"
+            className="w-full"
+          />
         ) : (
           image && (
             <Image

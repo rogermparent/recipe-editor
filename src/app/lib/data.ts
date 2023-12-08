@@ -96,12 +96,14 @@ export function getPostIndexEntryValue(post: Post): PostEntryValue {
 export async function reloadPostsDatabase() {
   const db = getPostDatabase();
   await db.drop();
-  const postDirectories = await readdir(postDataDirectory);
-  for (const slug of postDirectories) {
-    const postFilePath = getPostFilePath(getPostDirectory(slug));
-    const postFileContents = JSON.parse(String(await readFile(postFilePath)));
-    const { date } = postFileContents as Post;
-    await db.put([date, slug], getPostIndexEntryValue(postFileContents));
-  }
+  try {
+    const postDirectories = await readdir(postDataDirectory);
+    for (const slug of postDirectories) {
+      const postFilePath = getPostFilePath(getPostDirectory(slug));
+      const postFileContents = JSON.parse(String(await readFile(postFilePath)));
+      const { date } = postFileContents as Post;
+      await db.put([date, slug], getPostIndexEntryValue(postFileContents));
+    }
+  } catch (e) {}
   db.close();
 }
