@@ -15,6 +15,7 @@ import {
 import slugify from "@sindresorhus/slugify";
 import { createWriteStream } from "fs";
 import { Readable } from "node:stream";
+import { pipeline } from "node:stream/promises";
 import { ReadableStream } from "node:stream/web";
 import { z } from "zod";
 import path from "path";
@@ -72,7 +73,8 @@ async function writePostUpload(postBaseDirectory: string, file: File) {
   const fileWriteStream = createWriteStream(
     `${postBaseDirectory}/uploads/${file.name}`,
   );
-  Readable.fromWeb(file.stream() as ReadableStream<any>).pipe(fileWriteStream);
+  const readStream = Readable.fromWeb(file.stream() as ReadableStream<any>);
+  await pipeline(readStream, fileWriteStream);
 }
 
 export async function createPost(_prevState: State, formData: FormData) {
@@ -198,8 +200,8 @@ export async function updatePost(
           currentData.image,
         ),
       );
-    await writePostUpload(finalPostDirectory, image);
     await rmPromise;
+    await writePostUpload(finalPostDirectory, image);
   }
   if (willRename) {
     revalidatePath("/post/" + currentSlug);

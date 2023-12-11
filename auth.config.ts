@@ -1,14 +1,18 @@
 import type { NextAuthConfig } from "next-auth";
 
 export const authConfig = {
+  trustHost: true,
   pages: {
     signIn: "/login",
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const isEditorPath = nextUrl.pathname.endsWith("/edit");
-      if (isEditorPath) {
+      const isEditorPath =
+        nextUrl.pathname.endsWith("/edit") || nextUrl.pathname === "/new-post";
+      const isSettingsPath = nextUrl.pathname.startsWith("/settings");
+      const isPrivilegedPath = isEditorPath || isSettingsPath;
+      if (isPrivilegedPath) {
         if (isLoggedIn) return true;
         return false; // Redirect unauthenticated users to login page
       } else if (isLoggedIn) {

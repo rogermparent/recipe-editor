@@ -58,19 +58,6 @@ export async function PostListItem({
       <div className="text-sm italic px-2 text-gray-400 my-1">
         {new Date(date).toLocaleString()}
       </div>
-      <div className="flex flex-row justify-center m-2">
-        <form action={deletePostWithId}>
-          <button className="underline bg-slate-700 rounded-md text-sm py-1 px-2 mx-1">
-            Delete
-          </button>
-        </form>
-        <Link
-          href={`/post/${slug}/edit`}
-          className="underline bg-slate-700 rounded-md text-sm py-1 px-2 mx-1"
-        >
-          Edit
-        </Link>
-      </div>
     </div>
   );
 }

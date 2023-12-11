@@ -7,12 +7,13 @@ import { resolve } from "path";
 import { getContentDirectory } from "@/app/lib/data";
 import bcrypt from "bcrypt";
 
-interface User {
+interface BlogUser {
+  id: string;
   email: string;
   password: string;
 }
 
-async function getUser(email: string): Promise<User | undefined> {
+async function getUser(email: string): Promise<BlogUser | undefined> {
   try {
     const user = await readFile(resolve(getContentDirectory(), "users", email));
     return JSON.parse(String(user));
@@ -30,7 +31,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
         email: { label: "Email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials): Promise<User | null> {
+      async authorize(credentials): Promise<BlogUser | null> {
         const parsedCredentials = z
           .object({ email: z.string().email(), password: z.string().min(6) })
           .safeParse(credentials);
