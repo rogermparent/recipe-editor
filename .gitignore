@@ -37,4 +37,4 @@ next-env.d.ts
 
 # content (should be tracked in its own repo)
 content
-posts-db
+test-content
