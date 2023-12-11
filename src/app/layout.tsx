@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import clsx from "clsx";
+import { Button } from "@/components/Button";
+import { signOut } from "@/auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,6 +39,14 @@ export default function RootLayout({
             <Link href="/settings" className="inline-block p-2">
               Settings
             </Link>
+            <form
+              action={async () => {
+                "use server";
+                await signOut();
+              }}
+            >
+              <Button>Sign Out</Button>
+            </form>
           </nav>
         </footer>
       </body>

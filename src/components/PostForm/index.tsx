@@ -1,202 +1,16 @@
 "use client";
 
-import { ChangeEventHandler, ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import slugify from "@sindresorhus/slugify";
 import { Post } from "@/app/lib/data";
-import clsx from "clsx";
-import { State, StateErrors } from "@/app/lib/actions";
+import { State as PostFormState } from "@/app/lib/actions";
 import Image from "next/image";
-
-const baseInputStyle =
-  "text-black bg-slate-100 border border-slate-600 rounded-md";
-
-function Label({
-  children,
-  htmlFor,
-}: {
-  children: ReactNode;
-  htmlFor: string;
-}) {
-  return (
-    <label htmlFor={htmlFor} className="font-semibold text-sm py-1">
-      {children}
-    </label>
-  );
-}
-
-function FieldWrapper({
-  label,
-  id,
-  children,
-}: {
-  label: string;
-  id: string;
-  children: ReactNode;
-}) {
-  return (
-    <div className="flex flex-col flex-nowrap mb-1">
-      <Label htmlFor={id}>{label}</Label>
-      {children}
-    </div>
-  );
-}
-
-function Errors({ state, name }: { state: State; name: keyof StateErrors }) {
-  const errors = state.errors?.[name] as string[] | undefined;
-  return (
-    <div id="customer-error" aria-live="polite" aria-atomic="true">
-      {errors &&
-        errors.map((error: string) => (
-          <p className="mt-2 text-sm text-red-500" key={error}>
-            {error}
-          </p>
-        ))}
-    </div>
-  );
-}
-
-function TextInput({
-  name,
-  id,
-  defaultValue,
-  onChange,
-  label,
-  placeholder,
-  state,
-}: {
-  name: keyof StateErrors;
-  id: string;
-  label: string;
-  defaultValue?: string;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
-  placeholder?: string;
-  state: State;
-}) {
-  return (
-    <FieldWrapper label={label} id={id}>
-      <Errors state={state} name={name} />
-      <input
-        type="text"
-        name={name}
-        id={id}
-        className={clsx(baseInputStyle, "px-2 py-1")}
-        defaultValue={defaultValue}
-        onChange={onChange}
-        placeholder={placeholder}
-      />
-    </FieldWrapper>
-  );
-}
-
-function TextAreaInput({
-  name,
-  id,
-  defaultValue,
-  onChange,
-  label,
-  state,
-}: {
-  name: keyof StateErrors;
-  id: string;
-  label: string;
-  defaultValue?: string;
-  onChange?: ChangeEventHandler<HTMLTextAreaElement>;
-  state: State;
-}) {
-  return (
-    <FieldWrapper label={label} id={id}>
-      <Errors state={state} name={name} />
-      <textarea
-        name={name}
-        id={id}
-        className={clsx(baseInputStyle, "px-1 h-40 grow")}
-        defaultValue={defaultValue}
-        onChange={onChange}
-      />
-    </FieldWrapper>
-  );
-}
-
-function DateTimeInput({
-  name,
-  id,
-  date,
-  label,
-  currentTimezone,
-  state,
-}: {
-  name: keyof StateErrors;
-  id: string;
-  label: string;
-  date?: number;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
-  currentTimezone?: string;
-  state: State;
-}) {
-  const [currentDate, setCurrentDate] = useState(
-    date ? new Date(date) : undefined,
-  );
-  return (
-    <FieldWrapper label={label} id={id}>
-      <Errors state={state} name={name} />
-      <input
-        type="datetime-local"
-        step="any"
-        name={name}
-        id={id}
-        className={clsx(baseInputStyle, "p-1")}
-        defaultValue={
-          currentDate ? currentDate.toISOString().slice(0, -1) : undefined
-        }
-        onChange={(e) => {
-          const value = e.target?.value;
-          setCurrentDate(value ? new Date(value + "Z") : undefined);
-        }}
-      />
-      <div className="text-sm font-semibold italic h-4 my-0.5">
-        {currentTimezone && currentDate && (
-          <>
-            {currentDate.toLocaleString()} ({currentTimezone})
-          </>
-        )}
-      </div>
-    </FieldWrapper>
-  );
-}
-
-function FileInput({
-  name,
-  id,
-  defaultValue,
-  onChange,
-  label,
-  placeholder,
-  state,
-}: {
-  name: keyof StateErrors;
-  id: string;
-  label: string;
-  defaultValue?: string;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
-  placeholder?: string;
-  state: State;
-}) {
-  return (
-    <FieldWrapper label={label} id={id}>
-      <Errors state={state} name={name} />
-      <div className={clsx(baseInputStyle, "p-1")}>
-        <input
-          type="file"
-          name={name}
-          id={id}
-          defaultValue={defaultValue}
-          onChange={onChange}
-          placeholder={placeholder}
-        />
-      </div>
-    </FieldWrapper>
-  );
-}
+import {
+  TextInput,
+  DateTimeInput,
+  FileInput,
+  TextAreaInput,
+} from "@/components/Form";
 
 export function PostFields({
   post,
@@ -205,7 +19,7 @@ export function PostFields({
 }: {
   post?: Post;
   slug?: string;
-  state: State;
+  state: PostFormState;
 }) {
   const { title, body, date, image, summary } = post || {};
   const [defaultSlug, setDefaultSlug] = useState(title ? slugify(title) : "");
@@ -236,13 +50,13 @@ export function PostFields({
         id="post-form-title"
         defaultValue={title}
         onChange={(e) => setDefaultSlug(slugify(e.target.value))}
-        state={state}
+        errors={state.errors?.title}
       />
       <FileInput
         label="Image"
         name="image"
         id="post-form-image"
-        state={state}
+        errors={state.errors?.image}
         onChange={(e) => setImagesToUpload(e.target?.files || undefined)}
       />
       <div className="w-full">
@@ -268,14 +82,14 @@ export function PostFields({
         name="summary"
         id="post-form-summary"
         defaultValue={summary}
-        state={state}
+        errors={state.errors?.summary}
       />
       <TextAreaInput
         label="Body"
         name="body"
         id="post-form-body"
         defaultValue={body}
-        state={state}
+        errors={state.errors?.body}
       />
       <details className="py-1 my-1">
         <summary className="text-sm font-semibold">Advanced</summary>
@@ -286,7 +100,7 @@ export function PostFields({
             id="post-form-slug"
             defaultValue={slug}
             placeholder={defaultSlug}
-            state={state}
+            errors={state.errors?.slug}
           />
           <DateTimeInput
             label="Date (UTC)"
@@ -294,7 +108,7 @@ export function PostFields({
             id="post-form-date"
             date={date}
             currentTimezone={currentTimezone}
-            state={state}
+            errors={state.errors?.date}
           />
         </div>
       </details>

@@ -30,6 +30,10 @@ const postsBaseDirectory = resolve(contentDirectory, "posts");
 const postDataDirectory = resolve(postsBaseDirectory, "data");
 const postIndexDirectory = resolve(postsBaseDirectory, "index");
 
+export function getContentDirectory() {
+  return contentDirectory;
+}
+
 export function getPostDirectory(slug: string) {
   return resolve(postDataDirectory, slug);
 }
