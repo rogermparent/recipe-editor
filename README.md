@@ -19,3 +19,9 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Test Suite
+
+This project has a Cypress e2e test suite that can run against the development server or the optimized production build via two sets of scripts: `e2e-dev` and `e2e-start` both with `:headless` variants.
+
+`e2e-dev` is helpful for rapid development, while `e2e-start` runs faster and is more reflective of production. Remember to run `build` after any changes for those to apply to `e2e-start`!
