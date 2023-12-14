@@ -6,17 +6,27 @@ import Link from "next/link";
 import { deletePost } from "@/app/lib/actions";
 import Image from "next/image";
 import { getPlaceholder } from "@/app/lib/placeholders";
+import { notFound } from "next/navigation";
 
 export default async function Post({
   params: { slug },
 }: {
   params: { slug: string };
 }) {
-  const post = await getPostBySlug(slug);
+  let post;
+  try {
+    post = await getPostBySlug(slug);
+  } catch (e) {
+    if ((e as { code: string }).code === "ENOENT") {
+      notFound();
+    }
+    throw e;
+  }
   const { title, body, date, image } = post;
   const placeholderURL = image && (await getPlaceholder(slug, image));
 
   const deletePostWithId = deletePost.bind(null, date, slug);
+
   return (
     <main className="flex flex-col items-center w-full h-full max-w-prose grow py-2">
       <h1 className="text-2xl font-bold my-2">{title}</h1>

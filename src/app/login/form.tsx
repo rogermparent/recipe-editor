@@ -13,7 +13,7 @@ export default function LoginForm() {
       <form action={dispatch}>
         <TextInput name="email" label="Email" id="email" />
         <PasswordInput name="password" label="Password" id="password" />
-        <Button>Login</Button>
+        <Button>Log in</Button>
       </form>
     </div>
   );

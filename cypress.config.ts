@@ -18,6 +18,11 @@ export default defineConfig({
               { recursive: true },
             );
           }
+          await cp(
+            resolve("cypress", "fixtures", "users"),
+            resolve("test-content", "users"),
+            { recursive: true },
+          );
           return null;
         },
       });

@@ -82,14 +82,10 @@ export async function getPosts({
 }
 
 export async function getPostBySlug(slug: string) {
-  try {
-    const postData = JSON.parse(
-      String(await readFile(getPostFilePath(getPostDirectory(slug)))),
-    );
-    return postData;
-  } catch (e) {
-    throw new Error("Failed to get post");
-  }
+  const postData = JSON.parse(
+    String(await readFile(getPostFilePath(getPostDirectory(slug)))),
+  );
+  return postData;
 }
 
 export function getPostIndexEntryValue(post: Post): PostEntryValue {

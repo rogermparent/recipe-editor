@@ -1,5 +1,5 @@
 import { hash, genSalt } from "bcrypt";
-import { writeFile } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
 import { resolve } from "path";
 import readline from "readline";
 import readlinePromises from "readline/promises";
@@ -9,7 +9,7 @@ async function createUser() {
     input: process.stdin,
     output: process.stdout,
   });
-  const email = await rl.question("Enter a email: ");
+  const email = await rl.question("Enter an email: ");
   const passwordPromise = rl.question("Enter a password: ");
 
   // Use an event handler to hide password input
@@ -27,7 +27,9 @@ async function createUser() {
   const password = await passwordPromise;
   const hashedPassword = await hash(password, salt);
   const userData = { email, password: hashedPassword };
-  await writeFile(resolve("users", email), JSON.stringify(userData));
+  const usersDir = resolve("users");
+  await mkdir(usersDir, { recursive: true });
+  await writeFile(resolve(usersDir, email), JSON.stringify(userData));
   process.exit(0);
 }
 
