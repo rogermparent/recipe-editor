@@ -1,14 +1,14 @@
-import { checkTitlesInOrder, fillLoginForm } from "./util";
-
-describe("Homepage", () => {
+describe("Index Page", () => {
   describe("when empty", () => {
     beforeEach(() => {
       cy.resetData();
       cy.visit("http://localhost:3000");
     });
+
     it("should not need authorization", () => {
       cy.findByText("Sign In");
     });
+
     it("should inform the user if there are no posts", () => {
       cy.findByText("There are no posts yet.");
     });
@@ -22,7 +22,7 @@ describe("Homepage", () => {
 
       cy.findByText("New Post").click();
 
-      fillLoginForm();
+      cy.fillLoginForm();
 
       cy.findByLabelText("Title").type(testTitle);
       cy.findByText("Post").click();
@@ -72,7 +72,7 @@ describe("Homepage", () => {
       const allTitles = [3, 2, 1].map((x) => `Post ${x}`);
 
       // Homepage should have latest three posts
-      checkTitlesInOrder(allTitles);
+      cy.checkTitlesInOrder(allTitles);
 
       cy.findAllByText("More").should("not.exist");
     });
@@ -88,15 +88,15 @@ describe("Homepage", () => {
       const allTitles = [6, 5, 4, 3, 2, 1].map((x) => `Post ${x}`);
 
       // Homepage should have latest three posts
-      checkTitlesInOrder(allTitles.slice(0, 3));
+      cy.checkTitlesInOrder(allTitles.slice(0, 3));
 
       // First page should have latest 5 posts
       cy.findByText("More").click();
-      checkTitlesInOrder(allTitles.slice(0, 5));
+      cy.checkTitlesInOrder(allTitles.slice(0, 5));
 
       // Second page should have the last one post
       cy.findByText("→").click();
-      checkTitlesInOrder(allTitles.slice(5));
+      cy.checkTitlesInOrder(allTitles.slice(5));
     });
   });
 });

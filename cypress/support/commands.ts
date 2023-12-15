@@ -41,6 +41,8 @@ declare global {
   namespace Cypress {
     interface Chainable {
       resetData(fixture?: string): Chainable<void>;
+      fillLoginForm(fixture?: string): Chainable<void>;
+      checkTitlesInOrder(titles: string[]): Chainable<void>;
     }
   }
 }
@@ -48,4 +50,16 @@ declare global {
 Cypress.Commands.add("resetData", (fixture) => {
   cy.task("resetData", fixture);
   fetch("http://localhost:3000/settings/invalidate-cache");
+});
+
+Cypress.Commands.add("checkTitlesInOrder", (titles: string[]) => {
+  const items = cy.findAllByRole("listitem");
+  items.should("have.length", titles.length);
+  items.each((el, i) => cy.wrap(el).findByText(titles[i]));
+});
+
+Cypress.Commands.add("fillLoginForm", () => {
+  cy.findByLabelText("Email").type("admin@nextmail.com");
+  cy.findByLabelText("Password").type("password");
+  cy.findByText("Sign in with Credentials").click();
 });

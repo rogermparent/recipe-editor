@@ -1,13 +1,4 @@
-/*
- ** should display first three items
- **
- ** should link to index when there are more than three items
- ** should not need authorization
- */
-
-import { checkTitlesInOrder } from "./util";
-
-describe("Post", () => {
+describe("Single Post View", () => {
   describe("with the two posts fixture", () => {
     beforeEach(() => {
       cy.resetData("two-pages");
@@ -19,22 +10,27 @@ describe("Post", () => {
     });
 
     it("should not need authorization", () => {
-      cy.visit("http://localhost:3000/post/post-5");
       cy.findByText("Log In");
     });
 
-    it("should be able to edit the post", () => {
-      cy.findByText("Delete").click();
+    it("should be able to go to the edit page", () => {
+      cy.findByText("Edit").click();
 
-      cy.findByText("Post 3");
-      checkTitlesInOrder(["Post 6", "Post 4", "Post 3"]);
+      cy.fillLoginForm();
+
+      cy.findByText("Editing post: Post 5");
     });
 
     it("should be able to delete the post", () => {
       cy.findByText("Delete").click();
 
+      // First click of the delete button should trigger a sign-in
+      cy.fillLoginForm();
+
+      cy.findByText("Delete").click();
+
       cy.findByText("Post 3");
-      checkTitlesInOrder(["Post 6", "Post 4", "Post 3"]);
+      cy.checkTitlesInOrder(["Post 6", "Post 4", "Post 3"]);
       cy.request({
         url: "http://localhost:3000/post/post-5",
         failOnStatusCode: false,
