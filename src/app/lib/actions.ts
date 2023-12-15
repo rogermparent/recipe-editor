@@ -19,6 +19,7 @@ import { pipeline } from "node:stream/promises";
 import { ReadableStream } from "node:stream/web";
 import { z } from "zod";
 import path from "path";
+import { auth, signIn } from "@/auth";
 
 const FormSchema = z.object({
   title: z.string().min(1),
@@ -78,6 +79,11 @@ async function writePostUpload(postBaseDirectory: string, file: File) {
 }
 
 export async function createPost(_prevState: State, formData: FormData) {
+  const user = await auth();
+  if (!user) {
+    return signIn();
+  }
+
   const validatedFields = FormSchema.safeParse({
     title: formData.get("title"),
     body: formData.get("body"),
@@ -134,6 +140,11 @@ export async function updatePost(
   _prevState: State,
   formData: FormData,
 ) {
+  const user = await auth();
+  if (!user) {
+    return signIn();
+  }
+
   const validatedFields = FormSchema.safeParse({
     title: formData.get("title"),
     body: formData.get("body"),
@@ -216,6 +227,11 @@ export async function deletePost(
   slug: string,
   _formData: FormData,
 ) {
+  const user = await auth();
+  if (!user) {
+    return signIn();
+  }
+
   const db = getPostDatabase();
   const postDirectory = getPostDirectory(slug);
   try {

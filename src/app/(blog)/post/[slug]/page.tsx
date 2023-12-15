@@ -7,6 +7,7 @@ import { deletePost } from "@/app/lib/actions";
 import Image from "next/image";
 import { getPlaceholder } from "@/app/lib/placeholders";
 import { notFound } from "next/navigation";
+import { auth } from "@/auth";
 
 export default async function Post({
   params: { slug },
@@ -26,6 +27,8 @@ export default async function Post({
   const placeholderURL = image && (await getPlaceholder(slug, image));
 
   const deletePostWithId = deletePost.bind(null, date, slug);
+
+  const user = await auth();
 
   return (
     <main className="flex flex-col items-center w-full h-full max-w-prose grow py-2">
