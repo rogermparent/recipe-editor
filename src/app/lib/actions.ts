@@ -26,10 +26,22 @@ const FormSchema = z.object({
   summary: z.string().optional(),
   body: z.string().optional(),
   image: z.instanceof(File).optional(),
-  givenDate: z
-    .union([z.enum([""]), z.coerce.date().transform(Number)])
+  date: z
+    .union([
+      z.enum([""]),
+      z.string().transform((value, ctx) => {
+        const epoch = Date.parse(`${value}Z`);
+        if (Number.isNaN(epoch)) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.invalid_date,
+          });
+          return z.NEVER;
+        }
+        return epoch;
+      }),
+    ])
     .optional(),
-  givenSlug: z.string().optional(),
+  slug: z.string().optional(),
 });
 
 async function mkdirIfNeeded(dir: string) {
@@ -89,8 +101,8 @@ export async function createPost(_prevState: State, formData: FormData) {
     body: formData.get("body"),
     summary: formData.get("summary"),
     image: formData.get("image"),
-    givenDate: formData.get("date"),
-    givenSlug: formData.get("slug"),
+    date: formData.get("date"),
+    slug: formData.get("slug"),
   });
 
   if (!validatedFields.success) {
@@ -100,8 +112,14 @@ export async function createPost(_prevState: State, formData: FormData) {
     };
   }
 
-  const { givenDate, givenSlug, title, body, summary, image } =
-    validatedFields.data;
+  const {
+    date: givenDate,
+    slug: givenSlug,
+    title,
+    body,
+    summary,
+    image,
+  } = validatedFields.data;
 
   const date: number = givenDate || (Date.now() as number);
   const slug = slugify(givenSlug || title);
@@ -150,8 +168,8 @@ export async function updatePost(
     body: formData.get("body"),
     summary: formData.get("summary"),
     image: formData.get("image"),
-    givenDate: formData.get("date"),
-    givenSlug: formData.get("slug"),
+    date: formData.get("date"),
+    slug: formData.get("slug"),
   });
 
   if (!validatedFields.success) {
@@ -161,18 +179,17 @@ export async function updatePost(
     };
   }
 
-  const { givenDate, givenSlug, title, body, summary, image } =
-    validatedFields.data;
+  const { date, slug, title, body, summary, image } = validatedFields.data;
 
   const currentPostDirectory = getPostDirectory(currentSlug);
   const currentPostPath = getPostFilePath(currentPostDirectory);
 
-  const finalSlug = givenSlug || currentSlug;
-  const finalDate = givenDate || currentDate;
+  const finalSlug = slug || currentSlug;
+  const finalDate = date || currentDate;
   const finalPostDirectory = getPostDirectory(finalSlug);
 
   const willRename = currentPostDirectory !== finalPostDirectory;
-  const willChangeDate = givenDate && currentDate !== givenDate;
+  const willChangeDate = date && currentDate !== date;
 
   const currentData = JSON.parse(String(await readFile(currentPostPath)));
   const hasNewImage = image && image.size > 0;
