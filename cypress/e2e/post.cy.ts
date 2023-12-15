@@ -13,12 +13,31 @@ describe("Single Post View", () => {
       cy.findByText("Log In");
     });
 
-    it("should be able to go to the edit page", () => {
+    it("should be able to edit a post", () => {
       cy.findByText("Edit").click();
 
       cy.fillLoginForm();
 
       cy.findByText("Editing post: Post 5");
+
+      cy.findByText("Advanced").click();
+
+      const editedTitle = "Edited Title";
+
+      cy.findByLabelText("Title").clear().type(editedTitle);
+
+      const postDate = "2023-12-08T01:16:07.582";
+      cy.findByLabelText("Date (UTC)").should("have.value", postDate);
+
+      cy.findByText("Submit").click();
+
+      cy.findByText(editedTitle);
+
+      cy.visit("http://localhost:3000/");
+      cy.checkTitlesInOrder(["Post 6", editedTitle, "Post 4"]);
+
+      // Post date should not have changed
+      cy.findByText(new Date(postDate + "Z").toLocaleString());
     });
 
     it("should be able to delete the post", () => {

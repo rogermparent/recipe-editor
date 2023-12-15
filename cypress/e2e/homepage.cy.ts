@@ -6,7 +6,7 @@ describe("Index Page", () => {
     });
 
     it("should not need authorization", () => {
-      cy.findByText("Sign In");
+      cy.findByText("Log In");
     });
 
     it("should inform the user if there are no posts", () => {
@@ -45,9 +45,13 @@ describe("Index Page", () => {
     });
 
     it("should be able to post and see those posts in chronological order", () => {
+      cy.findByText("Log In").click();
+
+      cy.fillLoginForm();
+
       const testTitles = ["c", "a", "1"].map((x) => `Post ${x}`);
       for (const testTitle of testTitles) {
-        cy.visit("http://localhost:3000");
+        cy.visit("http://localhost:3000/new-post");
         cy.findByLabelText("Title").type(testTitle);
         cy.findByText("Post").click();
         cy.findByText(testTitle);
@@ -68,7 +72,7 @@ describe("Index Page", () => {
       cy.visit("http://localhost:3000");
     });
 
-    it.only("should not display a link to the index", () => {
+    it("should not display a link to the index", () => {
       const allTitles = [3, 2, 1].map((x) => `Post ${x}`);
 
       // Homepage should have latest three posts
@@ -84,7 +88,7 @@ describe("Index Page", () => {
       cy.visit("http://localhost:3000");
     });
 
-    it.only("should display the latest three posts", () => {
+    it("should display the latest three posts", () => {
       const allTitles = [6, 5, 4, 3, 2, 1].map((x) => `Post ${x}`);
 
       // Homepage should have latest three posts
