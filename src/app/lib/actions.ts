@@ -1,6 +1,6 @@
 "use server";
 
-import { mkdir, readFile, rename, rm, writeFile } from "fs/promises";
+import { readFile, rename, rm, writeFile } from "fs/promises";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import {
@@ -20,6 +20,7 @@ import { ReadableStream } from "node:stream/web";
 import { z } from "zod";
 import path from "path";
 import { auth, signIn } from "@/auth";
+import { mkdirIfNeeded, mkdirIfNotPresent } from "./util";
 
 const FormSchema = z.object({
   title: z.string().min(1),
@@ -43,28 +44,6 @@ const FormSchema = z.object({
     .optional(),
   slug: z.string().optional(),
 });
-
-async function mkdirIfNeeded(dir: string) {
-  try {
-    await mkdir(dir, { recursive: true });
-  } catch (e) {
-    if ((e as { code: string }).code !== "EEXIST") {
-      throw e;
-    }
-  }
-}
-
-async function mkdirIfNotPresent(dir: string) {
-  try {
-    await mkdir(dir, { recursive: true });
-  } catch (e) {
-    if ((e as { code: string }).code === "EEXIST") {
-      throw new Error("Post already exists");
-    } else {
-      throw e;
-    }
-  }
-}
 
 export interface StateErrors {
   title?: string[];
@@ -90,12 +69,7 @@ async function writePostUpload(postBaseDirectory: string, file: File) {
   await pipeline(readStream, fileWriteStream);
 }
 
-export async function createPost(_prevState: State, formData: FormData) {
-  const user = await auth();
-  if (!user) {
-    return signIn();
-  }
-
+function parsePostFormData(formData: FormData) {
   const validatedFields = FormSchema.safeParse({
     title: formData.get("title"),
     body: formData.get("body"),
@@ -104,6 +78,16 @@ export async function createPost(_prevState: State, formData: FormData) {
     date: formData.get("date"),
     slug: formData.get("slug"),
   });
+  return validatedFields;
+}
+
+export async function createPost(_prevState: State, formData: FormData) {
+  const user = await auth();
+  if (!user) {
+    return signIn();
+  }
+
+  const validatedFields = parsePostFormData(formData);
 
   if (!validatedFields.success) {
     return {
@@ -163,14 +147,7 @@ export async function updatePost(
     return signIn();
   }
 
-  const validatedFields = FormSchema.safeParse({
-    title: formData.get("title"),
-    body: formData.get("body"),
-    summary: formData.get("summary"),
-    image: formData.get("image"),
-    date: formData.get("date"),
-    slug: formData.get("slug"),
-  });
+  const validatedFields = parsePostFormData(formData);
 
   if (!validatedFields.success) {
     return {
@@ -208,7 +185,9 @@ export async function updatePost(
   } else {
     await writeFile(currentPostPath, JSON.stringify(data));
   }
+
   const db = getPostDatabase();
+
   try {
     if (willRename || willChangeDate) {
       db.remove([currentDate, currentSlug]);
