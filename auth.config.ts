@@ -11,7 +11,7 @@ export const authConfig = {
       const isPrivilegedPath = isEditorPath || isSettingsPath;
       if (isPrivilegedPath) {
         if (isLoggedIn) return true;
-        return false; // Redirect unauthenticated users to login page
+        return false; // Redirect unauthenticated users to signIn page
       }
       return true;
     },

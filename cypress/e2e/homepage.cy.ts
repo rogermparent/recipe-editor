@@ -6,7 +6,7 @@ describe("Index Page", () => {
     });
 
     it("should not need authorization", () => {
-      cy.findByText("Log In");
+      cy.findByText("Sign In");
     });
 
     it("should inform the user if there are no posts", () => {
@@ -22,7 +22,7 @@ describe("Index Page", () => {
 
       cy.findByText("New Post").click();
 
-      cy.fillLoginForm();
+      cy.fillSignInForm();
 
       cy.findByLabelText("Title").type(testTitle);
       cy.findByText("Post").click();
@@ -45,9 +45,9 @@ describe("Index Page", () => {
     });
 
     it("should be able to post and see those posts in chronological order", () => {
-      cy.findByText("Log In").click();
+      cy.findByText("Sign In").click();
 
-      cy.fillLoginForm();
+      cy.fillSignInForm();
 
       const testTitles = ["c", "a", "1"].map((x) => `Post ${x}`);
       for (const testTitle of testTitles) {

@@ -10,13 +10,13 @@ describe("Single Post View", () => {
     });
 
     it("should not need authorization", () => {
-      cy.findByText("Log In");
+      cy.findByText("Sign In");
     });
 
     it("should be able to edit a post", () => {
       cy.findByText("Edit").click();
 
-      cy.fillLoginForm();
+      cy.fillSignInForm();
 
       cy.findByText("Editing post: Post 5");
 
@@ -44,7 +44,7 @@ describe("Single Post View", () => {
       cy.findByText("Delete").click();
 
       // First click of the delete button should trigger a sign-in
-      cy.fillLoginForm();
+      cy.fillSignInForm();
 
       cy.findByText("Delete").click();
 

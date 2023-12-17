@@ -28,8 +28,6 @@ export default async function Post({
 
   const deletePostWithId = deletePost.bind(null, date, slug);
 
-  const user = await auth();
-
   return (
     <main className="flex flex-col items-center w-full h-full max-w-prose grow py-2">
       <h1 className="text-2xl font-bold my-2">{title}</h1>

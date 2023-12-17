@@ -11,7 +11,7 @@
 //
 //
 // -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
+// Cypress.Commands.add('signIn', (email, password) => { ... })
 //
 //
 // -- This is a child command --
@@ -28,7 +28,7 @@
 // declare global {
 //   namespace Cypress {
 //     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
+//       signIn(email: string, password: string): Chainable<void>
 //       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
 //       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
 //       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
@@ -37,11 +37,17 @@
 // }
 import "@testing-library/cypress/add-commands";
 
+interface SignInOptions {
+  email: string;
+  password: string;
+}
+
 declare global {
   namespace Cypress {
     interface Chainable {
       resetData(fixture?: string): Chainable<void>;
-      fillLoginForm(fixture?: string): Chainable<void>;
+      fillSignInForm(user?: SignInOptions): Chainable<void>;
+      signIn(user?: SignInOptions): Chainable<void>;
       checkTitlesInOrder(titles: string[]): Chainable<void>;
     }
   }
@@ -58,8 +64,16 @@ Cypress.Commands.add("checkTitlesInOrder", (titles: string[]) => {
   items.each((el, i) => cy.wrap(el).findByText(titles[i]));
 });
 
-Cypress.Commands.add("fillLoginForm", () => {
-  cy.findByLabelText("Email").type("admin@nextmail.com");
-  cy.findByLabelText("Password").type("password");
-  cy.findByText("Sign in with Credentials").click();
+Cypress.Commands.add(
+  "fillSignInForm",
+  ({ email = "admin@nextmail.com", password = "password" } = {}) => {
+    cy.findByLabelText("Email").type(email);
+    cy.findByLabelText("Password").type(password);
+    cy.findByText("Sign in with Credentials").click();
+  },
+);
+
+Cypress.Commands.add("signIn", (options) => {
+  cy.findByText("Sign In").click();
+  cy.fillSignInForm(options);
 });

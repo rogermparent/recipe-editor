@@ -26,23 +26,19 @@ export default async function BlogLayout({
       {children}
       <footer className="w-full bg-slate-800">
         <nav className="flex flex-row flex-wrap justify-center">
-          <Link href="/settings" className="inline-block p-2 hover:underline">
-            Settings
-          </Link>
-          <Link href="/new-post" className="inline-block p-2 hover:underline">
-            New Post
-          </Link>
           {session ? (
-            <form
-              action={async () => {
-                "use server";
-                await signOut();
-              }}
-            >
-              <button className="w-full h-full block p-2 hover:underline">
-                Sign Out
-              </button>
-            </form>
+            <>
+              <form
+                action={async () => {
+                  "use server";
+                  await signOut();
+                }}
+              >
+                <button className="w-full h-full block p-2 hover:underline">
+                  Sign Out
+                </button>
+              </form>
+            </>
           ) : (
             <form
               action={async () => {
@@ -51,10 +47,16 @@ export default async function BlogLayout({
               }}
             >
               <button className="w-full h-full block p-2 hover:underline">
-                Log In
+                Sign In
               </button>
             </form>
           )}
+          <Link href="/new-post" className="inline-block p-2 hover:underline">
+            New Post
+          </Link>
+          <Link href="/settings" className="inline-block p-2 hover:underline">
+            Settings
+          </Link>
         </nav>
       </footer>
     </>

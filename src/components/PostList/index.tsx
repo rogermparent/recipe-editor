@@ -1,4 +1,3 @@
-import { deletePost } from "@/app/lib/actions";
 import { PostEntry, PostEntryValue } from "@/app/lib/data";
 import Link from "next/link";
 import { ReactNode } from "react";
@@ -29,7 +28,6 @@ export async function PostListItem({
   summary,
   image,
 }: PostEntryValue & { date: number; slug: string }) {
-  const deletePostWithId = deletePost.bind(null, date, slug);
   const placeholderURL = image && (await getPlaceholder(slug, image));
 
   return (
