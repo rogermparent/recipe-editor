@@ -1,5 +1,5 @@
-import  getPosts  from "@/app/lib/models/posts/data/readIndex";
-import { PostList } from "@/components/PostList";
+import getPosts from "@/app/lib/models/posts/data/readIndex";
+import { PostList } from "@/components/Post/List";
 import Link from "next/link";
 
 export default async function Posts() {

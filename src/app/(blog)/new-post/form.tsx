@@ -1,10 +1,10 @@
 "use client";
 
-import { PostFields } from "@/components/PostForm";
+import PostFields from "@/components/Post/Form/Create";
 import { useFormState } from "react-dom";
 import { Button } from "@/components/Button";
 import { PostFormState } from "@/app/lib/models/posts/formState";
-import  createPost  from "@/app/lib/models/posts/actions/create";
+import createPost from "@/app/lib/models/posts/actions/create";
 
 export default function NewPostForm() {
   const initialState = { message: "", errors: {} } as PostFormState;

@@ -12,7 +12,7 @@ import {
 import { Post } from "@/app/lib/models/posts/types";
 import { PostFormState } from "@/app/lib/models/posts/formState";
 
-export function PostFields({
+export default function PostFields({
   post,
   slug,
   state,

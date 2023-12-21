@@ -1,11 +1,11 @@
 "use client";
 
-import { PostFields } from "@/components/PostForm";
+import PostFields from "@/components/Post/Form/Update";
 import { useFormState } from "react-dom";
 import { Button } from "@/components/Button";
 import { Post } from "@/app/lib/models/posts/types";
 import { PostFormState } from "@/app/lib/models/posts/formState";
-import  updatePost  from "@/app/lib/models/posts/actions/update";
+import updatePost from "@/app/lib/models/posts/actions/update";
 
 export default function EditPostForm({
   post,
