@@ -4,8 +4,8 @@ import { authConfig } from "../auth.config";
 import { z } from "zod";
 import { readFile } from "fs/promises";
 import { resolve } from "path";
-import { getContentDirectory } from "@/app/lib/data";
 import bcrypt from "bcrypt";
+import { getContentDirectory } from "@/app/lib/models/posts/filesystemDirectories";
 
 interface BlogUser {
   id: string;

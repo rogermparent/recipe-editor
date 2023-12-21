@@ -1,4 +1,4 @@
-import { getPostBySlug } from "@/app/lib/data";
+import  getPostBySlug  from "@/app/lib/models/posts/data/read";
 import EditForm from "./form";
 import { notFound } from "next/navigation";
 

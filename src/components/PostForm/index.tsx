@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react";
 import slugify from "@sindresorhus/slugify";
-import { Post } from "@/app/lib/data";
-import { State as PostFormState } from "@/app/lib/actions";
 import Image from "next/image";
 import {
   TextInput,
@@ -11,6 +9,8 @@ import {
   FileInput,
   TextAreaInput,
 } from "@/components/Form";
+import { Post } from "@/app/lib/models/posts/types";
+import { PostFormState } from "@/app/lib/models/posts/formState";
 
 export function PostFields({
   post,

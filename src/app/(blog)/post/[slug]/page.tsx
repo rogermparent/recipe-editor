@@ -1,13 +1,12 @@
-import { getPostBySlug } from "@/app/lib/data";
 import Markdown from "react-markdown";
 import styles from "@/components/Markdown/styles.module.css";
 import clsx from "clsx";
 import Link from "next/link";
-import { deletePost } from "@/app/lib/actions";
 import Image from "next/image";
 import { getPlaceholder } from "@/app/lib/placeholders";
 import { notFound } from "next/navigation";
-import { auth } from "@/auth";
+import  getPostBySlug  from "@/app/lib/models/posts/data/read";
+import deletePost from "@/app/lib/models/posts/actions/delete";
 
 export default async function Post({
   params: { slug },

@@ -1,6 +1,6 @@
-import { getPosts } from "@/app/lib/data";
 import Link from "next/link";
 import { PostList } from "@/components/PostList";
+import  getPosts  from "../lib/models/posts/data/readIndex";
 
 export default async function Home() {
   const { posts, more } = await getPosts({ limit: 3 });

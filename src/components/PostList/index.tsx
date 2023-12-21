@@ -1,4 +1,3 @@
-import { PostEntry, PostEntryValue } from "@/app/lib/data";
 import Link from "next/link";
 import { ReactNode } from "react";
 import Markdown from "react-markdown";
@@ -6,6 +5,7 @@ import styles from "@/components/Markdown/styles.module.css";
 import clsx from "clsx";
 import Image from "next/image";
 import { getPlaceholder } from "@/app/lib/placeholders";
+import { PostEntry, PostEntryValue } from "@/app/lib/models/posts/types";
 
 export function ButtonLink({
   href,

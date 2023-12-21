@@ -1,4 +1,4 @@
-import { getPostCount, getPosts } from "@/app/lib/data";
+import  getPosts  from "@/app/lib/models/posts/data/readIndex";
 import { PostList } from "@/components/PostList";
 import Link from "next/link";
 import { redirect } from "next/navigation";

@@ -1,4 +1,7 @@
-import { getPostDirectory, getPostUploadsDirectory } from "@/app/lib/data";
+import {
+  getPostDirectory,
+  getPostUploadsDirectory,
+} from "@/app/lib/models/posts/filesystemDirectories";
 import { ReadStream } from "fs";
 import { open } from "fs/promises";
 import { notFound } from "next/navigation";

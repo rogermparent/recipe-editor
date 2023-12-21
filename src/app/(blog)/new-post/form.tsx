@@ -2,11 +2,12 @@
 
 import { PostFields } from "@/components/PostForm";
 import { useFormState } from "react-dom";
-import { State, createPost } from "@/app/lib/actions";
 import { Button } from "@/components/Button";
+import { PostFormState } from "@/app/lib/models/posts/formState";
+import  createPost  from "@/app/lib/models/posts/actions/create";
 
 export default function NewPostForm() {
-  const initialState = { message: "", errors: {} } as State;
+  const initialState = { message: "", errors: {} } as PostFormState;
   const [state, dispatch] = useFormState(createPost, initialState);
   return (
     <form className="m-2 w-full" action={dispatch}>
