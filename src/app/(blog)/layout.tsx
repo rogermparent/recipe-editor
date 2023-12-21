@@ -51,8 +51,8 @@ export default async function BlogLayout({
               </button>
             </form>
           )}
-          <Link href="/new-post" className="inline-block p-2 hover:underline">
-            New Post
+          <Link href="/new-resume" className="inline-block p-2 hover:underline">
+            New Resume
           </Link>
           <Link href="/settings" className="inline-block p-2 hover:underline">
             Settings

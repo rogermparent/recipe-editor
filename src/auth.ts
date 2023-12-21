@@ -5,7 +5,7 @@ import { z } from "zod";
 import { readFile } from "fs/promises";
 import { resolve } from "path";
 import bcrypt from "bcrypt";
-import { getContentDirectory } from "@/app/lib/models/posts/filesystemDirectories";
+import { getContentDirectory } from "@/app/lib/models/resumes/filesystemDirectories";
 
 interface BlogUser {
   id: string;

@@ -9,7 +9,7 @@ export const authConfig = {
       if (allowGuest) {
         const isEditorPath =
           nextUrl.pathname.endsWith("/edit") ||
-          nextUrl.pathname === "/new-post";
+          nextUrl.pathname === "/new-resume";
         const isSettingsPath = nextUrl.pathname.startsWith("/settings");
         const isPrivilegedPath = isEditorPath || isSettingsPath;
         if (isPrivilegedPath) {
