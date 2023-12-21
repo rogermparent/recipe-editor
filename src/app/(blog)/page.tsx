@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PostList } from "@/components/Post/List";
+import  PostList  from "@/components/Post/List";
 import getPosts from "../lib/models/posts/data/readIndex";
 
 export default async function Home() {

@@ -21,7 +21,7 @@ export function ButtonLink({
   );
 }
 
-export async function PostListItem({
+export async function Item({
   title,
   slug,
   date,
@@ -60,7 +60,7 @@ export async function PostListItem({
   );
 }
 
-export function PostList({ posts }: { posts: PostEntry[] }) {
+export default function PostList({ posts }: { posts: PostEntry[] }) {
   return (
     <ul className="mx-auto flex flex-col sm:flex-row sm:flex-wrap items-center justify-center">
       {posts.map((entry) => {
@@ -70,7 +70,7 @@ export function PostList({ posts }: { posts: PostEntry[] }) {
         } = entry;
         return (
           <li key={slug} className="max-w-full w-96 sm:p-1 sm:w-1/2 lg:w-1/3">
-            <PostListItem
+            <Item
               title={title}
               slug={slug}
               date={date}
