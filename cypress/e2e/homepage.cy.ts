@@ -44,7 +44,7 @@ describe("Index Page", () => {
         .should("equal", 404);
     });
 
-    it("should be able to resume and see those resumes in chronological order", () => {
+    it("should be able to create resumes and see them in chronological order", () => {
       cy.findByText("Sign In").click();
 
       cy.fillSignInForm();
@@ -58,11 +58,7 @@ describe("Index Page", () => {
       }
 
       cy.visit("http://localhost:3000");
-      const frontPageResumes = cy.findAllByText(/Resume ./);
-      frontPageResumes.should("have.length", 3);
-      frontPageResumes.each((el, i) => {
-        cy.wrap(el).should("have.text", testTitles[testTitles.length - 1 - i]);
-      });
+      cy.checkTitlesInOrder(testTitles.reverse());
     });
   });
 
