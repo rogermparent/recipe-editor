@@ -4,11 +4,11 @@ import Link from "next/link";
 import { auth, signIn, signOut } from "@/auth";
 
 export const metadata: Metadata = {
-  title: "My LMDB-powered Blog",
-  description: "A minimal blog powered by LMDB and the filesystem.",
+  title: "Resume Builder",
+  description: "A resume builder powered by LMDB and the filesystem.",
 };
 
-export default async function BlogLayout({
+export default async function Layout({
   children,
 }: {
   children: React.ReactNode;
@@ -19,7 +19,7 @@ export default async function BlogLayout({
       <header className="w-full bg-slate-800">
         <Link href="/" className="block p-2">
           <h1 className="text-xl font-bold text-center">
-            My LMDB-powered Blog
+            Resume Builder
           </h1>
         </Link>
       </header>

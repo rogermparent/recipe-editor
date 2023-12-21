@@ -6,8 +6,8 @@ import clsx from "clsx";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "My LMDB-powered Blog",
-  description: "A minimal blog powered by LMDB and the filesystem.",
+  title: "Resume Builder",
+  description: "A minimal resume builder powered by LMDB and the filesystem.",
 };
 
 export default async function RootLayout({
