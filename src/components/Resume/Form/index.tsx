@@ -1,16 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import slugify from "@sindresorhus/slugify";
-import Image from "next/image";
 import {
   TextInput,
   DateTimeInput,
   FileInput,
   TextAreaInput,
+  TextListInput,
 } from "@/components/Form";
 import { Resume } from "@/app/lib/models/resumes/types";
 import { ResumeFormState } from "@/app/lib/models/resumes/formState";
+import createDefaultSlug from "@/app/lib/models/resumes/createSlug";
 
 export default function ResumeFields({
   resume,
@@ -21,76 +22,112 @@ export default function ResumeFields({
   slug?: string;
   state: ResumeFormState;
 }) {
-  const { title, body, date, image, summary } = resume || {};
-  const [defaultSlug, setDefaultSlug] = useState(title ? slugify(title) : "");
+  const {
+    company,
+    job,
+    date,
+    skills,
+    projects,
+    education,
+    jobExperience,
+    address,
+    email,
+    github,
+    linkedin,
+    name,
+    phone,
+    website,
+  } = resume || {};
+  const [currentCompany, setCurrentCompany] = useState(company);
+  const [currentJob, setCurrentJob] = useState(job);
+  const defaultSlug = useMemo(
+    () => createDefaultSlug({ company: currentCompany, job: currentJob }),
+    [currentCompany, currentJob],
+  );
   const [currentTimezone, setCurrentTimezone] = useState<string>();
-  const [imagesToUpload, setImagesToUpload] = useState<FileList>();
-  const [imagePreviewURL, setImagePreviewURL] = useState<string>();
   useEffect(() => {
     const fetchedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     setCurrentTimezone(fetchedTimezone);
   }, []);
-  useEffect(() => {
-    if (imagesToUpload) {
-      const previewImage = imagesToUpload[0];
-      if (previewImage) {
-        const url = URL.createObjectURL(previewImage);
-        setImagePreviewURL(url);
-        return () => {
-          URL.revokeObjectURL(url);
-        };
-      }
-    }
-  }, [imagesToUpload]);
   return (
     <>
       <TextInput
-        label="Title"
-        name="title"
-        id="resume-form-title"
-        defaultValue={title}
-        onChange={(e) => setDefaultSlug(slugify(e.target.value))}
-        errors={state.errors?.title}
+        label="Company"
+        name="company"
+        id="resume-form-company"
+        defaultValue={company}
+        onChange={(e) => setCurrentCompany(slugify(e.target.value))}
+        errors={state.errors?.company}
       />
-      <FileInput
-        label="Image"
-        name="image"
-        id="resume-form-image"
-        errors={state.errors?.image}
-        onChange={(e) => setImagesToUpload(e.target?.files || undefined)}
-      />
-      <div className="w-full">
-        {imagePreviewURL ? (
-          <Image
-            src={imagePreviewURL}
-            alt="Image to upload"
-            className="w-full"
-          />
-        ) : (
-          image && (
-            <Image
-              src={`/resume/${slug}/uploads/${image}`}
-              alt="Heading image"
-              width={850}
-              height={475}
-            />
-          )
-        )}
-      </div>
       <TextInput
-        label="Summary"
-        name="summary"
-        id="resume-form-summary"
-        defaultValue={summary}
-        errors={state.errors?.summary}
+        label="Job"
+        name="job"
+        id="resume-form-job"
+        defaultValue={job}
+        onChange={(e) => setCurrentJob(slugify(e.target.value))}
+        errors={state.errors?.job}
       />
-      <TextAreaInput
-        label="Body"
-        name="body"
-        id="resume-form-body"
-        defaultValue={body}
-        errors={state.errors?.body}
+      <TextListInput
+        label="Skills"
+        name="skills"
+        id="resume-form-skills"
+        defaultValue={skills}
+        errors={state.errors}
       />
+      <details className="py-1 my-1">
+        <summary className="text-sm font-semibold">Applicant</summary>
+        <div className="flex flex-col flex-nowrap">
+          <TextInput
+            label="Name"
+            name="name"
+            id="resume-form-name"
+            defaultValue={name}
+            errors={state.errors?.name}
+          />
+          <TextInput
+            label="Email"
+            name="email"
+            id="resume-form-email"
+            defaultValue={email}
+            errors={state.errors?.email}
+          />
+          <TextInput
+            label="Address"
+            name="address"
+            id="resume-form-address"
+            defaultValue={address}
+            errors={state.errors?.address}
+          />
+          <TextInput
+            label="Github"
+            name="github"
+            id="resume-form-github"
+            defaultValue={github}
+            errors={state.errors?.github}
+          />
+          <TextInput
+            label="LinkedIn"
+            name="linkedin"
+            id="resume-form-linkedin"
+            defaultValue={linkedin}
+            errors={state.errors?.linkedin}
+          />
+          <TextInput
+            label="Phone"
+            name="phone"
+            id="resume-form-phone"
+            defaultValue={phone}
+            errors={state.errors?.phone}
+          />
+          <TextInput
+            label="Website"
+            name="website"
+            id="resume-form-website"
+            defaultValue={website}
+            errors={state.errors?.website}
+          />
+        </div>
+      </details>
       <details className="py-1 my-1">
         <summary className="text-sm font-semibold">Advanced</summary>
         <div className="flex flex-col flex-nowrap">

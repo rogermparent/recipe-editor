@@ -9,10 +9,13 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { ResumeFormState } from "../formState";
 import { Resume } from "../types";
-import { getResumeDirectory, getResumeFilePath } from "../filesystemDirectories";
-import writeResumeUpload from "../writeUpload";
+import {
+  getResumeDirectory,
+  getResumeFilePath,
+} from "../filesystemDirectories";
 import getResumeDatabase from "../database";
 import buildResumeIndexValue from "../buildIndexValue";
+import createDefaultSlug from "../createSlug";
 
 export default async function createResume(
   _prevState: ResumeFormState,
@@ -26,6 +29,7 @@ export default async function createResume(
   const validatedFields = parseResumeFormData(formData);
 
   if (!validatedFields.success) {
+    console.log(validatedFields.error.flatten());
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: "Failed to create Resume.",
@@ -35,28 +39,36 @@ export default async function createResume(
   const {
     date: givenDate,
     slug: givenSlug,
-    title,
-    body,
-    summary,
-    image,
+    company,
+    job,
+    address,
+    email,
+    github,
+    linkedin,
+    name,
+    phone,
+    skills,
+    website,
   } = validatedFields.data;
 
   const date: number = givenDate || (Date.now() as number);
-  const slug = slugify(givenSlug || title);
-  const hasImage = image && image.size > 0;
+  const slug = slugify(givenSlug || createDefaultSlug(validatedFields.data));
   const data: Resume = {
-    image: hasImage ? image.name : undefined,
-    summary,
-    title,
-    body,
+    company,
+    job,
     date,
+    address,
+    email,
+    github,
+    linkedin,
+    name,
+    phone,
+    skills,
+    website,
   };
   const resumeBaseDirectory = getResumeDirectory(slug);
   await mkdirIfNotPresent(resumeBaseDirectory);
   await writeFile(getResumeFilePath(resumeBaseDirectory), JSON.stringify(data));
-  if (hasImage) {
-    await writeResumeUpload(resumeBaseDirectory, image);
-  }
   const db = getResumeDatabase();
   try {
     await db.put([date, slug], buildResumeIndexValue(data));

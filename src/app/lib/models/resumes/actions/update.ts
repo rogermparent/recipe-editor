@@ -1,8 +1,7 @@
 "use server";
 
 import { auth, signIn } from "@/auth";
-import { readFile, rename, rm, writeFile } from "fs/promises";
-import path from "path";
+import { rename, writeFile } from "fs/promises";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import parseResumeFormData from "../parseFormData";
@@ -10,12 +9,11 @@ import { ResumeFormState } from "../formState";
 import {
   getResumeDirectory,
   getResumeFilePath,
-  getResumeUploadsDirectory,
 } from "../filesystemDirectories";
 import { Resume } from "../types";
 import getResumeDatabase from "../database";
 import buildResumeIndexValue from "../buildIndexValue";
-import  writeResumeUpload  from "../writeUpload";
+import createDefaultSlug from "../createSlug";
 
 export default async function updateResume(
   currentDate: number,
@@ -37,32 +35,30 @@ export default async function updateResume(
     };
   }
 
-  const { date, slug, title, body, summary, image } = validatedFields.data;
+  const { date, slug, company, job } = validatedFields.data;
 
   const currentResumeDirectory = getResumeDirectory(currentSlug);
   const currentResumePath = getResumeFilePath(currentResumeDirectory);
 
-  const finalSlug = slug || currentSlug;
+  const finalSlug = slug || createDefaultSlug(validatedFields.data);
   const finalDate = date || currentDate;
   const finalResumeDirectory = getResumeDirectory(finalSlug);
 
   const willRename = currentResumeDirectory !== finalResumeDirectory;
   const willChangeDate = date && currentDate !== date;
 
-  const currentData = JSON.parse(String(await readFile(currentResumePath)));
-  const hasNewImage = image && image.size > 0;
-
   const data: Resume = {
-    title,
-    summary,
-    body,
+    company,
+    job,
     date: finalDate,
-    image: hasNewImage ? image.name : currentData.image,
   };
 
   if (willRename) {
     await rename(currentResumeDirectory, finalResumeDirectory);
-    await writeFile(`${finalResumeDirectory}/resume.json`, JSON.stringify(data));
+    await writeFile(
+      `${finalResumeDirectory}/resume.json`,
+      JSON.stringify(data),
+    );
   } else {
     await writeFile(currentResumePath, JSON.stringify(data));
   }
@@ -78,18 +74,6 @@ export default async function updateResume(
     return { message: "Failed to write resume to index" };
   } finally {
     db.close();
-  }
-  if (hasNewImage) {
-    const rmPromise =
-      currentData.image &&
-      rm(
-        path.join(
-          getResumeUploadsDirectory(finalResumeDirectory),
-          currentData.image,
-        ),
-      );
-    await rmPromise;
-    await writeResumeUpload(finalResumeDirectory, image);
   }
   if (willRename) {
     revalidatePath("/resume/" + currentSlug);

@@ -20,8 +20,8 @@ export default function NewResumeForm() {
           )}
         </div>
         <div className="my-1">
-          <Button>
-            <span>Resume</span>
+          <Button type="submit">
+            <span>Submit</span>
           </Button>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { SafeParseReturnType, z } from "zod";
+import set from "lodash/set";
 
 const localUTCDateSchema = z.union([
   z.enum([""]),
@@ -15,21 +16,25 @@ const localUTCDateSchema = z.union([
 ]);
 
 const ResumeFormSchema = z.object({
-  title: z.string().min(1),
-  summary: z.string().optional(),
-  body: z.string().optional(),
-  image: z.instanceof(File).optional(),
+  company: z.string().min(1),
+  job: z.string().min(1),
   date: z.optional(localUTCDateSchema),
   slug: z.string().optional(),
+  skills: z.array(z.string().min(1)),
+  name: z.string(),
+  phone: z.string(),
+  email: z.string(),
+  address: z.string(),
+  github: z.string(),
+  linkedin: z.string(),
+  website: z.string(),
 });
 
 export type ParsedResumeFormData = z.infer<typeof ResumeFormSchema>;
 
 interface RawResumeFormData {
-  title: string;
-  summary: string;
-  body: string;
-  image: File;
+  company: string;
+  job: string;
   date: string;
   slug: string;
 }
@@ -37,13 +42,10 @@ interface RawResumeFormData {
 export default function parseResumeFormData(
   formData: FormData,
 ): SafeParseReturnType<RawResumeFormData, ParsedResumeFormData> {
-  const validatedFields = ResumeFormSchema.safeParse({
-    title: formData.get("title"),
-    body: formData.get("body"),
-    summary: formData.get("summary"),
-    image: formData.get("image"),
-    date: formData.get("date"),
-    slug: formData.get("slug"),
-  });
+  const data = {};
+  for (const [key, value] of formData.entries()) {
+    set(data, key, value);
+  }
+  const validatedFields = ResumeFormSchema.safeParse(data);
   return validatedFields;
 }

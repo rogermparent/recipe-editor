@@ -1,8 +1,6 @@
-export interface ResumeFormErrors {
-  title?: string[];
-  body?: string[];
-  summary?: string[];
-  image?: string[];
+export interface ResumeFormErrors extends Record<string, string[] | undefined> {
+  company?: string[];
+  job?: string[];
   date?: string[];
   slug?: string[];
 }

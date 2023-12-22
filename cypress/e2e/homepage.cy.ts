@@ -14,30 +14,32 @@ describe("Index Page", () => {
     });
 
     it("should be able to create and delete a resume", () => {
-      const testTitle = "Test Title";
+      const testCompany = "Test Company";
+      const testJob = "Test Job";
 
       // We should start with no resumes
       cy.findByText("There are no resumes yet.");
-      cy.findAllByText(testTitle).should("not.exist");
+      cy.findAllByText(testCompany).should("not.exist");
 
       cy.findByText("New Resume").click();
 
       cy.fillSignInForm();
 
-      cy.findByLabelText("Title").type(testTitle);
-      cy.findByText("Resume").click();
-      cy.findByText(testTitle);
+      cy.findByLabelText("Company").type(testCompany);
+      cy.findByLabelText("Job").type(testJob);
+      cy.findByText("Submit").click();
+      cy.findByText(testCompany);
 
       // Check home and ensure the resume is present
       cy.visit("http://localhost:3000");
-      cy.findByText(testTitle).click();
+      cy.findByText(testCompany).click();
 
       // Delete the resume and ensure it's gone
       cy.findByText("Delete").click();
-      cy.findAllByText(testTitle).should("not.exist");
+      cy.findAllByText(testCompany).should("not.exist");
 
       cy.request({
-        url: "http://localhost:3000/resume/test-title",
+        url: "http://localhost:3000/resume/test-company",
         failOnStatusCode: false,
       })
         .its("status")
@@ -46,19 +48,21 @@ describe("Index Page", () => {
 
     it("should be able to create resumes and see them in chronological order", () => {
       cy.findByText("Sign In").click();
+      const testJob = "Test Job";
 
       cy.fillSignInForm();
 
-      const testTitles = ["c", "a", "1"].map((x) => `Resume ${x}`);
-      for (const testTitle of testTitles) {
+      const testCompanies = ["c", "a", "1"].map((x) => `Resume ${x}`);
+      for (const testCompany of testCompanies) {
         cy.visit("http://localhost:3000/new-resume");
-        cy.findByLabelText("Title").type(testTitle);
-        cy.findByText("Resume").click();
-        cy.findByText(testTitle);
+        cy.findByLabelText("Company").type(testCompany);
+        cy.findByLabelText("Job").type(testJob);
+        cy.findByText("Submit").click();
+        cy.findByText(testCompany);
       }
 
       cy.visit("http://localhost:3000");
-      cy.checkTitlesInOrder(testTitles.reverse());
+      cy.checkCompaniesInOrder(testCompanies.reverse());
     });
   });
 
@@ -69,10 +73,10 @@ describe("Index Page", () => {
     });
 
     it("should not display a link to the index", () => {
-      const allTitles = [3, 2, 1].map((x) => `Resume ${x}`);
+      const allCompanies = [3, 2, 1].map((x) => `Resume ${x}`);
 
       // Homepage should have latest three resumes
-      cy.checkTitlesInOrder(allTitles);
+      cy.checkCompaniesInOrder(allCompanies);
 
       cy.findAllByText("More").should("not.exist");
     });
@@ -85,18 +89,18 @@ describe("Index Page", () => {
     });
 
     it("should display the latest three resumes", () => {
-      const allTitles = [6, 5, 4, 3, 2, 1].map((x) => `Resume ${x}`);
+      const allCompanies = [6, 5, 4, 3, 2, 1].map((x) => `Resume ${x}`);
 
       // Homepage should have latest three resumes
-      cy.checkTitlesInOrder(allTitles.slice(0, 3));
+      cy.checkCompaniesInOrder(allCompanies.slice(0, 3));
 
       // First page should have latest 5 resumes
       cy.findByText("More").click();
-      cy.checkTitlesInOrder(allTitles.slice(0, 5));
+      cy.checkCompaniesInOrder(allCompanies.slice(0, 5));
 
       // Second page should have the last one resume
       cy.findByText("→").click();
-      cy.checkTitlesInOrder(allTitles.slice(5));
+      cy.checkCompaniesInOrder(allCompanies.slice(5));
     });
   });
 });

@@ -18,9 +18,7 @@ export default async function Layout({
     <>
       <header className="w-full bg-slate-800">
         <Link href="/" className="block p-2">
-          <h1 className="text-xl font-bold text-center">
-            Resume Builder
-          </h1>
+          <h1 className="text-xl font-bold text-center">Resume Builder</h1>
         </Link>
       </header>
       {children}

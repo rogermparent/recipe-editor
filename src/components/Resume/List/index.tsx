@@ -3,8 +3,6 @@ import { ReactNode } from "react";
 import Markdown from "react-markdown";
 import styles from "@/components/Markdown/styles.module.css";
 import clsx from "clsx";
-import Image from "next/image";
-import { getPlaceholder } from "@/app/lib/placeholders";
 import { ResumeEntry, ResumeEntryValue } from "@/app/lib/models/resumes/types";
 
 export function ButtonLink({
@@ -22,37 +20,19 @@ export function ButtonLink({
 }
 
 export async function Item({
-  title,
+  company,
   slug,
   date,
-  summary,
-  image,
+  job,
 }: ResumeEntryValue & { date: number; slug: string }) {
-  const placeholderURL = image && (await getPlaceholder(slug, image));
-
   return (
     <div className="my-1 rounded-lg bg-slate-900 overflow-hidden w-full h-full">
       <Link href={`/resume/${slug}`} className="block group">
-        <div className="w-full h-36 overflow-hidden bg-gray-800">
-          {image && (
-            <Image
-              src={`/resume/${slug}/uploads/${image}`}
-              alt="Resume thumbnail"
-              width={400}
-              height={400}
-              className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-              placeholder="blur"
-              blurDataURL={placeholderURL}
-            />
-          )}
-        </div>
         <div className="underline text-lg font-semibold px-3">
-          {title || String(date)}
+          {company || String(date)}
         </div>
       </Link>
-      <Markdown className={clsx(styles.content, "my-1 mx-3")}>
-        {summary}
-      </Markdown>
+      <Markdown className={clsx(styles.content, "my-1 mx-3")}>{job}</Markdown>
       <div className="text-sm italic px-2 text-gray-400 my-1">
         {new Date(date).toLocaleString()}
       </div>
@@ -66,17 +46,11 @@ export default function ResumeList({ resumes }: { resumes: ResumeEntry[] }) {
       {resumes.map((entry) => {
         const {
           key: [date, slug],
-          value: { title, summary, image },
+          value: { company, job },
         } = entry;
         return (
           <li key={slug} className="max-w-full w-96 sm:p-1 sm:w-1/2 lg:w-1/3">
-            <Item
-              title={title}
-              slug={slug}
-              date={date}
-              summary={summary}
-              image={image}
-            />
+            <Item company={company} slug={slug} date={date} job={job} />
           </li>
         );
       })}

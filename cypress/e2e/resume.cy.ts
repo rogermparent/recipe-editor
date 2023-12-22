@@ -22,19 +22,19 @@ describe("Single Resume View", () => {
 
       cy.findByText("Advanced").click();
 
-      const editedTitle = "Edited Title";
+      const editedCompany = "Edited Company";
 
-      cy.findByLabelText("Title").clear().type(editedTitle);
+      cy.findByLabelText("Company").clear().type(editedCompany);
 
       const resumeDate = "2023-12-08T01:16:07.582";
       cy.findByLabelText("Date (UTC)").should("have.value", resumeDate);
 
       cy.findByText("Submit").click();
 
-      cy.findByText(editedTitle);
+      cy.findByText(editedCompany);
 
       cy.visit("http://localhost:3000/");
-      cy.checkTitlesInOrder(["Resume 6", editedTitle, "Resume 4"]);
+      cy.checkCompaniesInOrder(["Resume 6", editedCompany, "Resume 4"]);
 
       // Resume date should not have changed
       cy.findByText(new Date(resumeDate + "Z").toLocaleString());
@@ -49,7 +49,7 @@ describe("Single Resume View", () => {
       cy.findByText("Delete").click();
 
       cy.findByText("Resume 3");
-      cy.checkTitlesInOrder(["Resume 6", "Resume 4", "Resume 3"]);
+      cy.checkCompaniesInOrder(["Resume 6", "Resume 4", "Resume 3"]);
       cy.request({
         url: "http://localhost:3000/resume/resume-5",
         failOnStatusCode: false,

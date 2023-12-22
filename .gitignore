@@ -40,4 +40,4 @@ next-env.d.ts
 /test-content
 
 # cypress
-cypress/screenshots
+/cypress/screenshots
