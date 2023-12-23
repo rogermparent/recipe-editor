@@ -16,13 +16,13 @@ export default async function Layout({
   const session = await auth();
   return (
     <>
-      <header className="w-full bg-slate-800">
+      <header className="w-full bg-slate-800 print:hidden">
         <Link href="/" className="block p-2">
           <h1 className="text-xl font-bold text-center">Resume Builder</h1>
         </Link>
       </header>
       {children}
-      <footer className="w-full bg-slate-800">
+      <footer className="w-full bg-slate-800 print:hidden">
         <nav className="flex flex-row flex-wrap justify-center">
           {session ? (
             <>

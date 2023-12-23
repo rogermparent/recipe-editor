@@ -32,7 +32,7 @@ export async function Item({
           {company || String(date)}
         </div>
       </Link>
-      <Markdown className={clsx(styles.content, "my-1 mx-3")}>{job}</Markdown>
+      <div className={"my-1 mx-3"}>{job}</div>
       <div className="text-sm italic px-2 text-gray-400 my-1">
         {new Date(date).toLocaleString()}
       </div>

@@ -5,24 +5,17 @@ import { useFormState } from "react-dom";
 import { Button } from "@/components/Button";
 import { Resume } from "@/app/lib/models/resumes/types";
 import { ResumeFormState } from "@/app/lib/models/resumes/formState";
-import updateResume from "@/app/lib/models/resumes/actions/update";
+import createResume from "@/app/lib/models/resumes/actions/create";
 
-export default function EditResumeForm({
-  resume,
-  slug,
-}: {
-  slug: string;
-  resume: Resume;
-}) {
-  const { date } = resume;
+export default function CopyResumeForm({ resume }: { resume: Resume }) {
   const initialState = { message: "", errors: {} } as ResumeFormState;
-  const updateThisResume = updateResume.bind(null, date, slug);
-  const [state, dispatch] = useFormState(updateThisResume, initialState);
+  const [state, dispatch] = useFormState(createResume, initialState);
+  const { job, company, ...cleanedResume } = resume;
   return (
     <form className="w-full h-full flex flex-col grow" action={dispatch}>
-      <ResumeFields resume={resume} slug={slug} state={state} />
+      <ResumeFields resume={cleanedResume} state={state} />
       <div className="flex flex-row flex-nowrap my-1">
-        <Button>Submit</Button>
+        <Button type="submit">Submit</Button>
       </div>
     </form>
   );

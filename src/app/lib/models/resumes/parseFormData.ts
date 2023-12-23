@@ -28,6 +28,32 @@ const ResumeFormSchema = z.object({
   github: z.string(),
   linkedin: z.string(),
   website: z.string(),
+  education: z.array(
+    z.object({
+      school: z.string(),
+      achievement: z.string(),
+      startDate: z.string(),
+      endDate: z.string(),
+    }),
+  ),
+  experience: z.array(
+    z.object({
+      company: z.string(),
+      title: z.string(),
+      description: z.string(),
+      startDate: z.string(),
+      endDate: z.string(),
+    }),
+  ),
+  projects: z.array(
+    z.object({
+      name: z.string(),
+      url: z.array(z.string()).optional(),
+      description: z.string(),
+      startDate: z.string(),
+      endDate: z.string(),
+    }),
+  ),
 });
 
 export type ParsedResumeFormData = z.infer<typeof ResumeFormSchema>;

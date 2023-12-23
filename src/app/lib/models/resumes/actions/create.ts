@@ -29,7 +29,6 @@ export default async function createResume(
   const validatedFields = parseResumeFormData(formData);
 
   if (!validatedFields.success) {
-    console.log(validatedFields.error.flatten());
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: "Failed to create Resume.",
@@ -49,6 +48,9 @@ export default async function createResume(
     phone,
     skills,
     website,
+    education,
+    experience,
+    projects,
   } = validatedFields.data;
 
   const date: number = givenDate || (Date.now() as number);
@@ -65,6 +67,9 @@ export default async function createResume(
     phone,
     skills,
     website,
+    education,
+    experience,
+    projects,
   };
   const resumeBaseDirectory = getResumeDirectory(slug);
   await mkdirIfNotPresent(resumeBaseDirectory);

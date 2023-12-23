@@ -12,13 +12,16 @@ import {
 import { Resume } from "@/app/lib/models/resumes/types";
 import { ResumeFormState } from "@/app/lib/models/resumes/formState";
 import createDefaultSlug from "@/app/lib/models/resumes/createSlug";
+import { ProjectsListInput } from "./Projects";
+import { EducationListInput } from "./Education";
+import { ExperienceListInput } from "./Experience";
 
 export default function ResumeFields({
   resume,
   slug,
   state,
 }: {
-  resume?: Resume;
+  resume?: Partial<Resume>;
   slug?: string;
   state: ResumeFormState;
 }) {
@@ -29,7 +32,7 @@ export default function ResumeFields({
     skills,
     projects,
     education,
-    jobExperience,
+    experience,
     address,
     email,
     github,
@@ -73,6 +76,24 @@ export default function ResumeFields({
         id="resume-form-skills"
         defaultValue={skills}
         errors={state.errors}
+      />
+      <ProjectsListInput
+        label="Projects"
+        name="projects"
+        id="resume-form-projects"
+        defaultValue={projects}
+      />
+      <EducationListInput
+        label="Education"
+        name="education"
+        id="resume-form-education"
+        defaultValue={education}
+      />
+      <ExperienceListInput
+        label="Experience"
+        name="experience"
+        id="resume-form-experience"
+        defaultValue={experience}
       />
       <details className="py-1 my-1">
         <summary className="text-sm font-semibold">Applicant</summary>

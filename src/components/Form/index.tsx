@@ -2,7 +2,6 @@ import {
   ChangeEventHandler,
   Dispatch,
   ReactNode,
-  useMemo,
   useReducer,
   useState,
 } from "react";
@@ -11,7 +10,7 @@ import { Button } from "../Button";
 import { ResumeFormErrors } from "@/app/lib/models/resumes/formState";
 
 const baseInputStyle =
-  "text-black bg-slate-100 border border-slate-600 rounded-md w-full";
+  "text-black bg-slate-100 border border-slate-600 rounded-md";
 
 export function Label({
   children,
@@ -59,7 +58,7 @@ export function Errors({ errors }: { errors?: string[] }) {
 
 export function TextInput({
   name,
-  id,
+  id = name,
   defaultValue,
   onChange,
   label,
@@ -67,7 +66,7 @@ export function TextInput({
   errors,
 }: {
   name: string;
-  id: string;
+  id?: string;
   label: string;
   defaultValue?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
@@ -90,10 +89,10 @@ export function TextInput({
   );
 }
 
-interface KeyListState {
+interface KeyListState<T = any> {
   currentKey: number;
   keys: number[];
-  defaultValues?: string[];
+  defaultValues?: T[];
 }
 
 type KeyListAction =
@@ -102,7 +101,7 @@ type KeyListAction =
   | { type: "DELETE"; index: number }
   | { type: "INSERT"; index: number };
 
-function reduceKeyList(state: KeyListState, action: KeyListAction) {
+function reduceKeyList<T>(state: KeyListState<T>, action: KeyListAction) {
   const { currentKey, keys } = state;
   switch (action.type) {
     case "APPEND":
@@ -141,10 +140,10 @@ function reduceKeyList(state: KeyListState, action: KeyListAction) {
   }
 }
 
-export function useKeyList(defaultValues?: string[] | undefined) {
+export function useKeyList<T = string>(defaultValues?: T[] | undefined) {
   return useReducer(
-    reduceKeyList,
-    { currentKey: 0, keys: [] } as KeyListState,
+    reduceKeyList<T>,
+    { currentKey: 0, keys: [] } as KeyListState<T>,
     (initialArg) => {
       if (defaultValues && defaultValues.length > 0) {
         const keys = [];
@@ -209,31 +208,35 @@ export function InputListControls({
 
 export function TextListInput({
   name,
-  id,
+  id = name,
   defaultValue,
   label,
 }: {
   name: string;
-  id: string;
+  id?: string;
   label: string;
   defaultValue?: string[];
   placeholder?: string;
   errors?: ResumeFormErrors | undefined;
 }) {
   const [{ keys, defaultValues }, dispatch] = useKeyList(defaultValue);
-  console.log({ keys, defaultValues });
   return (
     <FieldWrapper label={label} id={id}>
       <ul>
         {keys.map((key, index) => (
-          <li key={key} className="flex flex-row my-1">
+          <li
+            key={key}
+            className="flex flex-row flex-wrap my-1 justify-center items-center"
+          >
             <input
               type="text"
               defaultValue={defaultValues?.[index]}
-              className={clsx(baseInputStyle, "px-1")}
+              className={clsx(baseInputStyle, "px-1 grow")}
               name={`${name}[${index}]`}
             />
-            <InputListControls dispatch={dispatch} index={index} />
+            <div className="flex flex-row shrink">
+              <InputListControls dispatch={dispatch} index={index} />
+            </div>
           </li>
         ))}
       </ul>
@@ -250,7 +253,7 @@ export function TextListInput({
 
 export function PasswordInput({
   name,
-  id,
+  id = name,
   defaultValue,
   onChange,
   label,
@@ -258,7 +261,7 @@ export function PasswordInput({
   errors,
 }: {
   name: string;
-  id: string;
+  id?: string;
   label: string;
   defaultValue?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
@@ -283,14 +286,14 @@ export function PasswordInput({
 
 export function TextAreaInput({
   name,
-  id,
+  id = name,
   defaultValue,
   onChange,
   label,
   errors,
 }: {
   name: string;
-  id: string;
+  id?: string;
   label: string;
   defaultValue?: string;
   onChange?: ChangeEventHandler<HTMLTextAreaElement>;
@@ -310,16 +313,49 @@ export function TextAreaInput({
   );
 }
 
+export function DateInput({
+  name,
+  id = name,
+  defaultValue,
+  onChange,
+  label,
+  placeholder,
+  errors,
+}: {
+  name: string;
+  id?: string;
+  label: string;
+  defaultValue?: string;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+  placeholder?: string;
+  errors?: string[];
+}) {
+  return (
+    <FieldWrapper label={label} id={id}>
+      <Errors errors={errors} />
+      <input
+        type="date"
+        name={name}
+        id={id}
+        className={clsx(baseInputStyle, "px-2 py-1")}
+        defaultValue={defaultValue}
+        onChange={onChange}
+        placeholder={placeholder}
+      />
+    </FieldWrapper>
+  );
+}
+
 export function DateTimeInput({
   name,
-  id,
+  id = name,
   date,
   label,
   currentTimezone,
   errors,
 }: {
   name: string;
-  id: string;
+  id?: string;
   label: string;
   date?: number;
   onChange?: ChangeEventHandler<HTMLInputElement>;
@@ -364,7 +400,7 @@ export function DateTimeInput({
 
 export function FileInput({
   name,
-  id,
+  id = name,
   defaultValue,
   onChange,
   label,
@@ -372,7 +408,7 @@ export function FileInput({
   errors,
 }: {
   name: string;
-  id: string;
+  id?: string;
   label: string;
   defaultValue?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;

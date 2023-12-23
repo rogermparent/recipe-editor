@@ -2,6 +2,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import getResumeBySlug from "@/app/lib/models/resumes/data/read";
 import deleteResume from "@/app/lib/models/resumes/actions/delete";
+import { ResumeView } from "@/components/Resume/View";
+
+export async function generateMetadata({
+  params: { slug },
+}: {
+  params: { slug: string };
+}) {
+  return { title: slug };
+}
 
 export default async function Resume({
   params: { slug },
@@ -17,16 +26,15 @@ export default async function Resume({
     }
     throw e;
   }
-  const { company, job, date } = resume;
+  const { date } = resume;
 
   const deleteResumeWithId = deleteResume.bind(null, date, slug);
 
   return (
-    <main className="flex flex-col items-center w-full h-full max-w-prose grow py-2">
-      <h1 className="text-2xl font-bold my-2">{job}</h1>
-      <h2 className="text-2xl font-bold my-2">{company}</h2>
-      <hr className="w-full border-slate-700" />
-      <div className="flex flex-row justify-center m-1">
+    <main className="flex flex-col items-center w-full h-full grow">
+      <ResumeView resume={resume} />
+      <hr className="w-full border-slate-700 print:hidden" />
+      <div className="flex flex-row justify-center m-1 print:hidden">
         <form action={deleteResumeWithId}>
           <button className="underline bg-slate-700 rounded-md text-sm py-1 px-2 mx-1">
             Delete
@@ -37,6 +45,12 @@ export default async function Resume({
           className="underline bg-slate-700 rounded-md text-sm py-1 px-2 mx-1"
         >
           Edit
+        </Link>
+        <Link
+          href={`/resume/${slug}/copy`}
+          className="underline bg-slate-700 rounded-md text-sm py-1 px-2 mx-1"
+        >
+          Copy
         </Link>
       </div>
     </main>

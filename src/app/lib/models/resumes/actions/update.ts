@@ -35,7 +35,23 @@ export default async function updateResume(
     };
   }
 
-  const { date, slug, company, job } = validatedFields.data;
+  const {
+    date,
+    slug,
+    company,
+    job,
+    address,
+    email,
+    github,
+    linkedin,
+    name,
+    phone,
+    skills,
+    website,
+    education,
+    experience,
+    projects,
+  } = validatedFields.data;
 
   const currentResumeDirectory = getResumeDirectory(currentSlug);
   const currentResumePath = getResumeFilePath(currentResumeDirectory);
@@ -51,6 +67,17 @@ export default async function updateResume(
     company,
     job,
     date: finalDate,
+    address,
+    email,
+    github,
+    linkedin,
+    education,
+    experience,
+    name,
+    phone,
+    projects,
+    skills,
+    website,
   };
 
   if (willRename) {
