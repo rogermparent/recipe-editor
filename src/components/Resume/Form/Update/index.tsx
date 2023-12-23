@@ -70,6 +70,7 @@ export default function UpdateResumeFields({
         id="resume-form-skills"
         defaultValue={skills}
         errors={state.errors}
+        appendLabel="Append Skill"
       />
       <ProjectsListInput
         label="Projects"

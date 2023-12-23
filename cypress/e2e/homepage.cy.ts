@@ -52,7 +52,7 @@ describe("Index Page", () => {
 
       cy.fillSignInForm();
 
-      const testCompanies = ["c", "a", "1"].map((x) => `Resume ${x}`);
+      const testCompanies = ["c", "a", "1"].map((x) => `Company ${x}`);
       for (const testCompany of testCompanies) {
         cy.visit("http://localhost:3000/new-resume");
         cy.findByLabelText("Company").type(testCompany);
@@ -73,7 +73,7 @@ describe("Index Page", () => {
     });
 
     it("should not display a link to the index", () => {
-      const allCompanies = [3, 2, 1].map((x) => `Resume ${x}`);
+      const allCompanies = [3, 2, 1].map((x) => `Company ${x}`);
 
       // Homepage should have latest three resumes
       cy.checkCompaniesInOrder(allCompanies);
@@ -89,7 +89,7 @@ describe("Index Page", () => {
     });
 
     it("should display the latest three resumes", () => {
-      const allCompanies = [6, 5, 4, 3, 2, 1].map((x) => `Resume ${x}`);
+      const allCompanies = [6, 5, 4, 3, 2, 1].map((x) => `Company ${x}`);
 
       // Homepage should have latest three resumes
       cy.checkCompaniesInOrder(allCompanies.slice(0, 3));

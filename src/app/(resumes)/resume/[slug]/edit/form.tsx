@@ -1,6 +1,6 @@
 "use client";
 
-import ResumeFields from "@/components/Resume/Form/Update";
+import UpdateResumeFields from "@/components/Resume/Form/Update";
 import { useFormState } from "react-dom";
 import { Button } from "@/components/Button";
 import { Resume } from "@/app/lib/models/resumes/types";
@@ -20,7 +20,7 @@ export default function EditResumeForm({
   const [state, dispatch] = useFormState(updateThisResume, initialState);
   return (
     <form className="w-full h-full flex flex-col grow" action={dispatch}>
-      <ResumeFields resume={resume} slug={slug} state={state} />
+      <UpdateResumeFields resume={resume} slug={slug} state={state} />
       <div className="flex flex-row flex-nowrap my-1">
         <Button type="submit">Submit</Button>
       </div>

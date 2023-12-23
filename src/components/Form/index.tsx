@@ -211,6 +211,7 @@ export function TextListInput({
   id = name,
   defaultValue,
   label,
+  appendLabel = "Append Item",
 }: {
   name: string;
   id?: string;
@@ -218,6 +219,7 @@ export function TextListInput({
   defaultValue?: string[];
   placeholder?: string;
   errors?: ResumeFormErrors | undefined;
+  appendLabel?: string;
 }) {
   const [{ keys, defaultValues }, dispatch] = useKeyList(defaultValue);
   return (
@@ -245,7 +247,7 @@ export function TextListInput({
           dispatch({ type: "APPEND" });
         }}
       >
-        Append Item
+        {appendLabel}
       </Button>
     </FieldWrapper>
   );

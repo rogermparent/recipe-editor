@@ -43,6 +43,7 @@ export function ProjectsListInput({
                   label="Url"
                   name={`${itemKey}.url`}
                   defaultValue={currentDefaultItem?.url}
+                  appendLabel="Append Project URL"
                 />
                 <TextInput
                   label="Start Date"

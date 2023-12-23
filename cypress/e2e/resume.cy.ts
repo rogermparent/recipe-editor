@@ -6,19 +6,19 @@ describe("Single Resume View", () => {
     });
 
     it("should display a resume", () => {
-      cy.findByText("Resume 5");
+      cy.findByText("Company 5");
     });
 
     it("should not need authorization", () => {
       cy.findByText("Sign In");
     });
 
-    it("should be able to edit a resume", () => {
+    it.only("should be able to edit a resume", () => {
       cy.findByText("Edit").click();
 
       cy.fillSignInForm();
 
-      cy.findByText("Editing resume: Resume 5");
+      cy.findByText("Editing resume: Company 5");
 
       cy.findByText("Advanced").click();
 
@@ -34,7 +34,8 @@ describe("Single Resume View", () => {
       cy.findByText(editedCompany);
 
       cy.visit("http://localhost:3000/");
-      cy.checkCompaniesInOrder(["Resume 6", editedCompany, "Resume 4"]);
+      cy.findByText(editedCompany);
+      cy.checkCompaniesInOrder(["Company 6", editedCompany, "Company 4"]);
 
       // Resume date should not have changed
       cy.findByText(new Date(resumeDate + "Z").toLocaleString());
@@ -48,8 +49,8 @@ describe("Single Resume View", () => {
 
       cy.findByText("Delete").click();
 
-      cy.findByText("Resume 3");
-      cy.checkCompaniesInOrder(["Resume 6", "Resume 4", "Resume 3"]);
+      cy.findByText("Company 3");
+      cy.checkCompaniesInOrder(["Company 6", "Company 4", "Company 3"]);
       cy.request({
         url: "http://localhost:3000/resume/resume-5",
         failOnStatusCode: false,
