@@ -1,6 +1,6 @@
 "use client";
 
-import ResumeFields from "@/components/Resume/Form/Update";
+import UpdateResumeFields from "@/components/Resume/Form/Update";
 import { useFormState } from "react-dom";
 import { Button } from "@/components/Button";
 import { Resume } from "@/app/lib/models/resumes/types";
@@ -13,9 +13,16 @@ export default function CopyResumeForm({ resume }: { resume: Resume }) {
   const { job, company, date, ...cleanedResume } = resume;
   return (
     <form className="w-full h-full flex flex-col grow" action={dispatch}>
-      <ResumeFields resume={cleanedResume} state={state} />
-      <div className="flex flex-row flex-nowrap my-1">
-        <Button type="submit">Submit</Button>
+      <UpdateResumeFields resume={cleanedResume} state={state} />
+      <div id="missing-fields-error" aria-live="polite" aria-atomic="true">
+        {state.message && (
+          <p className="mt-2 text-sm text-red-500">{state.message}</p>
+        )}
+      </div>
+      <div className="my-1">
+        <Button type="submit">
+          <span>Submit</span>
+        </Button>
       </div>
     </form>
   );

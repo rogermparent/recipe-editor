@@ -20,40 +20,46 @@ const ResumeFormSchema = z.object({
   job: z.string().min(1),
   date: z.optional(localUTCDateSchema),
   slug: z.string().optional(),
-  skills: z.array(z.string().min(1)),
-  name: z.string(),
-  phone: z.string(),
-  email: z.string(),
-  address: z.string(),
-  github: z.string(),
-  linkedin: z.string(),
-  website: z.string(),
-  education: z.array(
-    z.object({
-      school: z.string(),
-      achievement: z.string(),
-      startDate: z.string(),
-      endDate: z.string(),
-    }),
-  ),
-  experience: z.array(
-    z.object({
-      company: z.string(),
-      title: z.string(),
-      description: z.string(),
-      startDate: z.string(),
-      endDate: z.string(),
-    }),
-  ),
-  projects: z.array(
-    z.object({
-      name: z.string(),
-      url: z.array(z.string()).optional(),
-      description: z.string(),
-      startDate: z.string(),
-      endDate: z.string(),
-    }),
-  ),
+  skills: z.array(z.string().min(1)).optional(),
+  name: z.string().optional(),
+  phone: z.string().optional(),
+  email: z.string().optional(),
+  address: z.string().optional(),
+  github: z.string().optional(),
+  linkedin: z.string().optional(),
+  website: z.string().optional(),
+  education: z
+    .array(
+      z.object({
+        school: z.string(),
+        achievement: z.string(),
+        startDate: z.string(),
+        endDate: z.string(),
+      }),
+    )
+    .optional(),
+  experience: z
+    .array(
+      z.object({
+        company: z.string(),
+        title: z.string(),
+        description: z.string(),
+        startDate: z.string(),
+        endDate: z.string(),
+      }),
+    )
+    .optional(),
+  projects: z
+    .array(
+      z.object({
+        name: z.string(),
+        url: z.array(z.string()).optional(),
+        description: z.string(),
+        startDate: z.string(),
+        endDate: z.string(),
+      }),
+    )
+    .optional(),
 });
 
 export type ParsedResumeFormData = z.infer<typeof ResumeFormSchema>;
