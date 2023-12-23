@@ -10,7 +10,7 @@ import createResume from "@/app/lib/models/resumes/actions/create";
 export default function CopyResumeForm({ resume }: { resume: Resume }) {
   const initialState = { message: "", errors: {} } as ResumeFormState;
   const [state, dispatch] = useFormState(createResume, initialState);
-  const { job, company, ...cleanedResume } = resume;
+  const { job, company, date, ...cleanedResume } = resume;
   return (
     <form className="w-full h-full flex flex-col grow" action={dispatch}>
       <ResumeFields resume={cleanedResume} state={state} />

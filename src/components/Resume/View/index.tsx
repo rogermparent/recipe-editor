@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import GithubIconSVG from "../../../images/github-mark.inline.svg";
 import LinkedinIconSVG from "../../../images/linkedin.inline.svg";
 import Image from "next/image";
@@ -8,9 +8,8 @@ import {
   Project,
   Resume,
 } from "@/app/lib/models/resumes/types";
-import Markdown from "react-markdown";
-import styles from "@/components/Markdown/styles.module.css";
-import clsx from "clsx";
+import Markdown from "@/components/Markdown";
+import Link from "next/link";
 
 function GithubIcon() {
   return (
@@ -21,6 +20,14 @@ function GithubIcon() {
 function LinkedinIcon() {
   return (
     <Image src={LinkedinIconSVG} alt="" className="inline-block w-4 mr-1" />
+  );
+}
+
+function SectionHeading({ children }: { children: ReactNode }) {
+  return (
+    <h2 className="text-2xl font-bold my-1 py-1 border-b border-black">
+      {children}
+    </h2>
   );
 }
 
@@ -42,54 +49,54 @@ const ContactInfo = ({
   return (
     <div>
       {address && (
-        <div>
+        <div className="mt-2">
           <span>&#8962;</span> <span>{address}</span>
         </div>
       )}
       {email && (
-        <div>
-          <a href={`mailto://${email}`}>
+        <div className="mt-2">
+          <Link target="_blank" href={`mailto://${email}`}>
             <span className="inline-block w-4 h-4 mr-1 text-center align-top">
               &#9993;
             </span>
             <span className="underline">{email}</span>
-          </a>
+          </Link>
         </div>
       )}
       {phone && (
-        <div>
-          <a href={`tel://${phone}`}>
+        <div className="mt-2">
+          <Link target="_blank" href={`tel://${phone}`}>
             <span className="inline-block w-4 h-4 mr-1 text-center align-top">
               &#128379;
             </span>
             <span className="underline">{phone}</span>
-          </a>
+          </Link>
         </div>
       )}
       {website && (
-        <div>
-          <a href={`https://${website}`} target="_blank">
+        <div className="mt-2">
+          <Link href={`https://${website}`} target="_blank">
             <span className="inline-block w-4 h-4 mr-1 text-center align-top">
               &#128463;
             </span>
             <span className="underline">{website}</span>
-          </a>
+          </Link>
         </div>
       )}
       {github && (
-        <div>
-          <a href={`https://github.com/${github}`}>
+        <div className="mt-2">
+          <Link target="_blank" href={`https://github.com/${github}`}>
             <GithubIcon />
             <span className="underline">github.com/{github}</span>
-          </a>
+          </Link>
         </div>
       )}
       {linkedin && (
-        <div>
-          <a href={`https://linkedin.com/in/${linkedin}`}>
+        <div className="mt-2">
+          <Link target="_blank" href={`https://linkedin.com/in/${linkedin}`}>
             <LinkedinIcon />
             <span className="underline">linkedin.com/in/{linkedin}</span>
-          </a>
+          </Link>
         </div>
       )}
     </div>
@@ -120,8 +127,8 @@ const DateSpan = ({
 
 const EducationList = ({ education }: { education?: Education[] }) => {
   return education && education.length > 0 ? (
-    <div>
-      <h2 className="text-xl font-bold">Education</h2>
+    <div className="mt-6">
+      <SectionHeading>Education</SectionHeading>
       <ul>
         {education.map(({ achievement, school, startDate, endDate }, i) => (
           <li key={i}>
@@ -149,12 +156,12 @@ const ExperienceList = ({
   readonly experience?: Experience[];
 }) => {
   return experience && experience.length > 0 ? (
-    <div className="mt-4">
-      <h2 className="text-xl font-bold my-2">Experience</h2>
+    <div className="mt-2">
+      <SectionHeading>Experience</SectionHeading>
       <ul>
         {experience.map(
           ({ startDate, endDate, description, title, company }, i) => (
-            <li key={i} className="my-2 text-sm ml-1">
+            <li key={i} className="mt-2 text-sm ml-1">
               <div className="my-1">
                 <div className="text-lg font-semibold">{title}</div>
                 <div className="text-base">{company}</div>
@@ -164,11 +171,7 @@ const ExperienceList = ({
                   </div>
                 )}
               </div>
-              {description && (
-                <Markdown className={clsx(styles.content, "text-sm")}>
-                  {description}
-                </Markdown>
-              )}
+              {description && <Markdown>{description}</Markdown>}
             </li>
           ),
         )}
@@ -183,24 +186,24 @@ const ProjectLink = ({ url }: { url: string }) => {
     const repoName = githubResult[1];
     return (
       <>
-        <a href={url} target="_blank" className="underline">
+        <Link href={url} target="_blank" className="underline">
           <GithubIcon />
           {repoName}
-        </a>{" "}
+        </Link>{" "}
       </>
     );
   }
   return (
-    <a href={url} target="_blank">
+    <Link href={url} target="_blank">
       {url}
-    </a>
+    </Link>
   );
 };
 
 const ProjectsList = ({ projects }: { readonly projects?: Project[] }) => {
   return projects && projects.length > 0 ? (
     <div>
-      <h2 className="text-2xl font-bold">Projects</h2>
+      <SectionHeading>Projects</SectionHeading>
       <ul className="pl-1">
         {projects.map(({ description, url, name, startDate, endDate }, i) => (
           <li key={i}>
@@ -219,11 +222,7 @@ const ProjectsList = ({ projects }: { readonly projects?: Project[] }) => {
                 </div>
               )}
             </div>
-            {description && (
-              <Markdown className={clsx(styles.content, "text-sm")}>
-                {description}
-              </Markdown>
-            )}
+            {description && <Markdown>{description}</Markdown>}
           </li>
         ))}
       </ul>
@@ -233,8 +232,8 @@ const ProjectsList = ({ projects }: { readonly projects?: Project[] }) => {
 
 const SkillsList = ({ skills }: { skills?: string[] }) => {
   return (
-    <div className="my-2">
-      <h2 className="text-xl font-bold my-2">Skills</h2>
+    <div className="mt-6">
+      <SectionHeading>Skills</SectionHeading>
       <ul className="pl-1 font-semibold text-lg">
         {skills?.map((skill) => (
           <li key={skill} className="my-1">
@@ -267,7 +266,7 @@ export const ResumeView = ({ resume }: { readonly resume?: Resume }) => {
       <div className="shrink-0 pr-4">
         <div>
           <div>
-            {name && <h1 className="text-2xl font-semibold">{name}</h1>}
+            {name && <h1 className="text-3xl font-semibold">{name}</h1>}
             <ContactInfo
               phone={phone}
               email={email}
@@ -282,15 +281,13 @@ export const ResumeView = ({ resume }: { readonly resume?: Resume }) => {
         </div>
       </div>
       <div className="grow max-w-prose print:max-w-full">
-        <div>
-          <div className="text-center">
-            {company && <div className="text-3xl font-bold">{job}</div>}
+        <div className="text-center grow">
+          {company && <div className="text-3xl font-bold">{job}</div>}
 
-            {job && <div className="text-xl">{company}</div>}
-          </div>
-          <ProjectsList projects={projects} />
-          <ExperienceList experience={experience} />
+          {job && <div className="text-xl">{company}</div>}
         </div>
+        <ExperienceList experience={experience} />
+        <ProjectsList projects={projects} />
       </div>
     </div>
   );

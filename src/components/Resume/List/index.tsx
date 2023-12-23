@@ -1,8 +1,5 @@
 import Link from "next/link";
 import { ReactNode } from "react";
-import Markdown from "react-markdown";
-import styles from "@/components/Markdown/styles.module.css";
-import clsx from "clsx";
 import { ResumeEntry, ResumeEntryValue } from "@/app/lib/models/resumes/types";
 
 export function ButtonLink({
@@ -31,10 +28,18 @@ export async function Item({
         <div className="underline text-lg font-semibold px-3">
           {company || String(date)}
         </div>
+        <div className={"my-1 mx-3"}>{job}</div>
+        <div className="text-sm italic px-2 text-gray-400 my-1">
+          {new Date(date).toLocaleString()}
+        </div>
       </Link>
-      <div className={"my-1 mx-3"}>{job}</div>
-      <div className="text-sm italic px-2 text-gray-400 my-1">
-        {new Date(date).toLocaleString()}
+      <div className="flex flex-row row-nowrap justify-center items-center my-1">
+        <Link
+          href={`/resume/${slug}/copy`}
+          className="block underline bg-slate-700 rounded-md text-sm py-1 px-2 mx-1"
+        >
+          Copy
+        </Link>
       </div>
     </div>
   );
@@ -49,7 +54,7 @@ export default function ResumeList({ resumes }: { resumes: ResumeEntry[] }) {
           value: { company, job },
         } = entry;
         return (
-          <li key={slug} className="max-w-full w-96 sm:p-1 sm:w-1/2 lg:w-1/3">
+          <li key={slug} className="w-full sm:p-1">
             <Item company={company} slug={slug} date={date} job={job} />
           </li>
         );
