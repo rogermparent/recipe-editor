@@ -6,16 +6,41 @@ The primary data source is a tree of directories in the Content Directory, which
 
 ## Getting Started
 
-First, create a user with the `create-user` script:
+Install package dependencies:
+
+```bash
+npm install
+```
+
+Create a user with the `create-user` script:
 
 ```bash
 npm run create-user
 ```
 
-Then, run the development server:
+Generate an OpenSSL secret key:
+
+```bash
+openssl rand -base64 32
+```
+
+Add the resulting secret to your `.env.local` file under `AUTH_SECRET`
+
+```
+AUTH_SECRET=XXxXXXxxxxxXxx/xXXXXXXXxx/xxXxxXxxXxxxXXXXx=
+```
+
+Run the development server to try things out:
 
 ```bash
 npm run dev
+```
+
+Alternatively, build and run the optimized production server:
+
+```bash
+npm run build
+npm run start
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
