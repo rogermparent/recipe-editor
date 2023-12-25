@@ -13,7 +13,7 @@ describe("Single Resume View", () => {
       cy.findByText("Sign In");
     });
 
-    it.only("should be able to edit a resume", () => {
+    it("should be able to edit a resume", () => {
       cy.findByText("Edit").click();
 
       cy.fillSignInForm();
@@ -24,9 +24,9 @@ describe("Single Resume View", () => {
 
       const editedCompany = "Edited Company";
 
-      cy.findByLabelText("Company").clear().type(editedCompany);
+      cy.findAllByLabelText("Company").first().clear().type(editedCompany);
 
-      const resumeDate = "2023-12-08T01:16:07.582";
+      const resumeDate = "2023-12-08T01:16:04.1";
       cy.findByLabelText("Date (UTC)").should("have.value", resumeDate);
 
       cy.findByText("Submit").click();

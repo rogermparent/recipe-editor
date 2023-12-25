@@ -102,5 +102,28 @@ describe("Index Page", () => {
       cy.findByText("→").click();
       cy.checkCompaniesInOrder(allCompanies.slice(5));
     });
+
+    it("should be able to copy a resume", () => {
+      cy.findByText("Company 5")
+        .parents("li")
+        .first()
+        .findByText("Copy")
+        .click();
+
+      cy.fillSignInForm();
+
+      // Company and Job should be empty but all other fields should be pre-filled
+      cy.get('[name="company"]').should("have.value", "").type("Copy Company");
+      cy.findByLabelText("Job").should("have.value", "").type("Copy Job");
+      cy.get('[name="skills[0]"]').should("have.value", "Test Skill");
+      cy.get('[name="name"]').should("have.value", "Test Applicant");
+
+      cy.findByText("Submit").click();
+      cy.findByText("Copy Company");
+
+      cy.visit("http://localhost:3000");
+      cy.findByText("Company 6");
+      cy.checkCompaniesInOrder(["Copy Company", "Company 6", "Company 5"]);
+    });
   });
 });
