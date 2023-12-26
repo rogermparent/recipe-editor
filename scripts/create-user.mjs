@@ -27,7 +27,7 @@ async function createUser() {
   const password = await passwordPromise;
   const hashedPassword = await hash(password, salt);
   const userData = { email, password: hashedPassword };
-  const usersDir = resolve("users");
+  const usersDir = resolve(process.env.CONTENT_DIRECTORY || "content", "users");
   await mkdir(usersDir, { recursive: true });
   await writeFile(resolve(usersDir, email), JSON.stringify(userData));
   process.exit(0);
