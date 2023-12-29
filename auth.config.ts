@@ -7,8 +7,8 @@ export const authConfig = {
       const allowGuest = true;
       const isLoggedIn = !!auth?.user;
       if (allowGuest) {
-        const isEditorPath = /\/(edit|copy|new-resume)/.test(nextUrl.pathname);
-        nextUrl.pathname === "/new-resume";
+        const isEditorPath = /\/(edit|copy|new-docPage)/.test(nextUrl.pathname);
+        nextUrl.pathname === "/new-docPage";
         const isSettingsPath = nextUrl.pathname.startsWith("/settings");
         const isPrivilegedPath = isEditorPath || isSettingsPath;
         if (isPrivilegedPath) {

@@ -3,8 +3,9 @@ import "./globals.css";
 import clsx from "clsx";
 
 export const metadata: Metadata = {
-  title: "Resume Builder",
-  description: "A minimal resume builder powered by LMDB and the filesystem.",
+  title: "Docs Editor",
+  description:
+    "A minimal documentation website builder powered by the filesystem.",
 };
 
 export default async function RootLayout({

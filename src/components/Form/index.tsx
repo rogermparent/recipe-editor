@@ -7,7 +7,7 @@ import {
 } from "react";
 import clsx from "clsx";
 import { Button } from "../Button";
-import { ResumeFormErrors } from "@/app/lib/models/resumes/formState";
+import { DocPageFormErrors } from "@/app/lib/models/docPages/formState";
 
 const baseInputStyle =
   "text-black bg-slate-100 border border-slate-600 rounded-md";
@@ -218,7 +218,7 @@ export function TextListInput({
   label: string;
   defaultValue?: string[];
   placeholder?: string;
-  errors?: ResumeFormErrors | undefined;
+  errors?: DocPageFormErrors | undefined;
   appendLabel?: string;
 }) {
   const [{ keys, defaultValues }, dispatch] = useKeyList(defaultValue);
