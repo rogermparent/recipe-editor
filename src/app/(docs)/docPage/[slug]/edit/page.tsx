@@ -16,10 +16,10 @@ export default async function DocPage({
     }
     throw e;
   }
-  const { company } = docPage;
+  const { name } = docPage;
   return (
     <main className="flex flex-col items-center px-2 grow max-w-prose w-full h-full">
-      <h1 className="text-2xl font-bold my-2">Editing docPage: {company}</h1>
+      <h1 className="text-2xl font-bold my-2">Editing Page: {name}</h1>
       <EditForm docPage={docPage} slug={slug} />
     </main>
   );

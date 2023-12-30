@@ -20,30 +20,18 @@ export function ButtonLink({
 }
 
 export async function Item({
-  company,
   slug,
   date,
-  job,
+  name,
 }: DocPageEntryValue & { date: number; slug: string }) {
   return (
     <div className="my-1 rounded-lg bg-slate-900 overflow-hidden w-full h-full">
       <Link href={`/docPage/${slug}`} className="block group">
-        <div className="underline text-lg font-semibold px-3">
-          {company || String(date)}
-        </div>
-        <div className={"my-1 mx-3"}>{job}</div>
+        <div className={"my-1 mx-3"}>{name}</div>
         <div className="text-sm italic px-2 text-gray-400 my-1">
           {new Date(date).toLocaleString()}
         </div>
       </Link>
-      <div className="flex flex-row row-nowrap justify-center items-center my-1">
-        <Link
-          href={`/docPage/${slug}/copy`}
-          className="block underline bg-slate-700 rounded-md text-sm py-1 px-2 mx-1"
-        >
-          Copy
-        </Link>
-      </div>
     </div>
   );
 }
@@ -58,11 +46,11 @@ export default function DocPageList({
       {docPages.map((entry) => {
         const {
           key: [date, slug],
-          value: { company, job },
+          value: { name },
         } = entry;
         return (
           <li key={slug} className="w-full sm:p-1">
-            <Item company={company} slug={slug} date={date} job={job} />
+            <Item slug={slug} date={date} name={name} />
           </li>
         );
       })}

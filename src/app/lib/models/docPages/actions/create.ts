@@ -35,41 +35,14 @@ export default async function createDocPage(
     };
   }
 
-  const {
-    date: givenDate,
-    slug: givenSlug,
-    company,
-    job,
-    address,
-    email,
-    github,
-    linkedin,
-    name,
-    phone,
-    skills,
-    website,
-    education,
-    experience,
-    projects,
-  } = validatedFields.data;
+  const { date: givenDate, slug: givenSlug, name, body } = validatedFields.data;
 
   const date: number = givenDate || (Date.now() as number);
   const slug = slugify(givenSlug || createDefaultSlug(validatedFields.data));
   const data: DocPage = {
-    company,
-    job,
-    date,
-    address,
-    email,
-    github,
-    linkedin,
     name,
-    phone,
-    skills,
-    website,
-    education,
-    experience,
-    projects,
+    date,
+    body,
   };
   const docPageBaseDirectory = getDocPageDirectory(slug);
   await mkdirIfNotPresent(docPageBaseDirectory);

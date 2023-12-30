@@ -1,9 +1,3 @@
-export default function createDefaultSlug({
-  job,
-  company,
-}: {
-  job?: string;
-  company?: string;
-}) {
-  return [company, job].filter(Boolean).join("-");
+export default function createDefaultSlug({ name }: { name: string }) {
+  return name;
 }

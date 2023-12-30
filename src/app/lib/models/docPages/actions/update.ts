@@ -14,6 +14,7 @@ import { DocPage } from "../types";
 import getDocPageDatabase from "../database";
 import buildDocPageIndexValue from "../buildIndexValue";
 import createDefaultSlug from "../createSlug";
+import slugify from "@sindresorhus/slugify";
 
 export default async function updateDocPage(
   currentDate: number,
@@ -35,28 +36,12 @@ export default async function updateDocPage(
     };
   }
 
-  const {
-    date,
-    slug,
-    company,
-    job,
-    address,
-    email,
-    github,
-    linkedin,
-    name,
-    phone,
-    skills,
-    website,
-    education,
-    experience,
-    projects,
-  } = validatedFields.data;
+  const { date, slug, name, body } = validatedFields.data;
 
   const currentDocPageDirectory = getDocPageDirectory(currentSlug);
   const currentDocPagePath = getDocPageFilePath(currentDocPageDirectory);
 
-  const finalSlug = slug || createDefaultSlug(validatedFields.data);
+  const finalSlug = slugify(slug || createDefaultSlug(validatedFields.data));
   const finalDate = date || currentDate;
   const finalDocPageDirectory = getDocPageDirectory(finalSlug);
 
@@ -64,20 +49,9 @@ export default async function updateDocPage(
   const willChangeDate = date && currentDate !== date;
 
   const data: DocPage = {
-    company,
-    job,
-    date: finalDate,
-    address,
-    email,
-    github,
-    linkedin,
-    education,
-    experience,
     name,
-    phone,
-    projects,
-    skills,
-    website,
+    date: finalDate,
+    body,
   };
 
   if (willRename) {

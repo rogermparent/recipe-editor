@@ -10,7 +10,7 @@ import createDocPage from "@/app/lib/models/docPages/actions/create";
 export default function CopyDocPageForm({ docPage }: { docPage: DocPage }) {
   const initialState = { message: "", errors: {} } as DocPageFormState;
   const [state, dispatch] = useFormState(createDocPage, initialState);
-  const { job, company, date, ...cleanedDocPage } = docPage;
+  const { name, date, ...cleanedDocPage } = docPage;
   return (
     <form className="w-full h-full flex flex-col grow" action={dispatch}>
       <UpdateDocPageFields docPage={cleanedDocPage} state={state} />

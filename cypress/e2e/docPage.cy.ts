@@ -6,7 +6,7 @@ describe("Single DocPage View", () => {
     });
 
     it("should display a docPage", () => {
-      cy.findByText("Company 5");
+      cy.findByText("Page 5");
     });
 
     it("should not need authorization", () => {
@@ -18,24 +18,24 @@ describe("Single DocPage View", () => {
 
       cy.fillSignInForm();
 
-      cy.findByText("Editing docPage: Company 5");
+      cy.findByText("Editing Page: Page 5");
 
       cy.findByText("Advanced").click();
 
-      const editedCompany = "Edited Company";
+      const editedPage = "Edited Page";
 
-      cy.findAllByLabelText("Company").first().clear().type(editedCompany);
+      cy.findAllByLabelText("Name").first().clear().type(editedPage);
 
       const docPageDate = "2023-12-08T01:16:04.1";
       cy.findByLabelText("Date (UTC)").should("have.value", docPageDate);
 
       cy.findByText("Submit").click();
 
-      cy.findByText(editedCompany);
+      cy.findByText(editedPage);
 
       cy.visit("http://localhost:3000/");
-      cy.findByText(editedCompany);
-      cy.checkCompaniesInOrder(["Company 6", editedCompany, "Company 4"]);
+      cy.findByText(editedPage);
+      cy.checkCompaniesInOrder(["Page 6", editedPage, "Page 4"]);
 
       // DocPage date should not have changed
       cy.findByText(new Date(docPageDate + "Z").toLocaleString());
@@ -49,8 +49,8 @@ describe("Single DocPage View", () => {
 
       cy.findByText("Delete").click();
 
-      cy.findByText("Company 3");
-      cy.checkCompaniesInOrder(["Company 6", "Company 4", "Company 3"]);
+      cy.findByText("Page 3");
+      cy.checkCompaniesInOrder(["Page 6", "Page 4", "Page 3"]);
       cy.request({
         url: "http://localhost:3000/docPage/docPage-5",
         failOnStatusCode: false,

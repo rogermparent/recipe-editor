@@ -14,32 +14,30 @@ describe("Index Page", () => {
     });
 
     it("should be able to create and delete a docPage", () => {
-      const testCompany = "Test Company";
-      const testJob = "Test Job";
+      const testPage = "Test Page";
 
       // We should start with no docPages
       cy.findByText("There are no docs yet.");
-      cy.findAllByText(testCompany).should("not.exist");
+      cy.findAllByText(testPage).should("not.exist");
 
-      cy.findByText("New DocPage").click();
+      cy.findByText("New Doc").click();
 
       cy.fillSignInForm();
 
-      cy.findByLabelText("Company").type(testCompany);
-      cy.findByLabelText("Job").type(testJob);
+      cy.findByLabelText("Name").type(testPage);
       cy.findByText("Submit").click();
-      cy.findByText(testCompany);
+      cy.findByText(testPage);
 
       // Check home and ensure the docPage is present
       cy.visit("http://localhost:3000");
-      cy.findByText(testCompany).click();
+      cy.findByText(testPage).click();
 
       // Delete the docPage and ensure it's gone
       cy.findByText("Delete").click();
-      cy.findAllByText(testCompany).should("not.exist");
+      cy.findAllByText(testPage).should("not.exist");
 
       cy.request({
-        url: "http://localhost:3000/docPage/test-company",
+        url: "http://localhost:3000/docPage/test-page",
         failOnStatusCode: false,
       })
         .its("status")
@@ -48,17 +46,15 @@ describe("Index Page", () => {
 
     it("should be able to create docPages and see them in chronological order", () => {
       cy.findByText("Sign In").click();
-      const testJob = "Test Job";
 
       cy.fillSignInForm();
 
-      const testCompanies = ["c", "a", "1"].map((x) => `Company ${x}`);
-      for (const testCompany of testCompanies) {
+      const testCompanies = ["c", "a", "1"].map((x) => `Page ${x}`);
+      for (const testPage of testCompanies) {
         cy.visit("http://localhost:3000/new-docPage");
-        cy.findByLabelText("Company").type(testCompany);
-        cy.findByLabelText("Job").type(testJob);
+        cy.findByLabelText("Name").type(testPage);
         cy.findByText("Submit").click();
-        cy.findByText(testCompany);
+        cy.findByText(testPage);
       }
 
       cy.visit("http://localhost:3000");
@@ -73,7 +69,7 @@ describe("Index Page", () => {
     });
 
     it("should not display a link to the index", () => {
-      const allCompanies = [3, 2, 1].map((x) => `Company ${x}`);
+      const allCompanies = [3, 2, 1].map((x) => `Page ${x}`);
 
       // Homepage should have latest three docPages
       cy.checkCompaniesInOrder(allCompanies);
@@ -89,7 +85,7 @@ describe("Index Page", () => {
     });
 
     it("should display the latest three docPages", () => {
-      const allCompanies = [6, 5, 4, 3, 2, 1].map((x) => `Company ${x}`);
+      const allCompanies = [6, 5, 4, 3, 2, 1].map((x) => `Page ${x}`);
 
       // Homepage should have latest three docPages
       cy.checkCompaniesInOrder(allCompanies.slice(0, 3));
@@ -101,29 +97,6 @@ describe("Index Page", () => {
       // Second page should have the last one docPage
       cy.findByText("→").click();
       cy.checkCompaniesInOrder(allCompanies.slice(5));
-    });
-
-    it("should be able to copy a docPage", () => {
-      cy.findByText("Company 5")
-        .parents("li")
-        .first()
-        .findByText("Copy")
-        .click();
-
-      cy.fillSignInForm();
-
-      // Company and Job should be empty but all other fields should be pre-filled
-      cy.get('[name="company"]').should("have.value", "").type("Copy Company");
-      cy.findByLabelText("Job").should("have.value", "").type("Copy Job");
-      cy.get('[name="skills[0]"]').should("have.value", "Test Skill");
-      cy.get('[name="name"]').should("have.value", "Test Applicant");
-
-      cy.findByText("Submit").click();
-      cy.findByText("Copy Company");
-
-      cy.visit("http://localhost:3000");
-      cy.findByText("Company 6");
-      cy.checkCompaniesInOrder(["Copy Company", "Company 6", "Company 5"]);
     });
   });
 });

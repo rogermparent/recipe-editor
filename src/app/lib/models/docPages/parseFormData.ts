@@ -15,69 +15,29 @@ const localUTCDateSchema = z.union([
   }),
 ]);
 
-const ResumeFormSchema = z.object({
-  company: z.string().min(1),
-  job: z.string().min(1),
+const DocPageFormSchema = z.object({
+  name: z.string().min(1),
+  body: z.string(),
   date: z.optional(localUTCDateSchema),
   slug: z.string().optional(),
-  skills: z.array(z.string().min(1)).optional(),
-  name: z.string().optional(),
-  phone: z.string().optional(),
-  email: z.string().optional(),
-  address: z.string().optional(),
-  github: z.string().optional(),
-  linkedin: z.string().optional(),
-  website: z.string().optional(),
-  education: z
-    .array(
-      z.object({
-        school: z.string(),
-        achievement: z.string(),
-        startDate: z.string(),
-        endDate: z.string(),
-      }),
-    )
-    .optional(),
-  experience: z
-    .array(
-      z.object({
-        company: z.string(),
-        title: z.string(),
-        description: z.string(),
-        startDate: z.string(),
-        endDate: z.string(),
-      }),
-    )
-    .optional(),
-  projects: z
-    .array(
-      z.object({
-        name: z.string(),
-        url: z.array(z.string()).optional(),
-        description: z.string(),
-        startDate: z.string(),
-        endDate: z.string(),
-      }),
-    )
-    .optional(),
 });
 
-export type ParsedResumeFormData = z.infer<typeof ResumeFormSchema>;
+export type ParsedDocPageFormData = z.infer<typeof DocPageFormSchema>;
 
-interface RawResumeFormData {
-  company: string;
-  job: string;
+interface RawDocPageFormData {
+  name: string;
+  body: string;
   date: string;
   slug: string;
 }
 
-export default function parseResumeFormData(
+export default function parseDocPageFormData(
   formData: FormData,
-): SafeParseReturnType<RawResumeFormData, ParsedResumeFormData> {
+): SafeParseReturnType<RawDocPageFormData, ParsedDocPageFormData> {
   const data = {};
   for (const [key, value] of formData.entries()) {
     set(data, key, value);
   }
-  const validatedFields = ResumeFormSchema.safeParse(data);
+  const validatedFields = DocPageFormSchema.safeParse(data);
   return validatedFields;
 }

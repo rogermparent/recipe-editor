@@ -1,51 +1,37 @@
-export interface Education {
-  school?: string;
-  achievement?: string;
-  startDate?: string;
-  endDate?: string;
+export type DocTreeNode =
+  | DocTreeDocPageNode
+  | DocTreeLinkNode
+  | DocTreeCategoryNode;
+
+export interface DocTreeCategoryNode {
+  label: string;
+  children: DocTreeNode[];
 }
 
-export interface Experience {
-  company?: string;
-  title?: string;
-  startDate?: string;
-  endDate?: string;
-  description?: string;
+export interface DocTreeDocPageNode {
+  slug: string;
+  label?: string;
+  children?: DocTreeNode[];
 }
 
-export interface Project {
-  name?: string;
-  url?: string[];
-  description?: string;
-  startDate?: string;
-  endDate?: string;
+export interface DocTreeLinkNode {
+  type: "link";
+  href: string;
 }
 
-export interface Resume {
+export interface DocPage {
   date: number;
-  job: string;
-  company: string;
-  skills?: string[];
-  name?: string;
-  phone?: string;
-  email?: string;
-  address?: string;
-  github?: string;
-  linkedin?: string;
-  website?: string;
-  education?: Education[];
-  experience?: Experience[];
-  projects?: Project[];
+  name: string;
+  body: string;
 }
 
-export type ResumeEntryKey = [date: number, slug: string];
-export interface ResumeEntryValue {
-  job: string;
-  company: string;
+export type DocPageEntryKey = [date: number, slug: string];
+export interface DocPageEntryValue {
+  name: string;
 }
 
-export interface ResumeEntry {
-  key: ResumeEntryKey;
-  value: ResumeEntryValue;
+export interface DocPageEntry {
+  key: DocPageEntryKey;
+  value: DocPageEntryValue;
   version?: number;
 }

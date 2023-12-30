@@ -24,10 +24,7 @@ function MarkdownLink({
 
 export default function StyledMarkdown({ children }: { children: string }) {
   return (
-    <Markdown
-      className={clsx(styles.content, "text-sm")}
-      components={{ a: MarkdownLink }}
-    >
+    <Markdown className={clsx(styles.content)} components={{ a: MarkdownLink }}>
       {children}
     </Markdown>
   );

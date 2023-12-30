@@ -7,7 +7,7 @@ export default async function Home() {
   return (
     <main className="flex flex-col items-center h-full w-full p-2 max-w-prose mx-auto grow bg-slate-950">
       <div className="m-2 text-left w-full grow">
-        <h2 className="font-bold text-2xl">Latest DocPages</h2>
+        <h2 className="font-bold text-2xl">Latest Doc Pages</h2>
         {docPages && docPages.length > 0 ? (
           <div>
             <DocPageList docPages={docPages} />

@@ -4,8 +4,8 @@ import Link from "next/link";
 import { auth, signIn, signOut } from "@/auth";
 
 export const metadata: Metadata = {
-  title: "DocPage Builder",
-  description: "A docPage builder powered by LMDB and the filesystem.",
+  title: "Docs Editor",
+  description: "A documentation builder powered by LMDB and the filesystem.",
 };
 
 export default async function Layout({
@@ -18,7 +18,7 @@ export default async function Layout({
     <>
       <header className="w-full bg-slate-800 print:hidden">
         <Link href="/" className="block p-2">
-          <h1 className="text-xl font-bold text-center">DocPage Builder</h1>
+          <h1 className="text-xl font-bold text-center">Docs Editor</h1>
         </Link>
       </header>
       {children}
@@ -49,11 +49,14 @@ export default async function Layout({
               </button>
             </form>
           )}
+          <Link href="/doc-tree" className="inline-block p-2 hover:underline">
+            Docs Tree
+          </Link>
           <Link
             href="/new-docPage"
             className="inline-block p-2 hover:underline"
           >
-            New DocPage
+            New Doc
           </Link>
           <Link href="/settings" className="inline-block p-2 hover:underline">
             Settings

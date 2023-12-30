@@ -15,7 +15,7 @@ export async function mkdirIfNotPresent(dir: string) {
     await mkdir(dir, { recursive: true });
   } catch (e) {
     if ((e as { code: string }).code === "EEXIST") {
-      throw new Error("Resume already exists");
+      throw new Error("Doc Page already exists");
     } else {
       throw e;
     }

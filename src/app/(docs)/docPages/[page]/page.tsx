@@ -25,7 +25,7 @@ export default async function DocPages({
   return (
     <main className="flex flex-col items-center w-full p-2 max-w-prose mx-auto grow">
       <div className="m-2 text-left w-full grow">
-        <h2 className="font-bold text-2xl">All DocPages</h2>
+        <h2 className="font-bold text-2xl">All Doc Pages</h2>
         {docPages && docPages.length > 0 ? (
           <div>
             <DocPageList docPages={docPages} />
