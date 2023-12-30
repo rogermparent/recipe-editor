@@ -1,24 +1,3 @@
-export type DocTreeNode =
-  | DocTreeDocPageNode
-  | DocTreeLinkNode
-  | DocTreeCategoryNode;
-
-export interface DocTreeCategoryNode {
-  label: string;
-  children: DocTreeNode[];
-}
-
-export interface DocTreeDocPageNode {
-  slug: string;
-  label?: string;
-  children?: DocTreeNode[];
-}
-
-export interface DocTreeLinkNode {
-  type: "link";
-  href: string;
-}
-
 export interface DocPage {
   date: number;
   name: string;

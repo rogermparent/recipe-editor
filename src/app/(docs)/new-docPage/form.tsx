@@ -6,14 +6,14 @@ import { Button } from "@/components/Button";
 import { DocPageFormState } from "@/app/lib/models/docPages/formState";
 import createDocPage from "@/app/lib/models/docPages/actions/create";
 
-export default function NewDocPageForm() {
+export default function NewDocPageForm({ slug }: { slug?: string }) {
   const initialState = { message: "", errors: {} } as DocPageFormState;
   const [state, dispatch] = useFormState(createDocPage, initialState);
   return (
     <form className="m-2 w-full" action={dispatch}>
       <h2 className="font-bold text-2xl mb-2">New DocPage</h2>
       <div className="flex flex-col flex-nowrap">
-        <CreateDocPageFields state={state} />
+        <CreateDocPageFields state={state} slug={slug} />
         <div id="missing-fields-error" aria-live="polite" aria-atomic="true">
           {state.message && (
             <p className="mt-2 text-sm text-red-500">{state.message}</p>
