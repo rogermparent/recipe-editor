@@ -127,12 +127,15 @@ function RenderedNode({
       </Link>
     );
   } else {
-    const { target } = node;
+    const { target, label } = node;
+    if (label && !target) {
+      return <span>{label}</span>;
+    }
     return target ? (
-      <span className="text-red-300">{target}</span>
+      <span className="text-red-300">{label || target}</span>
     ) : (
       <span className="text-gray-400">
-        New Item {parents ? `${parents.join(".")}.${index}` : index}
+        Item {parents?.length > 0 ? `${parents.join(".")}.${index}` : index}
       </span>
     );
   }
@@ -176,63 +179,70 @@ function TreeFormNode({
   const itemErrors = errors && errors[itemName];
   const { target, label } = node;
   return (
-    <div className="my-1 pl-1">
-      <details className="hover:bg-slate-800 transition border pl-1 list-decimal">
-        <summary className="min-h-6 pl-1">
-          <Errors errors={itemErrors} />
-          <RenderedNode
-            namePrefix={itemNamePrefix}
-            node={node}
-            data={data}
-            dispatch={dispatch}
-            parents={parents}
-            index={index}
+    <>
+      <div className="my-1 pl-1">
+        <details className="hover:bg-slate-800 transition border pl-1 list-decimal">
+          <summary className="min-h-6 pl-1">
+            <Errors errors={itemErrors} />
+            <RenderedNode
+              namePrefix={itemNamePrefix}
+              node={node}
+              data={data}
+              dispatch={dispatch}
+              parents={parents}
+              index={index}
+            />
+          </summary>
+          {!data && (
+            <Link className="underline" href={`/new-item/${target}`}>
+              Create missing page
+            </Link>
+          )}
+          <TextInput
+            name={itemNamePrefix + "target"}
+            label="Target"
+            defaultValue={target}
+            list="existingDocPages"
           />
-        </summary>
-        <TextInput
-          name={itemNamePrefix + "target"}
-          label="Target"
-          defaultValue={target}
-          list="existingDocPages"
-        />
-        <TextInput
-          name={itemNamePrefix + "label"}
-          label="Label"
-          defaultValue={label}
-        />
-        <div className="mb-1">
-          <Button className="mr-1" onClick={deleteItem}>
-            Delete
-          </Button>
-          <Button className="mr-1" onClick={insertItemAbove}>
-            Create Above
-          </Button>
-          <Button className="mr-1" onClick={addChildItem}>
-            Create Child
-          </Button>
-        </div>
-      </details>
-      {newParents && (
-        <div className="border-l-2 mt-1 ml-0.5 pl-1">
-          <ul>
-            {(node.children as DocsTreeNodeWithKey[]).map(
-              (child, childIndex) => (
-                <li key={child.key}>
-                  <TreeFormNode
-                    node={child}
-                    dataBySlug={dataBySlug}
-                    dispatch={dispatch}
-                    parents={newParents}
-                    index={childIndex}
-                    errors={errors}
-                  />
-                </li>
-              ),
-            )}
-          </ul>
-        </div>
-      )}
-    </div>
+          <TextInput
+            name={itemNamePrefix + "label"}
+            label="Label"
+            defaultValue={label}
+          />
+          <div className="mb-1">
+            <Button className="mr-1" onClick={deleteItem}>
+              Delete
+            </Button>
+            <Button className="mr-1" onClick={insertItemAbove}>
+              Add Above
+            </Button>
+            <Button className="mr-1" onClick={addChildItem}>
+              Add Child
+            </Button>
+          </div>
+        </details>
+        {newParents && (
+          <div className="border-l-2 mt-1 ml-0.5 pl-1">
+            <ul>
+              {(node.children as DocsTreeNodeWithKey[]).map(
+                (child, childIndex) => (
+                  <li key={child.key}>
+                    <TreeFormNode
+                      node={child}
+                      dataBySlug={dataBySlug}
+                      dispatch={dispatch}
+                      parents={newParents}
+                      index={childIndex}
+                      errors={errors}
+                    />
+                  </li>
+                ),
+              )}
+            </ul>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 
@@ -258,7 +268,7 @@ export default function TreeForm({
     <form action={formDispatch}>
       <datalist id="existingDocPages">
         {Object.entries(dataBySlug).map(([slug, { name }]) => (
-          <option value={slug}>
+          <option value={slug} key={slug}>
             {slug} ({name})
           </option>
         ))}

@@ -7,7 +7,6 @@ import parseDocsTreeFormData from "../parseFormData";
 import { DocsTreeFormState } from "../formState";
 import { docsTreeFilePath } from "../filesystemDirectories";
 import { DocsTree } from "../types";
-import { redirect } from "next/navigation";
 
 export default async function updateDocsTree(
   _prevState: DocsTreeFormState,
@@ -46,5 +45,5 @@ export default async function updateDocsTree(
 
   revalidatePath("/doc-tree/");
   revalidatePath("/");
-  redirect("/doc-tree/");
+  return { message: "Tree update successful!" };
 }

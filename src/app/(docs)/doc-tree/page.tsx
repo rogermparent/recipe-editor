@@ -18,10 +18,9 @@ function addKeysToItems(
     const itemWithKey = {
       ...item,
       key,
-      children:
-        "children" in item && item?.children
-          ? addKeysToItems(item.children, key + ".")
-          : undefined,
+      children: item?.children
+        ? addKeysToItems(item.children, key + ".")
+        : undefined,
     } as DocsTreeNodeWithKey;
     return itemWithKey;
   });

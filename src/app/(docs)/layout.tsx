@@ -24,6 +24,18 @@ export default async function Layout({
       {children}
       <footer className="w-full bg-slate-800 print:hidden">
         <nav className="flex flex-row flex-wrap justify-center">
+          <Link
+            href="/new-docPage"
+            className="inline-block p-2 hover:underline"
+          >
+            New Doc
+          </Link>
+          <Link href="/doc-tree" className="inline-block p-2 hover:underline">
+            Docs Tree
+          </Link>
+          <Link href="/settings" className="inline-block p-2 hover:underline">
+            Settings
+          </Link>
           {session ? (
             <>
               <form
@@ -49,18 +61,6 @@ export default async function Layout({
               </button>
             </form>
           )}
-          <Link href="/doc-tree" className="inline-block p-2 hover:underline">
-            Docs Tree
-          </Link>
-          <Link
-            href="/new-docPage"
-            className="inline-block p-2 hover:underline"
-          >
-            New Doc
-          </Link>
-          <Link href="/settings" className="inline-block p-2 hover:underline">
-            Settings
-          </Link>
         </nav>
       </footer>
     </>
