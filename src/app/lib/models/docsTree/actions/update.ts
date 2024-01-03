@@ -7,11 +7,12 @@ import parseDocsTreeFormData from "../parseFormData";
 import { DocsTreeFormState } from "../formState";
 import { docsTreeFilePath } from "../filesystemDirectories";
 import { DocsTree } from "../types";
+import { redirect } from "next/navigation";
 
 export default async function updateDocsTree(
   _prevState: DocsTreeFormState,
   formData: FormData,
-) {
+): Promise<DocsTreeFormState> {
   const user = await auth();
   if (!user) {
     return signIn();
@@ -20,8 +21,17 @@ export default async function updateDocsTree(
   const validatedFields = parseDocsTreeFormData(formData);
 
   if (!validatedFields.success) {
+    const issuesByPath: Record<string, string[]> = {};
+    for (const issue of validatedFields.error.issues) {
+      const currentPathString = issue.path.join(".");
+      if (!issuesByPath[currentPathString]) {
+        issuesByPath[currentPathString] = [];
+      }
+      issuesByPath[currentPathString].push(issue.message);
+    }
+    console.log(issuesByPath);
     return {
-      errors: validatedFields.error.flatten().fieldErrors,
+      errors: issuesByPath,
       message: "Failed to update DocsTree.",
     };
   }
@@ -36,4 +46,5 @@ export default async function updateDocsTree(
 
   revalidatePath("/doc-tree/");
   revalidatePath("/");
+  redirect("/doc-tree/");
 }

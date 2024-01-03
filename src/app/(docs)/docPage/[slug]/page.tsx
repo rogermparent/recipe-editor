@@ -22,28 +22,25 @@ async function SidebarNodeSingleItem({
   node: DocsTreeNode;
   currentSlug: string;
 }) {
-  if ("slug" in node) {
-    try {
-      const { slug } = node;
-      const active = slug === currentSlug;
-      const docPage = await getDocPageBySlug(slug);
+  const { target, label } = node;
+  try {
+    const active = target === currentSlug;
+    const docPage = target && (await getDocPageBySlug(target));
+    if (docPage) {
       return (
         <Link
           className={clsx(
             "block underline whitespace-nowrap px-2 py-0.5",
             active && "font-bold",
           )}
-          href={`/docPage/${slug}`}
+          href={`/docPage/${target}`}
         >
-          {docPage.name}
+          {label || docPage.name}
         </Link>
       );
-    } catch (e) {
-      const { slug } = node;
-      return <div className="whitespace-nowrap px-2 py-0.5">{slug}</div>;
     }
-  }
-  return <div>Invalid node?</div>;
+  } catch (e) {}
+  return <div className="whitespace-nowrap px-2 py-0.5">{label || target}</div>;
 }
 
 async function SidebarNodeItem({

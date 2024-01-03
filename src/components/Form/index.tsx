@@ -45,14 +45,16 @@ export function FieldWrapper({
 
 export function Errors({ errors }: { errors?: string[] }) {
   return (
-    <div id="customer-error" aria-live="polite" aria-atomic="true">
-      {errors &&
-        errors.map((error: string) => (
-          <p className="mt-2 text-sm text-red-500" key={error}>
-            {error}
-          </p>
-        ))}
-    </div>
+    errors && (
+      <div aria-live="polite" aria-atomic="true">
+        {errors &&
+          errors.map((error: string) => (
+            <p className="mt-2 text-sm text-red-500" key={error}>
+              {error}
+            </p>
+          ))}
+      </div>
+    )
   );
 }
 
@@ -64,6 +66,7 @@ export function TextInput({
   label,
   placeholder,
   errors,
+  list,
 }: {
   name: string;
   id?: string;
@@ -72,6 +75,7 @@ export function TextInput({
   onChange?: ChangeEventHandler<HTMLInputElement>;
   placeholder?: string;
   errors?: string[];
+  list?: string;
 }) {
   return (
     <FieldWrapper label={label} id={id}>
@@ -84,6 +88,7 @@ export function TextInput({
         defaultValue={defaultValue}
         onChange={onChange}
         placeholder={placeholder}
+        list={list}
       />
     </FieldWrapper>
   );
@@ -430,6 +435,36 @@ export function FileInput({
           placeholder={placeholder}
         />
       </div>
+    </FieldWrapper>
+  );
+}
+
+export function SelectInput({
+  name,
+  id = name,
+  defaultValue,
+  label,
+  errors,
+  children,
+}: {
+  name: string;
+  id?: string;
+  label: string;
+  defaultValue?: string;
+  errors?: string[];
+  children: ReactNode;
+}) {
+  return (
+    <FieldWrapper label={label} id={id}>
+      <Errors errors={errors} />
+      <select
+        name={name}
+        id={id}
+        className={clsx(baseInputStyle, "px-2 py-1")}
+        defaultValue={defaultValue}
+      >
+        {children}
+      </select>
     </FieldWrapper>
   );
 }
