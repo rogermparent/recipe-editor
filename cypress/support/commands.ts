@@ -48,7 +48,7 @@ declare global {
       resetData(fixture?: string): Chainable<void>;
       fillSignInForm(user?: SignInOptions): Chainable<void>;
       signIn(user?: SignInOptions): Chainable<void>;
-      checkCompaniesInOrder(companies: string[]): Chainable<void>;
+      checkNamesInOrder(names: string[]): Chainable<void>;
     }
   }
 }
@@ -58,10 +58,10 @@ Cypress.Commands.add("resetData", (fixture) => {
   fetch("http://localhost:3000/settings/invalidate-cache");
 });
 
-Cypress.Commands.add("checkCompaniesInOrder", (companies: string[]) => {
+Cypress.Commands.add("checkNamesInOrder", (names: string[]) => {
   const items = cy.findAllByRole("listitem");
-  items.should("have.length", companies.length);
-  items.each((el, i) => cy.wrap(el).findByText(companies[i]));
+  items.should("have.length", names.length);
+  items.each((el, i) => cy.wrap(el).findByText(names[i]));
 });
 
 Cypress.Commands.add(

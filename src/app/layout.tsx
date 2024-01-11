@@ -3,9 +3,9 @@ import "./globals.css";
 import clsx from "clsx";
 
 export const metadata: Metadata = {
-  title: "Docs Editor",
+  title: "Recipe Editor",
   description:
-    "A minimal documentation website builder powered by the filesystem.",
+    "A recipe book app built with Next 14.",
 };
 
 export default async function RootLayout({

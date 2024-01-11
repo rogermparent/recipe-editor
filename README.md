@@ -1,4 +1,4 @@
-# NextJS DocPage Builder
+# NextJS Recipe Builder
 
 This project is a proof-of-concept starter for a content-based website editor that primarily uses the filesystem for data storage alongside LMDB to fill some of the gaps between that and a full-blown RDBMS. Since most content websites are some variant of a blog, this base should be able to be adapt to many data types.
 

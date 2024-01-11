@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-docs-editor",
+  "name": "nextjs-recipe-editor",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -19,6 +19,7 @@
     "@sindresorhus/slugify": "^2.2.1",
     "bcrypt": "^5.1.1",
     "clsx": "^2.0.0",
+    "fraction.js": "^4.3.7",
     "lmdb": "^2.9.2",
     "lodash": "^4.17.21",
     "next": "14.0.4",
