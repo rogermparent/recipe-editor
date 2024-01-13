@@ -44,7 +44,6 @@ const jsonLDRegex = /<script.*?ld\+json.*?>([\s\S]*?)<\/script>/gm;
 function findRecipeObjectInText(text: string): RecipeLD | undefined {
   let jsonLDTextSearch;
   while ((jsonLDTextSearch = jsonLDRegex.exec(text)) !== null) {
-    console.log("MATCH", jsonLDRegex.lastIndex, jsonLDTextSearch[0]);
     const jsonLDTextMatch = jsonLDTextSearch?.[1];
     if (jsonLDTextMatch) {
       const jsonLDObject: UnknownLD = JSON.parse(jsonLDTextMatch);
@@ -56,14 +55,13 @@ function findRecipeObjectInText(text: string): RecipeLD | undefined {
   }
 }
 
-export async function fetchRecipeData(
+export async function importRecipeData(
   url: string,
 ): Promise<Partial<Recipe> | undefined> {
   const response = await fetch(url);
   const text = await response.text();
   const recipeObject = findRecipeObjectInText(text);
   if (recipeObject) {
-    console.log(recipeObject);
     const { name, description, recipeIngredient, recipeInstructions } =
       recipeObject;
     const massagedData = {
@@ -75,7 +73,7 @@ export async function fetchRecipeData(
       instructions: recipeInstructions?.map(
         ({ name, text, itemListElement }) => {
           return {
-            name,
+            name: name === text ? undefined : name,
             text:
               text ||
               (itemListElement?.length === 1

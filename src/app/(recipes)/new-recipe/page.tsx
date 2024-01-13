@@ -1,4 +1,4 @@
-import { fetchRecipeData } from "@/app/lib/getRecipeJson";
+import { importRecipeData } from "@/app/lib/importRecipeData";
 import CreateForm from "./form";
 import { TextInput } from "@/components/Form";
 import { Button } from "@/components/Button";
@@ -9,7 +9,7 @@ export default async function NewRecipe({
   searchParams: { import?: string };
 }) {
   const importedRecipe = importURL
-    ? await fetchRecipeData(importURL)
+    ? await importRecipeData(importURL)
     : undefined;
   return (
     <main className="flex flex-col items-center h-full w-full p-2 max-w-prose mx-auto grow bg-slate-950">
