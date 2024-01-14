@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import {
   Ingredient,
-  Instruction,
+  InstructionEntry,
   Recipe,
 } from "@/app/lib/models/recipes/types";
 
@@ -75,12 +75,36 @@ export const IngredientView = ({
   );
 };
 
-export const InstructionView = ({ name, text }: Instruction) => (
-  <li className="m-1">
-    {name && <h3 className="font-bold m-1">{name}</h3>}
-    <StyledMarkdown>{text}</StyledMarkdown>
-  </li>
-);
+export const InstructionEntryView = ({
+  entry,
+}: {
+  entry: InstructionEntry;
+}) => {
+  if ("instructions" in entry) {
+    const { name, instructions } = entry;
+    return (
+      <li className="m-1">
+        {name && <h3 className="font-bold m-1">{name}</h3>}
+        <ol className="list-disc pl-2">
+          {instructions.map(({ name, text }, i) => (
+            <li key={i} className="my-2">
+              {name && <h4>{name}</h4>}
+              <StyledMarkdown>{text}</StyledMarkdown>
+            </li>
+          ))}
+        </ol>
+      </li>
+    );
+  } else {
+    const { name, text } = entry;
+    return (
+      <li className="m-1">
+        {name && <h3 className="font-bold m-1">{name}</h3>}
+        <StyledMarkdown>{text}</StyledMarkdown>
+      </li>
+    );
+  }
+};
 
 const fractionInputReducer: Reducer<
   { fraction?: Fraction; input?: string },
@@ -122,7 +146,7 @@ export const Ingredients = ({
     <>
       {ingredients && (
         <div>
-          <h2>Ingredients</h2>
+          <h2 className="text-lg font-bold my-3">Ingredients</h2>
           <ul>
             {ingredients.map(({ ingredient, note, quantity, unit }, i) => (
               <IngredientView
@@ -218,10 +242,10 @@ export const RecipeView = ({
         <Ingredients ingredients={ingredients} multiplier={multiplier} />
         {instructions && (
           <div>
-            <h2>Instructions</h2>
+            <h2 className="text-lg font-bold my-3">Instructions</h2>
             <ol className="list-decimal pl-3">
-              {instructions.map(({ name, text }, i) => (
-                <InstructionView key={i} name={name} text={text} />
+              {instructions.map((entry, i) => (
+                <InstructionEntryView key={i} entry={entry} />
               ))}
             </ol>
           </div>

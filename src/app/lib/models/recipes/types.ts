@@ -5,10 +5,17 @@ export type Ingredient = {
   note?: string;
 };
 
-export type Instruction = {
+export interface Instruction {
   name?: string;
   text: string;
-};
+}
+
+export interface InstructionGroup {
+  name: string;
+  instructions: Instruction[];
+}
+
+export type InstructionEntry = Instruction | InstructionGroup;
 
 export interface Recipe {
   name: string;
@@ -21,7 +28,7 @@ export interface Recipe {
   servings?: number;
   servingSize?: string;
   ingredients?: Ingredient[];
-  instructions?: Instruction[];
+  instructions?: InstructionEntry[];
 }
 
 export type RecipeEntryKey = [date: number, slug: string];

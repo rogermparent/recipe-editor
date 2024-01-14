@@ -222,13 +222,15 @@ export function SelectInput({
   label,
   errors,
   children,
+  onChange,
 }: {
-  name: string;
+  name?: string;
   id?: string;
-  label: string;
+  label?: string;
   defaultValue?: string;
   errors?: string[];
   children: ReactNode;
+  onChange?: ChangeEventHandler<HTMLSelectElement>;
 }) {
   return (
     <FieldWrapper label={label} id={id}>
@@ -238,6 +240,7 @@ export function SelectInput({
         id={id}
         className={clsx(baseInputStyle, "px-2 py-1")}
         defaultValue={defaultValue}
+        onChange={onChange}
       >
         {children}
       </select>

@@ -10,7 +10,7 @@ interface KeyListState<T = any> {
   defaultValues?: T[];
 }
 
-type KeyListAction =
+export type KeyListAction =
   | { type: "APPEND" }
   | { type: "MOVE"; from: number; to: number }
   | { type: "DELETE"; index: number }

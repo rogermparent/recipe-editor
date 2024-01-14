@@ -1,4 +1,4 @@
-import { Recipe } from "./models/recipes/types";
+import { Instruction, InstructionGroup, Recipe } from "./models/recipes/types";
 
 interface RecipeLD {
   name: string;
@@ -6,7 +6,7 @@ interface RecipeLD {
   recipeIngredient: string[];
   recipeInstructions: {
     text?: string;
-    itemListElement: { text?: string }[];
+    itemListElement: { name?: string; text?: string }[];
     name?: string;
   }[];
 }
@@ -72,17 +72,20 @@ export async function importRecipeData(
       })),
       instructions: recipeInstructions?.map(
         ({ name, text, itemListElement }) => {
-          return {
-            name: name === text ? undefined : name,
-            text:
-              text ||
-              (itemListElement?.length === 1
-                ? itemListElement[0].text
-                : itemListElement
-                    .map(({ text }) => `* ${text}`)
-                    .join("\n\n")) ||
-              "",
-          };
+          if (itemListElement) {
+            return {
+              name,
+              instructions: itemListElement.map(({ name, text }) => ({
+                name: name === text ? undefined : name,
+                text,
+              })),
+            } as InstructionGroup;
+          } else {
+            return {
+              name,
+              text,
+            } as Instruction;
+          }
         },
       ),
     };
