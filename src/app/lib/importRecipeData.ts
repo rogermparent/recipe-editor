@@ -1,4 +1,10 @@
-import { Instruction, InstructionGroup, Recipe } from "./models/recipes/types";
+import {
+  Ingredient,
+  Instruction,
+  InstructionGroup,
+  Recipe,
+} from "./models/recipes/types";
+import { parseIngredient } from "parse-ingredient";
 
 interface RecipeLD {
   name: string;
@@ -55,6 +61,19 @@ function findRecipeObjectInText(text: string): RecipeLD | undefined {
   }
 }
 
+function createStep({
+  name,
+  text = "",
+}: {
+  name?: string;
+  text?: string;
+}): Instruction {
+  return {
+    name: name === text ? undefined : name,
+    text,
+  };
+}
+
 export async function importRecipeData(
   url: string,
 ): Promise<Partial<Recipe> | undefined> {
@@ -67,27 +86,28 @@ export async function importRecipeData(
     const massagedData = {
       name,
       description,
-      ingredients: recipeIngredient?.map((ingredient) => ({
-        ingredient,
-      })),
-      instructions: recipeInstructions?.map(
-        ({ name, text, itemListElement }) => {
-          if (itemListElement) {
-            return {
-              name,
-              instructions: itemListElement.map(({ name, text }) => ({
-                name: name === text ? undefined : name,
-                text,
-              })),
-            } as InstructionGroup;
-          } else {
-            return {
-              name,
-              text,
-            } as Instruction;
-          }
-        },
-      ),
+      ingredients: recipeIngredient?.map((ingredientString) => {
+        const parsedIngredient = parseIngredient(ingredientString);
+        const { quantity, unitOfMeasure, description } = parsedIngredient;
+        console.log(ingredientString, parsedIngredient);
+        const massagedIngredient: Ingredient = {
+          quantity: String(quantity),
+          unit: unitOfMeasure,
+          ingredient: description,
+        };
+        return massagedIngredient;
+      }),
+      instructions: recipeInstructions?.map((entry) => {
+        if ("itemListElement" in entry) {
+          const { name, itemListElement } = entry;
+          return {
+            name,
+            instructions: itemListElement.map(createStep),
+          } as InstructionGroup;
+        } else {
+          return createStep(entry);
+        }
+      }),
     };
     return massagedData;
   }

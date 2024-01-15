@@ -7,11 +7,7 @@ import React, {
   useMemo,
   useReducer,
 } from "react";
-import {
-  Ingredient,
-  InstructionEntry,
-  Recipe,
-} from "@/app/lib/models/recipes/types";
+import { Ingredient, Recipe } from "@/app/lib/models/recipes/types";
 
 import Fraction from "fraction.js";
 import clsx from "clsx";
@@ -19,7 +15,7 @@ import Image from "next/image";
 
 import Markdown from "@/components/Markdown";
 import { TextInput } from "@/components/Form";
-import StyledMarkdown from "@/components/Markdown";
+import { InstructionEntryView } from "./Instructions";
 
 function Card({
   children,
@@ -73,37 +69,6 @@ export const IngredientView = ({
       </div>
     </li>
   );
-};
-
-export const InstructionEntryView = ({
-  entry,
-}: {
-  entry: InstructionEntry;
-}) => {
-  if ("instructions" in entry) {
-    const { name, instructions } = entry;
-    return (
-      <li className="m-1">
-        {name && <h3 className="font-bold m-1">{name}</h3>}
-        <ol className="list-disc pl-2">
-          {instructions.map(({ name, text }, i) => (
-            <li key={i} className="my-2">
-              {name && <h4>{name}</h4>}
-              <StyledMarkdown>{text}</StyledMarkdown>
-            </li>
-          ))}
-        </ol>
-      </li>
-    );
-  } else {
-    const { name, text } = entry;
-    return (
-      <li className="m-1">
-        {name && <h3 className="font-bold m-1">{name}</h3>}
-        <StyledMarkdown>{text}</StyledMarkdown>
-      </li>
-    );
-  }
 };
 
 const fractionInputReducer: Reducer<
@@ -238,12 +203,12 @@ export const RecipeView = ({
           </InfoCard>
         </label>
       </div>
-      <div className="m-2">
+      <div className="my-3 marker:text-sm">
         <Ingredients ingredients={ingredients} multiplier={multiplier} />
         {instructions && (
           <div>
             <h2 className="text-lg font-bold my-3">Instructions</h2>
-            <ol className="list-decimal pl-3">
+            <ol className="list-decimal pl-4">
               {instructions.map((entry, i) => (
                 <InstructionEntryView key={i} entry={entry} />
               ))}
