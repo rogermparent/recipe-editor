@@ -45,9 +45,9 @@ const findRecipeInObject = (jsonLDObject: UnknownLD): RecipeLD | undefined => {
   }
 };
 
-const jsonLDRegex = /<script.*?ld\+json.*?>([\s\S]*?)<\/script>/gm;
-
 function findRecipeObjectInText(text: string): RecipeLD | undefined {
+  const jsonLDRegex = /<script.*?ld\+json.*?>([\s\S]*?)<\/script>/gm;
+
   let jsonLDTextSearch;
   while ((jsonLDTextSearch = jsonLDRegex.exec(text)) !== null) {
     const jsonLDTextMatch = jsonLDTextSearch?.[1];
@@ -77,7 +77,7 @@ function createStep({
 export async function importRecipeData(
   url: string,
 ): Promise<Partial<Recipe> | undefined> {
-  const response = await fetch(url);
+  const response = await fetch(url, { next: { revalidate: 300 } });
   const text = await response.text();
   const recipeObject = findRecipeObjectInText(text);
   if (recipeObject) {
@@ -89,7 +89,6 @@ export async function importRecipeData(
       ingredients: recipeIngredient?.map((ingredientString) => {
         const [parsedIngredient] = parseIngredient(ingredientString);
         const { quantity, unitOfMeasure, description } = parsedIngredient;
-        console.log(ingredientString, parsedIngredient);
         const massagedIngredient: Ingredient = {
           quantity: quantity ? String(quantity) : undefined,
           unit: unitOfMeasure || undefined,
