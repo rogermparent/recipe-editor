@@ -87,12 +87,12 @@ export async function importRecipeData(
       name,
       description,
       ingredients: recipeIngredient?.map((ingredientString) => {
-        const parsedIngredient = parseIngredient(ingredientString);
+        const [parsedIngredient] = parseIngredient(ingredientString);
         const { quantity, unitOfMeasure, description } = parsedIngredient;
         console.log(ingredientString, parsedIngredient);
         const massagedIngredient: Ingredient = {
-          quantity: String(quantity),
-          unit: unitOfMeasure,
+          quantity: quantity ? String(quantity) : undefined,
+          unit: unitOfMeasure || undefined,
           ingredient: description,
         };
         return massagedIngredient;
