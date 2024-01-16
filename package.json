@@ -24,7 +24,7 @@
     "lodash": "^4.17.21",
     "next": "14.0.4",
     "next-auth": "^5.0.0-beta.4",
-    "parse-ingredient": "^1.1.0",
+    "parse-ingredient": "^1.1.1",
     "plaiceholder": "^3.0.0",
     "react": "^18",
     "react-dom": "^18",
