@@ -10,11 +10,12 @@ interface KeyListState<T = any> {
   defaultValues?: T[];
 }
 
-export type KeyListAction =
+export type KeyListAction<T = any> =
   | { type: "APPEND" }
   | { type: "MOVE"; from: number; to: number }
   | { type: "DELETE"; index: number }
-  | { type: "INSERT"; index: number };
+  | { type: "INSERT"; index: number }
+  | { type: "RESET"; values: T[] };
 
 export function InputListControls({
   dispatch,
@@ -61,7 +62,10 @@ export function InputListControls({
   );
 }
 
-function reduceKeyList<T>(state: KeyListState<T>, action: KeyListAction) {
+function reduceKeyList<T>(
+  state: KeyListState<T>,
+  action: KeyListAction<T>,
+): KeyListState<T> {
   const { currentKey, keys } = state;
   switch (action.type) {
     case "APPEND":
@@ -97,13 +101,30 @@ function reduceKeyList<T>(state: KeyListState<T>, action: KeyListAction) {
         keys: [...keys.slice(0, index), ...keys.slice(index + 1)],
       };
     }
+    case "RESET": {
+      const { values } = action;
+      const keys: number[] = [];
+      const defaultValues: T[] = [];
+      for (let i = 0; i < values.length; i++) {
+        keys.push(i);
+        defaultValues[i] = values[i];
+      }
+      return {
+        currentKey,
+        keys,
+        defaultValues,
+      };
+    }
+    default: {
+      return state;
+    }
   }
 }
 
 export function useKeyList<T = string>(defaultValues?: T[] | undefined) {
   return useReducer(
     reduceKeyList<T>,
-    { currentKey: 0, keys: [] } as KeyListState<T>,
+    { currentKey: 0, keys: [] as number[] },
     (initialArg) => {
       if (defaultValues && defaultValues.length > 0) {
         const keys = [];

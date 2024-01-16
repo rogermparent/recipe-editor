@@ -127,9 +127,9 @@ export function TextAreaInput({
   label,
   errors,
 }: {
-  name: string;
+  name?: string;
   id?: string;
-  label: string;
+  label?: string;
   defaultValue?: string;
   onChange?: ChangeEventHandler<HTMLTextAreaElement>;
   errors?: string[];

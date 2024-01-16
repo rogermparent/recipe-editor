@@ -1,10 +1,5 @@
-import {
-  Ingredient,
-  Instruction,
-  InstructionGroup,
-  Recipe,
-} from "./models/recipes/types";
-import { parseIngredient } from "parse-ingredient";
+import { Instruction, InstructionGroup, Recipe } from "./models/recipes/types";
+import { createIngredients } from "./parseIngredients";
 
 interface RecipeLD {
   name: string;
@@ -87,13 +82,7 @@ export async function importRecipeData(
       name,
       description,
       ingredients: recipeIngredient?.map((ingredientString) => {
-        const [parsedIngredient] = parseIngredient(ingredientString);
-        const { quantity, unitOfMeasure, description } = parsedIngredient;
-        const massagedIngredient: Ingredient = {
-          quantity: quantity ? String(quantity) : undefined,
-          unit: unitOfMeasure || undefined,
-          ingredient: description,
-        };
+        const [massagedIngredient] = createIngredients(ingredientString);
         return massagedIngredient;
       }),
       instructions: recipeInstructions?.map((entry) => {
