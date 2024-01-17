@@ -4,10 +4,14 @@ import { Button } from "@/components/Button";
 import { RecipeFormErrors } from "@/app/lib/models/recipes/formState";
 import { FieldWrapper, baseInputStyle } from "..";
 
+interface KeyListValue<T> {
+  key: number;
+  defaultValue?: T;
+}
+
 interface KeyListState<T = any> {
   currentKey: number;
-  keys: number[];
-  defaultValues?: T[];
+  values: KeyListValue<T>[];
 }
 
 export type KeyListAction<T = any> =
@@ -66,18 +70,22 @@ function reduceKeyList<T>(
   state: KeyListState<T>,
   action: KeyListAction<T>,
 ): KeyListState<T> {
-  const { currentKey, keys } = state;
+  const { currentKey, values } = state;
   switch (action.type) {
     case "APPEND":
       return {
         currentKey: currentKey + 1,
-        keys: [...keys, currentKey],
+        values: [...values, { key: currentKey }],
       };
     case "INSERT": {
       const { index } = action;
       return {
         currentKey: currentKey + 1,
-        keys: [...keys.slice(0, index), currentKey, ...keys.slice(index)],
+        values: [
+          ...values.slice(0, index),
+          { key: currentKey },
+          ...values.slice(index),
+        ],
       };
     }
     case "MOVE": {
@@ -85,34 +93,31 @@ function reduceKeyList<T>(
       if (fromIndex === toIndex) {
         return state;
       }
-      const newKeys = [...keys];
-      const keyToMove = keys[fromIndex];
-      newKeys.splice(fromIndex, 1);
-      newKeys.splice(toIndex, 0, keyToMove);
+      const newValues = [...values];
+      const valueToMove = values[fromIndex];
+      newValues.splice(fromIndex, 1);
+      newValues.splice(toIndex, 0, valueToMove);
       return {
         currentKey,
-        keys: newKeys,
+        values: newValues,
       };
     }
     case "DELETE": {
       const { index } = action;
       return {
         currentKey,
-        keys: [...keys.slice(0, index), ...keys.slice(index + 1)],
+        values: [...values.slice(0, index), ...values.slice(index + 1)],
       };
     }
     case "RESET": {
-      const { values } = action;
-      const keys: number[] = [];
-      const defaultValues: T[] = [];
-      for (let i = 0; i < values.length; i++) {
-        keys.push(i);
-        defaultValues[i] = values[i];
-      }
+      const { values: newValues } = action;
+      let i = currentKey;
+      const values: { key: number; defaultValue?: T }[] = newValues.map(
+        (defaultValue) => ({ key: i++, defaultValue }),
+      );
       return {
         currentKey,
-        keys,
-        defaultValues,
+        values,
       };
     }
     default: {
@@ -124,17 +129,16 @@ function reduceKeyList<T>(
 export function useKeyList<T = string>(defaultValues?: T[] | undefined) {
   return useReducer(
     reduceKeyList<T>,
-    { currentKey: 0, keys: [] as number[] },
+    { currentKey: 0, values: [] },
     (initialArg) => {
       if (defaultValues && defaultValues.length > 0) {
-        const keys = [];
+        const values = [];
         for (let i = 0; i < defaultValues.length; i++) {
-          keys.push(i);
+          values.push({ key: i, defaultValue: defaultValues[i] });
         }
         return {
           currentKey: defaultValues.length,
-          keys,
-          defaultValues,
+          values,
         } as KeyListState;
       }
       return initialArg;
@@ -157,18 +161,18 @@ export function TextListInput({
   errors?: RecipeFormErrors | undefined;
   appendLabel?: string;
 }) {
-  const [{ keys, defaultValues }, dispatch] = useKeyList(defaultValue);
+  const [{ values }, dispatch] = useKeyList(defaultValue);
   return (
     <FieldWrapper label={label} id={id}>
       <ul>
-        {keys.map((key, index) => (
+        {values.map(({ key, defaultValue }, index) => (
           <li
             key={key}
             className="flex flex-row flex-wrap my-1 justify-center items-center"
           >
             <input
               type="text"
-              defaultValue={defaultValues?.[index]}
+              defaultValue={defaultValue}
               className={clsx(baseInputStyle, "px-1 grow")}
               name={`${name}[${index}]`}
             />

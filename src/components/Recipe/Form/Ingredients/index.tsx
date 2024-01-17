@@ -25,14 +25,13 @@ export function IngredientsListInput({
   placeholder?: string;
   errors?: RecipeFormErrors | undefined;
 }) {
-  const [{ keys, defaultValues }, dispatch] =
-    useKeyList<Ingredient>(defaultValue);
+  const [{ values }, dispatch] = useKeyList<Ingredient>(defaultValue);
   const importTextareaRef = useRef<HTMLTextAreaElement>(null);
   const detailsRef = useRef<HTMLDetailsElement>(null);
   return (
     <FieldWrapper label={label} id={id}>
       <details ref={detailsRef}>
-        <summary>Import</summary>
+        <summary>Paste</summary>
         <textarea
           ref={importTextareaRef}
           className={clsx(baseInputStyle, "w-full h-36")}
@@ -50,28 +49,27 @@ export function IngredientsListInput({
               }
             }}
           >
-            Submit
+            Import Ingredients
           </Button>
         </div>
       </details>
       <ul>
-        {keys.map((key, index) => {
+        {values.map(({ key, defaultValue }, index) => {
           const itemKey = `${name}[${index}]`;
-          const currentDefaultItem = defaultValues?.[index];
           return (
             <li key={key} className="flex flex-col my-1">
               <div>
                 <TextInput
                   name={`${itemKey}.quantity`}
-                  defaultValue={currentDefaultItem?.quantity}
+                  defaultValue={defaultValue?.quantity}
                 />
                 <TextInput
                   name={`${itemKey}.unit`}
-                  defaultValue={currentDefaultItem?.unit}
+                  defaultValue={defaultValue?.unit}
                 />
                 <TextInput
                   name={`${itemKey}.ingredient`}
-                  defaultValue={currentDefaultItem?.ingredient}
+                  defaultValue={defaultValue?.ingredient}
                 />
               </div>
               <div>
