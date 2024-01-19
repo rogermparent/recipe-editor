@@ -67,33 +67,35 @@ function InstructionGroupInput({
         defaultValue={currentDefaultItem?.name}
       />
       <FieldWrapper label="Children">
-        <ul className="pl-2 ml-0.5 border-l-2 border-white">
-          {values.map(({ key, defaultValue }, index) => {
-            const childItemKey = `${itemKey}.instructions[${index}]`;
-            return (
-              <li key={key}>
-                <InstructionInput
-                  currentDefaultItem={defaultValue as Instruction}
-                  itemKey={childItemKey}
-                />
-                <div>
-                  <InputListControls dispatch={childDispatch} index={index} />
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+        <div className="pl-2 ml-0.5 border-l-2 border-white">
+          <ul>
+            {values.map(({ key, defaultValue }, index) => {
+              const childItemKey = `${itemKey}.instructions[${index}]`;
+              return (
+                <li key={key}>
+                  <InstructionInput
+                    currentDefaultItem={defaultValue as Instruction}
+                    itemKey={childItemKey}
+                  />
+                  <div>
+                    <InputListControls dispatch={childDispatch} index={index} />
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+          <Button
+            onClick={() => {
+              childDispatch({ type: "APPEND" });
+            }}
+          >
+            Append
+          </Button>
+          <div>
+            <InputListControls dispatch={dispatch} index={index} />
+          </div>
+        </div>
       </FieldWrapper>
-      <Button
-        onClick={() => {
-          childDispatch({ type: "APPEND" });
-        }}
-      >
-        Append
-      </Button>
-      <div>
-        <InputListControls dispatch={dispatch} index={index} />
-      </div>
     </div>
   );
 }
