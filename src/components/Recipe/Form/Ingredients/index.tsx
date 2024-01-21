@@ -72,7 +72,7 @@ export function IngredientsListInput({
                   defaultValue={defaultValue?.ingredient}
                 />
               </div>
-              <div>
+              <div className="flex flex-row flex-nowrap justify-center">
                 <InputListControls dispatch={dispatch} index={index} />
               </div>
             </li>

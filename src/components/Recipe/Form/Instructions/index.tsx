@@ -23,9 +23,13 @@ import { Dispatch, useEffect, useRef, useState } from "react";
 function InstructionInput({
   currentDefaultItem,
   itemKey,
+  index,
+  dispatch,
 }: {
   currentDefaultItem?: Instruction;
   itemKey: string;
+  index: number;
+  dispatch: Dispatch<KeyListAction>;
 }) {
   return (
     <div>
@@ -41,6 +45,9 @@ function InstructionInput({
         defaultValue={currentDefaultItem?.text}
         key={currentDefaultItem?.text}
       />
+      <div className="flex flex-row flex-nowrap justify-center">
+        <InputListControls dispatch={dispatch} index={index} />
+      </div>
     </div>
   );
 }
@@ -76,26 +83,26 @@ function InstructionGroupInput({
                   <InstructionInput
                     currentDefaultItem={defaultValue as Instruction}
                     itemKey={childItemKey}
+                    index={index}
+                    dispatch={childDispatch}
                   />
-                  <div>
-                    <InputListControls dispatch={childDispatch} index={index} />
-                  </div>
                 </li>
               );
             })}
           </ul>
           <Button
+            className="mx-0.5 my-1 w-full"
             onClick={() => {
               childDispatch({ type: "APPEND" });
             }}
           >
             Append
           </Button>
-          <div>
-            <InputListControls dispatch={dispatch} index={index} />
-          </div>
         </div>
       </FieldWrapper>
+      <div className="flex flex-row flex-nowrap justify-center">
+        <InputListControls dispatch={dispatch} index={index} />
+      </div>
     </div>
   );
 }
@@ -141,11 +148,10 @@ function InstructionEntryInput({
         <InstructionInput
           currentDefaultItem={defaultValue as Instruction}
           itemKey={itemKey}
+          dispatch={dispatch}
+          index={index}
         />
       )}
-      <div>
-        <InputListControls dispatch={dispatch} index={index} />
-      </div>
     </li>
   );
 }
@@ -211,6 +217,7 @@ export function InstructionsListInput({
         })}
       </ul>
       <Button
+        className="mx-0.5 my-1 w-full"
         onClick={() => {
           dispatch({ type: "APPEND" });
         }}

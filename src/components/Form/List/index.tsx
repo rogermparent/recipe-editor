@@ -21,6 +21,8 @@ export type KeyListAction<T = any> =
   | { type: "INSERT"; index: number }
   | { type: "RESET"; values: T[] };
 
+const inputListControlButtonStyle = "ml-0.5 w-10 h-10 sm:w-8 sm:h-8";
+
 export function InputListControls({
   dispatch,
   index,
@@ -31,7 +33,7 @@ export function InputListControls({
   return (
     <>
       <Button
-        className="ml-0.5 w-8"
+        className={inputListControlButtonStyle}
         onClick={() => {
           dispatch({ type: "INSERT", index });
         }}
@@ -39,7 +41,7 @@ export function InputListControls({
         +
       </Button>
       <Button
-        className="ml-0.5 w-8"
+        className={inputListControlButtonStyle}
         onClick={() => {
           dispatch({ type: "MOVE", from: index, to: index - 1 });
         }}
@@ -47,7 +49,7 @@ export function InputListControls({
         &uarr;
       </Button>
       <Button
-        className="ml-0.5 w-8"
+        className={inputListControlButtonStyle}
         onClick={() => {
           dispatch({ type: "MOVE", from: index, to: index + 1 });
         }}
@@ -55,7 +57,7 @@ export function InputListControls({
         &darr;
       </Button>
       <Button
-        className="ml-0.5 w-8"
+        className={inputListControlButtonStyle}
         onClick={() => {
           dispatch({ type: "DELETE", index });
         }}
@@ -176,7 +178,7 @@ export function TextListInput({
               className={clsx(baseInputStyle, "px-1 grow")}
               name={`${name}[${index}]`}
             />
-            <div className="flex flex-row shrink">
+            <div className="flex flex-row flex-nowrap justify-center">
               <InputListControls dispatch={dispatch} index={index} />
             </div>
           </li>
