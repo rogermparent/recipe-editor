@@ -16,6 +16,7 @@ import buildRecipeIndexValue from "../buildIndexValue";
 import createDefaultSlug from "../createSlug";
 import slugify from "@sindresorhus/slugify";
 import writeRecipeUpload from "../writeUpload";
+import getRecipeBySlug from "../data/read";
 
 export default async function updateRecipe(
   currentDate: number,
@@ -37,11 +38,20 @@ export default async function updateRecipe(
     };
   }
 
-  const { date, slug, name, description, ingredients, instructions, image } =
-    validatedFields.data;
+  const {
+    date,
+    slug,
+    name,
+    description,
+    ingredients,
+    instructions,
+    image,
+    clearImage,
+  } = validatedFields.data;
 
   const currentRecipeDirectory = getRecipeDirectory(currentSlug);
   const currentRecipePath = getRecipeFilePath(currentRecipeDirectory);
+  const currentRecipeData = await getRecipeBySlug(currentSlug);
 
   const finalSlug = slugify(slug || createDefaultSlug(validatedFields.data));
   const finalDate = date || currentDate || Date.now();
@@ -57,7 +67,11 @@ export default async function updateRecipe(
     description,
     ingredients,
     instructions,
-    image: hasImage ? image.name : undefined,
+    image: hasImage
+      ? image.name
+      : clearImage
+        ? undefined
+        : currentRecipeData.image,
     date: finalDate,
   };
 

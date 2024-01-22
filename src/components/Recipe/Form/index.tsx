@@ -1,15 +1,80 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import slugify from "@sindresorhus/slugify";
-import { TextInput, TextAreaInput, FileInput } from "@/components/Form";
+import {
+  TextInput,
+  TextAreaInput,
+  FileInput,
+  CheckboxInput,
+} from "@/components/Form";
 import { Recipe } from "@/app/lib/models/recipes/types";
 import { RecipeFormState } from "@/app/lib/models/recipes/formState";
 import createDefaultSlug from "@/app/lib/models/recipes/createSlug";
-import { IngredientsListInput } from "./Ingredients";
-import { InstructionsListInput } from "./Instructions";
-import Image from "next/image";
+import { IngredientsListInput } from "@/components/Recipe/Form/Ingredients";
+import { InstructionsListInput } from "@/components/Recipe/Form/Instructions";
 import { DateTimeInput } from "@/components/Form/DateTime";
+
+function ImageInput({
+  image,
+  slug,
+  errors,
+}: {
+  image?: string;
+  slug: string | undefined;
+  errors: string[] | undefined;
+}) {
+  const [imagesToUpload, setImagesToUpload] = useState<FileList>();
+  const [imagePreviewURL, setImagePreviewURL] = useState<string>();
+
+  useEffect(() => {
+    if (imagesToUpload) {
+      const previewImage = imagesToUpload[0];
+      if (previewImage) {
+        const url = URL.createObjectURL(previewImage);
+        setImagePreviewURL(url);
+        return () => {
+          URL.revokeObjectURL(url);
+        };
+      }
+    }
+  }, [imagesToUpload]);
+
+  return (
+    <div>
+      <FileInput
+        label="Image"
+        name="image"
+        id="recipe-form-image"
+        errors={errors}
+        onChange={(e) => setImagesToUpload(e.target?.files || undefined)}
+      />
+      <div className="w-full">
+        {imagePreviewURL ? (
+          <Image
+            src={imagePreviewURL}
+            alt="Image to upload"
+            className="w-full"
+            width={850}
+            height={475}
+          />
+        ) : (
+          slug &&
+          image && (
+            <Image
+              src={`/recipe/${slug}/uploads/${image}`}
+              alt="Heading image"
+              width={850}
+              height={475}
+            />
+          )
+        )}
+      </div>
+      {image ? <CheckboxInput name="clearImage" label="Remove Image" /> : null}
+    </div>
+  );
+}
 
 export default function CreateRecipeFields({
   recipe,
@@ -28,26 +93,12 @@ export default function CreateRecipeFields({
     [currentName],
   );
   const [currentTimezone, setCurrentTimezone] = useState<string>();
-  const [imagesToUpload, setImagesToUpload] = useState<FileList>();
-  const [imagePreviewURL, setImagePreviewURL] = useState<string>();
 
   useEffect(() => {
     const fetchedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     setCurrentTimezone(fetchedTimezone);
   }, []);
 
-  useEffect(() => {
-    if (imagesToUpload) {
-      const previewImage = imagesToUpload[0];
-      if (previewImage) {
-        const url = URL.createObjectURL(previewImage);
-        setImagePreviewURL(url);
-        return () => {
-          URL.revokeObjectURL(url);
-        };
-      }
-    }
-  }, [imagesToUpload]);
   return (
     <>
       <TextInput
@@ -58,33 +109,6 @@ export default function CreateRecipeFields({
         onChange={(e) => setCurrentName(e.target.value)}
         errors={state.errors?.name}
       />
-      <FileInput
-        label="Image"
-        name="image"
-        id="recipe-form-image"
-        errors={state.errors?.image}
-        onChange={(e) => setImagesToUpload(e.target?.files || undefined)}
-      />
-      <div className="w-full">
-        {imagePreviewURL ? (
-          <Image
-            src={imagePreviewURL}
-            alt="Image to upload"
-            className="w-full"
-            width={850}
-            height={475}
-          />
-        ) : (
-          image && (
-            <Image
-              src={`/recipe/${slug}/uploads/${image}`}
-              alt="Heading image"
-              width={850}
-              height={475}
-            />
-          )
-        )}
-      </div>
       <TextAreaInput
         label="Description"
         name="description"
@@ -92,6 +116,7 @@ export default function CreateRecipeFields({
         defaultValue={description}
         errors={state.errors?.description}
       />
+      <ImageInput image={image} errors={state.errors?.image} slug={slug} />
       <IngredientsListInput
         label="Ingredients"
         name="ingredients"
