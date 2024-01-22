@@ -61,7 +61,7 @@ export default function CreateRecipeFields({
       <FileInput
         label="Image"
         name="image"
-        id="post-form-image"
+        id="recipe-form-image"
         errors={state.errors?.image}
         onChange={(e) => setImagesToUpload(e.target?.files || undefined)}
       />
@@ -77,7 +77,7 @@ export default function CreateRecipeFields({
         ) : (
           image && (
             <Image
-              src={`/post/${slug}/uploads/${image}`}
+              src={`/recipe/${slug}/uploads/${image}`}
               alt="Heading image"
               width={850}
               height={475}
