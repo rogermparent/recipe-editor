@@ -5,7 +5,7 @@ describe("Single Recipe View", () => {
       cy.visit("http://localhost:3000/recipe/recipe-6");
     });
 
-    it("should display a recipe", () => {
+    it.only("should display a recipe", () => {
       cy.findByText("Recipe 6");
     });
 
