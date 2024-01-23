@@ -1,5 +1,5 @@
-import getRecipes from "@/app/lib/models/recipes/data/readIndex";
-import RecipeList from "@/components/Recipe/List";
+import getRecipes from "@/collections/recipes/controller/data/readIndex";
+import RecipeList from "@/collections/recipes/components/List";
 import Link from "next/link";
 import { RECIPES_PER_PAGE } from "./constants";
 

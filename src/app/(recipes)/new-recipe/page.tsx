@@ -1,4 +1,4 @@
-import { importRecipeData } from "@/app/lib/importRecipeData";
+import { importRecipeData } from "@/collections/recipes/util/importRecipeData";
 import CreateForm from "./form";
 import { TextInput } from "@/components/Form";
 import { Button } from "@/components/Button";

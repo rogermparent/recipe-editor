@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ReactNode } from "react";
-import { RecipeEntry, RecipeEntryValue } from "@/app/lib/models/recipes/types";
+import { RecipeEntry, RecipeEntryValue } from "@/collections/recipes/controller/types";
 import Image from "next/image";
 import { getPlaceholder } from "@/app/lib/placeholders";
 

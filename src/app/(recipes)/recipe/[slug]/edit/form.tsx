@@ -1,11 +1,11 @@
 "use client";
 
-import UpdateRecipeFields from "@/components/Recipe/Form/Update";
+import UpdateRecipeFields from "@/collections/recipes/components/Form/Update";
 import { useFormState } from "react-dom";
 import { Button } from "@/components/Button";
-import { Recipe } from "@/app/lib/models/recipes/types";
-import { RecipeFormState } from "@/app/lib/models/recipes/formState";
-import updateRecipe from "@/app/lib/models/recipes/actions/update";
+import { Recipe } from "@/collections/recipes/controller/types";
+import { RecipeFormState } from "@/collections/recipes/controller/formState";
+import updateRecipe from "@/collections/recipes/controller/actions/update";
 
 export default function EditRecipeForm({
   recipe,

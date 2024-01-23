@@ -1,11 +1,11 @@
 "use client";
 
-import CreateRecipeFields from "@/components/Recipe/Form/Create";
+import CreateRecipeFields from "@/collections/recipes/components/Form/Create";
 import { useFormState } from "react-dom";
 import { Button } from "@/components/Button";
-import { RecipeFormState } from "@/app/lib/models/recipes/formState";
-import createRecipe from "@/app/lib/models/recipes/actions/create";
-import { Recipe } from "@/app/lib/models/recipes/types";
+import { RecipeFormState } from "@/collections/recipes/controller/formState";
+import createRecipe from "@/collections/recipes/controller/actions/create";
+import { Recipe } from "@/collections/recipes/controller/types";
 
 export default function NewRecipeForm({
   slug,

@@ -1,7 +1,7 @@
 import {
   getRecipeDirectory,
   getRecipeUploadsDirectory,
-} from "@/app/lib/models/recipes/filesystemDirectories";
+} from "@/collections/recipes/controller/filesystemDirectories";
 import { ReadStream } from "fs";
 import { open } from "fs/promises";
 import { notFound } from "next/navigation";

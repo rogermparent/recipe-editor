@@ -1,4 +1,4 @@
-import { Instruction, InstructionGroup, Recipe } from "./models/recipes/types";
+import { Instruction, InstructionGroup, Recipe } from "@/collections/recipes/controller/types";
 import { createIngredients } from "./parseIngredients";
 
 interface RecipeLD {

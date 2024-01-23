@@ -1,4 +1,4 @@
-import getRecipeBySlug from "@/app/lib/models/recipes/data/read";
+import getRecipeBySlug from "@/collections/recipes/controller/data/read";
 import EditForm from "./form";
 import { notFound } from "next/navigation";
 

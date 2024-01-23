@@ -1,7 +1,7 @@
 "use server";
 
 import { auth, signIn } from "@/auth";
-import parseRecipeFormData from "../parseFormData";
+import parseRecipeFormData from "@/collections/recipes/controller/parseFormData";
 import slugify from "@sindresorhus/slugify";
 import { mkdirIfNotPresent } from "@/app/lib/util";
 import { writeFile } from "fs/promises";

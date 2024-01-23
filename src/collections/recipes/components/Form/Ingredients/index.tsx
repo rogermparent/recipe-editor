@@ -1,6 +1,6 @@
-import { RecipeFormErrors } from "@/app/lib/models/recipes/formState";
-import { Ingredient } from "@/app/lib/models/recipes/types";
-import { createIngredients } from "@/app/lib/parseIngredients";
+import { RecipeFormErrors } from "@/collections/recipes/controller/formState";
+import { Ingredient } from "@/collections/recipes/controller/types";
+import { createIngredients } from "@/collections/recipes/util/parseIngredients";
 import { Button } from "@/components/Button";
 import {
   FieldWrapper,

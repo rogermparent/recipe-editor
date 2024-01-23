@@ -1,6 +1,6 @@
 "use client";
 
-import { InstructionEntry } from "@/app/lib/models/recipes/types";
+import { InstructionEntry } from "@/collections/recipes/controller/types";
 
 import Markdown from "@/components/Markdown";
 

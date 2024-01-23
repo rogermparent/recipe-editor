@@ -1,5 +1,5 @@
 import { parseIngredient } from "parse-ingredient";
-import { Ingredient } from "./models/recipes/types";
+import { Ingredient } from "@/collections/recipes/controller/types";
 
 export function createIngredients(input: string) {
   return parseIngredient(input).map(

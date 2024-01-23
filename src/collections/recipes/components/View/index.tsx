@@ -7,7 +7,7 @@ import React, {
   useMemo,
   useReducer,
 } from "react";
-import { Ingredient, Recipe } from "@/app/lib/models/recipes/types";
+import { Ingredient, Recipe } from "@/collections/recipes/controller/types";
 
 import Fraction from "fraction.js";
 import clsx from "clsx";

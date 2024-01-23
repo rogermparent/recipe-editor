@@ -1,6 +1,6 @@
 import Link from "next/link";
-import RecipeList from "@/components/Recipe/List";
-import getRecipes from "../lib/models/recipes/data/readIndex";
+import RecipeList from "@/collections/recipes/components/List";
+import getRecipes from "@/collections/recipes/controller/data/readIndex";
 
 export default async function Home() {
   const { recipes, more } = await getRecipes({ limit: 3 });

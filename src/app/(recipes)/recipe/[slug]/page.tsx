@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import getRecipeBySlug from "@/app/lib/models/recipes/data/read";
-import deleteRecipe from "@/app/lib/models/recipes/actions/delete";
-import { RecipeView } from "@/components/Recipe/View";
+import getRecipeBySlug from "@/collections/recipes/controller/data/read";
+import deleteRecipe from "@/collections/recipes/controller/actions/delete";
+import { RecipeView } from "@/collections/recipes/components/View";
 import { getPlaceholder } from "@/app/lib/placeholders";
 
 export async function generateMetadata({

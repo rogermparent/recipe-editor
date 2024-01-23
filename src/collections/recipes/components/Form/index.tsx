@@ -9,11 +9,11 @@ import {
   FileInput,
   CheckboxInput,
 } from "@/components/Form";
-import { Recipe } from "@/app/lib/models/recipes/types";
-import { RecipeFormState } from "@/app/lib/models/recipes/formState";
-import createDefaultSlug from "@/app/lib/models/recipes/createSlug";
-import { IngredientsListInput } from "@/components/Recipe/Form/Ingredients";
-import { InstructionsListInput } from "@/components/Recipe/Form/Instructions";
+import { Recipe } from "@/collections/recipes/controller/types";
+import { RecipeFormState } from "@/collections/recipes/controller/formState";
+import createDefaultSlug from "@/collections/recipes/controller/createSlug";
+import { IngredientsListInput } from "@/collections/recipes/components/Form/Ingredients";
+import { InstructionsListInput } from "@/collections/recipes/components/Form/Instructions";
 import { DateTimeInput } from "@/components/Form/DateTime";
 
 function ImageInput({

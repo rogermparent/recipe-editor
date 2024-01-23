@@ -1,9 +1,9 @@
-import { RecipeFormErrors } from "@/app/lib/models/recipes/formState";
+import { RecipeFormErrors } from "@/collections/recipes/controller/formState";
 import {
   Instruction,
   InstructionEntry,
   InstructionGroup,
-} from "@/app/lib/models/recipes/types";
+} from "@/collections/recipes/controller/types";
 import { Button } from "@/components/Button";
 import {
   FieldWrapper,

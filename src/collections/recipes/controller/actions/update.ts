@@ -4,7 +4,7 @@ import { auth, signIn } from "@/auth";
 import { rename, writeFile } from "fs/promises";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import parseRecipeFormData from "../parseFormData";
+import parseRecipeFormData from "@/collections/recipes/controller/parseFormData";
 import { RecipeFormState } from "../formState";
 import {
   getRecipeDirectory,
