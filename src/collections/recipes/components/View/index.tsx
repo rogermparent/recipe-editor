@@ -14,8 +14,8 @@ import clsx from "clsx";
 import Image from "next/image";
 
 import Markdown from "@/components/Markdown";
-import { TextInput } from "@/components/Form";
 import { InstructionEntryView } from "./Instructions";
+import { TextInput } from "@/components/Form/inputs/Text";
 
 function Card({
   children,

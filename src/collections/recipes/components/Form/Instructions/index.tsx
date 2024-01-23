@@ -5,18 +5,15 @@ import {
   InstructionGroup,
 } from "@/collections/recipes/controller/types";
 import { Button } from "@/components/Button";
-import {
-  FieldWrapper,
-  SelectInput,
-  TextAreaInput,
-  TextInput,
-  baseInputStyle,
-} from "@/components/Form";
+import { FieldWrapper, baseInputStyle } from "@/components/Form";
 import {
   InputListControls,
   KeyListAction,
   useKeyList,
-} from "@/components/Form/List";
+} from "@/components/Form/inputs/List";
+import { SelectInput } from "@/components/Form/inputs/Select";
+import { TextInput } from "@/components/Form/inputs/Text";
+import { TextAreaInput } from "@/components/Form/inputs/TextArea";
 import clsx from "clsx";
 import { Dispatch, useEffect, useRef, useState } from "react";
 

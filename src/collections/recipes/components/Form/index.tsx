@@ -1,80 +1,16 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
 import slugify from "@sindresorhus/slugify";
-import {
-  TextInput,
-  TextAreaInput,
-  FileInput,
-  CheckboxInput,
-} from "@/components/Form";
 import { Recipe } from "@/collections/recipes/controller/types";
 import { RecipeFormState } from "@/collections/recipes/controller/formState";
 import createDefaultSlug from "@/collections/recipes/controller/createSlug";
 import { IngredientsListInput } from "@/collections/recipes/components/Form/Ingredients";
 import { InstructionsListInput } from "@/collections/recipes/components/Form/Instructions";
-import { DateTimeInput } from "@/components/Form/DateTime";
-
-function ImageInput({
-  image,
-  slug,
-  errors,
-}: {
-  image?: string;
-  slug: string | undefined;
-  errors: string[] | undefined;
-}) {
-  const [imagesToUpload, setImagesToUpload] = useState<FileList>();
-  const [imagePreviewURL, setImagePreviewURL] = useState<string>();
-
-  useEffect(() => {
-    if (imagesToUpload) {
-      const previewImage = imagesToUpload[0];
-      if (previewImage) {
-        const url = URL.createObjectURL(previewImage);
-        setImagePreviewURL(url);
-        return () => {
-          URL.revokeObjectURL(url);
-        };
-      }
-    }
-  }, [imagesToUpload]);
-
-  return (
-    <div>
-      <FileInput
-        label="Image"
-        name="image"
-        id="recipe-form-image"
-        errors={errors}
-        onChange={(e) => setImagesToUpload(e.target?.files || undefined)}
-      />
-      <div className="w-full">
-        {imagePreviewURL ? (
-          <Image
-            src={imagePreviewURL}
-            alt="Image to upload"
-            className="w-full"
-            width={850}
-            height={475}
-          />
-        ) : (
-          slug &&
-          image && (
-            <Image
-              src={`/recipe/${slug}/uploads/${image}`}
-              alt="Heading image"
-              width={850}
-              height={475}
-            />
-          )
-        )}
-      </div>
-      {image ? <CheckboxInput name="clearImage" label="Remove Image" /> : null}
-    </div>
-  );
-}
+import { DateTimeInput } from "@/components/Form/inputs/DateTime";
+import { ImageInput } from "@/components/Form/inputs/Image";
+import { TextInput } from "@/components/Form/inputs/Text";
+import { TextAreaInput } from "@/components/Form/inputs/TextArea";
 
 export default function CreateRecipeFields({
   recipe,

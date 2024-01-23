@@ -1,6 +1,6 @@
 import { ChangeEventHandler, useState } from "react";
 import clsx from "clsx";
-import { Errors, FieldWrapper, baseInputStyle } from "..";
+import { Errors, FieldWrapper, baseInputStyle } from "../..";
 
 export function DateTimeInput({
   name,

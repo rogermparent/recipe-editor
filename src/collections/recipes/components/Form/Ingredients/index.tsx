@@ -2,15 +2,11 @@ import { RecipeFormErrors } from "@/collections/recipes/controller/formState";
 import { Ingredient } from "@/collections/recipes/controller/types";
 import { createIngredients } from "@/collections/recipes/util/parseIngredients";
 import { Button } from "@/components/Button";
-import {
-  FieldWrapper,
-  TextAreaInput,
-  TextInput,
-  baseInputStyle,
-} from "@/components/Form";
-import { InputListControls, useKeyList } from "@/components/Form/List";
+import { FieldWrapper, baseInputStyle } from "@/components/Form";
+import { InputListControls, useKeyList } from "@/components/Form/inputs/List";
+import { TextInput } from "@/components/Form/inputs/Text";
 import clsx from "clsx";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 export function IngredientsListInput({
   name,

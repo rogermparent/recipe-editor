@@ -2,7 +2,7 @@ import { Dispatch, useReducer } from "react";
 import clsx from "clsx";
 import { Button } from "@/components/Button";
 import { RecipeFormErrors } from "@/collections/recipes/controller/formState";
-import { FieldWrapper, baseInputStyle } from "..";
+import { FieldWrapper, baseInputStyle } from "../..";
 
 interface KeyListValue<T> {
   key: number;
