@@ -4,7 +4,7 @@ import { Index, Id, SearchOptions } from "flexsearch";
 export function useFlexSearch(
   query: string | undefined,
   index: Index | undefined,
-  source: unknown,
+  source?: unknown,
   searchOptions?: SearchOptions | undefined,
 ): Id[] {
   const [results, setResults] = useState<Id[]>([]);
@@ -13,6 +13,6 @@ export function useFlexSearch(
       const rawResults = index.search(query, searchOptions || {});
       setResults(rawResults);
     }
-  }, [query, index, source]);
+  }, [query, index, searchOptions, source]);
   return results;
 }

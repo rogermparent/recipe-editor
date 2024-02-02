@@ -26,6 +26,17 @@ export function useHighlightedText(text: string, query: string) {
   return hasMatch && wordComponents;
 }
 
+function HighlightedIngredient({
+  ingredient,
+  query,
+}: {
+  ingredient: string;
+  query: string;
+}) {
+  const text = useHighlightedText(ingredient, query);
+  return text && <li className="my-1">{text}</li>;
+}
+
 export function SearchListItem({
   recipe: { slug, date, name, image, placeholderURL, ingredients },
   query,
@@ -59,16 +70,13 @@ export function SearchListItem({
         </div>
         {ingredients && (
           <ul className="my-0.5 mx-2">
-            {ingredients.map((ingredient, i) => {
-              const text = useHighlightedText(ingredient, query);
-              return (
-                text && (
-                  <li key={i} className="my-1">
-                    {text}
-                  </li>
-                )
-              );
-            })}
+            {ingredients.map((ingredient, i) => (
+              <HighlightedIngredient
+                ingredient={ingredient}
+                query={query}
+                key={i}
+              />
+            ))}
           </ul>
         )}
       </Link>
