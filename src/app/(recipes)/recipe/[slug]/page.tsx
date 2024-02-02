@@ -27,21 +27,15 @@ export default async function Recipe({
     }
     throw e;
   }
-  const { date, image } = recipe;
+  const { date } = recipe;
 
   const deleteRecipeWithId = deleteRecipe.bind(null, date, slug);
-
-  const placeholderURL = image && (await getPlaceholder(slug, image));
 
   return (
     <main className="flex flex-col items-center w-full h-full grow">
       <div className="flex flex-row grow w-full h-full">
         <div className="grow flex flex-col flex-nowrap items-center">
-          <RecipeView
-            recipe={recipe}
-            slug={slug}
-            placeholderURL={placeholderURL}
-          />
+          <RecipeView recipe={recipe} slug={slug} />
         </div>
       </div>
       <hr className="w-full border-slate-700 print:hidden" />

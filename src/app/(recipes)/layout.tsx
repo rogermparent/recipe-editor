@@ -27,6 +27,9 @@ export default async function Layout({
           <Link href="/new-recipe" className="inline-block p-2 hover:underline">
             New Recipe
           </Link>
+          <Link href="/search" className="inline-block p-2 hover:underline">
+            Search
+          </Link>
           <Link href="/settings" className="inline-block p-2 hover:underline">
             Settings
           </Link>

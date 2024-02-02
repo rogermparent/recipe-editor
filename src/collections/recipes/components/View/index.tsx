@@ -133,11 +133,9 @@ export const Ingredients = ({
 export const RecipeView = ({
   recipe,
   slug,
-  placeholderURL,
 }: {
   recipe?: Recipe;
   slug: string;
-  placeholderURL: string;
 }) => {
   const {
     name,
@@ -150,6 +148,7 @@ export const RecipeView = ({
     servingSize,
     description,
     image,
+    placeholderURL,
   } = recipe || {};
 
   const [{ fraction: multiplier }, setMultiplier] = useReducer(

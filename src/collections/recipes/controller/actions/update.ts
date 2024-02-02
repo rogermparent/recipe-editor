@@ -17,6 +17,8 @@ import createDefaultSlug from "../createSlug";
 import slugify from "@sindresorhus/slugify";
 import writeRecipeUpload from "../writeUpload";
 import getRecipeBySlug from "../data/read";
+import { getPlaceholder } from "@/app/lib/placeholders";
+import { getPlaiceholder } from "plaiceholder";
 
 export default async function updateRecipe(
   currentDate: number,
@@ -62,6 +64,10 @@ export default async function updateRecipe(
 
   const hasImage = image && image.size > 0;
 
+  const placeholderURL = hasImage
+    ? (await getPlaiceholder((await image.arrayBuffer()) as Buffer)).base64
+    : undefined;
+
   const data: Recipe = {
     name,
     description,
@@ -72,6 +78,7 @@ export default async function updateRecipe(
       : clearImage
         ? undefined
         : currentRecipeData.image,
+    placeholderURL,
     date: finalDate,
   };
 

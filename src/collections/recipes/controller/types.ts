@@ -29,6 +29,7 @@ export interface Recipe {
   servingSize?: string;
   ingredients?: Ingredient[];
   instructions?: InstructionEntry[];
+  placeholderURL?: string;
 }
 
 export type RecipeEntryKey = [date: number, slug: string];
@@ -36,6 +37,8 @@ export interface RecipeEntryValue {
   name: string;
   description?: string;
   image?: string;
+  placeholderURL?: string;
+  ingredients?: string[];
 }
 
 export interface RecipeEntry {
