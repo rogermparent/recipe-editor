@@ -21,6 +21,7 @@
     "bcrypt": "^5.1.1",
     "clsx": "^2.1.0",
     "flexsearch": "^0.7.43",
+    "format-quantity": "^3.0.0",
     "fraction.js": "^4.3.7",
     "lmdb": "^2.9.2",
     "lodash": "^4.17.21",
