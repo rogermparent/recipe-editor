@@ -2,7 +2,7 @@ describe("Recipe Edit View", () => {
   describe("with the two recipes fixture", () => {
     beforeEach(() => {
       cy.resetData("two-pages");
-      cy.visit("http://localhost:3000/recipe/recipe-6/edit");
+      cy.visit("/recipe/recipe-6/edit");
     });
 
     it("should need authorization", () => {
@@ -11,7 +11,7 @@ describe("Recipe Edit View", () => {
 
     it("should require authorization even when recipe doesn't exist", () => {
       cy.visit({
-        url: "http://localhost:3000/recipe/non-existent-recipe/edit",
+        url: "/recipe/non-existent-recipe/edit",
       });
     });
 
@@ -36,7 +36,7 @@ describe("Recipe Edit View", () => {
 
         cy.findByText(editedRecipeTitle);
 
-        cy.visit("http://localhost:3000/");
+        cy.visit("/");
         cy.findByText(editedRecipeTitle);
         cy.checkNamesInOrder(["Recipe 7", editedRecipeTitle, "Recipe 5"]);
 
@@ -73,7 +73,7 @@ describe("Recipe Edit View", () => {
         );
 
         // Image on index should be alternate
-        cy.visit("http://localhost:3000/");
+        cy.visit("/");
         cy.findByText("Recipe 6")
           .parentsUntil("li")
           .findByRole("img")
@@ -85,7 +85,7 @@ describe("Recipe Edit View", () => {
       });
 
       it("should be able to set a recipe image on a recipe without an image", () => {
-        cy.visit("http://localhost:3000/recipe/recipe-5/edit");
+        cy.visit("/recipe/recipe-5/edit");
         cy.findByText("Editing Recipe: Recipe 5");
 
         // With no image, the preview and "remove image" checkbox should not be present
@@ -113,7 +113,7 @@ describe("Recipe Edit View", () => {
         );
 
         // Image on index should be alternate
-        cy.visit("http://localhost:3000/");
+        cy.visit("/");
         cy.findByText("Recipe 5")
           .parentsUntil("li")
           .findByRole("img")
@@ -161,7 +161,7 @@ describe("Recipe Edit View", () => {
 
       it("should have status 404 when recipe doesn't exist", () => {
         cy.request({
-          url: "http://localhost:3000/recipe/non-existent-recipe/edit",
+          url: "/recipe/non-existent-recipe/edit",
           failOnStatusCode: false,
         })
           .its("status")

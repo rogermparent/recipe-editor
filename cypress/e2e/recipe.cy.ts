@@ -2,7 +2,7 @@ describe("Single Recipe View", () => {
   describe("with the two recipes fixture", () => {
     beforeEach(() => {
       cy.resetData("two-pages");
-      cy.visit("http://localhost:3000/recipe/recipe-6");
+      cy.visit("/recipe/recipe-6");
     });
 
     it.only("should display a recipe", () => {
@@ -33,7 +33,7 @@ describe("Single Recipe View", () => {
 
       cy.findByText(editedRecipe);
 
-      cy.visit("http://localhost:3000/");
+      cy.visit("/");
       cy.findByText(editedRecipe);
       cy.checkNamesInOrder(["Recipe 7", editedRecipe, "Recipe 5"]);
 
@@ -52,7 +52,7 @@ describe("Single Recipe View", () => {
       cy.findByText("Recipe 4");
       cy.checkNamesInOrder(["Recipe 7", "Recipe 5", "Recipe 4"]);
       cy.request({
-        url: "http://localhost:3000/recipe/recipe-6",
+        url: "/recipe/recipe-6",
         failOnStatusCode: false,
       })
         .its("status")
@@ -62,7 +62,7 @@ describe("Single Recipe View", () => {
 
   it("should have status 404 when recipe doesn't exist", () => {
     cy.request({
-      url: "http://localhost:3000/recipe/non-existent-recipe",
+      url: "/recipe/non-existent-recipe",
       failOnStatusCode: false,
     })
       .its("status")

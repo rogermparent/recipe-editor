@@ -2,7 +2,7 @@ describe("Index Page", () => {
   describe("when empty", () => {
     beforeEach(() => {
       cy.resetData();
-      cy.visit("http://localhost:3000");
+      cy.visit("");
     });
 
     it("should not need authorization", () => {
@@ -29,7 +29,7 @@ describe("Index Page", () => {
       cy.findByText(testRecipe);
 
       // Check home and ensure the recipe is present
-      cy.visit("http://localhost:3000");
+      cy.visit("");
       cy.findByText(testRecipe).click();
 
       // Delete the recipe and ensure it's gone
@@ -37,7 +37,7 @@ describe("Index Page", () => {
       cy.findAllByText(testRecipe).should("not.exist");
 
       cy.request({
-        url: "http://localhost:3000/recipe/test-page",
+        url: "/recipe/test-page",
         failOnStatusCode: false,
       })
         .its("status")
@@ -51,13 +51,13 @@ describe("Index Page", () => {
 
       const testNames = ["c", "a", "1"].map((x) => `Recipe ${x}`);
       for (const testRecipe of testNames) {
-        cy.visit("http://localhost:3000/new-recipe");
+        cy.visit("/new-recipe");
         cy.findByLabelText("Name").type(testRecipe);
         cy.findByText("Submit").click();
         cy.findByText(testRecipe);
       }
 
-      cy.visit("http://localhost:3000");
+      cy.visit("");
       cy.checkNamesInOrder(testNames.reverse());
     });
   });
@@ -65,7 +65,7 @@ describe("Index Page", () => {
   describe("with just enough items for the front page", () => {
     beforeEach(() => {
       cy.resetData("front-page-only");
-      cy.visit("http://localhost:3000");
+      cy.visit("");
     });
 
     it("should not display a link to the index", () => {
@@ -81,7 +81,7 @@ describe("Index Page", () => {
   describe("with two pages of items", () => {
     beforeEach(() => {
       cy.resetData("two-pages");
-      cy.visit("http://localhost:3000");
+      cy.visit("");
     });
 
     it("should display the latest three recipes", () => {

@@ -2,7 +2,7 @@ describe("New Recipe View", () => {
   describe("with the importable uploads fixture", () => {
     beforeEach(() => {
       cy.resetData("importable-uploads");
-      cy.visit("http://localhost:3000/new-recipe");
+      cy.visit("/new-recipe");
     });
 
     it("should need authentication", () => {
@@ -25,7 +25,7 @@ describe("New Recipe View", () => {
 
         cy.findByRole("heading", { name: newRecipeTitle });
 
-        cy.visit("http://localhost:3000/");
+        cy.visit("/");
 
         cy.findByText(newRecipeTitle);
 
@@ -33,14 +33,17 @@ describe("New Recipe View", () => {
       });
 
       it.only("should be able to import a recipe", () => {
+        const baseURL = Cypress.config().baseUrl;
         const testURL = "/uploads/katsudon.html";
-        cy.findByLabelText("Import from URL").type(
-          "http://localhost:3000" + testURL,
-        );
+        const fullTestURL = new URL(testURL, baseURL);
+        cy.findByLabelText("Import from URL").type(fullTestURL.href);
         cy.findByRole("button", { name: "Import" }).click();
         cy.url().should(
           "equal",
-          "http://localhost:3000/new-recipe?import=http%3A%2F%2Flocalhost%3A3000%2Fuploads%2Fkatsudon.html",
+          new URL(
+            "/new-recipe?import=http%3A%2F%2Flocalhost%3A3000%2Fuploads%2Fkatsudon.html",
+            baseURL,
+          ).href,
         );
 
         // Stay within the recipe form to minimize matching outside
