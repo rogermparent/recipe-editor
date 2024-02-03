@@ -31,14 +31,14 @@ export function RecipeListItem({
         className="block group flex flex-col flex-nowrap h-full"
       >
         <div className="w-full h-64 sm:h-40 overflow-hidden bg-gray-800">
-          {image && placeholderURL && (
+          {image && (
             <Image
               src={`/recipe/${slug}/uploads/${image}`}
               alt="Recipe thumbnail"
               width={400}
               height={400}
               className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-              placeholder="blur"
+              placeholder={placeholderURL ? "blur" : undefined}
               blurDataURL={placeholderURL}
             />
           )}
