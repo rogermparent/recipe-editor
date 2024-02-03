@@ -12,7 +12,11 @@ export default function CopyRecipeForm({ recipe }: { recipe: Recipe }) {
   const [state, dispatch] = useFormState(createRecipe, initialState);
   const { name, date, ...cleanedRecipe } = recipe;
   return (
-    <form className="w-full h-full flex flex-col grow" action={dispatch}>
+    <form
+      id="recipe-form"
+      className="w-full h-full flex flex-col grow"
+      action={dispatch}
+    >
       <UpdateRecipeFields recipe={cleanedRecipe} state={state} />
       <div id="missing-fields-error" aria-live="polite" aria-atomic="true">
         {state.message && (

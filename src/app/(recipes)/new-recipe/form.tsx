@@ -17,7 +17,7 @@ export default function NewRecipeForm({
   const initialState = { message: "", errors: {} } as RecipeFormState;
   const [state, dispatch] = useFormState(createRecipe, initialState);
   return (
-    <form className="m-2 w-full" action={dispatch}>
+    <form id="recipe-form" className="m-2 w-full" action={dispatch}>
       <h2 className="font-bold text-2xl mb-2">New Recipe</h2>
       <div className="flex flex-col flex-nowrap">
         <CreateRecipeFields state={state} slug={slug} recipe={recipe} />

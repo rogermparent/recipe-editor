@@ -19,7 +19,11 @@ export default function EditRecipeForm({
   const updateThisRecipe = updateRecipe.bind(null, date, slug);
   const [state, dispatch] = useFormState(updateThisRecipe, initialState);
   return (
-    <form className="w-full h-full flex flex-col grow" action={dispatch}>
+    <form
+      id="recipe-form"
+      className="w-full h-full flex flex-col grow"
+      action={dispatch}
+    >
       <UpdateRecipeFields recipe={recipe} slug={slug} state={state} />
       <div className="flex flex-row flex-nowrap my-1">
         <Button type="submit">Submit</Button>

@@ -13,7 +13,7 @@ export default async function NewRecipe({
     : undefined;
   return (
     <main className="flex flex-col items-center h-full w-full p-2 max-w-prose mx-auto grow bg-slate-950">
-      <form>
+      <form id="import-form">
         <TextInput name="import" label="Import from URL" />
         <Button type="submit">Import</Button>
       </form>
