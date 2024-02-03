@@ -7,6 +7,7 @@ export function useHighlightedText(text: string, query: string) {
   const queryWords = query.split(" ");
   const words = text.split(" ");
   let hasMatch = false;
+  const lastIndex = words.length - 1;
   const wordComponents = words.map<ReactNode>((word, i) => {
     for (const queryWord of queryWords) {
       if (word.toLowerCase().startsWith(queryWord.toLowerCase())) {
@@ -16,7 +17,8 @@ export function useHighlightedText(text: string, query: string) {
         return (
           <Fragment key={i}>
             <mark>{highlightedText}</mark>
-            {otherText}{" "}
+            {otherText}
+            {i < lastIndex ? " " : null}
           </Fragment>
         );
       }
@@ -64,7 +66,7 @@ export function SearchListItem({
             />
           )}
         </div>
-        <div className="my-1 mx-3">{maybeHighlightedName}</div>
+        <h3 className="my-1 mx-3">{maybeHighlightedName}</h3>
         <div className="italic px-2 text-gray-400 my-1">
           {date && new Date(date).toLocaleString()}
         </div>

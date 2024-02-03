@@ -1,5 +1,5 @@
 describe("Recipe Edit View", () => {
-  describe("with the two recipes fixture", () => {
+  describe("with the two pages fixture", () => {
     beforeEach(() => {
       cy.resetData("two-pages");
       cy.visit("/recipe/recipe-6/edit");
