@@ -2,7 +2,7 @@ describe("Index Page", () => {
   describe("when empty", () => {
     beforeEach(() => {
       cy.resetData();
-      cy.visit("");
+      cy.visit("/");
     });
 
     it("should not need authorization", () => {
@@ -29,7 +29,7 @@ describe("Index Page", () => {
       cy.findByText(testRecipe);
 
       // Check home and ensure the recipe is present
-      cy.visit("");
+      cy.visit("/");
       cy.findByText(testRecipe).click();
 
       // Delete the recipe and ensure it's gone
@@ -57,7 +57,7 @@ describe("Index Page", () => {
         cy.findByText(testRecipe);
       }
 
-      cy.visit("");
+      cy.visit("/");
       cy.checkNamesInOrder(testNames.reverse());
     });
   });
@@ -65,7 +65,7 @@ describe("Index Page", () => {
   describe("with just enough items for the front page", () => {
     beforeEach(() => {
       cy.resetData("front-page-only");
-      cy.visit("");
+      cy.visit("/");
     });
 
     it("should not display a link to the index", () => {
@@ -81,7 +81,7 @@ describe("Index Page", () => {
   describe("with two pages of items", () => {
     beforeEach(() => {
       cy.resetData("two-pages");
-      cy.visit("");
+      cy.visit("/");
     });
 
     it("should display the latest three recipes", () => {
