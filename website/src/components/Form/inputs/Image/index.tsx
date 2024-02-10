@@ -52,7 +52,7 @@ export function ImageInput({
             <Image
               src={`/recipe/${slug}/uploads/${image}/page`}
               alt="Heading image"
-              width={800}
+              width={850}
               height={475}
             />
           )
