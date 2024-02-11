@@ -84,8 +84,6 @@ export default async function updateRecipe(
     date: finalDate,
   };
 
-  console.log({ data });
-
   if (willRename) {
     await rename(currentRecipeDirectory, finalRecipeDirectory);
     await writeFile(
