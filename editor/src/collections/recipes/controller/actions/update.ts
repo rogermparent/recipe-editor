@@ -66,7 +66,9 @@ export default async function updateRecipe(
 
   const placeholderURL = hasImage
     ? (await getPlaiceholder((await image.arrayBuffer()) as Buffer)).base64
-    : undefined;
+    : clearImage
+      ? undefined
+      : currentRecipeData.placeholderURL;
 
   const data: Recipe = {
     name,
