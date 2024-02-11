@@ -140,7 +140,7 @@ describe("Recipe Edit View", () => {
         cy.findAllByLabelText("Remove Image").should("not.exist");
       });
 
-      it("should be able to preserve an image when editing", () => {
+      it.only("should be able to preserve an image when editing", () => {
         cy.findByText("Editing Recipe: Recipe 6");
 
         cy.findByRole("img");
@@ -152,10 +152,21 @@ describe("Recipe Edit View", () => {
         cy.findByText("Submit").click();
 
         cy.findByText(editedRecipeTitle);
+        cy.findByRole("img").should(
+          "have.attr",
+          "src",
+          "/_next/image?url=%2Frecipe%2Frecipe-6%2Fuploads%2Frecipe%206%20test%20image.png&w=1920&q=75",
+        );
 
         cy.findByText("Edit").click();
 
-        cy.findByRole("img");
+        cy.findByText("Editing Recipe: Edited Recipe");
+
+        cy.findByRole("img").should(
+          "have.attr",
+          "src",
+          "/_next/image?url=%2Frecipe%2Frecipe-6%2Fuploads%2Frecipe%206%20test%20image.png&w=1920&q=75",
+        );
         cy.findByLabelText("Remove Image");
       });
 
