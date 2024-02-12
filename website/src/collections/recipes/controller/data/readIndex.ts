@@ -30,6 +30,5 @@ export default async function getRecipes({
     })).asArray;
   const totalRecipes = db.getCount();
   const more = (offset || 0) + (limit || 0) < totalRecipes;
-  db.close();
   return { recipes, more };
 }

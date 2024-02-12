@@ -24,7 +24,15 @@ export async function GET(_request: NextRequest) {
   if (!newBuild.all) {
     throw new Error("Run has no all stream");
   }
-  const newStream = ReadStream.toWeb(newBuild.all) as ReadableStream;
-  currentStream = newStream as ReadableStream;
-  return new NextResponse(newStream);
+  // const newStream = ReadStream.toWeb(newBuild.all) as ReadableStream;
+  const newStream = new TransformStream();
+  const writer = newStream.writable.getWriter();
+  newBuild.all.on("data", (chunk) => {
+    writer.write(chunk);
+  });
+  newBuild.all.on("close", () => {
+    writer.close();
+  });
+  currentStream = newStream.readable;
+  return new NextResponse(newStream.readable);
 }
