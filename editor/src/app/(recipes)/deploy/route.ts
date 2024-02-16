@@ -4,11 +4,16 @@ import { ReadStream } from "fs";
 import { getContentDirectory } from "@/collections/recipes/controller/filesystemDirectories";
 import { unstable_noStore } from "next/cache";
 import { resolve } from "path";
+import { auth, signIn } from "@/auth";
 
 let currentStream: ReadableStream | undefined;
 
 export async function GET(_request: NextRequest) {
   unstable_noStore();
+  const user = await auth();
+  if (!user) {
+    return signIn();
+  }
   if (currentStream) {
     return new NextResponse("A deploy is already currently running!");
   }
