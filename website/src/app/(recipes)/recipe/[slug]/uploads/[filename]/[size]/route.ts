@@ -1,8 +1,8 @@
-import getRecipes from "@/collections/recipes/controller/data/readIndex";
+import getRecipes from "recipes-collection/controller/data/readIndex";
 import {
   getRecipeDirectory,
   getRecipeUploadsDirectory,
-} from "@/collections/recipes/controller/filesystemDirectories";
+} from "recipes-collection/controller/filesystemDirectories";
 import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 import { resolve } from "path";

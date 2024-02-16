@@ -1,11 +1,11 @@
 "use client";
 
-import UpdateRecipeFields from "@/collections/recipes/components/Form/Update";
+import UpdateRecipeFields from "recipes-collection/components/Form/Update";
 import { useFormState } from "react-dom";
 import { Button } from "@/components/Button";
-import { Recipe } from "@/collections/recipes/controller/types";
-import { RecipeFormState } from "@/collections/recipes/controller/formState";
-import createRecipe from "@/collections/recipes/controller/actions/create";
+import { Recipe } from "recipes-collection/controller/types";
+import { RecipeFormState } from "recipes-collection/controller/formState";
+import createRecipe from "recipes-collection/controller/actions/create";
 
 export default function CopyRecipeForm({ recipe }: { recipe: Recipe }) {
   const initialState = { message: "", errors: {} } as RecipeFormState;

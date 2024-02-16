@@ -1,4 +1,4 @@
-import { MassagedRecipeEntry } from "@/collections/recipes/controller/data/readIndex";
+import { MassagedRecipeEntry } from "recipes-collection/controller/data/readIndex";
 import Link from "next/link";
 import Image from "next/image";
 import { Fragment, ReactNode } from "react";

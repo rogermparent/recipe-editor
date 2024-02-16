@@ -78,25 +78,21 @@ describe("Index Page", () => {
     });
   });
 
-  describe("with two pages of items", () => {
+  describe("with seven items", () => {
     beforeEach(() => {
       cy.resetData("two-pages");
       cy.visit("/");
     });
 
-    it("should display the latest three recipes", () => {
+    it("should display the latest six recipes", () => {
       const allNames = [7, 6, 5, 4, 3, 2, 1].map((x) => `Recipe ${x}`);
 
       // Homepage should have latest three recipes
-      cy.checkNamesInOrder(allNames.slice(0, 3));
-
-      // First page should have latest 6 recipes
-      cy.findByText("More").click();
       cy.checkNamesInOrder(allNames.slice(0, 6));
 
-      // Second page should have the last one recipe
-      cy.findByText("→").click();
-      cy.checkNamesInOrder(allNames.slice(6));
+      // First page should have all recipes
+      cy.findByText("More").click();
+      cy.checkNamesInOrder(allNames.slice(0, 7));
     });
   });
 });

@@ -1,4 +1,4 @@
-import rebuildRecipeIndex from "@/collections/recipes/controller/actions/rebuildIndex";
+import rebuildRecipeIndex from "recipes-collection/controller/actions/rebuildIndex";
 import { auth } from "@/auth";
 import { Button } from "@/components/Button";
 import { Exporters } from "./exporter";

@@ -1,3 +1,4 @@
 packages:
   - 'website'
   - 'editor'
+  - 'recipes-collection'

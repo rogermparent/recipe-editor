@@ -1,5 +1,5 @@
 describe("Search Page", () => {
-  describe("with the two pages fixture", () => {
+  describe("with seven items", () => {
     beforeEach(() => {
       cy.resetData("two-pages");
       cy.visit("/search");

@@ -1,7 +1,7 @@
 import {
   getRecipeDirectory,
   getRecipeUploadsDirectory,
-} from "@/collections/recipes/controller/filesystemDirectories";
+} from "recipes-collection/controller/filesystemDirectories";
 import { resolve } from "path";
 import { getPlaiceholder } from "plaiceholder";
 import { readFile } from "fs/promises";

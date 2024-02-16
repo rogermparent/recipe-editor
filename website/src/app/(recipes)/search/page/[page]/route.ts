@@ -1,4 +1,4 @@
-import getRecipes from "@/collections/recipes/controller/data/readIndex";
+import getRecipes from "recipes-collection/controller/data/readIndex";
 import { RECIPES_PER_SEARCH_PAGE } from "../../constants";
 
 export async function GET(

@@ -65,6 +65,9 @@ importers:
       react-markdown:
         specifier: ^9.0.1
         version: 9.0.1(@types/react@18.2.55)(react@18.2.0)
+      recipes-collection:
+        specifier: ^1.0.0
+        version: link:../recipes-collection
       sharp:
         specifier: 0.33.2
         version: 0.33.2
@@ -118,6 +121,36 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
 
+  recipes-collection:
+    dependencies:
+      clsx:
+        specifier: ^2.1.0
+        version: 2.1.0
+      format-quantity:
+        specifier: ^3.0.0
+        version: 3.0.0
+      fraction.js:
+        specifier: ^4.3.7
+        version: 4.3.7
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+      next:
+        specifier: 14.1.0
+        version: 14.1.0(react-dom@18.2.0)(react@18.2.0)
+      parse-ingredient:
+        specifier: ^1.2.0
+        version: 1.2.0
+      plaiceholder:
+        specifier: ^3.0.0
+        version: 3.0.0(sharp@0.33.2)
+      react:
+        specifier: ^18
+        version: 18.2.0
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
+
   website:
     dependencies:
       '@sindresorhus/slugify':
@@ -165,6 +198,9 @@ importers:
       react-markdown:
         specifier: ^9.0.1
         version: 9.0.1(@types/react@18.2.55)(react@18.2.0)
+      recipes-collection:
+        specifier: ^1.0.0
+        version: link:../recipes-collection
       sharp:
         specifier: 0.33.2
         version: 0.33.2

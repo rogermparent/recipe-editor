@@ -1,11 +1,11 @@
 describe("Single Recipe View", () => {
-  describe("with the two pages fixture", () => {
+  describe("with seven items", () => {
     beforeEach(() => {
       cy.resetData("two-pages");
       cy.visit("/recipe/recipe-6");
     });
 
-    it.only("should display a recipe", () => {
+    it("should display a recipe", () => {
       cy.findByText("Recipe 6");
     });
 
@@ -35,7 +35,14 @@ describe("Single Recipe View", () => {
 
       cy.visit("/");
       cy.findByText(editedRecipe);
-      cy.checkNamesInOrder(["Recipe 7", editedRecipe, "Recipe 5"]);
+      cy.checkNamesInOrder([
+        "Recipe 7",
+        editedRecipe,
+        "Recipe 5",
+        "Recipe 4",
+        "Recipe 3",
+        "Recipe 2",
+      ]);
 
       // Recipe date should not have changed
       cy.findByText(new Date(recipeDate + "Z").toLocaleString());
@@ -50,7 +57,14 @@ describe("Single Recipe View", () => {
       cy.findByText("Delete").click();
 
       cy.findByText("Recipe 4");
-      cy.checkNamesInOrder(["Recipe 7", "Recipe 5", "Recipe 4"]);
+      cy.checkNamesInOrder([
+        "Recipe 7",
+        "Recipe 5",
+        "Recipe 4",
+        "Recipe 3",
+        "Recipe 2",
+        "Recipe 1",
+      ]);
       cy.request({
         url: "/recipe/recipe-6",
         failOnStatusCode: false,

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import execa from "execa";
-import { getContentDirectory } from "@/collections/recipes/controller/filesystemDirectories";
+import { getContentDirectory } from "recipes-collection/controller/filesystemDirectories";
 import { unstable_noStore } from "next/cache";
 import { auth, signIn } from "@/auth";
 
