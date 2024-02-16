@@ -5,6 +5,7 @@ import {
   Dispatch,
   ReactNode,
   SetStateAction,
+  useCallback,
   useEffect,
   useState,
 } from "react";
@@ -19,12 +20,14 @@ function OutputWindow({ children }: { children: ReactNode }) {
   );
 }
 
-function useStreamText(): [
-  string,
-  Dispatch<SetStateAction<Response | undefined>>,
-] {
+function useStreamText(): {
+  streamText: string;
+  isRunning: boolean;
+  fetchStream: (endpoint: string) => void;
+} {
   const [streamResponse, setStreamResponse] = useState<Response>();
   const [streamText, setStreamText] = useState("");
+  const [isRunning, setIsRunning] = useState(false);
   useEffect(() => {
     if (streamResponse) {
       if (streamResponse.body) {
@@ -34,6 +37,7 @@ function useStreamText(): [
           while (true) {
             const { done, value } = await reader.read();
             if (done) {
+              setIsRunning(false);
               return;
             }
             setStreamText((cur) => cur + decoder.decode(value));
@@ -42,40 +46,53 @@ function useStreamText(): [
       }
     }
   }, [streamResponse, setStreamText]);
-  return [streamText, setStreamResponse];
+  const fetchStream = useCallback((endpoint: string) => {
+    setIsRunning(true);
+    fetch(endpoint)
+      .then((res) => {
+        setStreamResponse(res);
+      })
+      .catch(() => {
+        setIsRunning(false);
+      });
+  }, []);
+  return { streamText, isRunning, fetchStream };
 }
 
-export function Exporter() {
-  const [buildLog, setBuildResponse] = useStreamText();
-  const [deployLog, setDeployResponse] = useStreamText();
+function SingleExporter({
+  endpoint,
+  buttonText,
+}: {
+  endpoint: string;
+  buttonText: string;
+}) {
+  const { streamText, isRunning, fetchStream } = useStreamText();
+  return (
+    <form
+      action={endpoint}
+      className="p-1 block"
+      onSubmit={(e) => {
+        e.preventDefault();
+        fetchStream(endpoint);
+      }}
+    >
+      <Button type="submit">{buttonText}</Button>
+      {isRunning && (
+        <>
+          {" "}
+          <i>running...</i>
+        </>
+      )}
+      <OutputWindow>{streamText}</OutputWindow>
+    </form>
+  );
+}
+
+export function Exporters() {
   return (
     <div className="p-2 w-full">
-      <form
-        action="/build"
-        className="p-1 block"
-        onSubmit={(e) => {
-          e.preventDefault();
-          fetch("/build").then((res) => {
-            setBuildResponse(res);
-          });
-        }}
-      >
-        <Button type="submit">Build</Button>
-        <OutputWindow>{buildLog}</OutputWindow>
-      </form>
-      <form
-        action="/deploy"
-        className="p-1 block"
-        onSubmit={(e) => {
-          e.preventDefault();
-          fetch("/deploy").then((res) => {
-            setDeployResponse(res);
-          });
-        }}
-      >
-        <Button type="submit">Deploy</Button>
-        <OutputWindow>{deployLog}</OutputWindow>
-      </form>
+      <SingleExporter endpoint="/build" buttonText="Build" />
+      <SingleExporter endpoint="/deploy" buttonText="Deploy" />
     </div>
   );
 }
