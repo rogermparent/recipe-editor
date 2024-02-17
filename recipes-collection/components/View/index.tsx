@@ -13,9 +13,9 @@ import Fraction from "fraction.js";
 import clsx from "clsx";
 import Image from "next/image";
 
-import Markdown from "@/components/Markdown";
+import Markdown from "component-library/Markdown";
 import { InstructionEntryView } from "./Instructions";
-import { TextInput } from "@/components/Form/inputs/Text";
+import { TextInput } from "component-library/Form/inputs/Text";
 
 function Card({
   children,

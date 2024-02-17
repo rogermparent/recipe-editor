@@ -7,10 +7,10 @@ import { RecipeFormState } from "../../controller/formState";
 import createDefaultSlug from "../../controller/createSlug";
 import { IngredientsListInput } from "../../components/Form/Ingredients";
 import { InstructionsListInput } from "../../components/Form/Instructions";
-import { DateTimeInput } from "@/components/Form/inputs/DateTime";
-import { ImageInput } from "@/components/Form/inputs/Image";
-import { TextInput } from "@/components/Form/inputs/Text";
-import { TextAreaInput } from "@/components/Form/inputs/TextArea";
+import { DateTimeInput } from "component-library/Form/inputs/DateTime";
+import { ImageInput } from "component-library/Form/inputs/Image";
+import { TextInput } from "component-library/Form/inputs/Text";
+import { TextAreaInput } from "component-library/Form/inputs/TextArea";
 
 export default function CreateRecipeFields({
   recipe,

@@ -1,7 +1,7 @@
 import { importRecipeData } from "recipes-collection/util/importRecipeData";
 import CreateForm from "./form";
-import { Button } from "@/components/Button";
-import { TextInput } from "@/components/Form/inputs/Text";
+import { Button } from "component-library/Button";
+import { TextInput } from "component-library/Form/inputs/Text";
 
 export default async function NewRecipe({
   searchParams: { import: importURL },

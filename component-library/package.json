@@ -1,5 +1,5 @@
 {
-  "name": "recipes-collection",
+  "name": "component-library",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,14 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "clsx": "^2.1.0",
-    "component-library": "^1.0.0",
-    "format-quantity": "^3.0.0",
-    "fraction.js": "^4.3.7",
-    "lodash": "^4.17.21",
     "next": "14.1.0",
-    "parse-ingredient": "^1.2.0",
-    "plaiceholder": "^3.0.0",
-    "react": "^18",
-    "zod": "^3.22.4"
+    "react-markdown": "^9.0.1"
   }
 }

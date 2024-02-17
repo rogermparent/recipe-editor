@@ -4,16 +4,16 @@ import {
   InstructionEntry,
   InstructionGroup,
 } from "../../../controller/types";
-import { Button } from "@/components/Button";
-import { FieldWrapper, baseInputStyle } from "@/components/Form";
+import { Button } from "component-library/Button";
+import { FieldWrapper, baseInputStyle } from "component-library/Form";
 import {
   InputListControls,
   KeyListAction,
   useKeyList,
-} from "@/components/Form/inputs/List";
-import { SelectInput } from "@/components/Form/inputs/Select";
-import { TextInput } from "@/components/Form/inputs/Text";
-import { TextAreaInput } from "@/components/Form/inputs/TextArea";
+} from "component-library/Form/inputs/List";
+import { SelectInput } from "component-library/Form/inputs/Select";
+import { TextInput } from "component-library/Form/inputs/Text";
+import { TextAreaInput } from "component-library/Form/inputs/TextArea";
 import clsx from "clsx";
 import { Dispatch, useEffect, useRef, useState } from "react";
 

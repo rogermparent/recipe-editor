@@ -15,6 +15,18 @@ importers:
         specifier: 5.3.3
         version: 5.3.3
 
+  component-library:
+    dependencies:
+      clsx:
+        specifier: ^2.1.0
+        version: 2.1.0
+      next:
+        specifier: 14.1.0
+        version: 14.1.0(react-dom@18.2.0)(react@18.2.0)
+      react-markdown:
+        specifier: ^9.0.1
+        version: 9.0.1(@types/react@18.2.55)(react@18.2.0)
+
   editor:
     dependencies:
       '@sindresorhus/slugify':
@@ -29,6 +41,9 @@ importers:
       clsx:
         specifier: ^2.1.0
         version: 2.1.0
+      component-library:
+        specifier: ^1.0.0
+        version: link:../component-library
       flexsearch:
         specifier: ^0.7.43
         version: 0.7.43
@@ -126,6 +141,9 @@ importers:
       clsx:
         specifier: ^2.1.0
         version: 2.1.0
+      component-library:
+        specifier: ^1.0.0
+        version: link:../component-library
       format-quantity:
         specifier: ^3.0.0
         version: 3.0.0
@@ -162,6 +180,9 @@ importers:
       clsx:
         specifier: ^2.1.0
         version: 2.1.0
+      component-library:
+        specifier: ^1.0.0
+        version: link:../component-library
       flexsearch:
         specifier: ^0.7.43
         version: 0.7.43

@@ -4,14 +4,14 @@ import {
   MassagedRecipeEntry,
   ReadRecipeIndexResult,
 } from "recipes-collection/controller/data/readIndex";
-import { Button } from "@/components/Button";
-import { TextInput } from "@/components/Form/inputs/Text";
+import { Button } from "component-library/Button";
+import { TextInput } from "component-library/Form/inputs/Text";
 import {
   QueryClient,
   QueryClientProvider,
   useInfiniteQuery,
 } from "@tanstack/react-query";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import SearchList from "./searchList";
 import { useFlexSearch } from "./useFlexSearch";
 import FlexSearch, { Id, Index } from "flexsearch";

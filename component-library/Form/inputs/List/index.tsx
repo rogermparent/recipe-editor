@@ -1,7 +1,6 @@
 import { Dispatch, useReducer } from "react";
 import clsx from "clsx";
-import { Button } from "@/components/Button";
-import { RecipeFormErrors } from "recipes-collection/controller/formState";
+import { Button } from "../../../Button";
 import { FieldWrapper, baseInputStyle } from "../..";
 
 interface KeyListValue<T> {
@@ -160,7 +159,7 @@ export function TextListInput({
   label: string;
   defaultValue?: string[];
   placeholder?: string;
-  errors?: RecipeFormErrors | undefined;
+  errors?: Record<string, string> | undefined;
   appendLabel?: string;
 }) {
   const [{ values }, dispatch] = useKeyList(defaultValue);

@@ -1,14 +1,7 @@
 "use client";
 
-import { Button } from "@/components/Button";
-import {
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { Button } from "component-library/Button";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 
 const decoder = new TextDecoder();
 
