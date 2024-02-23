@@ -2,7 +2,7 @@
 
 import CreateRecipeFields from "recipes-collection/components/Form/Create";
 import { useFormState } from "react-dom";
-import { Button } from "component-library/Button";
+import { Button } from "component-library/components/Button";
 import { RecipeFormState } from "recipes-collection/controller/formState";
 import createRecipe from "recipes-collection/controller/actions/create";
 import { Recipe } from "recipes-collection/controller/types";

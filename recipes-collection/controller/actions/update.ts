@@ -15,10 +15,8 @@ import getRecipeDatabase from "../database";
 import buildRecipeIndexValue from "../buildIndexValue";
 import createDefaultSlug from "../createSlug";
 import slugify from "@sindresorhus/slugify";
-import writeRecipeUpload from "../writeUpload";
+import writeRecipeFiles, { getRecipeFileInfo } from "../writeUpload";
 import getRecipeBySlug from "../data/read";
-import { getPlaceholder } from "@/app/lib/placeholders";
-import { getPlaiceholder } from "plaiceholder";
 
 export default async function updateRecipe(
   currentDate: number,
@@ -47,7 +45,6 @@ export default async function updateRecipe(
     description,
     ingredients,
     instructions,
-    image,
     clearImage,
   } = validatedFields.data;
 
@@ -62,25 +59,18 @@ export default async function updateRecipe(
   const willRename = currentRecipeDirectory !== finalRecipeDirectory;
   const willChangeDate = currentDate !== finalDate;
 
-  const hasImage = image && image.size > 0;
-
-  const placeholderURL = hasImage
-    ? (await getPlaiceholder((await image.arrayBuffer()) as Buffer)).base64
-    : clearImage
-      ? undefined
-      : currentRecipeData.placeholderURL;
+  const imageData = await getRecipeFileInfo(
+    validatedFields.data,
+    currentRecipeData,
+  );
+  const { imageName } = imageData;
 
   const data: Recipe = {
     name,
     description,
     ingredients,
     instructions,
-    image: hasImage
-      ? image.name
-      : clearImage
-        ? undefined
-        : currentRecipeData.image,
-    placeholderURL,
+    image: imageName || (clearImage ? undefined : currentRecipeData.imageName),
     date: finalDate,
   };
 
@@ -94,9 +84,7 @@ export default async function updateRecipe(
     await writeFile(currentRecipePath, JSON.stringify(data));
   }
 
-  if (hasImage) {
-    await writeRecipeUpload(finalRecipeDirectory, image);
-  }
+  await writeRecipeFiles(finalRecipeDirectory, imageData);
 
   const db = getRecipeDatabase();
 

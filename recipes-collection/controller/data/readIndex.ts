@@ -6,7 +6,6 @@ export interface MassagedRecipeEntry {
   name: string;
   ingredients?: string[];
   image?: string;
-  placeholderURL?: string;
 }
 
 export interface ReadRecipeIndexResult {

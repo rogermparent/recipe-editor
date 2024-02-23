@@ -1,6 +1,6 @@
 import rebuildRecipeIndex from "recipes-collection/controller/actions/rebuildIndex";
 import { auth } from "@/auth";
-import { Button } from "component-library/Button";
+import { Button } from "component-library/components/Button";
 import { Exporters } from "./exporter";
 
 export default async function SettingsPage() {

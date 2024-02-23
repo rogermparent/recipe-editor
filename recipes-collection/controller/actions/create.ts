@@ -16,7 +16,7 @@ import {
 import getRecipeDatabase from "../database";
 import buildRecipeIndexValue from "../buildIndexValue";
 import createDefaultSlug from "../createSlug";
-import writeRecipeUpload from "../writeUpload";
+import writeRecipeFiles, { getRecipeFileInfo } from "../writeUpload";
 
 export default async function createRecipe(
   _prevState: RecipeFormState,
@@ -41,28 +41,32 @@ export default async function createRecipe(
     slug: givenSlug,
     name,
     description,
-    image,
     ingredients,
     instructions,
   } = validatedFields.data;
 
   const date: number = givenDate || (Date.now() as number);
   const slug = slugify(givenSlug || createDefaultSlug(validatedFields.data));
-  const hasImage = image && image.size > 0;
+
+  const imageData = await getRecipeFileInfo(validatedFields.data);
+  const { imageName } = imageData;
+
   const data: Recipe = {
     name,
     description,
     ingredients,
     instructions,
-    image: hasImage ? image.name : undefined,
+    image: imageName,
     date,
   };
+
   const recipeBaseDirectory = getRecipeDirectory(slug);
   await mkdirIfNotPresent(recipeBaseDirectory);
+
   await writeFile(getRecipeFilePath(recipeBaseDirectory), JSON.stringify(data));
-  if (hasImage) {
-    await writeRecipeUpload(recipeBaseDirectory, image);
-  }
+
+  await writeRecipeFiles(recipeBaseDirectory, imageData);
+
   const db = getRecipeDatabase();
   try {
     await db.put([date, slug], buildRecipeIndexValue(data));

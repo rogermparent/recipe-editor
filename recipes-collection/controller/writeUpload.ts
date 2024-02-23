@@ -5,17 +5,47 @@ import { createWriteStream } from "fs";
 import { Readable } from "node:stream";
 import { pipeline } from "node:stream/promises";
 import { ReadableStream } from "node:stream/web";
-import { mkdirIfNeeded } from "@/app/lib/util";
+import { ParsedRecipeFormData } from "./parseFormData";
+import { mkdirIfNeeded } from "../util/mkdirIfNeeded";
+import { Recipe } from "./types";
 
-export default async function writeRecipeUpload(
+export interface RecipeImageData {
+  hasImage: boolean;
+  imageName?: string | undefined;
+  image?: File | undefined;
+}
+
+export async function getRecipeFileInfo(
+  recipeFormData: ParsedRecipeFormData,
+  currentRecipeData?: Recipe | undefined,
+): Promise<RecipeImageData> {
+  const { image, clearImage } = recipeFormData;
+
+  if (!image || image.size === 0) {
+    if (clearImage) {
+      return { hasImage: false };
+    }
+    return { hasImage: false, imageName: currentRecipeData?.image };
+  }
+
+  return { hasImage: true, imageName: image.name, image };
+}
+
+export default async function writeRecipeFiles(
   recipeBaseDirectory: string,
-  file: File,
-) {
+  { hasImage, imageName, image }: RecipeImageData,
+): Promise<void> {
+  if (!hasImage) {
+    return undefined;
+  }
+
   await mkdirIfNeeded(getRecipeUploadsDirectory(recipeBaseDirectory));
 
-  const fileWriteStream = createWriteStream(
-    `${recipeBaseDirectory}/uploads/${file.name}`,
+  const imageWriteStream = createWriteStream(
+    `${recipeBaseDirectory}/uploads/${imageName}`,
   );
-  const readStream = Readable.fromWeb(file.stream() as ReadableStream<any>);
-  await pipeline(readStream, fileWriteStream);
+  const readStream = Readable.fromWeb(
+    (image as File).stream() as ReadableStream<any>,
+  );
+  await pipeline(readStream, imageWriteStream);
 }

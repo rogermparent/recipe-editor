@@ -58,7 +58,7 @@ describe("Recipe Edit View", () => {
         cy.findByRole("img").should(
           "have.attr",
           "src",
-          "/_next/image?url=%2Frecipe%2Frecipe-6%2Fuploads%2Frecipe%206%20test%20image.png&w=1920&q=75",
+          "/image/recipe/recipe-6/uploads/recipe%206%20test%20image.png/recipe%206%20test%20image-w1920q75.webp",
         );
 
         cy.findByLabelText("Image").selectFile(
@@ -76,7 +76,7 @@ describe("Recipe Edit View", () => {
         cy.findByRole("img").should(
           "have.attr",
           "src",
-          "/_next/image?url=%2Frecipe%2Frecipe-6%2Fuploads%2Frecipe%206%20test%20image%20alternate.png&w=1920&q=75",
+          "/image/recipe/recipe-6/uploads/recipe%206%20test%20image%20alternate.png/recipe%206%20test%20image%20alternate-w1920q75.webp",
         );
 
         // Image on index should be alternate
@@ -87,7 +87,7 @@ describe("Recipe Edit View", () => {
           .should(
             "have.attr",
             "src",
-            "/_next/image?url=%2Frecipe%2Frecipe-6%2Fuploads%2Frecipe%206%20test%20image%20alternate.png&w=828&q=75",
+            "/image/recipe/recipe-6/uploads/recipe%206%20test%20image%20alternate.png/recipe%206%20test%20image%20alternate-w828q75.webp",
           );
       });
 
@@ -112,11 +112,12 @@ describe("Recipe Edit View", () => {
 
         cy.findByText("Submit").click();
 
+        cy.findByText("Recipe 5");
         // Image on view page should be alternate
         cy.findByRole("img").should(
           "have.attr",
           "src",
-          "/_next/image?url=%2Frecipe%2Frecipe-5%2Fuploads%2Frecipe%206%20test%20image%20alternate.png&w=1920&q=75",
+          "/image/recipe/recipe-5/uploads/recipe%206%20test%20image%20alternate.png/recipe%206%20test%20image%20alternate-w1920q75.webp",
         );
 
         // Image on index should be alternate
@@ -127,7 +128,7 @@ describe("Recipe Edit View", () => {
           .should(
             "have.attr",
             "src",
-            "/_next/image?url=%2Frecipe%2Frecipe-5%2Fuploads%2Frecipe%206%20test%20image%20alternate.png&w=828&q=75",
+            "/image/recipe/recipe-5/uploads/recipe%206%20test%20image%20alternate.png/recipe%206%20test%20image%20alternate-w828q75.webp",
           );
       });
 
@@ -162,7 +163,7 @@ describe("Recipe Edit View", () => {
         cy.findByRole("img").should(
           "have.attr",
           "src",
-          "/_next/image?url=%2Frecipe%2Frecipe-6%2Fuploads%2Frecipe%206%20test%20image.png&w=1920&q=75",
+          "/image/recipe/recipe-6/uploads/recipe%206%20test%20image.png/recipe%206%20test%20image-w1920q75.webp",
         );
 
         cy.findByText("Edit").click();
@@ -172,7 +173,7 @@ describe("Recipe Edit View", () => {
         cy.findByRole("img").should(
           "have.attr",
           "src",
-          "/_next/image?url=%2Frecipe%2Frecipe-6%2Fuploads%2Frecipe%206%20test%20image.png&w=1920&q=75",
+          "/image/recipe/recipe-6/uploads/recipe%206%20test%20image.png/recipe%206%20test%20image-w1920q75.webp",
         );
         cy.findByLabelText("Remove Image");
       });

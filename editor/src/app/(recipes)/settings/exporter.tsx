@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "component-library/Button";
+import { Button } from "component-library/components/Button";
 import { ReactNode, useCallback, useEffect, useState } from "react";
 
 const decoder = new TextDecoder();

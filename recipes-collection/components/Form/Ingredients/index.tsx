@@ -1,13 +1,13 @@
 import { RecipeFormErrors } from "../../../controller/formState";
 import { Ingredient } from "../../../controller/types";
 import { createIngredients } from "../../../util/parseIngredients";
-import { Button } from "component-library/Button";
-import { FieldWrapper, baseInputStyle } from "component-library/Form";
+import { Button } from "component-library/components/Button";
+import { FieldWrapper, baseInputStyle } from "component-library/components/Form";
 import {
   InputListControls,
   useKeyList,
-} from "component-library/Form/inputs/List";
-import { TextInput } from "component-library/Form/inputs/Text";
+} from "component-library/components/Form/inputs/List";
+import { TextInput } from "component-library/components/Form/inputs/Text";
 import clsx from "clsx";
 import { useRef } from "react";
 

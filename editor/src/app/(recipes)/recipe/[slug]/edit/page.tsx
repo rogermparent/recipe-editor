@@ -1,6 +1,7 @@
 import getRecipeBySlug from "recipes-collection/controller/data/read";
 import EditForm from "./form";
 import { notFound } from "next/navigation";
+import { getTransformedRecipeImageProps } from "recipes-collection/components/RecipeImage";
 
 export default async function Recipe({
   params: { slug },
@@ -16,11 +17,22 @@ export default async function Recipe({
     }
     throw e;
   }
-  const { name } = recipe;
+  const { name, image } = recipe;
+  const defaultImage =
+    slug && image
+      ? await getTransformedRecipeImageProps({
+          slug,
+          image,
+          alt: "Heading image",
+          width: 850,
+          height: 450,
+          className: "object-cover aspect-ratio-[16/10] h-96",
+        })
+      : undefined;
   return (
     <main className="flex flex-col items-center px-2 grow max-w-prose w-full h-full">
       <h1 className="text-2xl font-bold my-2">Editing Recipe: {name}</h1>
-      <EditForm recipe={recipe} slug={slug} />
+      <EditForm recipe={recipe} slug={slug} defaultImage={defaultImage} />
     </main>
   );
 }

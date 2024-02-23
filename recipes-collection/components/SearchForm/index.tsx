@@ -3,16 +3,16 @@
 import {
   MassagedRecipeEntry,
   ReadRecipeIndexResult,
-} from "recipes-collection/controller/data/readIndex";
-import { Button } from "component-library/Button";
-import { TextInput } from "component-library/Form/inputs/Text";
+} from "../../controller/data/readIndex";
+import { Button } from "component-library/components/Button";
+import { TextInput } from "component-library/components/Form/inputs/Text";
 import {
   QueryClient,
   QueryClientProvider,
   useInfiniteQuery,
 } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
-import SearchList from "./searchList";
+import SearchList from "../SearchList";
 import { useFlexSearch } from "./useFlexSearch";
 import FlexSearch, { Id, Index } from "flexsearch";
 

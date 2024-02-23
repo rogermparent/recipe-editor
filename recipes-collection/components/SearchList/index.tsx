@@ -1,7 +1,9 @@
-import { MassagedRecipeEntry } from "recipes-collection/controller/data/readIndex";
+import { MassagedRecipeEntry } from "../../controller/data/readIndex";
 import Link from "next/link";
 import Image from "next/image";
 import { Fragment, ReactNode } from "react";
+import { RecipeImage } from "../RecipeImage";
+import { PureRecipeImage } from "../RecipeImage/PureImage";
 
 export function useHighlightedText(text: string, query: string) {
   const queryWords = query.split(" ");
@@ -40,7 +42,7 @@ function HighlightedIngredient({
 }
 
 export function SearchListItem({
-  recipe: { slug, date, name, image, placeholderURL, ingredients },
+  recipe: { slug, date, name, ingredients, image },
   query,
 }: {
   recipe: MassagedRecipeEntry;
@@ -54,15 +56,14 @@ export function SearchListItem({
         className="block group flex flex-col flex-nowrap h-full"
       >
         <div className="w-full h-64 sm:h-40 overflow-hidden bg-gray-800">
-          {image && placeholderURL && (
-            <Image
-              src={`/recipe/${slug}/uploads/${image}`}
+          {image && (
+            <PureRecipeImage
+              slug={slug}
+              image={image}
               alt="Recipe thumbnail"
               width={400}
               height={400}
               className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-              placeholder="blur"
-              blurDataURL={placeholderURL}
             />
           )}
         </div>

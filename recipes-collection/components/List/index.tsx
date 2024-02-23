@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ReactNode } from "react";
-import Image from "next/image";
 import type { MassagedRecipeEntry } from "../../controller/data/readIndex";
+import { RecipeImage } from "../RecipeImage";
 
 export function ButtonLink({
   href,
@@ -22,7 +22,6 @@ export function RecipeListItem({
   date,
   name,
   image,
-  placeholderURL,
 }: MassagedRecipeEntry) {
   return (
     <div className="my-1 rounded-lg bg-slate-900 overflow-hidden w-full h-full md:text-sm">
@@ -32,14 +31,13 @@ export function RecipeListItem({
       >
         <div className="w-full h-64 sm:h-40 overflow-hidden bg-gray-800">
           {image && (
-            <Image
-              src={`/recipe/${slug}/uploads/${image}`}
+            <RecipeImage
+              slug={slug}
+              image={image}
               alt="Recipe thumbnail"
               width={400}
               height={400}
               className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-              placeholder={placeholderURL ? "blur" : undefined}
-              blurDataURL={placeholderURL}
             />
           )}
         </div>
@@ -60,16 +58,10 @@ export default function RecipeList({
   return (
     <ul className="mx-auto flex flex-col sm:flex-row sm:flex-wrap items-center justify-center">
       {recipes.map((entry) => {
-        const { date, slug, name, image, placeholderURL } = entry;
+        const { date, slug, name, image } = entry;
         return (
           <li key={slug} className="w-full sm:p-1 sm:w-1/2 md:w-1/3 lg:w-1/4">
-            <RecipeListItem
-              slug={slug}
-              date={date}
-              name={name}
-              image={image}
-              placeholderURL={placeholderURL}
-            />
+            <RecipeListItem slug={slug} date={date} name={name} image={image} />
           </li>
         );
       })}

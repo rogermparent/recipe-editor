@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { FileInput } from "../File";
-import { CheckboxInput } from "../Checkbox";
+import { FileInput } from "component-library/components/Form/inputs/File";
+import { CheckboxInput } from "component-library/components/Form/inputs/Checkbox";
+import { RecipeImageDisplay } from "../../RecipeImage/Display";
+import { StaticImageProps } from "../../RecipeImage";
 
 export function ImageInput({
-  image,
-  slug,
+  defaultImage,
   errors,
 }: {
-  image?: string;
-  slug: string | undefined;
+  defaultImage?: StaticImageProps;
   errors: string[] | undefined;
 }) {
   const [imagesToUpload, setImagesToUpload] = useState<FileList>();
@@ -47,18 +47,12 @@ export function ImageInput({
             height={475}
           />
         ) : (
-          slug &&
-          image && (
-            <Image
-              src={`/recipe/${slug}/uploads/${image}`}
-              alt="Heading image"
-              width={850}
-              height={475}
-            />
-          )
+          defaultImage && <RecipeImageDisplay image={defaultImage} />
         )}
       </div>
-      {image ? <CheckboxInput name="clearImage" label="Remove Image" /> : null}
+      {defaultImage ? (
+        <CheckboxInput name="clearImage" label="Remove Image" />
+      ) : null}
     </div>
   );
 }
