@@ -1,6 +1,5 @@
 "use server";
 
-import { auth, signIn } from "@/auth";
 import { rename, writeFile } from "fs/promises";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -24,11 +23,6 @@ export default async function updateRecipe(
   _prevState: RecipeFormState,
   formData: FormData,
 ) {
-  const user = await auth();
-  if (!user) {
-    return signIn();
-  }
-
   const validatedFields = parseRecipeFormData(formData);
 
   if (!validatedFields.success) {

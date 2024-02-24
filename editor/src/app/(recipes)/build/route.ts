@@ -3,35 +3,10 @@ import execa from "execa";
 import { getContentDirectory } from "recipes-collection/controller/filesystemDirectories";
 import { unstable_noStore } from "next/cache";
 import { auth, signIn } from "@/auth";
+import { resolve } from "path";
+import { Readable } from "stream";
 
 let currentStream: ReadableStream | undefined;
-
-async function attachCommandsToStream(inputStream: WritableStream) {
-  const contentDirectory = getContentDirectory();
-  const writer = inputStream.getWriter();
-  const newBuild = execa("./scripts/build.sh", [], {
-    all: true,
-    env: {
-      NODE_ENV: "production",
-      CONTENT_DIRECTORY: contentDirectory,
-    },
-  });
-  newBuild.once("close", () => {
-    currentStream = undefined;
-  });
-  if (!newBuild.all) {
-    throw new Error("Run has no all stream");
-  }
-  newBuild.all.on("data", (chunk) => {
-    writer.write(chunk);
-  });
-  try {
-    await newBuild;
-  } catch (e) {
-    console.error(e);
-  }
-  writer.close();
-}
 
 export async function GET(_request: NextRequest) {
   unstable_noStore();
@@ -42,8 +17,23 @@ export async function GET(_request: NextRequest) {
   if (currentStream) {
     return new NextResponse("A build is already currently running!");
   }
-  const newStream = new TransformStream();
-  attachCommandsToStream(newStream.writable);
-  currentStream = newStream.readable;
-  return new NextResponse(newStream.readable);
+  const contentDirectory = getContentDirectory();
+  const cwd = resolve("..", "website");
+  const newBuild = execa("pnpm", ["run", "build"], {
+    cwd: cwd,
+    all: true,
+    env: {
+      NODE_ENV: "production",
+      CONTENT_DIRECTORY: contentDirectory,
+    },
+  });
+  if (!newBuild.all) {
+    throw new Error("Run has no all stream");
+  }
+  const webStream = Readable.toWeb(newBuild.all);
+  currentStream = webStream as ReadableStream;
+  newBuild.once("close", () => {
+    currentStream = undefined;
+  });
+  return new NextResponse(currentStream);
 }

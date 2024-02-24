@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import getRecipeBySlug from "recipes-collection/controller/data/read";
-import deleteRecipe from "recipes-collection/controller/actions/delete";
 import { RecipeView } from "recipes-collection/components/View";
+import deleteRecipe from "@/actions/deleteRecipe";
 
 export async function generateMetadata({
   params: { slug },

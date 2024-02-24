@@ -9,6 +9,17 @@ import { TextInput } from "component-library/components/Form/inputs/Text";
 import { Ingredient, Recipe } from "../../../controller/types";
 import { InfoCard } from "../shared";
 
+function getFraction(quantity: string | undefined) {
+  if (quantity) {
+    try {
+      return new Fraction(quantity);
+    } catch (e) {
+      console.error(`Given quantity ${quantity} couldn't be parsed!`);
+    }
+  }
+  return undefined;
+}
+
 export const IngredientView = ({
   ingredient,
   quantity,
@@ -22,10 +33,7 @@ export const IngredientView = ({
   note?: string;
   multiplier?: Fraction;
 }) => {
-  const parsedQuantity = useMemo(
-    () => quantity && new Fraction(quantity),
-    [quantity],
-  );
+  const parsedQuantity = useMemo(() => getFraction(quantity), [quantity]);
   const multipliedQuantity =
     parsedQuantity && multiplier && !multiplier.equals(1)
       ? parsedQuantity.mul(multiplier)
@@ -116,6 +124,18 @@ export function MultiplyingView({ recipe }: { recipe: Recipe }) {
 
   return (
     <>
+      <label htmlFor="multiplier" className="w-24 mx-auto">
+        <InfoCard>
+          <TextInput
+            id="multiplier"
+            name="multiplier"
+            label="Multiply"
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              setMultiplier(e.target.value);
+            }}
+          />
+        </InfoCard>
+      </label>
       <div className="my-3 marker:text-sm">
         <Ingredients ingredients={ingredients} multiplier={multiplier} />
         {instructions && (
@@ -136,19 +156,6 @@ export function MultiplyingView({ recipe }: { recipe: Recipe }) {
             {servingSize && <span>{servingSize}</span>}
           </InfoCard>
         )}
-
-        <label htmlFor="multiplier" className="w-24">
-          <InfoCard>
-            <TextInput
-              id="multiplier"
-              name="multiplier"
-              label="Multiply"
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                setMultiplier(e.target.value);
-              }}
-            />
-          </InfoCard>
-        </label>
       </div>
     </>
   );
