@@ -4,7 +4,6 @@ import React, { ChangeEvent, Reducer, useMemo, useReducer } from "react";
 
 import Fraction from "fraction.js";
 
-import { InstructionEntryView } from "../Instructions";
 import { TextInput } from "component-library/components/Form/inputs/Text";
 import { Ingredient, Recipe } from "../../../controller/types";
 import { InfoCard } from "../shared";
@@ -110,7 +109,7 @@ export const Ingredients = ({
 };
 
 export function MultiplyingView({ recipe }: { recipe: Recipe }) {
-  const { servings, servingSize, ingredients, instructions } = recipe;
+  const { servings, servingSize, ingredients } = recipe;
 
   const [{ fraction: multiplier }, setMultiplier] = useReducer(
     fractionInputReducer,
@@ -138,16 +137,6 @@ export function MultiplyingView({ recipe }: { recipe: Recipe }) {
       </label>
       <div className="my-3 marker:text-sm">
         <Ingredients ingredients={ingredients} multiplier={multiplier} />
-        {instructions && (
-          <div>
-            <h2 className="text-lg font-bold my-3">Instructions</h2>
-            <ol className="list-decimal pl-4">
-              {instructions.map((entry, i) => (
-                <InstructionEntryView key={i} entry={entry} />
-              ))}
-            </ol>
-          </div>
-        )}
       </div>
       <div className="m-2 flex flex-row flex-wrap items-center justify-center">
         {multipliedServings && (

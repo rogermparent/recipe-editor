@@ -4,6 +4,7 @@ import Markdown from "component-library/components/Markdown";
 import { RecipeImage } from "../RecipeImage";
 import { MultiplyingView } from "./Multiplier";
 import { InfoCard } from "./shared";
+import { InstructionEntryView } from "./Instructions";
 
 export const RecipeView = ({
   recipe,
@@ -16,7 +17,15 @@ export const RecipeView = ({
     throw new Error("Recipe data not found!");
   }
 
-  const { name, prepTime, cookTime, totalTime, description, image } = recipe;
+  const {
+    name,
+    prepTime,
+    cookTime,
+    totalTime,
+    description,
+    image,
+    instructions,
+  } = recipe;
 
   return (
     <div className="w-full h-full p-2 print:p-0 grow flex flex-col flex-nowrap max-w-prose">
@@ -38,6 +47,16 @@ export const RecipeView = ({
         {totalTime && <InfoCard title="Total Time">{totalTime}</InfoCard>}
       </div>
       <MultiplyingView recipe={recipe} />
+      {instructions && (
+        <div>
+          <h2 className="text-lg font-bold my-3">Instructions</h2>
+          <ol className="list-decimal pl-4">
+            {instructions.map((entry, i) => (
+              <InstructionEntryView key={i} entry={entry} />
+            ))}
+          </ol>
+        </div>
+      )}
     </div>
   );
 };

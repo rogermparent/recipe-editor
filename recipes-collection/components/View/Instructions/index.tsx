@@ -1,5 +1,3 @@
-"use client";
-
 import { InstructionEntry } from "../../../controller/types";
 
 import Markdown from "component-library/components/Markdown";

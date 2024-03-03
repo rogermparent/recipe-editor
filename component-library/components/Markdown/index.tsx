@@ -1,4 +1,4 @@
-import Markdown from "react-markdown";
+import Markdown from "markdown-to-jsx";
 import styles from "./styles.module.css";
 import clsx from "clsx";
 import Link from "next/link";
@@ -24,7 +24,16 @@ function MarkdownLink({
 
 export default function StyledMarkdown({ children }: { children: string }) {
   return (
-    <Markdown className={clsx(styles.content)} components={{ a: MarkdownLink }}>
+    <Markdown
+      className={clsx(styles.content)}
+      options={{
+        overrides: {
+          a: {
+            component: MarkdownLink,
+          },
+        },
+      }}
+    >
       {children}
     </Markdown>
   );

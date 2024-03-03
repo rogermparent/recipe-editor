@@ -7,6 +7,9 @@ import { RecipeImageDisplay } from "./Display";
 import { access } from "fs/promises";
 import { ImgProps } from "next/dist/shared/lib/get-img-props";
 
+// Simple method of avoiding running two of the same resize operation at once.
+const runningResizes = new Map();
+
 async function resizeImage({
   sharp,
   width,
@@ -18,6 +21,10 @@ async function resizeImage({
   quality: number;
   resultPath: string;
 }) {
+  if (runningResizes.has(resultPath)) {
+    return;
+  }
+  runningResizes.set(resultPath, true);
   try {
     await access(resultPath);
     return;
@@ -25,6 +32,7 @@ async function resizeImage({
   const { dir } = parse(resultPath);
   await mkdirIfNeeded(dir);
   await sharp.resize({ width }).webp({ quality }).toFile(resultPath);
+  runningResizes.delete(resultPath);
 }
 
 export interface StaticImageProps {
@@ -35,8 +43,9 @@ export async function getTransformedImageProps(
   srcPath: string,
   imagePropsArgs: ImageProps,
 ): Promise<StaticImageProps> {
-  const promises: Promise<void>[] = [];
-  const image = sharp(srcPath);
+  const promisedResizedImages: Promise<void>[] = [];
+  const imageSharp = sharp(srcPath);
+
   function loader({ src, width, quality = 75 }: ImageLoaderProps) {
     const { name } = parse(src);
     const resultFilename = `${name}-w${width}q${quality}.webp`;
@@ -46,7 +55,9 @@ export async function getTransformedImageProps(
       src,
       resultFilename,
     );
-    promises.push(resizeImage({ sharp: image, width, quality, resultPath }));
+    promisedResizedImages.push(
+      resizeImage({ sharp: imageSharp, width, quality, resultPath }),
+    );
     const resultSrc = posix.join(
       "/image",
       encodeURI(src),
@@ -54,9 +65,10 @@ export async function getTransformedImageProps(
     );
     return resultSrc;
   }
+
   const { props } = getImageProps({ loader, ...imagePropsArgs });
 
-  await Promise.all(promises);
+  await Promise.all(promisedResizedImages);
   return { props };
 }
 
