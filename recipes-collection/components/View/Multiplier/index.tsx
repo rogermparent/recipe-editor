@@ -7,6 +7,7 @@ import Fraction from "fraction.js";
 import { TextInput } from "component-library/components/Form/inputs/Text";
 import { Ingredient, Recipe } from "../../../controller/types";
 import { InfoCard } from "../shared";
+import { useMultiplier } from "./Provider";
 
 function getFraction(quantity: string | undefined) {
   if (quantity) {
@@ -60,24 +61,6 @@ export const IngredientView = ({
   );
 };
 
-const fractionInputReducer: Reducer<
-  { fraction?: Fraction; input?: string },
-  string
-> = (state, input) => {
-  if (input === state.input) {
-    return state;
-  }
-  if (!input || input === "1") {
-    return { fraction: undefined, input };
-  }
-  try {
-    const fraction = new Fraction(input);
-    return { fraction, input };
-  } catch (e) {
-    return state;
-  }
-};
-
 export const Ingredients = ({
   ingredients,
   multiplier,
@@ -111,10 +94,7 @@ export const Ingredients = ({
 export function MultiplyingView({ recipe }: { recipe: Recipe }) {
   const { servings, servingSize, ingredients } = recipe;
 
-  const [{ fraction: multiplier }, setMultiplier] = useReducer(
-    fractionInputReducer,
-    {},
-  );
+  const [{ multiplier }, setMultiplier] = useMultiplier();
 
   const multipliedServings =
     multiplier && servings
