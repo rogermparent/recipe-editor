@@ -1,0 +1,195 @@
+import { Dispatch, useReducer } from "react";
+import clsx from "clsx";
+import { Button } from "../../../Button";
+import { FieldWrapper, baseInputStyle } from "../..";
+
+interface KeyListValue<T> {
+  key: number;
+  defaultValue?: T;
+}
+
+interface KeyListState<T = any> {
+  currentKey: number;
+  values: KeyListValue<T>[];
+}
+
+export type KeyListAction<T = any> =
+  | { type: "APPEND" }
+  | { type: "MOVE"; from: number; to: number }
+  | { type: "DELETE"; index: number }
+  | { type: "INSERT"; index: number }
+  | { type: "RESET"; values: T[] };
+
+const inputListControlButtonStyle = "ml-0.5 w-10 h-10 sm:w-8 sm:h-8";
+
+export function InputListControls({
+  dispatch,
+  index,
+}: {
+  dispatch: Dispatch<KeyListAction>;
+  index: number;
+}) {
+  return (
+    <>
+      <Button
+        className={inputListControlButtonStyle}
+        onClick={() => {
+          dispatch({ type: "INSERT", index });
+        }}
+      >
+        +
+      </Button>
+      <Button
+        className={inputListControlButtonStyle}
+        onClick={() => {
+          dispatch({ type: "MOVE", from: index, to: index - 1 });
+        }}
+      >
+        &uarr;
+      </Button>
+      <Button
+        className={inputListControlButtonStyle}
+        onClick={() => {
+          dispatch({ type: "MOVE", from: index, to: index + 1 });
+        }}
+      >
+        &darr;
+      </Button>
+      <Button
+        className={inputListControlButtonStyle}
+        onClick={() => {
+          dispatch({ type: "DELETE", index });
+        }}
+      >
+        &times;
+      </Button>
+    </>
+  );
+}
+
+function reduceKeyList<T>(
+  state: KeyListState<T>,
+  action: KeyListAction<T>,
+): KeyListState<T> {
+  const { currentKey, values } = state;
+  switch (action.type) {
+    case "APPEND":
+      return {
+        currentKey: currentKey + 1,
+        values: [...values, { key: currentKey }],
+      };
+    case "INSERT": {
+      const { index } = action;
+      return {
+        currentKey: currentKey + 1,
+        values: [
+          ...values.slice(0, index),
+          { key: currentKey },
+          ...values.slice(index),
+        ],
+      };
+    }
+    case "MOVE": {
+      const { from: fromIndex, to: toIndex } = action;
+      if (fromIndex === toIndex) {
+        return state;
+      }
+      const newValues = [...values];
+      const valueToMove = values[fromIndex];
+      newValues.splice(fromIndex, 1);
+      newValues.splice(toIndex, 0, valueToMove);
+      return {
+        currentKey,
+        values: newValues,
+      };
+    }
+    case "DELETE": {
+      const { index } = action;
+      return {
+        currentKey,
+        values: [...values.slice(0, index), ...values.slice(index + 1)],
+      };
+    }
+    case "RESET": {
+      const { values: newValues } = action;
+      let i = currentKey;
+      const values: { key: number; defaultValue?: T }[] = newValues.map(
+        (defaultValue) => ({ key: i++, defaultValue }),
+      );
+      return {
+        currentKey,
+        values,
+      };
+    }
+    default: {
+      return state;
+    }
+  }
+}
+
+export function useKeyList<T = string>(defaultValues?: T[] | undefined) {
+  return useReducer(
+    reduceKeyList<T>,
+    { currentKey: 0, values: [] },
+    (initialArg) => {
+      if (defaultValues && defaultValues.length > 0) {
+        const values = [];
+        for (let i = 0; i < defaultValues.length; i++) {
+          values.push({ key: i, defaultValue: defaultValues[i] });
+        }
+        return {
+          currentKey: defaultValues.length,
+          values,
+        } as KeyListState;
+      }
+      return initialArg;
+    },
+  );
+}
+
+export function TextListInput({
+  name,
+  id = name,
+  defaultValue,
+  label,
+  appendLabel = "Append Item",
+}: {
+  name: string;
+  id?: string;
+  label: string;
+  defaultValue?: string[];
+  placeholder?: string;
+  errors?: Record<string, string> | undefined;
+  appendLabel?: string;
+}) {
+  const [{ values }, dispatch] = useKeyList(defaultValue);
+  return (
+    <FieldWrapper label={label} id={id}>
+      <ul>
+        {values.map(({ key, defaultValue }, index) => (
+          <li
+            key={key}
+            className="flex flex-row flex-wrap my-1 justify-center items-center"
+          >
+            <input
+              type="text"
+              defaultValue={defaultValue}
+              className={clsx(baseInputStyle, "px-1 grow")}
+              name={`${name}[${index}]`}
+            />
+            <div className="flex flex-row flex-nowrap justify-center">
+              <InputListControls dispatch={dispatch} index={index} />
+            </div>
+          </li>
+        ))}
+      </ul>
+      <Button
+        onClick={() => {
+          dispatch({ type: "APPEND" });
+        }}
+      >
+        {appendLabel}
+      </Button>
+    </FieldWrapper>
+  );
+}

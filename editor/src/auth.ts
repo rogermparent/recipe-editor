@@ -5,7 +5,7 @@ import { z } from "zod";
 import { readFile } from "fs/promises";
 import { resolve } from "path";
 import bcrypt from "bcrypt";
-import { getContentDirectory } from "@/collections/recipes/controller/filesystemDirectories";
+import { getContentDirectory } from "recipes-collection/controller/filesystemDirectories";
 
 interface User {
   id: string;

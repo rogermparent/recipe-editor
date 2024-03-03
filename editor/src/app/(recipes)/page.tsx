@@ -1,9 +1,9 @@
 import Link from "next/link";
-import RecipeList from "@/collections/recipes/components/List";
-import getRecipes from "@/collections/recipes/controller/data/readIndex";
+import RecipeList from "recipes-collection/components/List";
+import getRecipes from "recipes-collection/controller/data/readIndex";
 
 export default async function Home() {
-  const { recipes, more } = await getRecipes({ limit: 3 });
+  const { recipes, more } = await getRecipes({ limit: 6 });
   return (
     <main className="flex flex-col items-center h-full w-full p-2 max-w-prose lg:max-w-4xl mx-auto grow bg-slate-950">
       <div className="m-2 text-left w-full grow">

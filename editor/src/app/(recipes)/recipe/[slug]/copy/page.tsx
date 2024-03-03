@@ -1,4 +1,4 @@
-import getRecipeBySlug from "@/collections/recipes/controller/data/read";
+import getRecipeBySlug from "recipes-collection/controller/data/read";
 import CopyForm from "./form";
 import { notFound } from "next/navigation";
 

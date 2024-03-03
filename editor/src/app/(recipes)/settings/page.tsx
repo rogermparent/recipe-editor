@@ -1,7 +1,7 @@
-import rebuildRecipeIndex from "@/collections/recipes/controller/actions/rebuildIndex";
+import rebuildRecipeIndex from "recipes-collection/controller/actions/rebuildIndex";
 import { auth } from "@/auth";
-import { Button } from "@/components/Button";
-import { Exporter } from "./exporter";
+import { Button } from "component-library/components/Button";
+import { Exporters } from "./exporter";
 
 export default async function SettingsPage() {
   auth();
@@ -14,7 +14,7 @@ export default async function SettingsPage() {
         </form>
       </div>
       <h2 className="text-lg font-bold my-3">Export</h2>
-      <Exporter />
+      <Exporters />
     </main>
   );
 }

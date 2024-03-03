@@ -32,7 +32,7 @@ describe("New Recipe View", () => {
         cy.checkNamesInOrder([newRecipeTitle]);
       });
 
-      it.only("should be able to import a recipe", () => {
+      it("should be able to import a recipe", () => {
         const baseURL = Cypress.config().baseUrl;
         const testURL = "/uploads/katsudon.html";
         const fullTestURL = new URL(testURL, baseURL);

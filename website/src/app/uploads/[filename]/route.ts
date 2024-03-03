@@ -1,4 +1,4 @@
-import { getContentDirectory } from "@/collections/recipes/controller/filesystemDirectories";
+import { getContentDirectory } from "recipes-collection/controller/filesystemDirectories";
 import { ReadStream } from "fs";
 import { open, readdir } from "fs/promises";
 import { notFound } from "next/navigation";

@@ -1,30 +1,39 @@
 import { NextRequest, NextResponse } from "next/server";
 import execa from "execa";
-import { ReadStream } from "fs";
-import { getContentDirectory } from "@/collections/recipes/controller/filesystemDirectories";
+import { getContentDirectory } from "recipes-collection/controller/filesystemDirectories";
 import { unstable_noStore } from "next/cache";
+import { auth, signIn } from "@/auth";
+import { resolve } from "path";
+import { Readable } from "stream";
 
 let currentStream: ReadableStream | undefined;
 
 export async function GET(_request: NextRequest) {
   unstable_noStore();
+  const user = await auth();
+  if (!user) {
+    return signIn();
+  }
   if (currentStream) {
     return new NextResponse("A build is already currently running!");
   }
-  const newBuild = execa("pnpm", ["run", "-C", "../website", "build"], {
+  const contentDirectory = getContentDirectory();
+  const cwd = resolve("..", "website");
+  const newBuild = execa("pnpm", ["run", "build"], {
+    cwd: cwd,
     all: true,
     env: {
       NODE_ENV: "production",
-      CONTENT_DIRECTORY: getContentDirectory(),
+      CONTENT_DIRECTORY: contentDirectory,
     },
-  });
-  newBuild.once("close", () => {
-    currentStream = undefined;
   });
   if (!newBuild.all) {
     throw new Error("Run has no all stream");
   }
-  const newStream = ReadStream.toWeb(newBuild.all) as ReadableStream;
-  currentStream = newStream as ReadableStream;
-  return new NextResponse(newStream);
+  const webStream = Readable.toWeb(newBuild.all);
+  currentStream = webStream as ReadableStream;
+  newBuild.once("close", () => {
+    currentStream = undefined;
+  });
+  return new NextResponse(currentStream);
 }

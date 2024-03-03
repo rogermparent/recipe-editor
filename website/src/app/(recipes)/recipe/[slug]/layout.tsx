@@ -1,4 +1,4 @@
-import getRecipes from "@/collections/recipes/controller/data/readIndex";
+import getRecipes from "recipes-collection/controller/data/readIndex";
 import { ReactNode } from "react";
 
 export default function RecipePageLayout({
