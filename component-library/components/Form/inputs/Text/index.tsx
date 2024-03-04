@@ -11,6 +11,7 @@ export function TextInput({
   placeholder,
   errors,
   list,
+  value,
 }: {
   name: string;
   id?: string;
@@ -20,6 +21,7 @@ export function TextInput({
   placeholder?: string;
   errors?: string[];
   list?: string;
+  value?: string;
 }) {
   return (
     <FieldWrapper label={label} id={id}>
@@ -33,6 +35,7 @@ export function TextInput({
         onChange={onChange}
         placeholder={placeholder}
         list={list}
+        value={value}
       />
     </FieldWrapper>
   );

@@ -2,99 +2,60 @@
 
 import React, { ChangeEvent, Reducer, useMemo, useReducer } from "react";
 
-import Fraction from "fraction.js";
-
 import { TextInput } from "component-library/components/Form/inputs/Text";
 import { Ingredient, Recipe } from "../../../controller/types";
 import { InfoCard } from "../shared";
 import { useMultiplier } from "./Provider";
+import StyledMarkdown from "component-library/components/Markdown";
+import { Multiplyable } from "./Multiplyable";
+import { Button } from "component-library/components/Button";
 
-function getFraction(quantity: string | undefined) {
-  if (quantity) {
-    try {
-      return new Fraction(quantity);
-    } catch (e) {
-      console.error(`Given quantity ${quantity} couldn't be parsed!`);
-    }
-  }
-  return undefined;
-}
-
-export const IngredientView = ({
-  ingredient,
-  quantity,
-  unit,
-  multiplier,
-  note,
-}: {
-  ingredient?: string;
-  quantity?: string;
-  unit?: string;
-  note?: string;
-  multiplier?: Fraction;
-}) => {
-  const parsedQuantity = useMemo(() => getFraction(quantity), [quantity]);
-  const multipliedQuantity =
-    parsedQuantity && multiplier && !multiplier.equals(1)
-      ? parsedQuantity.mul(multiplier)
-      : parsedQuantity;
+export const IngredientItem = ({ ingredient }: { ingredient?: string }) => {
   return (
     <li>
-      <div>
-        <label>
-          <input
-            type="checkbox"
-            className="peer h-4 w-4 shrink-0 rounded-sm border border-primary shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
-          />{" "}
-          {multipliedQuantity && (
-            <span>{multipliedQuantity.toFraction(true)}</span>
-          )}{" "}
-          {unit && <span>{unit}</span>} <span>{ingredient}</span>
-          {note && (
-            <span>
-              , <span>{note}</span>
-            </span>
-          )}
-        </label>
-      </div>
+      <label>
+        <input
+          type="checkbox"
+          className="peer h-4 w-4 shrink-0 rounded-sm border border-primary shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+        />{" "}
+        {ingredient && (
+          <StyledMarkdown components={{ Multiplyable }}>
+            {ingredient}
+          </StyledMarkdown>
+        )}
+      </label>
     </li>
   );
 };
 
 export const Ingredients = ({
   ingredients,
-  multiplier,
 }: {
   ingredients?: Ingredient[];
-  multiplier?: Fraction;
 }) => {
   return (
-    <>
+    <form>
       {ingredients && (
         <div>
           <h2 className="text-lg font-bold my-3">Ingredients</h2>
           <ul>
-            {ingredients.map(({ ingredient, note, quantity, unit }, i) => (
-              <IngredientView
-                key={i}
-                ingredient={ingredient}
-                note={note}
-                quantity={quantity}
-                unit={unit}
-                multiplier={multiplier}
-              />
+            {ingredients.map(({ ingredient }, i) => (
+              <IngredientItem key={i} ingredient={ingredient} />
             ))}
           </ul>
         </div>
       )}
-    </>
+      <Button className="mt-2" type="reset">
+        Reset
+      </Button>
+    </form>
   );
 };
 
 export function MultiplyingView({ recipe }: { recipe: Recipe }) {
   const { servings, servingSize, ingredients } = recipe;
 
-  const [{ multiplier }, setMultiplier] = useMultiplier();
+  const [{ multiplier, input }, setMultiplier] = useMultiplier();
 
   const multipliedServings =
     multiplier && servings
@@ -112,11 +73,12 @@ export function MultiplyingView({ recipe }: { recipe: Recipe }) {
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               setMultiplier(e.target.value);
             }}
+            value={input}
           />
         </InfoCard>
       </label>
       <div className="my-3 marker:text-sm">
-        <Ingredients ingredients={ingredients} multiplier={multiplier} />
+        <Ingredients ingredients={ingredients} />
       </div>
       <div className="m-2 flex flex-row flex-wrap items-center justify-center">
         {multipliedServings && (

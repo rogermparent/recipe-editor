@@ -1,8 +1,5 @@
 export type Ingredient = {
   ingredient: string;
-  unit?: string;
-  quantity?: string;
-  note?: string;
 };
 
 export interface Instruction {
