@@ -13,6 +13,12 @@ describe("Single Recipe View", () => {
       cy.findByText("Sign In");
     });
 
+    it("should be able to multiply ingredient amounts", () => {
+      cy.findByText("1 1/2 tsp salt");
+      cy.findByLabelText("Multiply").type("2");
+      cy.findByText("3 tsp salt");
+    });
+
     it("should be able to edit a recipe", () => {
       cy.findByText("Edit").click();
 
