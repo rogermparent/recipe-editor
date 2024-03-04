@@ -15,8 +15,10 @@ describe("Single Recipe View", () => {
 
     it("should be able to multiply ingredient amounts", () => {
       cy.findByText("1 1/2 tsp salt");
+      cy.findByText("Sprinkle 1/2 tsp salt in water");
       cy.findByLabelText("Multiply").type("2");
       cy.findByText("3 tsp salt");
+      cy.findByText("Sprinkle 1 tsp salt in water");
     });
 
     it("should be able to edit a recipe", () => {

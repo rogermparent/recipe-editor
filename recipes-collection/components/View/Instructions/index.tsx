@@ -35,7 +35,9 @@ export const InstructionEntryView = ({
     return (
       <li className="my-3">
         {name && <h3 className={stepHeadingStyle}>{name}</h3>}
-        <Markdown components={{ Multiplyable }}>{text}</Markdown>
+        <Markdown components={{ Multiplyable: { component: Multiplyable } }}>
+          {text}
+        </Markdown>
       </li>
     );
   }
