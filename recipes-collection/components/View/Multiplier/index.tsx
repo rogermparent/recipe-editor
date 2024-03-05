@@ -70,10 +70,10 @@ export function MultiplyingView({ recipe }: { recipe: Recipe }) {
             id="multiplier"
             name="multiplier"
             label="Multiply"
+            value={input || ""}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               setMultiplier(e.target.value);
             }}
-            value={input}
           />
         </InfoCard>
       </label>
