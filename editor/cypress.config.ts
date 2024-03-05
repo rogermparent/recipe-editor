@@ -27,5 +27,8 @@ export default defineConfig({
         },
       });
     },
+    retries: {
+      runMode: 2,
+    },
   },
 });

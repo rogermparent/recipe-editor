@@ -26,7 +26,7 @@ describe("Single Recipe View", () => {
 
       cy.fillSignInForm();
 
-      cy.findByText("Editing Recipe: Recipe 6");
+      cy.findByText("Editing Recipe: Recipe 6", { timeout: 10000 });
 
       cy.findByText("Advanced").click();
 

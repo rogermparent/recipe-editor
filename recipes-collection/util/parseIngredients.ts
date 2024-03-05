@@ -1,3 +1,5 @@
+import { Ingredient } from "../controller/types";
+
 export function createIngredients(input: string) {
   return input
     .split(/\n+/)
@@ -14,5 +16,5 @@ export function createIngredients(input: string) {
         return { ingredient: multiplyableIngredient };
       }
     })
-    .filter(Boolean);
+    .filter(Boolean) as Ingredient[];
 }
