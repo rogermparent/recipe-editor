@@ -7,8 +7,6 @@ export default function buildRecipeIndexValue(
   return {
     name,
     image,
-    ingredients: ingredients?.map(({ quantity, unit, ingredient }) =>
-      [quantity, unit, ingredient].join(" "),
-    ),
+    ingredients: ingredients?.map(({ ingredient }) => ingredient),
   };
 }

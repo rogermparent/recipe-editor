@@ -56,11 +56,9 @@ describe("New Recipe View", () => {
           );
 
           // Verify first ingredient
-          cy.get('[name="ingredients[0].quantity"]').should("have.value", "1");
-          cy.get('[name="ingredients[0].unit"]').should("have.value", "cup");
           cy.get('[name="ingredients[0].ingredient"]').should(
             "have.value",
-            "water ((for the dashi packet))",
+            `<Multiplyable baseNumber="1" /> cup water ((for the dashi packet))`,
           );
 
           // Verify first instruction, which is a simple step

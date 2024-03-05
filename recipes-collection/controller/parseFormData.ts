@@ -26,9 +26,6 @@ const RecipeFormSchema = z.object({
     .array(
       z.object({
         ingredient: z.string(),
-        quantity: z.string().optional(),
-        unit: z.string().optional(),
-        note: z.string().optional(),
       }),
     )
     .optional(),

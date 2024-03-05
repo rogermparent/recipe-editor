@@ -2,7 +2,10 @@ import { RecipeFormErrors } from "../../../controller/formState";
 import { Ingredient } from "../../../controller/types";
 import { createIngredients } from "../../../util/parseIngredients";
 import { Button } from "component-library/components/Button";
-import { FieldWrapper, baseInputStyle } from "component-library/components/Form";
+import {
+  FieldWrapper,
+  baseInputStyle,
+} from "component-library/components/Form";
 import {
   InputListControls,
   useKeyList,
@@ -58,14 +61,6 @@ export function IngredientsListInput({
           return (
             <li key={key} className="flex flex-col my-1">
               <div>
-                <TextInput
-                  name={`${itemKey}.quantity`}
-                  defaultValue={defaultValue?.quantity}
-                />
-                <TextInput
-                  name={`${itemKey}.unit`}
-                  defaultValue={defaultValue?.unit}
-                />
                 <TextInput
                   name={`${itemKey}.ingredient`}
                   defaultValue={defaultValue?.ingredient}
