@@ -71,9 +71,6 @@ importers:
       next-auth:
         specifier: ^5.0.0-beta.9
         version: 5.0.0-beta.9(next@14.1.1)(react@18.2.0)
-      parse-ingredient:
-        specifier: ^1.2.0
-        version: 1.2.0
       react:
         specifier: ^18
         version: 18.2.0
@@ -156,9 +153,6 @@ importers:
       next:
         specifier: 14.1.1
         version: 14.1.1(react-dom@18.2.0)(react@18.2.0)
-      parse-ingredient:
-        specifier: ^1.2.0
-        version: 1.2.0
       plaiceholder:
         specifier: ^3.0.0
         version: 3.0.0(sharp@0.33.2)
@@ -213,9 +207,6 @@ importers:
       next:
         specifier: 14.1.1
         version: 14.1.1(react-dom@18.2.0)(react@18.2.0)
-      parse-ingredient:
-        specifier: ^1.2.0
-        version: 1.2.0
       react:
         specifier: ^18
         version: 18.2.0
@@ -8264,11 +8255,6 @@ packages:
       boolbase: 1.0.0
     dev: false
 
-  /numeric-quantity@2.0.1:
-    resolution: {integrity: sha512-+Bt2X6YxM5bg8XIBl76NVeG2eL0Y5VQRoyz6GLYrZXW/TDh7We+tGeX4/WZWhaVGOg5ZjNBEOZt9a86slMhOJA==}
-    engines: {node: '>=16'}
-    dev: false
-
   /oauth4webapi@2.10.3:
     resolution: {integrity: sha512-9FkXEXfzVKzH63GUOZz1zMr3wBaICSzk6DLXx+CGdrQ10ItNk2ePWzYYc1fdmKq1ayGFb2aX97sRCoZ2s0mkDw==}
     dev: false
@@ -8662,13 +8648,6 @@ packages:
   /parse-gitignore@2.0.0:
     resolution: {integrity: sha512-RmVuCHWsfu0QPNW+mraxh/xjQVw/lhUCUru8Zni3Ctq3AoMhpDTq0OVdKS6iesd6Kqb7viCV3isAL43dciOSog==}
     engines: {node: '>=14'}
-    dev: false
-
-  /parse-ingredient@1.2.0:
-    resolution: {integrity: sha512-3xaNV8fBhcyOOuTV9pIBV6/BGXcJzacZfwkEKaamf1HH4uHStOx8hiRhpLGr/ruQXf1bkt4gRfFo52LxDsj9Zw==}
-    engines: {node: '>=10'}
-    dependencies:
-      numeric-quantity: 2.0.1
     dev: false
 
   /parse-json@5.2.0:

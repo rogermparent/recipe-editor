@@ -1,35 +1,18 @@
-import { parseIngredient } from "parse-ingredient";
-import { Ingredient } from "../controller/types";
-import { formatQuantity } from "format-quantity";
-
 export function createIngredients(input: string) {
-  return parseIngredient(input).map(
-    ({ quantity, unitOfMeasure, description }) => {
-      const ingredientStringSegments = [];
-
-      if (quantity) {
-        const formattedQuantity = formatQuantity(quantity);
-        if (formattedQuantity) {
-          ingredientStringSegments.push(
-            `<Multiplyable baseNumber="${formattedQuantity}" />`,
-          );
-        } else {
-          ingredientStringSegments.push(quantity);
-        }
+  return input
+    .split(/\n+/)
+    .map((inputLine) => {
+      const trimmedInputLine = inputLine.trim();
+      if (trimmedInputLine) {
+        const multiplyableIngredient = trimmedInputLine.replace(
+          /[0-9]+(?:\/[0-9]+|(?: and)? [0-9]+\/[0-9]+|\.[0-9]+)?/g,
+          (match) => {
+            const normalizedMatch = match.replace(" and", "");
+            return `<Multiplyable baseNumber="${normalizedMatch}" />`;
+          },
+        );
+        return { ingredient: multiplyableIngredient };
       }
-
-      if (unitOfMeasure) {
-        ingredientStringSegments.push(unitOfMeasure);
-      }
-
-      if (description) {
-        ingredientStringSegments.push(description);
-      }
-
-      const massagedIngredient: Ingredient = {
-        ingredient: ingredientStringSegments.join(" "),
-      };
-      return massagedIngredient;
-    },
-  );
+    })
+    .filter(Boolean);
 }

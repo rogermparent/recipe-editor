@@ -78,9 +78,16 @@ export async function importRecipeData(
   if (recipeObject) {
     const { name, description, recipeIngredient, recipeInstructions } =
       recipeObject;
+
+    const newDescriptionSegments = [`*Imported from [${url}](${url})*`];
+    if (description) {
+      newDescriptionSegments.push(`\n\n---\n\n${description}`);
+    }
+
+    const newDescription = newDescriptionSegments.join("");
     const massagedData = {
       name,
-      description,
+      description: newDescription,
       ingredients: recipeIngredient?.map((ingredientString) => {
         const [massagedIngredient] = createIngredients(ingredientString);
         return massagedIngredient;
