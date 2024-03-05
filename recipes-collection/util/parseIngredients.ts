@@ -5,11 +5,29 @@ import { formatQuantity } from "format-quantity";
 export function createIngredients(input: string) {
   return parseIngredient(input).map(
     ({ quantity, unitOfMeasure, description }) => {
-      const formattedQuantity = quantity ? formatQuantity(quantity) : undefined;
+      const ingredientStringSegments = [];
+
+      if (quantity) {
+        const formattedQuantity = formatQuantity(quantity);
+        if (formattedQuantity) {
+          ingredientStringSegments.push(
+            `<Multiplyable baseNumber="${formattedQuantity}" />`,
+          );
+        } else {
+          ingredientStringSegments.push(quantity);
+        }
+      }
+
+      if (unitOfMeasure) {
+        ingredientStringSegments.push(unitOfMeasure);
+      }
+
+      if (description) {
+        ingredientStringSegments.push(description);
+      }
+
       const massagedIngredient: Ingredient = {
-        quantity: formattedQuantity || undefined,
-        unit: unitOfMeasure || undefined,
-        ingredient: description,
+        ingredient: ingredientStringSegments.join(" "),
       };
       return massagedIngredient;
     },
