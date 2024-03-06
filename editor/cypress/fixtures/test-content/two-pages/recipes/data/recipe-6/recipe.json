@@ -2,5 +2,12 @@
   "name": "Recipe 6",
   "description": "",
   "image": "recipe 6 test image.png",
-  "date": 1701998172622
+  "date": 1701998172622,
+  "ingredients": [
+    { "ingredient": "<Multiplyable baseNumber=\"1 1/2\" /> tsp salt" },
+    { "ingredient": "<Multiplyable baseNumber=\"1\" /> cup water" }
+  ],
+  "instructions": [
+    { "text": "Sprinkle <Multiplyable baseNumber=\"1/2\" /> tsp salt in water" }
+  ]
 }

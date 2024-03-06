@@ -1,6 +1,7 @@
 import { InstructionEntry } from "../../../controller/types";
 
 import Markdown from "component-library/components/Markdown";
+import { Multiplyable } from "../Multiplier/Multiplyable";
 
 const stepHeadingStyle = "text-lg font-bold my-2 border-b border-white";
 const childHeadingStyle = "text-base font-bold my-1 border-b border-white";
@@ -19,7 +20,11 @@ export const InstructionEntryView = ({
           {instructions.map(({ name, text }, i) => (
             <li key={i} className="my-2">
               {name && <h4 className={childHeadingStyle}>{name}</h4>}
-              <Markdown>{text}</Markdown>
+              <Markdown
+                components={{ Multiplyable: { component: Multiplyable } }}
+              >
+                {text}
+              </Markdown>
             </li>
           ))}
         </ol>
@@ -30,7 +35,9 @@ export const InstructionEntryView = ({
     return (
       <li className="my-3">
         {name && <h3 className={stepHeadingStyle}>{name}</h3>}
-        <Markdown>{text}</Markdown>
+        <Markdown components={{ Multiplyable: { component: Multiplyable } }}>
+          {text}
+        </Markdown>
       </li>
     );
   }

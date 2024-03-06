@@ -1,3 +1,4 @@
+import { decodeHTML } from "entities";
 import { Instruction, InstructionGroup, Recipe } from "../controller/types";
 import { createIngredients } from "./parseIngredients";
 
@@ -64,8 +65,8 @@ function createStep({
   text?: string;
 }): Instruction {
   return {
-    name: name === text ? undefined : name,
-    text,
+    name: name && (name === text ? undefined : decodeHTML(name)),
+    text: decodeHTML(text),
   };
 }
 
@@ -78,9 +79,16 @@ export async function importRecipeData(
   if (recipeObject) {
     const { name, description, recipeIngredient, recipeInstructions } =
       recipeObject;
+
+    const newDescriptionSegments = [`*Imported from [${url}](${url})*`];
+    if (description) {
+      newDescriptionSegments.push(`\n\n---\n\n${description}`);
+    }
+
+    const newDescription = newDescriptionSegments.join("");
     const massagedData = {
       name,
-      description,
+      description: newDescription,
       ingredients: recipeIngredient?.map((ingredientString) => {
         const [massagedIngredient] = createIngredients(ingredientString);
         return massagedIngredient;

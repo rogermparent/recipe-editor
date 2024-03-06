@@ -1,4 +1,4 @@
-import Markdown from "markdown-to-jsx";
+import Markdown, { MarkdownToJSX } from "markdown-to-jsx";
 import styles from "./styles.module.css";
 import clsx from "clsx";
 import Link from "next/link";
@@ -22,7 +22,13 @@ function MarkdownLink({
   );
 }
 
-export default function StyledMarkdown({ children }: { children: string }) {
+export default function StyledMarkdown({
+  children,
+  components,
+}: {
+  children: string;
+  components?: MarkdownToJSX.Overrides;
+}) {
   return (
     <Markdown
       className={clsx(styles.content)}
@@ -31,6 +37,7 @@ export default function StyledMarkdown({ children }: { children: string }) {
           a: {
             component: MarkdownLink,
           },
+          ...components,
         },
       }}
     >

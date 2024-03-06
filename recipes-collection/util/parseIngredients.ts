@@ -1,17 +1,20 @@
-import { parseIngredient } from "parse-ingredient";
 import { Ingredient } from "../controller/types";
-import { formatQuantity } from "format-quantity";
 
 export function createIngredients(input: string) {
-  return parseIngredient(input).map(
-    ({ quantity, unitOfMeasure, description }) => {
-      const formattedQuantity = quantity ? formatQuantity(quantity) : undefined;
-      const massagedIngredient: Ingredient = {
-        quantity: formattedQuantity || undefined,
-        unit: unitOfMeasure || undefined,
-        ingredient: description,
-      };
-      return massagedIngredient;
-    },
-  );
+  return input
+    .split(/\n+/)
+    .map((inputLine) => {
+      const trimmedInputLine = inputLine.trim();
+      if (trimmedInputLine) {
+        const multiplyableIngredient = trimmedInputLine.replace(
+          /[0-9]+(?:\/[0-9]+|(?: and)? [0-9]+\/[0-9]+|\.[0-9]+)?/g,
+          (match) => {
+            const normalizedMatch = match.replace(" and", "");
+            return `<Multiplyable baseNumber="${normalizedMatch}" />`;
+          },
+        );
+        return { ingredient: multiplyableIngredient };
+      }
+    })
+    .filter(Boolean) as Ingredient[];
 }

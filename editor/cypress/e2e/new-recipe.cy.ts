@@ -52,15 +52,13 @@ describe("New Recipe View", () => {
           cy.get('[name="name"]').should("have.value", "Katsudon");
           cy.get('[name="description"]').should(
             "have.value",
-            "Katsudon is a Japanese pork cutlet rice bowl made with tonkatsu, eggs, and sautéed onions simmered in a sweet and savory sauce. It‘s a one-bowl wonder and true comfort food!",
+            "*Imported from [http://localhost:3000/uploads/katsudon.html](http://localhost:3000/uploads/katsudon.html)*\n\n---\n\nKatsudon is a Japanese pork cutlet rice bowl made with tonkatsu, eggs, and sautéed onions simmered in a sweet and savory sauce. It‘s a one-bowl wonder and true comfort food!",
           );
 
           // Verify first ingredient
-          cy.get('[name="ingredients[0].quantity"]').should("have.value", "1");
-          cy.get('[name="ingredients[0].unit"]').should("have.value", "cup");
           cy.get('[name="ingredients[0].ingredient"]').should(
             "have.value",
-            "water ((for the dashi packet))",
+            `<Multiplyable baseNumber="1" /> cup water ((for the dashi packet))`,
           );
 
           // Verify first instruction, which is a simple step
