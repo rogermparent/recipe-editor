@@ -1,3 +1,4 @@
+import { decodeHTML } from "entities";
 import { Instruction, InstructionGroup, Recipe } from "../controller/types";
 import { createIngredients } from "./parseIngredients";
 
@@ -64,8 +65,8 @@ function createStep({
   text?: string;
 }): Instruction {
   return {
-    name: name === text ? undefined : name,
-    text,
+    name: name && (name === text ? undefined : decodeHTML(name)),
+    text: decodeHTML(text),
   };
 }
 
