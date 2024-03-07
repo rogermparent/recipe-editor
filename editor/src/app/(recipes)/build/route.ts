@@ -32,8 +32,9 @@ export async function GET(_request: NextRequest) {
   }
   const webStream = Readable.toWeb(newBuild.all);
   currentStream = webStream as ReadableStream;
-  newBuild.once("close", () => {
+  newBuild.finally(() => {
     currentStream = undefined;
   });
+
   return new NextResponse(currentStream);
 }
