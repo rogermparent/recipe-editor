@@ -37,9 +37,11 @@ export const RecipeView = ({
             slug={slug}
             image={image}
             alt="Heading image"
-            width={850}
+            width={580}
             height={450}
+            sizes="100vw"
             className="object-cover aspect-ratio-[16/10] h-96"
+            loading="eager"
           />
         )}
         {description && <Markdown>{description}</Markdown>}

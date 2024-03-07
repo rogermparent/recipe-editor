@@ -79,6 +79,8 @@ interface TransformedRecipeImageProps {
   width: number;
   height: number;
   className?: string;
+  loading?: ImageProps["loading"];
+  sizes?: ImageProps["sizes"];
 }
 
 export async function getTransformedRecipeImageProps({
@@ -87,6 +89,8 @@ export async function getTransformedRecipeImageProps({
   alt,
   width,
   height,
+  loading,
+  sizes,
   className,
 }: TransformedRecipeImageProps) {
   const srcPath = join(
@@ -104,6 +108,8 @@ export async function getTransformedRecipeImageProps({
     width,
     height,
     className,
+    loading,
+    sizes,
   });
 }
 
