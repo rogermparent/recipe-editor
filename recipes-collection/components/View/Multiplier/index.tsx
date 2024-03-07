@@ -70,7 +70,7 @@ export function MultiplyingView({ recipe }: { recipe: Recipe }) {
             id="multiplier"
             name="multiplier"
             label="Multiply"
-            value={input || ""}
+            defaultValue={input}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               setMultiplier(e.target.value);
             }}

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import getRecipeBySlug from "recipes-collection/controller/data/read";
 import { RecipeView } from "recipes-collection/components/View";
+import getRecipes from "recipes-collection/controller/data/readIndex";
 
 export async function generateMetadata({
   params: { slug },
@@ -34,4 +35,9 @@ export default async function Recipe({
       </div>
     </main>
   );
+}
+
+export async function generateStaticParams() {
+  const { recipes } = await getRecipes();
+  return recipes.map(({ slug }) => ({ slug }));
 }
