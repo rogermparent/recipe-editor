@@ -22,17 +22,22 @@ function useStreamText(): {
   const [streamText, setStreamText] = useState("");
   const [isRunning, setIsRunning] = useState(false);
   useEffect(() => {
-    setStreamText("");
-    (async () => {
-      if (streamResponse?.body) {
-        for await (const chunk of streamResponse.body) {
-          const newDecodedChunk = decoder.decode(chunk);
-          console.log({ newDecodedChunk });
-          setStreamText((cur) => cur + newDecodedChunk);
+    if (streamResponse?.body) {
+      setStreamText("");
+      const { body } = streamResponse;
+
+      (async () => {
+        const reader = body.getReader();
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) {
+            setIsRunning(false);
+            return;
+          }
+          setStreamText((cur) => cur + decoder.decode(value));
         }
-        setIsRunning(false);
-      }
-    })();
+      })();
+    }
   }, [streamResponse, setStreamText]);
   const fetchStream = useCallback((endpoint: string) => {
     setIsRunning(true);
