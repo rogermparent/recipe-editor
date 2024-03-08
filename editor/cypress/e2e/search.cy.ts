@@ -46,7 +46,7 @@ describe("Search Page", () => {
         .should("have.text", "Recipe 5");
     });
 
-    it.only("should be able to find a recipe by ingredient", () => {
+    it("should be able to find a recipe by ingredient", () => {
       cy.findByLabelText("Query").type("salt");
       cy.findByRole("button", { name: "Submit" }).click();
 
