@@ -24,9 +24,10 @@ export default async function Recipe({
           slug,
           image,
           alt: "Heading image",
-          width: 850,
+          width: 580,
           height: 450,
           className: "object-cover aspect-ratio-[16/10] h-96",
+          sizes: "100vw",
         })
       : undefined;
   return (
