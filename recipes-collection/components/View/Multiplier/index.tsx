@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ChangeEvent, Reducer, useMemo, useReducer } from "react";
+import React, { ChangeEvent } from "react";
 
 import { TextInput } from "component-library/components/Form/inputs/Text";
 import { Ingredient, Recipe } from "../../../controller/types";
@@ -8,15 +8,15 @@ import { InfoCard } from "../shared";
 import { useMultiplier } from "./Provider";
 import StyledMarkdown from "component-library/components/Markdown";
 import { Multiplyable } from "./Multiplyable";
-import { Button } from "component-library/components/Button";
+import { Button, PaddedButton } from "component-library/components/Button";
 
 export const IngredientItem = ({ ingredient }: { ingredient?: string }) => {
   return (
     <li>
-      <label>
+      <label className="h-12 block flex flex-row items-center text-lg">
         <input
           type="checkbox"
-          className="peer h-4 w-4 shrink-0 rounded-sm border border-primary shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+          className="h-4 w-4 m-2 inline-block shrink-0 rounded-sm border border-primary shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
         />{" "}
         {ingredient && (
           <StyledMarkdown components={{ Multiplyable }}>
@@ -36,8 +36,13 @@ export const Ingredients = ({
   return (
     <form>
       {ingredients && (
-        <div>
-          <h2 className="text-lg font-bold my-3">Ingredients</h2>
+        <div className="my-4">
+          <h2 className="text-xl font-bold">
+            Ingredients
+            <PaddedButton className="ml-2 h-12 text-base" type="reset">
+              Reset
+            </PaddedButton>
+          </h2>
           <ul>
             {ingredients.map(({ ingredient }, i) => (
               <IngredientItem key={i} ingredient={ingredient} />
@@ -45,9 +50,6 @@ export const Ingredients = ({
           </ul>
         </div>
       )}
-      <Button className="mt-2" type="reset">
-        Reset
-      </Button>
     </form>
   );
 };

@@ -45,5 +45,14 @@ describe("Search Page", () => {
         .findByRole("heading")
         .should("have.text", "Recipe 5");
     });
+
+    it("should be able to find a recipe by ingredient", () => {
+      cy.findByLabelText("Query").type("sal");
+      cy.findByRole("button", { name: "Submit" }).click();
+
+      cy.findByRole("heading", { name: "Recipe 6" });
+
+      cy.findByText(/^1 1\/2 tsp.*t$/).findByText("sal");
+    });
   });
 });

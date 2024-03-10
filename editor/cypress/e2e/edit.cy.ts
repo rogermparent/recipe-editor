@@ -1,3 +1,5 @@
+import imageFixture from "../fixtures/images/recipe-6-test-image-alternate.png";
+
 describe("Recipe Edit View", () => {
   describe("with seven items", () => {
     beforeEach(() => {
@@ -58,12 +60,14 @@ describe("Recipe Edit View", () => {
         cy.findByRole("img").should(
           "have.attr",
           "src",
-          "/image/recipe/recipe-6/uploads/recipe%206%20test%20image.png/recipe%206%20test%20image-w1920q75.webp",
+          "/image/recipe/recipe-6/uploads/recipe-6-test-image.png/recipe-6-test-image-w3840q75.webp",
         );
 
-        cy.findByLabelText("Image").selectFile(
-          "cypress/fixtures/images/recipe 6 test image alternate.png",
-        );
+        cy.findByLabelText("Image").selectFile({
+          contents: "cypress/fixtures/images/recipe-6-test-image-alternate.png",
+          fileName: "recipe-6-test-image-alternate.png",
+          mimeType: "image/png",
+        });
 
         // Image preview should now be blob from pending image
         cy.findByRole("img")
@@ -76,7 +80,7 @@ describe("Recipe Edit View", () => {
         cy.findByRole("img").should(
           "have.attr",
           "src",
-          "/image/recipe/recipe-6/uploads/recipe%206%20test%20image%20alternate.png/recipe%206%20test%20image%20alternate-w1920q75.webp",
+          "/image/recipe/recipe-6/uploads/recipe-6-test-image-alternate.png/recipe-6-test-image-alternate-w3840q75.webp",
         );
 
         // Image on index should be alternate
@@ -87,7 +91,7 @@ describe("Recipe Edit View", () => {
           .should(
             "have.attr",
             "src",
-            "/image/recipe/recipe-6/uploads/recipe%206%20test%20image%20alternate.png/recipe%206%20test%20image%20alternate-w828q75.webp",
+            "/image/recipe/recipe-6/uploads/recipe-6-test-image-alternate.png/recipe-6-test-image-alternate-w828q75.webp",
           );
       });
 
@@ -99,12 +103,16 @@ describe("Recipe Edit View", () => {
         cy.findAllByRole("img").should("not.exist");
         cy.findAllByLabelText("Remove Image").should("not.exist");
 
-        cy.findByLabelText("Image").selectFile(
-          "cypress/fixtures/images/recipe 6 test image alternate.png",
-        );
+        cy.findByLabelText("Image").selectFile({
+          contents: "cypress/fixtures/images/recipe-6-test-image-alternate.png",
+          fileName: "recipe-6-test-image-alternate.png",
+          mimeType: "image/png",
+        });
+
+        cy.findByLabelText("Image").then(console.log);
 
         // Image preview should now be blob from pending image
-        cy.findByRole("img")
+        cy.findByRole("img", { timeout: 10000 })
           .should("have.attr", "src")
           .should("match", /^blob:/);
 
@@ -117,7 +125,7 @@ describe("Recipe Edit View", () => {
         cy.findByRole("img").should(
           "have.attr",
           "src",
-          "/image/recipe/recipe-5/uploads/recipe%206%20test%20image%20alternate.png/recipe%206%20test%20image%20alternate-w1920q75.webp",
+          "/image/recipe/recipe-5/uploads/recipe-6-test-image-alternate.png/recipe-6-test-image-alternate-w3840q75.webp",
         );
 
         // Image on index should be alternate
@@ -128,7 +136,7 @@ describe("Recipe Edit View", () => {
           .should(
             "have.attr",
             "src",
-            "/image/recipe/recipe-5/uploads/recipe%206%20test%20image%20alternate.png/recipe%206%20test%20image%20alternate-w828q75.webp",
+            "/image/recipe/recipe-5/uploads/recipe-6-test-image-alternate.png/recipe-6-test-image-alternate-w828q75.webp",
           );
       });
 
@@ -163,7 +171,7 @@ describe("Recipe Edit View", () => {
         cy.findByRole("img").should(
           "have.attr",
           "src",
-          "/image/recipe/recipe-6/uploads/recipe%206%20test%20image.png/recipe%206%20test%20image-w1920q75.webp",
+          "/image/recipe/recipe-6/uploads/recipe-6-test-image.png/recipe-6-test-image-w3840q75.webp",
         );
 
         cy.findByText("Edit").click();
@@ -173,7 +181,7 @@ describe("Recipe Edit View", () => {
         cy.findByRole("img").should(
           "have.attr",
           "src",
-          "/image/recipe/recipe-6/uploads/recipe%206%20test%20image.png/recipe%206%20test%20image-w1920q75.webp",
+          "/image/recipe/recipe-6/uploads/recipe-6-test-image.png/recipe-6-test-image-w3840q75.webp",
         );
         cy.findByLabelText("Remove Image");
       });

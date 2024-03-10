@@ -12,21 +12,15 @@ export function ImageInput({
   defaultImage?: StaticImageProps;
   errors: string[] | undefined;
 }) {
-  const [imagesToUpload, setImagesToUpload] = useState<FileList>();
   const [imagePreviewURL, setImagePreviewURL] = useState<string>();
 
   useEffect(() => {
-    if (imagesToUpload) {
-      const previewImage = imagesToUpload[0];
-      if (previewImage) {
-        const url = URL.createObjectURL(previewImage);
-        setImagePreviewURL(url);
-        return () => {
-          URL.revokeObjectURL(url);
-        };
-      }
+    if (imagePreviewURL) {
+      return () => {
+        URL.revokeObjectURL(imagePreviewURL);
+      };
     }
-  }, [imagesToUpload]);
+  }, [imagePreviewURL]);
 
   return (
     <div>
@@ -35,7 +29,22 @@ export function ImageInput({
         name="image"
         id="recipe-form-image"
         errors={errors}
-        onChange={(e) => setImagesToUpload(e.target?.files || undefined)}
+        onChange={(e) => {
+          console.log("CHANGING FILE");
+          const imagesToUpload = e.target?.files;
+          console.log({ imagesToUpload });
+          if (!imagesToUpload) {
+            return;
+          }
+          const previewImage = imagesToUpload[0];
+          console.log({ imagesToUpload, previewImage });
+          if (!previewImage) {
+            return;
+          }
+          const previewURL = URL.createObjectURL(previewImage);
+          console.log({ imagesToUpload, previewImage, previewURL });
+          setImagePreviewURL(previewURL);
+        }}
       />
       <div className="w-full">
         {imagePreviewURL ? (

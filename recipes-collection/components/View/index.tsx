@@ -31,7 +31,7 @@ export const RecipeView = ({
   return (
     <MultiplierProvider>
       <div className="w-full h-full p-2 print:p-0 grow flex flex-col flex-nowrap max-w-prose">
-        <h1 className="text-2xl font-bold m-2">{name}</h1>
+        <h1 className="text-3xl font-bold mt-4 mb-6">{name}</h1>
         {image && (
           <RecipeImage
             slug={slug}
@@ -53,7 +53,7 @@ export const RecipeView = ({
         <MultiplyingView recipe={recipe} />
         {instructions && (
           <div>
-            <h2 className="text-lg font-bold my-3">Instructions</h2>
+            <h2 className="text-xl font-bold my-3">Instructions</h2>
             <ol className="list-decimal pl-4">
               {instructions.map((entry, i) => (
                 <InstructionEntryView key={i} entry={entry} />
