@@ -53,5 +53,10 @@
     "start-server-and-test": "^2.0.3",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.4.2"
+  },
+  "lint-staged": {
+    "*.md(x)?": "prettier --write",
+    "*.js(x)": "prettier -write",
+    "*.ts(x)": "prettier --write"
   }
 }
