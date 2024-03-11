@@ -29,7 +29,8 @@ describe("Recipe Edit View", () => {
 
         const editedRecipeTitle = "Edited Recipe";
 
-        cy.findAllByLabelText("Name").first().clear().type(editedRecipeTitle);
+        cy.findAllByLabelText("Name").first().clear();
+        cy.findAllByLabelText("Name").first().type(editedRecipeTitle);
 
         const recipeDate = "2023-12-08T01:16:12.622";
         cy.findByLabelText("Date (UTC)").should("have.value", recipeDate);
@@ -163,7 +164,8 @@ describe("Recipe Edit View", () => {
 
         const editedRecipeTitle = "Edited Recipe";
 
-        cy.findAllByLabelText("Name").first().clear().type(editedRecipeTitle);
+        cy.findAllByLabelText("Name").first().clear();
+        cy.findAllByLabelText("Name").first().type(editedRecipeTitle);
 
         cy.findByText("Submit").click();
 
