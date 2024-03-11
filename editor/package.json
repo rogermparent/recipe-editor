@@ -46,17 +46,20 @@
     "@types/react-dom": "^18",
     "autoprefixer": "^10.4.18",
     "cypress": "^13.6.6",
-    "eslint": "^8",
+    "eslint": "^8.56.0",
     "eslint-config-next": "14.1.3",
     "eslint-plugin-react": "^7.34.0",
     "postcss": "^8",
+    "prettier": "3.2.5",
     "start-server-and-test": "^2.0.3",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.4.2"
   },
   "lint-staged": {
-    "*.md(x)?": "prettier --write",
-    "*.js(x)": "prettier -write",
-    "*.ts(x)": "prettier --write"
+    "*.{json,md,mdx,yml,yaml,css}": "prettier --write",
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   }
 }
