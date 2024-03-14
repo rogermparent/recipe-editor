@@ -59,9 +59,10 @@ Cypress.Commands.add("resetData", (fixture) => {
 });
 
 Cypress.Commands.add("checkNamesInOrder", (names: string[]) => {
-  const items = cy.findAllByRole("listitem");
-  items.should("have.length", names.length);
-  items.each((el, i) => cy.wrap(el).findByText(names[i]));
+  cy.findAllByRole("listitem").should("have.length", names.length);
+  cy.findAllByRole("listitem").each((el, i) =>
+    cy.wrap(el).findByText(names[i]),
+  );
 });
 
 Cypress.Commands.add(
