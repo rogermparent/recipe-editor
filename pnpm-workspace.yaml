@@ -1,5 +1,5 @@
 packages:
-  - 'website'
-  - 'editor'
-  - 'recipes-collection'
-  - 'component-library'
+  - website
+  - editor
+  - recipes-collection
+  - component-library

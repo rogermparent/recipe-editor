@@ -30,7 +30,7 @@ openssl rand -base64 32
 
 Add the resulting secret to your `.env.local` file under `AUTH_SECRET`
 
-```
+```dosini
 AUTH_SECRET=XXxXXXxxxxxXxx/xXXXXXXXxx/xxXxxXxxXxxxXXXXx=
 ```
 
