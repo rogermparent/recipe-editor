@@ -19,7 +19,8 @@ describe("New Recipe View", () => {
 
         const newRecipeTitle = "My New Recipe";
 
-        cy.findAllByLabelText("Name").first().clear().type(newRecipeTitle);
+        cy.findAllByLabelText("Name").first().clear();
+        cy.findAllByLabelText("Name").first().type(newRecipeTitle);
 
         cy.findByText("Submit").click();
 

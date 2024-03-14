@@ -17,28 +17,32 @@ describe("Search Page", () => {
         .findByRole("heading")
         .should("have.text", "Recipe 6");
 
-      cy.findByLabelText("Query").clear().type("6 Recipe");
+      cy.findByLabelText("Query").clear();
+      cy.findByLabelText("Query").type("6 Recipe");
       cy.findByRole("button", { name: "Submit" }).click();
 
       cy.findByRole("listitem")
         .findByRole("heading")
         .should("have.text", "Recipe 6");
 
-      cy.findByLabelText("Query").clear().type("recipe 6");
+      cy.findByLabelText("Query").clear();
+      cy.findByLabelText("Query").type("recipe 6");
       cy.findByRole("button", { name: "Submit" }).click();
 
       cy.findByRole("listitem")
         .findByRole("heading")
         .should("have.text", "Recipe 6");
 
-      cy.findByLabelText("Query").clear().type("6");
+      cy.findByLabelText("Query").clear();
+      cy.findByLabelText("Query").type("6");
       cy.findByRole("button", { name: "Submit" }).click();
 
       cy.findByRole("listitem")
         .findByRole("heading")
         .should("have.text", "Recipe 6");
 
-      cy.findByLabelText("Query").clear().type("5");
+      cy.findByLabelText("Query").clear();
+      cy.findByLabelText("Query").type("5");
       cy.findByRole("button", { name: "Submit" }).click();
 
       cy.findByRole("listitem")
