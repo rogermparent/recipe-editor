@@ -1,5 +1,4 @@
-export interface RecipeFormErrors
-  extends Record<string, string[] | undefined> {
+export interface RecipeFormErrors extends Record<string, string[] | undefined> {
   description?: string[];
   name?: string[];
   date?: string[];
