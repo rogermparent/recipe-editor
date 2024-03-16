@@ -4,8 +4,7 @@ import clsx from "clsx";
 
 export const metadata: Metadata = {
   title: "Recipe Editor",
-  description:
-    "A recipe book app built with Next 14.",
+  description: "A recipe book app built with Next 14.",
 };
 
 export default async function RootLayout({
