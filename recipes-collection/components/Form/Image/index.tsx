@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { FileInput } from "component-library/components/Form/inputs/File";
 import { CheckboxInput } from "component-library/components/Form/inputs/Checkbox";
-import { RecipeImageDisplay } from "../../RecipeImage/Display";
-import { StaticImageProps } from "../../RecipeImage";
+import { StaticImageProps } from "next-static-image/src";
+import { StaticImageDisplay } from "next-static-image/src/Display";
 
 export function ImageInput({
   defaultImage,
@@ -56,7 +56,7 @@ export function ImageInput({
             height={475}
           />
         ) : (
-          defaultImage && <RecipeImageDisplay image={defaultImage} />
+          defaultImage && <StaticImageDisplay image={defaultImage} />
         )}
       </div>
       {defaultImage ? (

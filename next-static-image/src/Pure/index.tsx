@@ -1,5 +1,5 @@
 import { ImageLoaderProps, getImageProps } from "next/image";
-import { RecipeImageDisplay } from "../Display";
+import { StaticImageDisplay } from "../Display";
 import { parse } from "path";
 
 export function pureLoader({ src, width, quality = 75 }: ImageLoaderProps) {
@@ -9,7 +9,7 @@ export function pureLoader({ src, width, quality = 75 }: ImageLoaderProps) {
   return resultSrc;
 }
 
-interface PureRecipeImageProps {
+interface PureStaticImageProps {
   slug: string;
   image: string;
   alt: string;
@@ -18,14 +18,14 @@ interface PureRecipeImageProps {
   className?: string;
 }
 
-export function getPureRecipeImageProps({
+export function getPureStaticImageProps({
   slug,
   image,
   alt,
   width,
   height,
   className,
-}: PureRecipeImageProps) {
+}: PureStaticImageProps) {
   const { props } = getImageProps({
     loader: pureLoader,
     src: `/recipe/${slug}/uploads/${image}`,
@@ -38,9 +38,9 @@ export function getPureRecipeImageProps({
   return { props };
 }
 
-export function PureRecipeImage(inputProps: PureRecipeImageProps) {
+export function PureStaticImage(inputProps: PureStaticImageProps) {
   if (inputProps.image) {
-    const image = getPureRecipeImageProps(inputProps);
-    return <RecipeImageDisplay image={image} />;
+    const image = getPureStaticImageProps(inputProps);
+    return <StaticImageDisplay image={image} />;
   }
 }

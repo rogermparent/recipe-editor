@@ -11,7 +11,7 @@ import { DateTimeInput } from "component-library/components/Form/inputs/DateTime
 import { TextInput } from "component-library/components/Form/inputs/Text";
 import { TextAreaInput } from "component-library/components/Form/inputs/TextArea";
 import { ImageInput } from "./Image";
-import { StaticImageProps } from "../RecipeImage";
+import { StaticImageProps } from "next-static-image/src";
 
 export default function RecipeFields({
   recipe,

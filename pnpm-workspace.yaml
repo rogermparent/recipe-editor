@@ -3,3 +3,4 @@ packages:
   - editor
   - recipes-collection
   - component-library
+  - next-static-image
