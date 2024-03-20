@@ -3,6 +3,7 @@ import { join, parse, posix } from "path";
 import sharp, { Sharp } from "sharp";
 import { access, mkdir } from "fs/promises";
 import { ImgProps } from "next/dist/shared/lib/get-img-props";
+import ora, { oraPromise } from "ora";
 
 export interface StaticImageProps {
   props: ImgProps;
@@ -27,11 +28,13 @@ async function resizeImage({
   width,
   quality,
   resultPath,
+  resultFilename,
 }: {
   sharp: Sharp;
   width: number;
   quality: number;
   resultPath: string;
+  resultFilename: string;
 }) {
   // Return early if this transform is currently running elsewhere
   if (runningResizes.has(resultPath)) {
@@ -53,7 +56,10 @@ async function resizeImage({
     await mkdir(dir, { recursive: true });
   } catch (e) {}
 
-  await sharp.resize({ width }).webp({ quality }).toFile(resultPath);
+  await oraPromise(
+    sharp.resize({ width }).webp({ quality }).toFile(resultPath),
+    `Resizing ${resultFilename}`,
+  );
 
   // Release our spot in cache for currently running transforms.
   runningResizes.delete(resultPath);
@@ -76,7 +82,13 @@ export async function getTransformedImageProps(
     const resultFilename = `${name}-w${width}q${quality}.webp`;
     const resultPath = join(localOutputDirectory, src, resultFilename);
     promisedResizedImages.push(
-      resizeImage({ sharp: imageSharp, width, quality, resultPath }),
+      resizeImage({
+        sharp: imageSharp,
+        width,
+        quality,
+        resultPath,
+        resultFilename,
+      }),
     );
     const resultSrc = posix.join(
       "/image",
