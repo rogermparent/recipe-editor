@@ -1,9 +1,7 @@
 import { MassagedRecipeEntry } from "../../controller/data/readIndex";
 import Link from "next/link";
-import Image from "next/image";
 import { Fragment, ReactNode } from "react";
-import { RecipeImage } from "../RecipeImage";
-import { PureRecipeImage } from "../RecipeImage/PureImage";
+import { PureStaticImage } from "next-static-image/src/Pure";
 
 export function useHighlightedText(text: string, query: string) {
   const queryWords = query.split(" ");
@@ -57,7 +55,7 @@ export function SearchListItem({
       >
         <div className="w-full h-64 sm:h-40 overflow-hidden bg-gray-800">
           {image && (
-            <PureRecipeImage
+            <PureStaticImage
               slug={slug}
               image={image}
               alt="Recipe thumbnail"

@@ -1,6 +1,6 @@
 import { Recipe } from "../../controller/types";
 import { RecipeFormState } from "../../controller/formState";
-import { StaticImageProps } from "../RecipeImage";
+import { StaticImageProps } from "next-static-image/src";
 import RecipeFields from "./fields";
 
 export default async function RecipeForm({

@@ -5,7 +5,7 @@ import { useFormState } from "react-dom";
 import { Button } from "component-library/components/Button";
 import { Recipe } from "recipes-collection/controller/types";
 import { RecipeFormState } from "recipes-collection/controller/formState";
-import { StaticImageProps } from "recipes-collection/components/RecipeImage";
+import { StaticImageProps } from "next-static-image/src";
 import updateRecipe from "@/actions/updateRecipe";
 
 export default function EditRecipeForm({

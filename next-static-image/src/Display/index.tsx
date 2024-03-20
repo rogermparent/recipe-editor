@@ -1,6 +1,6 @@
-import { StaticImageProps } from ".";
+import { StaticImageProps } from "../index";
 
-export function RecipeImageDisplay({
+export function StaticImageDisplay({
   image: { props },
 }: {
   image: StaticImageProps;
