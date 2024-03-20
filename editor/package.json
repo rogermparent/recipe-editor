@@ -23,6 +23,7 @@
     "component-library": "^1.0.0",
     "date-fns": "^3.6.0",
     "entities": "^4.5.0",
+    "execa": "^8.0.1",
     "flexsearch": "^0.7.43",
     "format-quantity": "^3.0.0",
     "fraction.js": "^4.3.7",
