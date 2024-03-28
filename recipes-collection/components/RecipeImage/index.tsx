@@ -2,9 +2,9 @@ import { join } from "path";
 import { getContentDirectory } from "../../controller/filesystemDirectories";
 import {
   TransformedRecipeImageProps,
-  getTransformedImageProps,
+  getStaticImageProps,
 } from "next-static-image/src";
-import { StaticImageDisplay } from "next-static-image/src/Display";
+import Image from "next/image";
 
 const localOutputDirectory = join(getContentDirectory(), "transformed-images");
 
@@ -27,7 +27,7 @@ export async function getTransformedRecipeImageProps({
     image,
   );
 
-  return getTransformedImageProps(
+  return getStaticImageProps(
     { srcPath, localOutputDirectory },
     {
       src: `/recipe/${slug}/uploads/${image}`,
@@ -44,6 +44,6 @@ export async function getTransformedRecipeImageProps({
 export async function RecipeImage(inputProps: TransformedRecipeImageProps) {
   if (inputProps.image) {
     const image = await getTransformedRecipeImageProps(inputProps);
-    return <StaticImageDisplay image={image} />;
+    return <Image {...image.props} alt={inputProps.alt} unoptimized={true} />;
   }
 }
