@@ -1,9 +1,14 @@
 import { ImageLoaderProps, ImageProps, getImageProps } from "next/image";
 import { join, parse, posix } from "path";
-import sharp, { Sharp } from "sharp";
-import { access, mkdir } from "fs/promises";
+import sharp from "sharp";
 import { ImgProps } from "next/dist/shared/lib/get-img-props";
-import ora, { oraPromise } from "ora";
+import { queuePossibleImageResize } from "./resizeImage";
+import { stat } from "fs/promises";
+
+export interface LocalTransformProps {
+  srcPath: string;
+  localOutputDirectory: string;
+}
 
 export interface StaticImageProps {
   props: ImgProps;
@@ -20,86 +25,46 @@ export interface TransformedRecipeImageProps {
   sizes?: ImageProps["sizes"];
 }
 
-// Simple method of avoiding running two of the same resize operation at once.
-const runningResizes = new Map();
-
-async function resizeImage({
-  sharp,
-  width,
-  quality,
-  resultPath,
-  resultFilename,
-}: {
-  sharp: Sharp;
-  width: number;
-  quality: number;
-  resultPath: string;
-  resultFilename: string;
-}) {
-  // Return early if this transform is currently running elsewhere
-  if (runningResizes.has(resultPath)) {
-    return;
-  }
-
-  // Claim our spot in cache for currently running transforms.
-  runningResizes.set(resultPath, true);
-
-  // Return early if the exact image we're creating exists on the filesystem
-  try {
-    await access(resultPath);
-    return;
-  } catch (e) {}
-
-  // Attempt to create directory for result, keep going if it already exists
-  const { dir } = parse(resultPath);
-  try {
-    await mkdir(dir, { recursive: true });
-  } catch (e) {}
-
-  await oraPromise(
-    sharp.resize({ width }).webp({ quality }).toFile(resultPath),
-    `Resizing ${resultFilename}`,
-  );
-
-  // Release our spot in cache for currently running transforms.
-  runningResizes.delete(resultPath);
-}
-
-interface LocalTransformProps {
-  srcPath: string;
-  localOutputDirectory: string;
-}
-
-export async function getTransformedImageProps(
+export async function getStaticImageProps(
   { srcPath, localOutputDirectory }: LocalTransformProps,
-  imagePropsArgs: ImageProps,
+  imagePropsArgs: ImageProps & { src: string },
 ): Promise<StaticImageProps> {
-  const promisedResizedImages: Promise<void>[] = [];
+  const { src } = imagePropsArgs;
+
+  const { mtime } = await stat(srcPath);
   const imageSharp = sharp(srcPath);
+
+  const resultDirectory = join(localOutputDirectory, src);
+  const promisedResizedImages: Promise<void>[] = [];
 
   function loader({ src, width, quality = 75 }: ImageLoaderProps) {
     const { name } = parse(src);
     const resultFilename = `${name}-w${width}q${quality}.webp`;
-    const resultPath = join(localOutputDirectory, src, resultFilename);
+    const resultPath = join(resultDirectory, resultFilename);
+
     promisedResizedImages.push(
-      resizeImage({
+      queuePossibleImageResize({
         sharp: imageSharp,
         width,
         quality,
         resultPath,
         resultFilename,
+        srcMtime: mtime,
       }),
     );
+
     const resultSrc = posix.join(
       "/image",
       encodeURI(src),
       encodeURI(resultFilename),
     );
+
     return resultSrc;
   }
 
-  const { props } = getImageProps({ loader, ...imagePropsArgs });
+  const imageProps = getImageProps({ loader, ...imagePropsArgs });
 
   await Promise.all(promisedResizedImages);
-  return { props };
+
+  return imageProps;
 }

@@ -3,7 +3,6 @@ import Image from "next/image";
 import { FileInput } from "component-library/components/Form/inputs/File";
 import { CheckboxInput } from "component-library/components/Form/inputs/Checkbox";
 import { StaticImageProps } from "next-static-image/src";
-import { StaticImageDisplay } from "next-static-image/src/Display";
 
 export function ImageInput({
   defaultImage,
@@ -54,9 +53,16 @@ export function ImageInput({
             className="w-full"
             width={850}
             height={475}
+            unoptimized={true}
           />
         ) : (
-          defaultImage && <StaticImageDisplay image={defaultImage} />
+          defaultImage && (
+            <Image
+              {...defaultImage.props}
+              alt="Existing Recipe Image"
+              unoptimized={true}
+            />
+          )
         )}
       </div>
       {defaultImage ? (

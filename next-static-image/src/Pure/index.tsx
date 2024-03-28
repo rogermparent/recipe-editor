@@ -1,5 +1,5 @@
-import { ImageLoaderProps, getImageProps } from "next/image";
-import { StaticImageDisplay } from "../Display";
+import React from "react";
+import Image, { ImageLoaderProps, getImageProps } from "next/image";
 import { parse } from "path";
 
 export function pureLoader({ src, width, quality = 75 }: ImageLoaderProps) {
@@ -41,6 +41,6 @@ export function getPureStaticImageProps({
 export function PureStaticImage(inputProps: PureStaticImageProps) {
   if (inputProps.image) {
     const image = getPureStaticImageProps(inputProps);
-    return <StaticImageDisplay image={image} />;
+    return <Image {...image.props} alt={inputProps.alt} unoptimized={true} />;
   }
 }
