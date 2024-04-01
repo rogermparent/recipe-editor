@@ -21,9 +21,6 @@ export default async function Layout({
       {children}
       <footer className="w-full bg-slate-800 print:hidden">
         <nav className="flex flex-row flex-wrap justify-center">
-          <Link href="/new-recipe" className="inline-block p-2 hover:underline">
-            New Recipe
-          </Link>
           <Link href="/pages" className="inline-block p-2 hover:underline">
             Pages
           </Link>

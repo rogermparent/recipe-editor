@@ -1,5 +1,5 @@
 import { join } from "path";
-import { getContentDirectory } from "../../controller/filesystemDirectories";
+import { getContentDirectory } from "content-engine/fs/getContentDirectory";
 import {
   TransformedRecipeImageProps,
   getStaticImageProps,

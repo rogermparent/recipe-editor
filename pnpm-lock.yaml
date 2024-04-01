@@ -29,12 +29,17 @@ importers:
       clsx:
         specifier: ^2.1.0
         version: 2.1.0
+      content-engine:
+        specifier: ^1.0.0
+        version: link:../content-engine
       markdown-to-jsx:
         specifier: ^7.4.3
         version: 7.4.3(react@18.2.0)
       next:
         specifier: 14.1.3
         version: 14.1.3(react-dom@18.2.0)(react@18.2.0)
+
+  content-engine: {}
 
   editor:
     dependencies:
@@ -53,6 +58,9 @@ importers:
       component-library:
         specifier: ^1.0.0
         version: link:../component-library
+      content-engine:
+        specifier: ^1.0.0
+        version: link:../content-engine
       date-fns:
         specifier: ^3.6.0
         version: 3.6.0
@@ -89,6 +97,9 @@ importers:
       next-static-image:
         specifier: ^0.0.1
         version: link:../next-static-image
+      pages-collection:
+        specifier: ^1.0.0
+        version: link:../pages-collection
       react:
         specifier: ^18
         version: 18.2.0
@@ -179,6 +190,55 @@ importers:
         specifier: ^20
         version: 20.11.17
 
+  pages-collection:
+    dependencies:
+      clsx:
+        specifier: ^2.1.0
+        version: 2.1.0
+      component-library:
+        specifier: ^1.0.0
+        version: link:../component-library
+      content-engine:
+        specifier: ^1.0.0
+        version: link:../content-engine
+      format-quantity:
+        specifier: ^3.0.0
+        version: 3.0.0
+      fraction.js:
+        specifier: ^4.3.7
+        version: 4.3.7
+      fs-extra:
+        specifier: ^11.2.0
+        version: 11.2.0
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+      next:
+        specifier: 14.1.3
+        version: 14.1.3(react-dom@18.2.0)(react@18.2.0)
+      next-static-image:
+        specifier: ^0.0.1
+        version: link:../next-static-image
+      plaiceholder:
+        specifier: ^3.0.0
+        version: 3.0.0(sharp@0.33.2)
+      react:
+        specifier: ^18
+        version: 18.2.0
+      sharp:
+        specifier: 0.33.2
+        version: 0.33.2
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
+    devDependencies:
+      '@types/fs-extra':
+        specifier: ^11.0.4
+        version: 11.0.4
+      '@types/node':
+        specifier: ^20
+        version: 20.11.17
+
   recipes-collection:
     dependencies:
       clsx:
@@ -187,6 +247,9 @@ importers:
       component-library:
         specifier: ^1.0.0
         version: link:../component-library
+      content-engine:
+        specifier: ^1.0.0
+        version: link:../content-engine
       format-quantity:
         specifier: ^3.0.0
         version: 3.0.0
@@ -229,6 +292,9 @@ importers:
       component-library:
         specifier: ^1.0.0
         version: link:../component-library
+      content-engine:
+        specifier: ^1.0.0
+        version: link:../content-engine
       date-fns:
         specifier: ^3.6.0
         version: 3.6.0
@@ -2478,6 +2544,13 @@ packages:
     resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
     dev: false
 
+  /@types/fs-extra@11.0.4:
+    resolution: {integrity: sha512-yTbItCNreRooED33qjunPthRcSjERP1r4MqCZc7wv0u2sUkzTFp45tgUfS5+r7FrZPdmCCNflLhVSP/o+SemsQ==}
+    dependencies:
+      '@types/jsonfile': 6.1.4
+      '@types/node': 20.11.17
+    dev: true
+
   /@types/http-cache-semantics@4.0.4:
     resolution: {integrity: sha512-1m0bIFVc7eJWyve9S0RnuRgcQqF/Xd5QsUZAZeQFr1Q3/p9JWoQQEqmVy+DPTNpGXwhgIetAoYF8JSc33q29QA==}
     dev: false
@@ -2506,6 +2579,12 @@ packages:
 
   /@types/json5@0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
+    dev: true
+
+  /@types/jsonfile@6.1.4:
+    resolution: {integrity: sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ==}
+    dependencies:
+      '@types/node': 20.11.17
     dev: true
 
   /@types/lodash@4.17.0:
@@ -6460,6 +6539,15 @@ packages:
     resolution: {integrity: sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==}
     dev: false
 
+  /fs-extra@11.2.0:
+    resolution: {integrity: sha512-PmDi3uwK5nFuXh7XDTlVnS17xJS7vW36is2+w3xcv8SVxiB4NyATf4ctkVY5bkSjX0Y4nbvZCq1/EjtEyr9ktw==}
+    engines: {node: '>=14.14'}
+    dependencies:
+      graceful-fs: 4.2.11
+      jsonfile: 6.1.0
+      universalify: 2.0.1
+    dev: false
+
   /fs-extra@9.1.0:
     resolution: {integrity: sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==}
     engines: {node: '>=10'}
@@ -7777,7 +7865,6 @@ packages:
       universalify: 2.0.1
     optionalDependencies:
       graceful-fs: 4.2.11
-    dev: true
 
   /jsonpointer@5.0.1:
     resolution: {integrity: sha512-p/nXbhSEcu3pZRdkW1OfJhpsVtW1gd4Wa1fnQc9YLiTfAjn0312eMKimbdIQzuZl9aa9xUGaRlP9T/CJE/ditQ==}
@@ -11801,7 +11888,6 @@ packages:
   /universalify@2.0.1:
     resolution: {integrity: sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==}
     engines: {node: '>= 10.0.0'}
-    dev: true
 
   /unix-dgram@2.0.6:
     resolution: {integrity: sha512-AURroAsb73BZ6CdAyMrTk/hYKNj3DuYYEuOaB8bYMOHGKupRNScw90Q5C71tWJc3uE7dIeXRyuwN0xLLq3vDTg==}
