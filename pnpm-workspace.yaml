@@ -5,4 +5,5 @@ packages:
   - next-static-image
   - recipes-collection
   - pages-collection
+  - menus-collection
   - content-engine

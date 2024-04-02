@@ -1,7 +1,6 @@
 import rebuildRecipeIndex from "recipes-collection/controller/actions/rebuildIndex";
 import { auth } from "@/auth";
 import { Button } from "component-library/components/Button";
-import { Exporters } from "./exporter";
 
 export default async function SettingsPage() {
   auth();
@@ -13,8 +12,6 @@ export default async function SettingsPage() {
           <Button type="submit">Reload Database</Button>
         </form>
       </div>
-      <h2 className="text-lg font-bold my-3">Export</h2>
-      <Exporters />
     </main>
   );
 }

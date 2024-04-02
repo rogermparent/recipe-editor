@@ -15,9 +15,8 @@ export default function EditPageForm({
   slug: string;
   page: Page;
 }) {
-  const { date } = page;
   const initialState = { message: "", errors: {} } as PageFormState;
-  const updateThisPage = updatePage.bind(null, date, slug);
+  const updateThisPage = updatePage.bind(null, slug);
   const [state, dispatch] = useFormState(updateThisPage, initialState);
   return (
     <form
