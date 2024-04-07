@@ -14,7 +14,7 @@ import { ensureDir } from "fs-extra";
 export default async function updateMenu(
   currentSlug: string,
   _prevState: MenuFormState,
-  formData: FormData
+  formData: FormData,
 ) {
   const validatedFields = parseMenuFormData(formData);
 

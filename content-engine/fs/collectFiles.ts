@@ -18,7 +18,7 @@ export async function collectFiles<T>(
   filename: string,
   getMassagedFile: (dir: string) => Promise<T>,
   dir: string = "",
-  filePromises: Promise<T>[] = []
+  filePromises: Promise<T>[] = [],
 ) {
   const dirContents = await getDirContents(join(base, dir));
   if (dirContents) {
@@ -29,7 +29,7 @@ export async function collectFiles<T>(
           filename,
           getMassagedFile,
           join(dir, item.name),
-          filePromises
+          filePromises,
         );
       } else if (item.name === filename) {
         filePromises.push(getMassagedFile(dir));

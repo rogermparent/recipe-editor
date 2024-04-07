@@ -30,6 +30,11 @@ export default async function Menus() {
           slug="header"
           description="Site header navigation"
         />
+        <MenuLink
+          name="Footer"
+          slug="footer"
+          description="Site footer navigation"
+        />
       </div>
     </main>
   );

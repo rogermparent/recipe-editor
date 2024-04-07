@@ -41,12 +41,21 @@ async function SiteHeader() {
 
 async function SiteFooter() {
   const session = await auth();
+  const footerMenu = await getMenuBySlug("footer");
   return (
     <footer className="w-full bg-slate-800 print:hidden border-t border-slate-700">
       <nav className="flex flex-row flex-wrap justify-center">
-        <Link href="/search" className="inline-block p-2 hover:underline">
-          Search
-        </Link>
+        {footerMenu?.items
+          ? footerMenu.items.map(({ name, href }) => (
+              <Link
+                key={`${name}-${href}`}
+                href={href}
+                className="inline-block p-2 hover:underline"
+              >
+                {name}
+              </Link>
+            ))
+          : null}
         <Link href="/new-recipe" className="inline-block p-2 hover:underline">
           New Recipe
         </Link>

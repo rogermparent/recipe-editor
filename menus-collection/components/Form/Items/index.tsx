@@ -42,7 +42,7 @@ function MenuItemFields({
   dispatch: Dispatch<KeyListAction>;
 }) {
   const [{ values }, childDispatch] = useKeyList<MenuItem>(
-    currentDefaultItem?.children
+    currentDefaultItem?.children,
   );
   return (
     <div>

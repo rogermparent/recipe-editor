@@ -31,7 +31,7 @@ const MenuSchema = z.object({
 export type ParsedMenuFormData = z.infer<typeof MenuSchema>;
 
 export default function parseMenuFormData(
-  formData: FormData
+  formData: FormData,
 ): SafeParseReturnType<RawMenuFormData, ParsedMenuFormData> {
   const data = {};
   for (const [key, value] of formData.entries()) {

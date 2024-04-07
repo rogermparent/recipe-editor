@@ -22,7 +22,7 @@ export default async function getPages(): Promise<ReadPageIndexResult> {
   const pagePromises = await collectFiles(
     pagesBaseDirectory,
     "page.json",
-    getMassagedPage
+    getMassagedPage,
   );
   const pages = await Promise.all(pagePromises);
   return { pages };
