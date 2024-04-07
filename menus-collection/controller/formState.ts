@@ -1,5 +1,4 @@
 export interface MenuFormErrors extends Record<string, string[] | undefined> {
-  name?: string[];
   slug?: string[];
 }
 
