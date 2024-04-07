@@ -9,11 +9,12 @@ import { getMenuDirectory, getMenuFilePath } from "../filesystemDirectories";
 import { Menu } from "../types";
 import createDefaultSlug from "../createSlug";
 import slugify from "@sindresorhus/slugify";
+import { ensureDir } from "fs-extra";
 
 export default async function updateMenu(
   currentSlug: string,
   _prevState: MenuFormState,
-  formData: FormData,
+  formData: FormData
 ) {
   const validatedFields = parseMenuFormData(formData);
 
@@ -24,31 +25,18 @@ export default async function updateMenu(
     };
   }
 
-  const { slug, name, items } = validatedFields.data;
+  const { items } = validatedFields.data;
 
   const currentMenuDirectory = getMenuDirectory(currentSlug);
   const currentMenuPath = getMenuFilePath(currentMenuDirectory);
 
-  const finalSlug = slugify(slug || createDefaultSlug(validatedFields.data));
-  const finalMenuDirectory = getMenuDirectory(finalSlug);
-
-  const willRename = currentMenuDirectory !== finalMenuDirectory;
-
   const data: Menu = {
-    name,
     items,
   };
 
-  if (willRename) {
-    await rename(currentMenuDirectory, finalMenuDirectory);
-    await writeFile(`${finalMenuDirectory}/menu.json`, JSON.stringify(data));
-  } else {
-    await writeFile(currentMenuPath, JSON.stringify(data));
-  }
+  await ensureDir(currentMenuDirectory);
+  await writeFile(currentMenuPath, JSON.stringify(data));
 
-  if (willRename) {
-    revalidatePath("/" + currentSlug);
-  }
-  revalidatePath("/" + finalSlug);
+  revalidatePath("/" + currentSlug);
   redirect("/menus");
 }

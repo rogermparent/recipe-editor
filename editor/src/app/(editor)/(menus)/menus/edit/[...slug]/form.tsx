@@ -13,7 +13,7 @@ export default function EditMenuForm({
   slug,
 }: {
   slug: string;
-  menu: Menu;
+  menu: Menu | undefined;
 }) {
   const initialState = { message: "", errors: {} } as MenuFormState;
   const updateThisMenu = updateMenu.bind(null, slug);

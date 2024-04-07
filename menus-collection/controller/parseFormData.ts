@@ -20,21 +20,18 @@ interface RawMenuItemFormData {
 }
 
 interface RawMenuFormData {
-  name: string;
   slug: string;
   items: RawMenuItemFormData;
 }
 
 const MenuSchema = z.object({
-  name: z.string(),
-  slug: z.string().optional(),
   items: z.optional(z.array(MenuItemSchema)),
 });
 
 export type ParsedMenuFormData = z.infer<typeof MenuSchema>;
 
 export default function parseMenuFormData(
-  formData: FormData,
+  formData: FormData
 ): SafeParseReturnType<RawMenuFormData, ParsedMenuFormData> {
   const data = {};
   for (const [key, value] of formData.entries()) {

@@ -23,12 +23,6 @@ function ItemInput({
 }) {
   return (
     <div>
-      <TextInput
-        label="Name"
-        name={`${itemKey}.name`}
-        defaultValue={currentDefaultItem?.name}
-        key={currentDefaultItem?.name}
-      />
       <div className="flex flex-row flex-nowrap justify-center">
         <InputListControls dispatch={dispatch} index={index} />
       </div>
@@ -48,7 +42,7 @@ function MenuItemFields({
   dispatch: Dispatch<KeyListAction>;
 }) {
   const [{ values }, childDispatch] = useKeyList<MenuItem>(
-    currentDefaultItem?.children,
+    currentDefaultItem?.children
   );
   return (
     <div>

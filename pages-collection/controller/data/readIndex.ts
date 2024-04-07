@@ -1,7 +1,6 @@
-import { readdir } from "node:fs/promises";
 import { pagesBaseDirectory } from "../filesystemDirectories";
 import getPageBySlug from "./read";
-import { join } from "node:path";
+import { collectFiles } from "content-engine/fs/collectFiles";
 
 export interface MassagedPageEntry {
   date: number;
@@ -19,24 +18,12 @@ async function getMassagedPage(slug: string): Promise<MassagedPageEntry> {
   return { ...pageData, slug };
 }
 
-async function collectPagePromises(
-  base: string,
-  dir: string = "",
-  pagePromises: Promise<MassagedPageEntry>[] = [],
-) {
-  const dirContents = await readdir(join(base, dir), { withFileTypes: true });
-  for (const item of dirContents) {
-    if (item.isDirectory()) {
-      await collectPagePromises(base, join(dir, item.name), pagePromises);
-    } else if (item.name === "page.json") {
-      pagePromises.push(getMassagedPage(dir));
-    }
-  }
-  return pagePromises;
-}
-
 export default async function getPages(): Promise<ReadPageIndexResult> {
-  const pagePromises = await collectPagePromises(pagesBaseDirectory);
+  const pagePromises = await collectFiles(
+    pagesBaseDirectory,
+    "page.json",
+    getMassagedPage
+  );
   const pages = await Promise.all(pagePromises);
   return { pages };
 }
