@@ -13,7 +13,8 @@ export default async function safeGetMenuBySlug(
   slug: string,
 ): Promise<Menu | undefined> {
   try {
-    return getMenuBySlug(slug);
+    const menuData = await getMenuBySlug(slug);
+    return menuData;
   } catch (e) {
     if ((e as { code?: string }).code === "ENOENT") {
       return undefined;
