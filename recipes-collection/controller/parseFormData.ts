@@ -1,5 +1,5 @@
 import { SafeParseReturnType, z } from "zod";
-import set from "lodash/set";
+import parseFormData from "content-engine/forms/parseFormData";
 
 const localUTCDateSchema = z.union([
   z.enum([""]),
@@ -66,10 +66,5 @@ interface RawRecipeFormData {
 export default function parseRecipeFormData(
   formData: FormData,
 ): SafeParseReturnType<RawRecipeFormData, ParsedRecipeFormData> {
-  const data = {};
-  for (const [key, value] of formData.entries()) {
-    set(data, key, value);
-  }
-  const validatedFields = RecipeFormSchema.safeParse(data);
-  return validatedFields;
+  return parseFormData(formData, RecipeFormSchema);
 }
