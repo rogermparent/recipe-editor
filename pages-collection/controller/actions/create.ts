@@ -2,14 +2,13 @@
 
 import parsePageFormData from "../parseFormData";
 import slugify from "@sindresorhus/slugify";
-import { writeFile } from "fs/promises";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { PageFormState } from "../formState";
 import { Page } from "../types";
-import { getPageDirectory, getPageFilePath } from "../filesystemDirectories";
+import { getPageDirectory } from "../filesystemDirectories";
 import createDefaultSlug from "../createSlug";
-import { ensureDir } from "fs-extra";
+import writeContentFile from "content-engine/fs/writeContentFile";
 
 export default async function createPage(
   _prevState: PageFormState,
@@ -40,11 +39,8 @@ export default async function createPage(
     content,
   };
 
-  const pageBaseDirectory = getPageDirectory(slug);
-
-  await ensureDir(pageBaseDirectory);
-
-  await writeFile(getPageFilePath(pageBaseDirectory), JSON.stringify(data));
+  const baseDirectory = getPageDirectory(slug);
+  await writeContentFile({ baseDirectory, filename: "page.json", data });
 
   revalidatePath("/" + slug);
   revalidatePath("/[...slug]");

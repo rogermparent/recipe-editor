@@ -17,6 +17,7 @@ import getRecipeDatabase from "../database";
 import buildRecipeIndexValue from "../buildIndexValue";
 import createDefaultSlug from "../createSlug";
 import writeRecipeFiles, { getRecipeFileInfo } from "../writeUpload";
+import writeContentFile from "content-engine/fs/writeContentFile";
 
 export default async function createRecipe(
   _prevState: RecipeFormState,
@@ -60,12 +61,11 @@ export default async function createRecipe(
     date,
   };
 
-  const recipeBaseDirectory = getRecipeDirectory(slug);
-  await mkdirIfNotPresent(recipeBaseDirectory);
+  const baseDirectory = getRecipeDirectory(slug);
 
-  await writeFile(getRecipeFilePath(recipeBaseDirectory), JSON.stringify(data));
+  await writeContentFile({ baseDirectory, filename: "recipe.json", data });
 
-  await writeRecipeFiles(recipeBaseDirectory, imageData);
+  await writeRecipeFiles(baseDirectory, imageData);
 
   const db = getRecipeDatabase();
   try {
