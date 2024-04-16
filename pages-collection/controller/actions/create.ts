@@ -8,7 +8,7 @@ import { PageFormState } from "../formState";
 import { Page } from "../types";
 import { getPageDirectory } from "../filesystemDirectories";
 import createDefaultSlug from "../createSlug";
-import writeContentFile from "content-engine/fs/writeContentFile";
+import { outputJson } from "fs-extra";
 
 export default async function createPage(
   _prevState: PageFormState,
@@ -40,7 +40,7 @@ export default async function createPage(
   };
 
   const baseDirectory = getPageDirectory(slug);
-  await writeContentFile({ baseDirectory, filename: "page.json", data });
+  await outputJson(join(baseDirectory, "page.json"), data);
 
   revalidatePath("/" + slug);
   revalidatePath("/[...slug]");

@@ -6,7 +6,8 @@ import parseMenuFormData from "../parseFormData";
 import { MenuFormState } from "../formState";
 import { getMenuDirectory } from "../filesystemDirectories";
 import { Menu } from "../types";
-import writeContentFile from "content-engine/fs/writeContentFile";
+import { outputJson } from "fs-extra";
+import { join } from "path";
 
 export default async function updateMenu(
   currentSlug: string,
@@ -30,7 +31,7 @@ export default async function updateMenu(
     items,
   };
 
-  await writeContentFile({ baseDirectory, filename: "menu.json", data });
+  await outputJson(join(baseDirectory, "menu.json"), data);
 
   revalidatePath("/" + currentSlug);
   redirect("/menus");

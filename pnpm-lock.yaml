@@ -86,6 +86,9 @@ importers:
       fraction.js:
         specifier: ^4.3.7
         version: 4.3.7
+      fs-extra:
+        specifier: ^11.2.0
+        version: 11.2.0
       lmdb:
         specifier: ^3.0.5
         version: 3.0.5
@@ -132,6 +135,9 @@ importers:
       '@types/bcrypt':
         specifier: ^5.0.2
         version: 5.0.2
+      '@types/fs-extra':
+        specifier: ^11.0.4
+        version: 11.0.4
       '@types/lodash':
         specifier: ^4.17.0
         version: 4.17.0
@@ -318,6 +324,9 @@ importers:
       fraction.js:
         specifier: ^4.3.7
         version: 4.3.7
+      fs-extra:
+        specifier: ^11.2.0
+        version: 11.2.0
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -339,6 +348,10 @@ importers:
       zod:
         specifier: ^3.22.4
         version: 3.22.4
+    devDependencies:
+      '@types/fs-extra':
+        specifier: ^11.0.4
+        version: 11.0.4
 
   website:
     dependencies:

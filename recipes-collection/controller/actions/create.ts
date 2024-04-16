@@ -1,33 +1,23 @@
 "use server";
 
-import { auth, signIn } from "@/auth";
 import parseRecipeFormData from "../parseFormData";
 import slugify from "@sindresorhus/slugify";
-import { mkdirIfNotPresent } from "@/app/lib/util";
-import { writeFile } from "fs/promises";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { RecipeFormState } from "../formState";
 import { Recipe } from "../types";
-import {
-  getRecipeDirectory,
-  getRecipeFilePath,
-} from "../filesystemDirectories";
+import { getRecipeDirectory } from "../filesystemDirectories";
 import getRecipeDatabase from "../database";
 import buildRecipeIndexValue from "../buildIndexValue";
 import createDefaultSlug from "../createSlug";
 import writeRecipeFiles, { getRecipeFileInfo } from "../writeUpload";
-import writeContentFile from "content-engine/fs/writeContentFile";
+import { outputJson } from "fs-extra";
+import { join } from "path";
 
 export default async function createRecipe(
   _prevState: RecipeFormState,
   formData: FormData,
 ) {
-  const user = await auth();
-  if (!user) {
-    return signIn();
-  }
-
   const validatedFields = parseRecipeFormData(formData);
 
   if (!validatedFields.success) {
@@ -63,7 +53,7 @@ export default async function createRecipe(
 
   const baseDirectory = getRecipeDirectory(slug);
 
-  await writeContentFile({ baseDirectory, filename: "recipe.json", data });
+  await outputJson(join(baseDirectory, "recipe.json"), data);
 
   await writeRecipeFiles(baseDirectory, imageData);
 
