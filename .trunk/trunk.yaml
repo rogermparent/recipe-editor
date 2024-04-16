@@ -21,7 +21,7 @@ lint:
       paths:
         - pnpm-lock.yaml
   enabled:
-    - checkov@3.2.55
+    - checkov@3.2.64
     - eslint@8.57.0
     - git-diff-check
     - markdownlint@0.39.0
