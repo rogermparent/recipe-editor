@@ -9,6 +9,7 @@ import { Page } from "../types";
 import { getPageDirectory } from "../filesystemDirectories";
 import createDefaultSlug from "../createSlug";
 import { outputJson } from "fs-extra";
+import { join } from "path";
 
 export default async function createPage(
   _prevState: PageFormState,
