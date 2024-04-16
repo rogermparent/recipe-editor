@@ -62,6 +62,12 @@ describe("New Recipe View", () => {
             `<Multiplyable baseNumber="1" /> cup water ((for the dashi packet))`,
           );
 
+          // Verify vulgar fraction ingredient
+          cy.get('[name="ingredients[5].ingredient"]').should(
+            "have.value",
+            `<Multiplyable baseNumber="1/2" />  onion ((<Multiplyable baseNumber="4" /> oz, <Multiplyable baseNumber="113" /> g))`,
+          );
+
           // Verify first instruction, which is a simple step
           cy.get('[name="instructions[0].type"]').should("have.value", "step");
           cy.get('[name="instructions[0].name"]').should("have.value", "");
