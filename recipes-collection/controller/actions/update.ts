@@ -16,6 +16,7 @@ import createDefaultSlug from "../createSlug";
 import slugify from "@sindresorhus/slugify";
 import writeRecipeFiles, { getRecipeFileInfo } from "../writeUpload";
 import getRecipeBySlug from "../data/read";
+import updateContentFile from "content-engine/fs/updateContentFile";
 
 export default async function updateRecipe(
   currentDate: number,
@@ -43,7 +44,6 @@ export default async function updateRecipe(
   } = validatedFields.data;
 
   const currentRecipeDirectory = getRecipeDirectory(currentSlug);
-  const currentRecipePath = getRecipeFilePath(currentRecipeDirectory);
   const currentRecipeData = await getRecipeBySlug(currentSlug);
 
   const finalSlug = slugify(slug || createDefaultSlug(validatedFields.data));
@@ -68,15 +68,12 @@ export default async function updateRecipe(
     date: finalDate,
   };
 
-  if (willRename) {
-    await rename(currentRecipeDirectory, finalRecipeDirectory);
-    await writeFile(
-      `${finalRecipeDirectory}/recipe.json`,
-      JSON.stringify(data),
-    );
-  } else {
-    await writeFile(currentRecipePath, JSON.stringify(data));
-  }
+  await updateContentFile({
+    baseDirectory: finalRecipeDirectory,
+    currentBaseDirectory: currentRecipeDirectory,
+    filename: "recipe.json",
+    data,
+  });
 
   await writeRecipeFiles(finalRecipeDirectory, imageData);
 
