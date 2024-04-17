@@ -176,11 +176,14 @@ export function InstructionsListInput({
   const [{ values }, dispatch] = useKeyList<InstructionEntry>(defaultValue);
   const importTextareaRef = useRef<HTMLTextAreaElement>(null);
   const detailsRef = useRef<HTMLDetailsElement>(null);
+  const instructionsPasteId = "instructions-paste-area";
   return (
     <FieldWrapper label={label} id={id}>
       <details ref={detailsRef}>
-        <summary>Paste</summary>
+        <summary>Paste Instructions</summary>
         <textarea
+          title="Instructions Paste Area"
+          id={instructionsPasteId}
           ref={importTextareaRef}
           className={clsx(baseInputStyle, "w-full h-36")}
         />
@@ -198,7 +201,7 @@ export function InstructionsListInput({
               }
             }}
           >
-            Import Ingredients
+            Import Instructions
           </Button>
         </div>
       </details>
