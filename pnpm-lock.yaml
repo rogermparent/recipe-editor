@@ -33,14 +33,14 @@ importers:
         specifier: ^1.0.0
         version: link:../content-engine
       markdown-to-jsx:
-        specifier: ^7.4.6
-        version: 7.4.6(react@18.2.0)
+        specifier: ^7.4.7
+        version: 7.4.7(react@18.2.0)
       menus-collection:
         specifier: ^1.0.0
         version: link:../menus-collection
       next:
-        specifier: 14.1.4
-        version: 14.1.4(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 14.2.1
+        version: 14.2.1(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
 
   content-engine:
     dependencies:
@@ -90,23 +90,23 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       lmdb:
-        specifier: ^3.0.5
-        version: 3.0.5
+        specifier: ^3.0.6
+        version: 3.0.6
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
       markdown-to-jsx:
-        specifier: ^7.4.6
-        version: 7.4.6(react@18.2.0)
+        specifier: ^7.4.7
+        version: 7.4.7(react@18.2.0)
       menus-collection:
         specifier: ^1.0.0
         version: link:../menus-collection
       next:
-        specifier: 14.1.4
-        version: 14.1.4(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 14.2.1
+        version: 14.2.1(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
       next-auth:
         specifier: ^5.0.0-beta.9
-        version: 5.0.0-beta.9(next@14.1.4)(react@18.2.0)
+        version: 5.0.0-beta.9(next@14.2.1)(react@18.2.0)
       next-static-image:
         specifier: ^0.0.1
         version: link:../next-static-image
@@ -131,7 +131,7 @@ importers:
     devDependencies:
       '@testing-library/cypress':
         specifier: ^10.0.1
-        version: 10.0.1(cypress@13.7.2)
+        version: 10.0.1(cypress@13.7.3)
       '@types/bcrypt':
         specifier: ^5.0.2
         version: 5.0.2
@@ -154,17 +154,17 @@ importers:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.35)
       cypress:
-        specifier: ^13.7.2
-        version: 13.7.2
+        specifier: ^13.7.3
+        version: 13.7.3
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
       eslint-config-next:
-        specifier: 14.1.4
-        version: 14.1.4(eslint@8.57.0)(typescript@5.4.5)
+        specifier: 14.2.1
+        version: 14.2.1(eslint@8.57.0)(typescript@5.4.5)
       eslint-plugin-cypress:
-        specifier: ^2.15.1
-        version: 2.15.1(eslint@8.57.0)
+        specifier: ^2.15.2
+        version: 2.15.2(eslint@8.57.0)
       eslint-plugin-mocha:
         specifier: ^10.4.2
         version: 10.4.2(eslint@8.57.0)
@@ -214,8 +214,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       next:
-        specifier: 14.1.4
-        version: 14.1.4(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 14.2.1
+        version: 14.2.1(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
       next-static-image:
         specifier: ^0.0.1
         version: link:../next-static-image
@@ -245,11 +245,11 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0
       markdown-to-jsx:
-        specifier: ^7.4.6
-        version: 7.4.6(react@18.2.0)
+        specifier: ^7.4.7
+        version: 7.4.7(react@18.2.0)
       next:
-        specifier: 14.1.4
-        version: 14.1.4(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 14.2.1
+        version: 14.2.1(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
       ora:
         specifier: ^8.0.1
         version: 8.0.1
@@ -282,8 +282,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       next:
-        specifier: 14.1.4
-        version: 14.1.4(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 14.2.1
+        version: 14.2.1(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
       next-static-image:
         specifier: ^0.0.1
         version: link:../next-static-image
@@ -331,8 +331,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       next:
-        specifier: 14.1.4
-        version: 14.1.4(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 14.2.1
+        version: 14.2.1(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
       next-static-image:
         specifier: ^0.0.1
         version: link:../next-static-image
@@ -383,14 +383,14 @@ importers:
         specifier: ^4.3.7
         version: 4.3.7
       lmdb:
-        specifier: ^3.0.5
-        version: 3.0.5
+        specifier: ^3.0.6
+        version: 3.0.6
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
       markdown-to-jsx:
-        specifier: ^7.4.6
-        version: 7.4.6(react@18.2.0)
+        specifier: ^7.4.7
+        version: 7.4.7(react@18.2.0)
       menus-collection:
         specifier: ^1.0.0
         version: link:../menus-collection
@@ -398,8 +398,8 @@ importers:
         specifier: ^17.22.1
         version: 17.22.1(@types/node@20.11.17)
       next:
-        specifier: 14.1.4
-        version: 14.1.4(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 14.2.1
+        version: 14.2.1(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: ^18
         version: 18.2.0
@@ -418,7 +418,7 @@ importers:
     devDependencies:
       '@testing-library/cypress':
         specifier: ^10.0.1
-        version: 10.0.1(cypress@13.7.2)
+        version: 10.0.1(cypress@13.7.3)
       '@types/bcrypt':
         specifier: ^5.0.2
         version: 5.0.2
@@ -438,14 +438,14 @@ importers:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.35)
       cypress:
-        specifier: ^13.7.2
-        version: 13.7.2
+        specifier: ^13.7.3
+        version: 13.7.3
       eslint:
         specifier: ^8
         version: 8.56.0
       eslint-config-next:
-        specifier: 14.1.4
-        version: 14.1.4(eslint@8.56.0)(typescript@5.4.5)
+        specifier: 14.2.1
+        version: 14.2.1(eslint@8.56.0)(typescript@5.4.5)
       eslint-plugin-react:
         specifier: ^7.34.1
         version: 7.34.1(eslint@8.56.0)
@@ -1479,48 +1479,48 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: false
 
-  /@lmdb/lmdb-darwin-arm64@3.0.5:
-    resolution: {integrity: sha512-GCG4eAKkIQBD0c0qhR0mrLO4nnXjEf86Sh5HkqjqWqP/sPAFJvgBqky8lhJQaQvTsfI9jDH0rvD4hWlPYKApYg==}
+  /@lmdb/lmdb-darwin-arm64@3.0.6:
+    resolution: {integrity: sha512-K78TgfasUWdukV+XybsQFZ7vGYOgCLorxNf3+Dlw6ZA4wAkGKNWrcOD/Kcfyy5TvH8/tTChvVrOpQmMdCF2onA==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@lmdb/lmdb-darwin-x64@3.0.5:
-    resolution: {integrity: sha512-6/7G3Z9YZnWMH8hWiaSDyN79ksowCDdYaZRGKTP3F4owKkmdKQ5sz9BOGVBIf0xRjuIlWaO+KPh5NI54/NfW9w==}
+  /@lmdb/lmdb-darwin-x64@3.0.6:
+    resolution: {integrity: sha512-uSi885DabWUfnVH7//jOT9VXpCIditqZdaXBM2phQDEILQHh4V1P8Sc4T2P/3AyGGOverHF+5RxYA4azXiq9fw==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@lmdb/lmdb-linux-arm64@3.0.5:
-    resolution: {integrity: sha512-kZ7k9HU9cdcDKLfufEw6m+kINNMADixEfjYNWW889vtAYbdFnhhj1kdaOxo1SEubBx/1pkuHfiQ0dxG3tGhyOg==}
+  /@lmdb/lmdb-linux-arm64@3.0.6:
+    resolution: {integrity: sha512-A/tBUN+QTNP9yuqzxIjgA2ESbdKzcVsnPibw3dbLvSU9GEDoyNIYvPT44/C9+77yJb4DjcV7Gb17bNzsDwU+9w==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@lmdb/lmdb-linux-arm@3.0.5:
-    resolution: {integrity: sha512-vQlnQtnjJZeB4QwBqzydGrtGvcoZfJk4URxV5CMiLPNuaUYuUvP+S4FHTeHCmpkrDzxhscIh7jI89noyPs2aTg==}
+  /@lmdb/lmdb-linux-arm@3.0.6:
+    resolution: {integrity: sha512-NNrDyabm9ovU0ve41JAI0Lj32evPPV++k1bABuxOMRGB+JjrDPRKFPiMGPQGsqMVdK4QeO7OTGPEs8KIow4rhw==}
     cpu: [arm]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@lmdb/lmdb-linux-x64@3.0.5:
-    resolution: {integrity: sha512-QPIEG6n4W+Ldkl9Yq+4dIxOoSbQdyhLbR2fEp7HqKN1nu2LcRZ+WSoAUoRqpydR97YpagxV3wnw/ILUoGx7ISQ==}
+  /@lmdb/lmdb-linux-x64@3.0.6:
+    resolution: {integrity: sha512-gpa0vXkr5VbwkdoBy3904qc1Ilymf6GH31n/ALaDSXK8BBniC2Cf3yJvfgneUNLpDCxOH8rH+WIoZrnWkbuNzg==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@lmdb/lmdb-win32-x64@3.0.5:
-    resolution: {integrity: sha512-c2ohB2tekVK3H0/CnsfK7DxhFDSw6fYYcAe/DgYdLRnUEBqvK5Hf2nMh00cqvWEXJ29KbkI0I+NJw/iJozIZYw==}
+  /@lmdb/lmdb-win32-x64@3.0.6:
+    resolution: {integrity: sha512-xQ09fJ0YY3LD+ABT4tiUF+uNGN9EC2i8+RQmN21zgzHMnmHtLWzLREEWBaGBod+lNj5eeVWL+Mk/h1hTak45eQ==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
@@ -2027,18 +2027,18 @@ packages:
       - supports-color
     dev: false
 
-  /@next/env@14.1.4:
-    resolution: {integrity: sha512-e7X7bbn3Z6DWnDi75UWn+REgAbLEqxI8Tq2pkFOFAMpWAWApz/YCUhtWMWn410h8Q2fYiYL7Yg5OlxMOCfFjJQ==}
+  /@next/env@14.2.1:
+    resolution: {integrity: sha512-qsHJle3GU3CmVx7pUoXcghX4sRN+vINkbLdH611T8ZlsP//grzqVW87BSUgOZeSAD4q7ZdZicdwNe/20U2janA==}
     dev: false
 
-  /@next/eslint-plugin-next@14.1.4:
-    resolution: {integrity: sha512-n4zYNLSyCo0Ln5b7qxqQeQ34OZKXwgbdcx6kmkQbywr+0k6M3Vinft0T72R6CDAcDrne2IAgSud4uWCzFgc5HA==}
+  /@next/eslint-plugin-next@14.2.1:
+    resolution: {integrity: sha512-Fp+mthEBjkn8r9qd6o4JgxKp0IDEzW0VYHD8ZC05xS5/lFNwHKuOdr2kVhWG7BQCO9L6eeepshM1Wbs2T+LgSg==}
     dependencies:
       glob: 10.3.10
     dev: true
 
-  /@next/swc-darwin-arm64@14.1.4:
-    resolution: {integrity: sha512-ubmUkbmW65nIAOmoxT1IROZdmmJMmdYvXIe8211send9ZYJu+SqxSnJM4TrPj9wmL6g9Atvj0S/2cFmMSS99jg==}
+  /@next/swc-darwin-arm64@14.2.1:
+    resolution: {integrity: sha512-kGjnjcIJehEcd3rT/3NAATJQndAEELk0J9GmGMXHSC75TMnvpOhONcjNHbjtcWE5HUQnIHy5JVkatrnYm1QhVw==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
@@ -2046,8 +2046,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-darwin-x64@14.1.4:
-    resolution: {integrity: sha512-b0Xo1ELj3u7IkZWAKcJPJEhBop117U78l70nfoQGo4xUSvv0PJSTaV4U9xQBLvZlnjsYkc8RwQN1HoH/oQmLlQ==}
+  /@next/swc-darwin-x64@14.2.1:
+    resolution: {integrity: sha512-dAdWndgdQi7BK2WSXrx4lae7mYcOYjbHJUhvOUnJjMNYrmYhxbbvJ2xElZpxNxdfA6zkqagIB9He2tQk+l16ew==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
@@ -2055,8 +2055,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-arm64-gnu@14.1.4:
-    resolution: {integrity: sha512-457G0hcLrdYA/u1O2XkRMsDKId5VKe3uKPvrKVOyuARa6nXrdhJOOYU9hkKKyQTMru1B8qEP78IAhf/1XnVqKA==}
+  /@next/swc-linux-arm64-gnu@14.2.1:
+    resolution: {integrity: sha512-2ZctfnyFOGvTkoD6L+DtQtO3BfFz4CapoHnyLTXkOxbZkVRgg3TQBUjTD/xKrO1QWeydeo8AWfZRg8539qNKrg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -2064,8 +2064,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-arm64-musl@14.1.4:
-    resolution: {integrity: sha512-l/kMG+z6MB+fKA9KdtyprkTQ1ihlJcBh66cf0HvqGP+rXBbOXX0dpJatjZbHeunvEHoBBS69GYQG5ry78JMy3g==}
+  /@next/swc-linux-arm64-musl@14.2.1:
+    resolution: {integrity: sha512-jazZXctiaanemy4r+TPIpFP36t1mMwWCKMsmrTRVChRqE6putyAxZA4PDujx0SnfvZHosjdkx9xIq9BzBB5tWg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -2073,8 +2073,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-x64-gnu@14.1.4:
-    resolution: {integrity: sha512-BapIFZ3ZRnvQ1uWbmqEGJuPT9cgLwvKtxhK/L2t4QYO7l+/DxXuIGjvp1x8rvfa/x1FFSsipERZK70pewbtJtw==}
+  /@next/swc-linux-x64-gnu@14.2.1:
+    resolution: {integrity: sha512-VjCHWCjsAzQAAo8lkBOLEIkBZFdfW+Z18qcQ056kL4KpUYc8o59JhLDCBlhg+hINQRgzQ2UPGma2AURGOH0+Qg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -2082,8 +2082,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-x64-musl@14.1.4:
-    resolution: {integrity: sha512-mqVxTwk4XuBl49qn2A5UmzFImoL1iLm0KQQwtdRJRKl21ylQwwGCxJtIYo2rbfkZHoSKlh/YgztY0qH3wG1xIg==}
+  /@next/swc-linux-x64-musl@14.2.1:
+    resolution: {integrity: sha512-7HZKYKvAp4nAHiHIbY04finRqjeYvkITOGOurP1aLMexIFG/1+oCnqhGogBdc4lao/lkMW1c+AkwWSzSlLasqw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -2091,8 +2091,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-win32-arm64-msvc@14.1.4:
-    resolution: {integrity: sha512-xzxF4ErcumXjO2Pvg/wVGrtr9QQJLk3IyQX1ddAC/fi6/5jZCZ9xpuL9Tzc4KPWMFq8GGWFVDMshZOdHGdkvag==}
+  /@next/swc-win32-arm64-msvc@14.2.1:
+    resolution: {integrity: sha512-YGHklaJ/Cj/F0Xd8jxgj2p8po4JTCi6H7Z3Yics3xJhm9CPIqtl8erlpK1CLv+HInDqEWfXilqatF8YsLxxA2Q==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
@@ -2100,8 +2100,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-win32-ia32-msvc@14.1.4:
-    resolution: {integrity: sha512-WZiz8OdbkpRw6/IU/lredZWKKZopUMhcI2F+XiMAcPja0uZYdMTZQRoQ0WZcvinn9xZAidimE7tN9W5v9Yyfyw==}
+  /@next/swc-win32-ia32-msvc@14.2.1:
+    resolution: {integrity: sha512-o+ISKOlvU/L43ZhtAAfCjwIfcwuZstiHVXq/BDsZwGqQE0h/81td95MPHliWCnFoikzWcYqh+hz54ZB2FIT8RA==}
     engines: {node: '>= 10'}
     cpu: [ia32]
     os: [win32]
@@ -2109,8 +2109,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-win32-x64-msvc@14.1.4:
-    resolution: {integrity: sha512-4Rto21sPfw555sZ/XNLqfxDUNeLhNYGO2dlPqsnuCg8N8a2a9u1ltqBOPQ4vj1Gf7eJC0W2hHG2eYUHuiXgY2w==}
+  /@next/swc-win32-x64-msvc@14.2.1:
+    resolution: {integrity: sha512-GmRoTiLcvCLifujlisknv4zu9/C4i9r0ktsA8E51EMqJL4bD4CpO7lDYr7SrUxCR0tS4RVcrqKmCak24T0ohaw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -2484,9 +2484,14 @@ packages:
       escape-string-regexp: 5.0.0
     dev: false
 
-  /@swc/helpers@0.5.2:
-    resolution: {integrity: sha512-E4KcWTpoLHqwPHLxidpOqQbcrZVgi0rsmmZXUle1jXmJfuIf/UWpczUJ7MZZ5tlxytgJXyp0w4PGkkeLiuIdZw==}
+  /@swc/counter@0.1.3:
+    resolution: {integrity: sha512-e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==}
+    dev: false
+
+  /@swc/helpers@0.5.5:
+    resolution: {integrity: sha512-KGYxvIOXcceOAbEk4bi/dVLEK9z8sZ0uBB3Il5b1rhfClSpcX0yfRO0KmTkqR2cnQDymwLB+25ZyMzICg/cm/A==}
     dependencies:
+      '@swc/counter': 0.1.3
       tslib: 2.6.2
     dev: false
 
@@ -2510,7 +2515,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@testing-library/cypress@10.0.1(cypress@13.7.2):
+  /@testing-library/cypress@10.0.1(cypress@13.7.3):
     resolution: {integrity: sha512-e8uswjTZIBhaIXjzEcrQQ8nHRWHgZH7XBxKuIWxZ/T7FxfWhCR48nFhUX5nfPizjVOKSThEfOSv67jquc1ASkw==}
     engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
@@ -2518,7 +2523,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.9
       '@testing-library/dom': 9.3.4
-      cypress: 13.7.2
+      cypress: 13.7.3
     dev: true
 
   /@testing-library/dom@9.3.4:
@@ -3895,13 +3900,8 @@ packages:
     resolution: {integrity: sha512-xlx1yCK2Oc1APsPXDL2LdlNP6+uu8OCDdhOBSVT279M/S+y75O30C2VuD8T2ogdePBBl7PfPF4504tnLgX3zfw==}
     engines: {node: '>=14.16'}
 
-  /caniuse-lite@1.0.30001591:
-    resolution: {integrity: sha512-PCzRMei/vXjJyL5mJtzNiUCKP59dm8Apqc3PH8gJkMnMXZGox93RbE76jHsmLwmIo6/3nsYIpJtx0O7u5PqFuQ==}
-    dev: false
-
   /caniuse-lite@1.0.30001605:
     resolution: {integrity: sha512-nXwGlFWo34uliI9z3n6Qc0wZaf7zaZWA1CPZ169La5mV3I/gem7bst0vr5XQH5TJXZIMfDeZyOrZnSlVzKxxHQ==}
-    dev: true
 
   /caseless@0.12.0:
     resolution: {integrity: sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==}
@@ -4577,8 +4577,8 @@ packages:
     resolution: {integrity: sha512-0sVXIohTfLqVIW3kb/0n6IiWF3Ifj5nm2XaSrLq2DI6fKIGa2fYAZdk917rUneaeLVpYfFcyXE2ft0fe3remsA==}
     dev: false
 
-  /cypress@13.7.2:
-    resolution: {integrity: sha512-FF5hFI5wlRIHY8urLZjJjj/YvfCBrRpglbZCLr/cYcL9MdDe0+5usa8kTIrDHthlEc9lwihbkb5dmwqBDNS2yw==}
+  /cypress@13.7.3:
+    resolution: {integrity: sha512-uoecY6FTCAuIEqLUYkTrxamDBjMHTYak/1O7jtgwboHiTnS1NaMOoR08KcTrbRZFCBvYOiS4tEkQRmsV+xcrag==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
     hasBin: true
     requiresBuild: true
@@ -5363,8 +5363,8 @@ packages:
       source-map: 0.6.1
     dev: false
 
-  /eslint-config-next@14.1.4(eslint@8.56.0)(typescript@5.4.5):
-    resolution: {integrity: sha512-cihIahbhYAWwXJwZkAaRPpUi5t9aOi/HdfWXOjZeUOqNWXHD8X22kd1KG58Dc3MVaRx3HoR/oMGk2ltcrqDn8g==}
+  /eslint-config-next@14.2.1(eslint@8.56.0)(typescript@5.4.5):
+    resolution: {integrity: sha512-BgD0kPCWMlqoItRf3xe9fG0MqwObKfVch+f2ccwDpZiCJA8ghkz2wrASH+bI6nLZzGcOJOpMm1v1Q1euhfpt4Q==}
     peerDependencies:
       eslint: ^7.23.0 || ^8.0.0
       typescript: '>=3.3.1'
@@ -5372,7 +5372,7 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@next/eslint-plugin-next': 14.1.4
+      '@next/eslint-plugin-next': 14.2.1
       '@rushstack/eslint-patch': 1.7.2
       '@typescript-eslint/parser': 6.21.0(eslint@8.56.0)(typescript@5.4.5)
       eslint: 8.56.0
@@ -5388,8 +5388,8 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-config-next@14.1.4(eslint@8.57.0)(typescript@5.4.5):
-    resolution: {integrity: sha512-cihIahbhYAWwXJwZkAaRPpUi5t9aOi/HdfWXOjZeUOqNWXHD8X22kd1KG58Dc3MVaRx3HoR/oMGk2ltcrqDn8g==}
+  /eslint-config-next@14.2.1(eslint@8.57.0)(typescript@5.4.5):
+    resolution: {integrity: sha512-BgD0kPCWMlqoItRf3xe9fG0MqwObKfVch+f2ccwDpZiCJA8ghkz2wrASH+bI6nLZzGcOJOpMm1v1Q1euhfpt4Q==}
     peerDependencies:
       eslint: ^7.23.0 || ^8.0.0
       typescript: '>=3.3.1'
@@ -5397,7 +5397,7 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@next/eslint-plugin-next': 14.1.4
+      '@next/eslint-plugin-next': 14.2.1
       '@rushstack/eslint-patch': 1.7.2
       '@typescript-eslint/parser': 6.21.0(eslint@8.57.0)(typescript@5.4.5)
       eslint: 8.57.0
@@ -5529,8 +5529,8 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-cypress@2.15.1(eslint@8.57.0):
-    resolution: {integrity: sha512-eLHLWP5Q+I4j2AWepYq0PgFEei9/s5LvjuSqWrxurkg1YZ8ltxdvMNmdSf0drnsNo57CTgYY/NIHHLRSWejR7w==}
+  /eslint-plugin-cypress@2.15.2(eslint@8.57.0):
+    resolution: {integrity: sha512-CtcFEQTDKyftpI22FVGpx8bkpKyYXBlNge6zSo0pl5/qJvBAnzaD76Vu2AsP16d6mTj478Ldn2mhgrWV+Xr0vQ==}
     peerDependencies:
       eslint: '>= 3.2.1'
     dependencies:
@@ -8183,8 +8183,8 @@ packages:
       wrap-ansi: 9.0.0
     dev: true
 
-  /lmdb@3.0.5:
-    resolution: {integrity: sha512-GIT/DDSEbexAX819CdM4lLlneXoSpQQkgNAvNhe9c5FTCL10nySVnuQTtTj5zZzbjBKPn1rEa5daUgZRIyURLQ==}
+  /lmdb@3.0.6:
+    resolution: {integrity: sha512-cXcTiBm7ZoM+0uMXvJc9xK9jLAvMhUkkR3aXAbJ1UDEAx1lVw5zEiqzt2cti2xjWb1XU83tYRbOeM19Ju6+KZg==}
     hasBin: true
     requiresBuild: true
     dependencies:
@@ -8194,12 +8194,12 @@ packages:
       ordered-binary: 1.5.1
       weak-lru-cache: 1.2.2
     optionalDependencies:
-      '@lmdb/lmdb-darwin-arm64': 3.0.5
-      '@lmdb/lmdb-darwin-x64': 3.0.5
-      '@lmdb/lmdb-linux-arm': 3.0.5
-      '@lmdb/lmdb-linux-arm64': 3.0.5
-      '@lmdb/lmdb-linux-x64': 3.0.5
-      '@lmdb/lmdb-win32-x64': 3.0.5
+      '@lmdb/lmdb-darwin-arm64': 3.0.6
+      '@lmdb/lmdb-darwin-x64': 3.0.6
+      '@lmdb/lmdb-linux-arm': 3.0.6
+      '@lmdb/lmdb-linux-arm64': 3.0.6
+      '@lmdb/lmdb-linux-x64': 3.0.6
+      '@lmdb/lmdb-win32-x64': 3.0.6
     dev: false
 
   /locate-path@6.0.0:
@@ -8426,8 +8426,8 @@ packages:
       object-visit: 1.0.1
     dev: false
 
-  /markdown-to-jsx@7.4.6(react@18.2.0):
-    resolution: {integrity: sha512-3cyNxI/PwotvYkjg6KmFaN1uyN/7NqETteD2DobBB8ro/FR9jsHIh4Fi7ywAz0s9QHRKCmGlOUggs5GxSWACKA==}
+  /markdown-to-jsx@7.4.7(react@18.2.0):
+    resolution: {integrity: sha512-0+ls1IQZdU6cwM1yu0ZjjiVWYtkbExSyUIFU2ZeDIFuZM1W42Mh4OlJ4nb4apX4H8smxDHRdFaoIVJGwfv5hkg==}
     engines: {node: '>= 10'}
     peerDependencies:
       react: '>= 0.14.0'
@@ -8972,7 +8972,7 @@ packages:
       qs: 6.11.0
     dev: false
 
-  /next-auth@5.0.0-beta.9(next@14.1.4)(react@18.2.0):
+  /next-auth@5.0.0-beta.9(next@14.2.1)(react@18.2.0):
     resolution: {integrity: sha512-BWFiwJ/wzfxWpHnGpAoFsXHSlVofWgFns6tjtIGeDrXfEf3D+afnBpmzCNyek2RNYDVgMHi8Q5uXzFoNBd2l5g==}
     peerDependencies:
       '@simplewebauthn/browser': ^9.0.1
@@ -8989,45 +8989,48 @@ packages:
         optional: true
     dependencies:
       '@auth/core': 0.26.3
-      next: 14.1.4(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
+      next: 14.2.1(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
     dev: false
 
-  /next@14.1.4(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-1WTaXeSrUwlz/XcnhGTY7+8eiaFvdet5z9u3V2jb+Ek1vFo0VhHKSAIJvDWfQpttWjnyw14kBeq28TPq7bTeEQ==}
+  /next@14.2.1(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-SF3TJnKdH43PMkCcErLPv+x/DY1YCklslk3ZmwaVoyUfDgHKexuKlf9sEfBQ69w+ue8jQ3msLb+hSj1T19hGag==}
     engines: {node: '>=18.17.0'}
     hasBin: true
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
+      '@playwright/test': ^1.41.2
       react: ^18.2.0
       react-dom: ^18.2.0
       sass: ^1.3.0
     peerDependenciesMeta:
       '@opentelemetry/api':
         optional: true
+      '@playwright/test':
+        optional: true
       sass:
         optional: true
     dependencies:
-      '@next/env': 14.1.4
+      '@next/env': 14.2.1
       '@opentelemetry/api': 1.8.0
-      '@swc/helpers': 0.5.2
+      '@swc/helpers': 0.5.5
       busboy: 1.6.0
-      caniuse-lite: 1.0.30001591
+      caniuse-lite: 1.0.30001605
       graceful-fs: 4.2.11
       postcss: 8.4.31
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       styled-jsx: 5.1.1(react@18.2.0)
     optionalDependencies:
-      '@next/swc-darwin-arm64': 14.1.4
-      '@next/swc-darwin-x64': 14.1.4
-      '@next/swc-linux-arm64-gnu': 14.1.4
-      '@next/swc-linux-arm64-musl': 14.1.4
-      '@next/swc-linux-x64-gnu': 14.1.4
-      '@next/swc-linux-x64-musl': 14.1.4
-      '@next/swc-win32-arm64-msvc': 14.1.4
-      '@next/swc-win32-ia32-msvc': 14.1.4
-      '@next/swc-win32-x64-msvc': 14.1.4
+      '@next/swc-darwin-arm64': 14.2.1
+      '@next/swc-darwin-x64': 14.2.1
+      '@next/swc-linux-arm64-gnu': 14.2.1
+      '@next/swc-linux-arm64-musl': 14.2.1
+      '@next/swc-linux-x64-gnu': 14.2.1
+      '@next/swc-linux-x64-musl': 14.2.1
+      '@next/swc-win32-arm64-msvc': 14.2.1
+      '@next/swc-win32-ia32-msvc': 14.2.1
+      '@next/swc-win32-x64-msvc': 14.2.1
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
