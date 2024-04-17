@@ -1,4 +1,4 @@
-import { Ingredient } from "../controller/types";
+import type { Ingredient } from "../controller/types";
 
 export function createIngredients(input: string) {
   return input
@@ -7,7 +7,7 @@ export function createIngredients(input: string) {
       const trimmedInputLine = inputLine
         .trim()
         .normalize("NFKD")
-        .replace(/⁄/g, "/");
+        .replaceAll("⁄", "/");
       if (trimmedInputLine) {
         const multiplyableIngredient = trimmedInputLine.replace(
           /[0-9]+(?:\/[0-9]+|(?: and)? [0-9]+\/[0-9]+|\.[0-9]+)?/g,
