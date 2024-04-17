@@ -33,6 +33,62 @@ describe("New Recipe View", () => {
         cy.checkNamesInOrder([newRecipeTitle]);
       });
 
+      it("should be able to paste ingredients", () => {
+        cy.findByRole("heading", { name: "New Recipe" });
+
+        const newRecipeTitle = "My New Recipe";
+
+        cy.findAllByLabelText("Name").first().clear();
+        cy.findAllByLabelText("Name").first().type(newRecipeTitle);
+
+        cy.findByText("Paste Ingredients").click();
+        cy.findByTitle("Ingredients Paste Area").type(
+          `
+1 cup water ((for the dashi packet))
+1  dashi packet
+2 tsp sugar
+2 Tbsp mirin
+2 Tbsp soy sauce
+½  onion ((4 oz 113 g))
+1  green onion/scallion ((for garnish))
+3  large eggs (50 g each w/o shell)
+2  tonkatsu
+2 servings cooked Japanese short-grain rice ((typically 1⅔ cups (250 g) per donburi serving))
+`,
+        );
+
+        cy.findByText("Import Ingredients").click();
+
+        // Verify first ingredient
+        cy.get('[name="ingredients[0].ingredient"]').should(
+          "have.value",
+          `<Multiplyable baseNumber="1" /> cup water ((for the dashi packet))`,
+        );
+
+        // Verify vulgar fraction ingredient
+        cy.get('[name="ingredients[5].ingredient"]').should(
+          "have.value",
+          `<Multiplyable baseNumber="1/2" />  onion ((<Multiplyable baseNumber="4" /> oz <Multiplyable baseNumber="113" /> g))`,
+        );
+
+        cy.findByText("Submit").click();
+
+        cy.findByRole("heading", { name: newRecipeTitle });
+
+        cy.findByText("1 cup water ((for the dashi packet))");
+        cy.findByText("1 dashi packet");
+        cy.findByText("2 tsp sugar");
+        cy.findByText("2 Tbsp mirin");
+        cy.findByText("2 Tbsp soy sauce");
+        cy.findByText("1/2 onion ((4 oz 113 g))");
+        cy.findByText("1 green onion/scallion ((for garnish))");
+        cy.findByText("3 large eggs (50 g each w/o shell)");
+        cy.findByText("2 tonkatsu");
+        cy.findByText(
+          "2 servings cooked Japanese short-grain rice ((typically 4 cups (250 g) per donburi serving))",
+        );
+      });
+
       it("should be able to import a recipe", () => {
         const baseURL = Cypress.config().baseUrl;
         const testURL = "/uploads/katsudon.html";

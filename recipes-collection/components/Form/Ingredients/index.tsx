@@ -30,11 +30,14 @@ export function IngredientsListInput({
   const [{ values }, dispatch] = useKeyList<Ingredient>(defaultValue);
   const importTextareaRef = useRef<HTMLTextAreaElement>(null);
   const detailsRef = useRef<HTMLDetailsElement>(null);
+  const ingredientsPasteId = "ingredients-paste-area";
   return (
     <FieldWrapper label={label} id={id}>
       <details ref={detailsRef}>
-        <summary>Paste</summary>
+        <summary>Paste Ingredients</summary>
         <textarea
+          title="Ingredients Paste Area"
+          id={ingredientsPasteId}
           ref={importTextareaRef}
           className={clsx(baseInputStyle, "w-full h-36")}
         />
