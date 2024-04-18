@@ -2,6 +2,7 @@ import getPages, {
   MassagedPageEntry,
 } from "pages-collection/controller/data/readIndex";
 import Link from "next/link";
+import { auth, signIn } from "@/auth";
 
 function PageListItem({ page: { name, slug } }: { page: MassagedPageEntry }) {
   return (
@@ -16,6 +17,11 @@ function PageListItem({ page: { name, slug } }: { page: MassagedPageEntry }) {
 }
 
 export default async function Pages() {
+  const user = await auth();
+  if (!user) {
+    return signIn(undefined, { redirectTo: "/pages" });
+  }
+
   const { pages } = await getPages();
 
   return (

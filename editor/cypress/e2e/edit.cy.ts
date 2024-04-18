@@ -1,5 +1,3 @@
-import imageFixture from "../fixtures/images/recipe-6-test-image-alternate.png";
-
 describe("Recipe Edit View", () => {
   describe("with seven items", () => {
     beforeEach(() => {

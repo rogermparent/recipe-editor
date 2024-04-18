@@ -44,16 +44,10 @@ export default async function Page({
           </button>
         </form>
         <Link
-          href={`/page/${slug}/edit`}
+          href={`/pages/edit/${slug}`}
           className="underline bg-slate-700 rounded-md text-sm py-1 px-2 mx-1"
         >
           Edit
-        </Link>
-        <Link
-          href={`/page/${slug}/copy`}
-          className="underline bg-slate-700 rounded-md text-sm py-1 px-2 mx-1"
-        >
-          Copy
         </Link>
       </div>
     </main>

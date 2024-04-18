@@ -44,7 +44,7 @@ export default async function createPage(
   await outputJson(join(baseDirectory, "page.json"), data);
 
   revalidatePath("/" + slug);
-  revalidatePath("/[...slug]");
+  revalidatePath("/[...slug]", "page");
   revalidatePath("/pages");
   redirect("/" + slug);
 }

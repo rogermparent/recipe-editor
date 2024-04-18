@@ -34,7 +34,7 @@
     "markdown-to-jsx": "^7.4.7",
     "menus-collection": "^1.0.0",
     "next": "14.2.1",
-    "next-auth": "^5.0.0-beta.9",
+    "next-auth": "5.0.0-beta.16",
     "next-static-image": "^0.0.1",
     "pages-collection": "^1.0.0",
     "react": "^18",
