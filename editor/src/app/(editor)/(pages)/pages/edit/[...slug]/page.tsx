@@ -9,7 +9,6 @@ export default async function Page({
 }) {
   const slug = slugSegments.join("/");
   let page;
-  console.log({ slug });
   try {
     page = await getPageBySlug(slug);
   } catch (e) {
