@@ -3,6 +3,7 @@ import EditForm from "./form";
 import { notFound } from "next/navigation";
 import deleteMenu from "menus-collection/controller/actions/delete";
 import { Button } from "component-library/components/Button";
+import { auth, signIn } from "@/auth";
 
 async function maybeGetMenu(slug: string) {
   try {
@@ -21,6 +22,12 @@ export default async function Menu({
 }: {
   params: { slug: string[] };
 }) {
+  const user = await auth();
+  if (!user) {
+    return signIn(undefined, {
+      redirectTo: `/menus/edit/${slugSegments.join("/")}`,
+    });
+  }
   const slug = slugSegments.join("/");
   const deleteThisMenu = deleteMenu.bind(null, slug);
   const menu = await maybeGetMenu(slug);
