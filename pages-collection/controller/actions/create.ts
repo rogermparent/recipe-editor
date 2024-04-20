@@ -43,8 +43,8 @@ export default async function createPage(
   const baseDirectory = getPageDirectory(slug);
   await outputJson(join(baseDirectory, "page.json"), data);
 
-  revalidatePath("/" + slug);
-  revalidatePath("/[...slug]", "page");
+  const resultPath = "/" + slug;
+  revalidatePath(resultPath);
   revalidatePath("/pages");
-  redirect("/" + slug);
+  redirect(resultPath);
 }
