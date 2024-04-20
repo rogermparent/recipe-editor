@@ -1,3 +1,4 @@
+import { auth, signIn } from "@/auth";
 import Link from "next/link";
 
 function MenuLink({
@@ -21,6 +22,10 @@ function MenuLink({
 }
 
 export default async function Menus() {
+  const user = await auth();
+  if (!user) {
+    return signIn(undefined, { redirectTo: "/menus" });
+  }
   return (
     <main className="flex flex-col items-center w-full p-2 max-w-4xl mx-auto grow">
       <div className="m-2 text-left w-full grow">

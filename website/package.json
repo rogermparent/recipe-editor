@@ -30,12 +30,12 @@
     "markdown-to-jsx": "^7.4.7",
     "menus-collection": "^1.0.0",
     "netlify-cli": "^17.22.1",
-    "next": "14.2.1",
+    "next": "14.2.2",
     "react": "^18",
     "react-dom": "^18",
     "recipes-collection": "^1.0.0",
     "sharp": "0.33.3",
-    "zod": "^3.22.4"
+    "zod": "^3.22.5"
   },
   "devDependencies": {
     "@testing-library/cypress": "^10.0.1",
@@ -45,9 +45,9 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.4.19",
-    "cypress": "^13.7.3",
+    "cypress": "^13.8.0",
     "eslint": "^8",
-    "eslint-config-next": "14.2.1",
+    "eslint-config-next": "14.2.2",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "postcss": "^8",

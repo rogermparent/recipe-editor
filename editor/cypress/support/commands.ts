@@ -68,8 +68,8 @@ Cypress.Commands.add("checkNamesInOrder", (names: string[]) => {
 Cypress.Commands.add(
   "fillSignInForm",
   ({ email = "admin@nextmail.com", password = "password" } = {}) => {
-    cy.findByLabelText("Email").type(email);
-    cy.findByLabelText("Password").type(password);
+    cy.findByLabelText("Email").type(email, { force: true });
+    cy.findByLabelText("Password").type(password, { force: true });
     cy.findByText("Sign in with Credentials").click();
   },
 );

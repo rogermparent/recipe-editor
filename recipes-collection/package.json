@@ -17,12 +17,12 @@
     "fraction.js": "^4.3.7",
     "fs-extra": "^11.2.0",
     "lodash": "^4.17.21",
-    "next": "14.2.1",
+    "next": "14.2.2",
     "next-static-image": "^0.0.1",
     "plaiceholder": "^3.0.0",
     "react": "^18",
     "sharp": "0.33.3",
-    "zod": "^3.22.4"
+    "zod": "^3.22.5"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4"

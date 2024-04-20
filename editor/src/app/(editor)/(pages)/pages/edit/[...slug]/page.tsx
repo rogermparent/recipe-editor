@@ -1,6 +1,7 @@
 import getPageBySlug from "pages-collection/controller/data/read";
 import EditForm from "./form";
 import { notFound } from "next/navigation";
+import { auth, signIn } from "@/auth";
 
 export default async function Page({
   params: { slug: slugSegments },
@@ -8,6 +9,12 @@ export default async function Page({
   params: { slug: string[] };
 }) {
   const slug = slugSegments.join("/");
+  const user = await auth();
+  if (!user) {
+    return signIn(undefined, {
+      redirectTo: `/pages/edit/${slug}`,
+    });
+  }
   let page;
   try {
     page = await getPageBySlug(slug);
