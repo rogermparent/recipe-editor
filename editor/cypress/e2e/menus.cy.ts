@@ -9,6 +9,11 @@ describe("Menu Editor", () => {
       cy.findByText("Sign in with Credentials");
     });
 
+    it("should need authorization when directly going to edit the header", () => {
+      cy.visit("/menus/edit/header");
+      cy.findByText("Sign in with Credentials");
+    });
+
     describe("when authenticated", () => {
       beforeEach(() => {
         cy.fillSignInForm();

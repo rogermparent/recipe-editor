@@ -1,16 +1,21 @@
 describe("Page Editor", () => {
   describe("with a clean slate", () => {
-    beforeEach(() => {
+    it("should need authorization", () => {
       cy.resetData();
       cy.visit("/pages");
+      cy.findByText("Sign in with Credentials");
     });
 
-    it("should need authorization", () => {
+    it("should need authorization when directly going to an edit page", () => {
+      cy.resetData("about-page");
+      cy.visit("/pages/edit/about");
       cy.findByText("Sign in with Credentials");
     });
 
     describe("when authenticated", () => {
       beforeEach(() => {
+        cy.resetData();
+        cy.visit("/pages");
         cy.fillSignInForm();
       });
 
