@@ -1,9 +1,9 @@
 packages:
-  - website
-  - editor
-  - component-library
-  - next-static-image
-  - recipes-collection
-  - pages-collection
-  - menus-collection
-  - content-engine
+  - websites/recipe-website
+  - websites/recipe-website-editor
+  - packages/component-library
+  - packages/next-static-image
+  - packages/recipes-collection
+  - packages/pages-collection
+  - packages/menus-collection
+  - packages/content-engine
