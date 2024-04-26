@@ -1,6 +1,6 @@
 packages:
   - websites/recipe-website
-  - websites/recipe-website-editor
+  - websites/recipe-editor
   - packages/component-library
   - packages/next-static-image
   - packages/recipes-collection
