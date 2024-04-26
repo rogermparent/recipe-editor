@@ -1,56 +1,13 @@
-# NextJS Recipe Builder
+# Content Engine
 
-This project is a proof-of-concept starter for a content-based website editor that primarily uses the filesystem for data storage alongside LMDB to fill the gaps between that and a full-blown RDBMS.
+This monorepo hosts a group of packages that establish and re-use patterns to create content-driven websites with custom graphical editors.
 
-The primary data source is a tree of directories in the Content Directory, which by default is named `content` and located at the root of the project.
+The projects in [`packages`](packages) are libraries that could be published as reusable packages, and the ones in [`websites`](websites) are examples of concrete implementations using those packages.
 
-## Getting Started
+Generally, a website made with these packages will span two projects: an editor and a website. The editor is a dynamic app that has serves as a custom-built CMS, and that CMS calls the website project to build a deployable static website with that content. Having this editor/website pattern combines the accessibility of a dynamic graphical CMS with the effortless hosting of a static website.
 
-Install package dependencies from the root:
+Reusable packages in this repo aim to be composable, allowing any implementation full control over the process of creating content. For example, a website can check in with any authentication service that's compatible with NextJS before calling the functions from `recipes-collection` to persist content to the database.
 
-```bash
-pnpm install
-```
+One standout in this monorepo is [`next-static-image`](packages/next-static-image), which enables build-time optimization of dynamic images in a NextJS static export project with minimal API changes. This package may graduate into its own repo eventually, but the websites in this repo serve as its best test target currently.
 
-## Setting up the editor
-
-First, `cd` into `editor`.
-
-Create a user with the `create-user` script:
-
-```bash
-pnpm run create-user
-```
-
-Generate an OpenSSL secret key:
-
-```bash
-openssl rand -base64 32
-```
-
-Add the resulting secret to your `.env.local` file under `AUTH_SECRET`
-
-```dosini
-AUTH_SECRET=XXxXXXxxxxxXxx/xXXXXXXXxx/xxXxxXxxXxxxXXXXx=
-```
-
-Run the development server to try things out:
-
-```bash
-pnpm run dev
-```
-
-Alternatively, build and run the optimized production server:
-
-```bash
-pnpm run build
-pnpm run start
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Test Suite
-
-The editor app has a Cypress e2e test suite that can run against the development server or the optimized production build via two sets of scripts: `e2e-dev` and `e2e-start` both with `:headless` variants.
-
-`e2e-dev` is helpful for rapid development, while `e2e-start` runs faster and is more reflective of production. Remember to run `build` after any changes for those to apply to `e2e-start`!
+The [Recipe Editor](websites/recipe-editor) and [Recipe Website](websites/recipe-website) projects are the most complete implementations using the code in this monorepo, but more are planned in the future.
