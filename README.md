@@ -1,4 +1,4 @@
-# Content Engine
+# Content Engine Workspace
 
 This monorepo hosts a group of packages that establish and re-use patterns to create content-driven websites with custom graphical editors.
 
