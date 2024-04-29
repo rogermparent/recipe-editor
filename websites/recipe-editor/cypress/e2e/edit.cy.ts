@@ -108,8 +108,6 @@ describe("Recipe Edit View", () => {
           mimeType: "image/png",
         });
 
-        cy.findByLabelText("Image").then(console.log);
-
         // Image preview should now be blob from pending image
         cy.findByRole("img", { timeout: 10000 })
           .should("have.attr", "src")

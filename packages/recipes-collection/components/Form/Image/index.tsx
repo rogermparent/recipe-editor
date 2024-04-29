@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { FileInput } from "component-library/components/Form/inputs/File";
 import { CheckboxInput } from "component-library/components/Form/inputs/Checkbox";
@@ -7,9 +7,11 @@ import { StaticImageProps } from "next-static-image/src";
 export function ImageInput({
   defaultImage,
   errors,
+  imageToImport,
 }: {
   defaultImage?: StaticImageProps;
   errors: string[] | undefined;
+  imageToImport?: string;
 }) {
   const [imagePreviewURL, setImagePreviewURL] = useState<string>();
 
@@ -21,6 +23,8 @@ export function ImageInput({
     }
   }, [imagePreviewURL]);
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   return (
     <div>
       <FileInput
@@ -28,42 +32,61 @@ export function ImageInput({
         name="image"
         id="recipe-form-image"
         errors={errors}
+        ref={fileInputRef}
         onChange={(e) => {
-          console.log("CHANGING FILE");
           const imagesToUpload = e.target?.files;
-          console.log({ imagesToUpload });
           if (!imagesToUpload) {
             return;
           }
           const previewImage = imagesToUpload[0];
-          console.log({ imagesToUpload, previewImage });
           if (!previewImage) {
             return;
           }
           const previewURL = URL.createObjectURL(previewImage);
-          console.log({ imagesToUpload, previewImage, previewURL });
           setImagePreviewURL(previewURL);
         }}
       />
       <div className="w-full">
         {imagePreviewURL ? (
-          <Image
-            src={imagePreviewURL}
-            alt="Image to upload"
-            className="w-full"
-            width={850}
-            height={475}
-            unoptimized={true}
-          />
-        ) : (
-          defaultImage && (
+          <div>
             <Image
-              {...defaultImage.props}
-              alt="Existing Recipe Image"
+              src={imagePreviewURL}
+              alt="Image to upload"
+              className="w-full"
+              width={850}
+              height={475}
               unoptimized={true}
             />
-          )
-        )}
+            <button
+              onClick={() => {
+                if (fileInputRef.current) {
+                  fileInputRef.current.value = "";
+                  setImagePreviewURL(undefined);
+                }
+              }}
+            >
+              Cancel upload
+            </button>
+          </div>
+        ) : imageToImport ? (
+          <div>
+            <div>Importing image:</div>
+            <Image
+              src={imageToImport}
+              unoptimized={true}
+              alt="Direct link to image which will be imported."
+              width={850}
+              height={475}
+            />
+            <input type="hidden" value={imageToImport} name="imageImportUrl" />
+          </div>
+        ) : defaultImage ? (
+          <Image
+            {...defaultImage.props}
+            alt="Existing Recipe Image"
+            unoptimized={true}
+          />
+        ) : null}
       </div>
       {defaultImage ? (
         <CheckboxInput name="clearImage" label="Remove Image" />

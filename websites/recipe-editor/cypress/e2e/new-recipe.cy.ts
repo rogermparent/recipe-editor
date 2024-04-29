@@ -141,6 +141,89 @@ describe("New Recipe View", () => {
           cy.get('[name="instructions[1].text"]').should("not.exist");
         });
       });
+
+      it("should be able to import a recipe with an image", () => {
+        const baseURL = Cypress.config().baseUrl;
+        const testURL = "/uploads/blackstone-nachos.html";
+        const fullTestURL = new URL(testURL, baseURL);
+        cy.findByLabelText("Import from URL").type(fullTestURL.href);
+        cy.findByRole("button", { name: "Import" }).click();
+        cy.url().should(
+          "equal",
+          new URL(
+            "/new-recipe?import=http%3A%2F%2Flocalhost%3A3000%2Fuploads%2Fblackstone-nachos.html",
+            baseURL,
+          ).href,
+        );
+
+        // Stay within the recipe form to minimize matching outside
+        cy.get("#recipe-form").within(() => {
+          // Verify top-level fields, i.e. name and description
+          cy.get('[name="name"]').should(
+            "have.value",
+            "Blackstone Griddle Grilled Nachos",
+          );
+          cy.get('[name="description"]').should(
+            "have.value",
+            "*Imported from [http://localhost:3000/uploads/blackstone-nachos.html](http://localhost:3000/uploads/blackstone-nachos.html)*\n\n---\n\nWho doesn’t love nachos? Jazz up your nacho routine with these super-tasty Blackstone Nachos Supreme. Made effortlessly on your Blackstone Griddle, there’s nothing like this towering pile of crispy chips and delish toppings for your next snack attack.",
+          );
+
+          // Verify first ingredient
+          cy.get('[name="ingredients[0].ingredient"]').should(
+            "have.value",
+            `Olive Oil <Multiplyable baseNumber="1" /> tablespoon`,
+          );
+
+          // Verify last ingredient
+          cy.get('[name="ingredients[9].ingredient"]').should(
+            "have.value",
+            `Lettuce, Shredded <Multiplyable baseNumber="1/2" /> cup`,
+          );
+
+          // Verify empty string ingredient from import was ignored
+          cy.get('[name="ingredients[10].ingredient"]').should("not.exist");
+
+          // Verify first instruction
+          cy.get('[name="instructions[0].type"]').should("have.value", "step");
+          cy.get('[name="instructions[0].name"]').should("have.value", "");
+          cy.get('[name="instructions[0].text"]').should(
+            "have.value",
+            "Preheat the Blackstone Flat Top Griddle to medium heat.",
+          );
+
+          // Image preview should be external link to image we will import
+          cy.findByRole("img").should(
+            "have.attr",
+            "src",
+            new URL("/uploads/2021-11-28_0107-scaled-720x720.png", baseURL)
+              .href,
+          );
+        });
+
+        cy.findByText("Submit").click();
+
+        // Ensure we're on the view page and not the new-recipe page
+        cy.findByLabelText("Multiply");
+
+        // Image should be newly created from the import's source
+        cy.findByRole("img").should(
+          "have.attr",
+          "src",
+          "/image/recipe/blackstone-griddle-grilled-nachos/uploads/2021-11-28_0107-scaled-720x720.png/2021-11-28_0107-scaled-720x720-w3840q75.webp",
+        );
+
+        // Ensure resulting edit page works
+
+        cy.findByText("Edit").click();
+
+        cy.findByText("Editing Recipe: Blackstone Griddle Grilled Nachos");
+
+        cy.findByRole("img").should(
+          "have.attr",
+          "src",
+          "/image/recipe/blackstone-griddle-grilled-nachos/uploads/2021-11-28_0107-scaled-720x720.png/2021-11-28_0107-scaled-720x720-w3840q75.webp",
+        );
+      });
     });
   });
 });
