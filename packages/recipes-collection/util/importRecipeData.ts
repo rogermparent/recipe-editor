@@ -6,6 +6,7 @@ interface RecipeLD {
   name: string;
   description: string;
   recipeIngredient: string[];
+  image?: string[];
   recipeInstructions: {
     text?: string;
     itemListElement: { name?: string; text?: string }[];
@@ -77,8 +78,10 @@ export async function importRecipeData(
   const text = await response.text();
   const recipeObject = findRecipeObjectInText(text);
   if (recipeObject) {
-    const { name, description, recipeIngredient, recipeInstructions } =
+    const { name, description, recipeIngredient, recipeInstructions, image } =
       recipeObject;
+
+    const imageURL = image?.[0];
 
     const newDescriptionSegments = [`*Imported from [${url}](${url})*`];
     if (description) {
@@ -88,6 +91,7 @@ export async function importRecipeData(
     const newDescription = newDescriptionSegments.join("");
     const massagedData = {
       name,
+      image: imageURL,
       description: newDescription,
       ingredients: recipeIngredient?.map((ingredientString) => {
         const [massagedIngredient] = createIngredients(ingredientString);
