@@ -22,6 +22,7 @@ const RecipeFormSchema = z.object({
   clearImage: z.coerce.boolean(),
   date: z.optional(localUTCDateSchema),
   slug: z.string().optional(),
+  imageImportUrl: z.string().optional(),
   ingredients: z
     .array(
       z.object({

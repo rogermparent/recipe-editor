@@ -2,6 +2,7 @@
 
 import { getRecipeUploadsDirectory } from "./filesystemDirectories";
 import { createWriteStream } from "fs";
+import { basename } from "path";
 import { Readable } from "node:stream";
 import { pipeline } from "node:stream/promises";
 import { ReadableStream } from "node:stream/web";
@@ -10,32 +11,38 @@ import { mkdirIfNeeded } from "../util/mkdirIfNeeded";
 import { Recipe } from "./types";
 
 export interface RecipeImageData {
-  hasImage: boolean;
   imageName?: string | undefined;
   image?: File | undefined;
+  imageImportUrl?: string | undefined;
 }
 
 export async function getRecipeFileInfo(
   recipeFormData: ParsedRecipeFormData,
   currentRecipeData?: Recipe | undefined,
 ): Promise<RecipeImageData> {
-  const { image, clearImage } = recipeFormData;
+  const { image, clearImage, imageImportUrl } = recipeFormData;
 
   if (!image || image.size === 0) {
     if (clearImage) {
-      return { hasImage: false };
+      return {};
     }
-    return { hasImage: false, imageName: currentRecipeData?.image };
+    if (imageImportUrl) {
+      return {
+        imageName: basename(imageImportUrl),
+        imageImportUrl,
+      };
+    }
+    return { imageName: currentRecipeData?.image };
   }
 
-  return { hasImage: true, imageName: image.name, image };
+  return { imageName: image.name, image };
 }
 
 export default async function writeRecipeFiles(
   recipeBaseDirectory: string,
-  { hasImage, imageName, image }: RecipeImageData,
+  { imageName, image, imageImportUrl }: RecipeImageData,
 ): Promise<void> {
-  if (!hasImage) {
+  if (!image && !imageImportUrl) {
     return undefined;
   }
 
@@ -44,8 +51,18 @@ export default async function writeRecipeFiles(
   const imageWriteStream = createWriteStream(
     `${recipeBaseDirectory}/uploads/${imageName}`,
   );
-  const readStream = Readable.fromWeb(
-    (image as File).stream() as ReadableStream<any>,
-  );
-  await pipeline(readStream, imageWriteStream);
+  if (image) {
+    const readStream = Readable.fromWeb(
+      (image as File).stream() as ReadableStream<any>,
+    );
+    await pipeline(readStream, imageWriteStream);
+  } else if (imageImportUrl) {
+    const importedImageData = await fetch(imageImportUrl);
+    if (importedImageData.body) {
+      await pipeline(
+        Readable.fromWeb(importedImageData.body as ReadableStream<any>),
+        imageWriteStream,
+      );
+    }
+  }
 }

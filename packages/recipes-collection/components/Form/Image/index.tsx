@@ -78,11 +78,7 @@ export function ImageInput({
               width={850}
               height={475}
             />
-            <input
-              type="hidden"
-              value={imageToImport}
-              name="image-import-url"
-            />
+            <input type="hidden" value={imageToImport} name="imageImportUrl" />
           </div>
         ) : (
           defaultImage && (
