@@ -80,15 +80,13 @@ export function ImageInput({
             />
             <input type="hidden" value={imageToImport} name="imageImportUrl" />
           </div>
-        ) : (
-          defaultImage && (
-            <Image
-              {...defaultImage.props}
-              alt="Existing Recipe Image"
-              unoptimized={true}
-            />
-          )
-        )}
+        ) : defaultImage ? (
+          <Image
+            {...defaultImage.props}
+            alt="Existing Recipe Image"
+            unoptimized={true}
+          />
+        ) : null}
       </div>
       {defaultImage ? (
         <CheckboxInput name="clearImage" label="Remove Image" />

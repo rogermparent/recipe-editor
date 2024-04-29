@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import slugify from "@sindresorhus/slugify";
-import { Recipe } from "../../controller/types";
+import { ImportedRecipe } from "../../util/importRecipeData";
 import { RecipeFormState } from "../../controller/formState";
 import createDefaultSlug from "../../controller/createSlug";
 import { IngredientsListInput } from "../../components/Form/Ingredients";
@@ -19,12 +19,12 @@ export default function RecipeFields({
   state,
   defaultImage,
 }: {
-  recipe?: Partial<Recipe>;
+  recipe?: Partial<ImportedRecipe>;
   slug?: string;
   state: RecipeFormState;
   defaultImage?: StaticImageProps;
 }) {
-  const { name, date, description, ingredients, instructions, image } =
+  const { name, date, description, ingredients, instructions, imageImportUrl } =
     recipe || {};
   const [currentName, setCurrentName] = useState(name);
   const defaultSlug = useMemo(
@@ -58,7 +58,7 @@ export default function RecipeFields({
       <ImageInput
         defaultImage={defaultImage}
         errors={state.errors?.image}
-        imageToImport={image}
+        imageToImport={imageImportUrl}
       />
       <IngredientsListInput
         label="Ingredients"

@@ -1,6 +1,11 @@
 import { decodeHTML } from "entities";
-import { Instruction, InstructionGroup, Recipe } from "../controller/types";
-import { createIngredients } from "./parseIngredients";
+import {
+  Ingredient,
+  Instruction,
+  InstructionGroup,
+  Recipe,
+} from "../controller/types";
+import { createIngredient } from "./parseIngredients";
 
 interface RecipeLD {
   name: string;
@@ -15,6 +20,10 @@ interface RecipeLD {
 }
 
 type UnknownLD = Record<string, unknown> | UnknownLD[] | RecipeLD;
+
+export interface ImportedRecipe extends Recipe {
+  imageImportUrl?: string;
+}
 
 const findRecipeInObject = (jsonLDObject: UnknownLD): RecipeLD | undefined => {
   if (Array.isArray(jsonLDObject)) {
@@ -65,15 +74,23 @@ function createStep({
   name?: string;
   text?: string;
 }): Instruction {
+  const cleanedName = name
+    ? decodeHTML(name).replaceAll(/ +/g, " ")
+    : undefined;
+  const cleanedText = decodeHTML(text).replaceAll(/ +/g, " ");
+  const nameIsNotRedundant =
+    cleanedName &&
+    cleanedText &&
+    !cleanedText.startsWith(cleanedName.replace(/\.\.\.$/, ""));
   return {
-    name: name && (name === text ? undefined : decodeHTML(name)),
-    text: decodeHTML(text),
+    name: nameIsNotRedundant ? cleanedName : undefined,
+    text: cleanedText,
   };
 }
 
 export async function importRecipeData(
   url: string,
-): Promise<Partial<Recipe> | undefined> {
+): Promise<Partial<ImportedRecipe> | undefined> {
   const response = await fetch(url, { next: { revalidate: 300 } });
   const text = await response.text();
   const recipeObject = findRecipeObjectInText(text);
@@ -91,12 +108,11 @@ export async function importRecipeData(
     const newDescription = newDescriptionSegments.join("");
     const massagedData = {
       name,
-      image: imageURL,
+      imageImportUrl: imageURL,
       description: newDescription,
-      ingredients: recipeIngredient?.map((ingredientString) => {
-        const [massagedIngredient] = createIngredients(ingredientString);
-        return massagedIngredient;
-      }),
+      ingredients: recipeIngredient
+        ?.map(createIngredient)
+        .filter(Boolean) as Ingredient[],
       instructions: recipeInstructions?.map((entry) => {
         if ("itemListElement" in entry) {
           const { name, itemListElement } = entry;
