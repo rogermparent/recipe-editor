@@ -7,7 +7,9 @@ export function createIngredients(input: string) {
       const trimmedInputLine = inputLine
         .trim()
         .normalize("NFKD")
-        .replaceAll("⁄", "/");
+        .replaceAll("⁄", "/")
+        .replaceAll(/ +/g, " ");
+
       if (trimmedInputLine) {
         const multiplyableIngredient = trimmedInputLine.replace(
           /[0-9]+(?:\/[0-9]+|(?: and)? [0-9]+\/[0-9]+|\.[0-9]+)?/g,

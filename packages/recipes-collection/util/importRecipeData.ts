@@ -65,9 +65,17 @@ function createStep({
   name?: string;
   text?: string;
 }): Instruction {
+  const cleanedName = name
+    ? decodeHTML(name).replaceAll(/ +/g, " ")
+    : undefined;
+  const cleanedText = decodeHTML(text).replaceAll(/ +/g, " ");
+  const nameIsNotRedundant =
+    cleanedName &&
+    cleanedText &&
+    !cleanedText.startsWith(cleanedName.replace(/\.\.\.$/, ""));
   return {
-    name: name && (name === text ? undefined : decodeHTML(name)),
-    text: decodeHTML(text),
+    name: nameIsNotRedundant ? cleanedName : undefined,
+    text: cleanedText,
   };
 }
 
