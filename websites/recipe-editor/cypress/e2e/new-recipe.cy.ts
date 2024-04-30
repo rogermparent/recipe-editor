@@ -45,14 +45,14 @@ describe("New Recipe View", () => {
         cy.findByTitle("Ingredients Paste Area").type(
           `
 1 cup water ((for the dashi packet))
-1  dashi packet
+1 dashi packet
 2 tsp sugar
 2 Tbsp mirin
 2 Tbsp soy sauce
-½  onion ((4 oz 113 g))
-1  green onion/scallion ((for garnish))
-3  large eggs (50 g each w/o shell)
-2  tonkatsu
+½ onion ((4 oz 113 g))
+1 green onion/scallion ((for garnish))
+3 large eggs (50 g each w/o shell)
+2 tonkatsu
 2 servings cooked Japanese short-grain rice ((typically 1⅔ cups (250 g) per donburi serving))
 `,
         );
@@ -68,7 +68,7 @@ describe("New Recipe View", () => {
         // Verify vulgar fraction ingredient
         cy.get('[name="ingredients[5].ingredient"]').should(
           "have.value",
-          `<Multiplyable baseNumber="1/2" />  onion ((<Multiplyable baseNumber="4" /> oz <Multiplyable baseNumber="113" /> g))`,
+          `<Multiplyable baseNumber="1/2" /> onion ((<Multiplyable baseNumber="4" /> oz <Multiplyable baseNumber="113" /> g))`,
         );
 
         cy.findByText("Submit").click();
@@ -121,7 +121,7 @@ describe("New Recipe View", () => {
           // Verify vulgar fraction ingredient
           cy.get('[name="ingredients[5].ingredient"]').should(
             "have.value",
-            `<Multiplyable baseNumber="1/2" />  onion ((<Multiplyable baseNumber="4" /> oz, <Multiplyable baseNumber="113" /> g))`,
+            `<Multiplyable baseNumber="1/2" /> onion ((<Multiplyable baseNumber="4" /> oz, <Multiplyable baseNumber="113" /> g))`,
           );
 
           // Verify first instruction, which is a simple step
@@ -206,11 +206,16 @@ describe("New Recipe View", () => {
         cy.findByLabelText("Multiply");
 
         // Image should be newly created from the import's source
-        cy.findByRole("img").should(
-          "have.attr",
-          "src",
-          "/image/recipe/blackstone-griddle-grilled-nachos/uploads/2021-11-28_0107-scaled-720x720.png/2021-11-28_0107-scaled-720x720-w3840q75.webp",
-        );
+        const processedImagePath =
+          "/image/recipe/blackstone-griddle-grilled-nachos/uploads/2021-11-28_0107-scaled-720x720.png/2021-11-28_0107-scaled-720x720-w3840q75.webp";
+
+        cy.request({
+          url: processedImagePath,
+        })
+          .its("status")
+          .should("equal", 200);
+
+        cy.findByRole("img").should("have.attr", "src", processedImagePath);
 
         // Ensure resulting edit page works
 
@@ -218,11 +223,7 @@ describe("New Recipe View", () => {
 
         cy.findByText("Editing Recipe: Blackstone Griddle Grilled Nachos");
 
-        cy.findByRole("img").should(
-          "have.attr",
-          "src",
-          "/image/recipe/blackstone-griddle-grilled-nachos/uploads/2021-11-28_0107-scaled-720x720.png/2021-11-28_0107-scaled-720x720-w3840q75.webp",
-        );
+        cy.findByRole("img").should("have.attr", "src", processedImagePath);
       });
     });
   });

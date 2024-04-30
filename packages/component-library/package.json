@@ -10,10 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "clsx": "^2.1.0",
+    "clsx": "^2.1.1",
     "content-engine": "^1.0.0",
     "markdown-to-jsx": "^7.4.7",
     "menus-collection": "^1.0.0",
-    "next": "14.2.2"
+    "next": "14.2.3"
   }
 }
