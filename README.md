@@ -10,4 +10,4 @@ Reusable packages in this repo aim to be composable, allowing any implementation
 
 One standout in this monorepo is [`next-static-image`](packages/next-static-image), which enables build-time optimization of dynamic images in a NextJS static export project with minimal API changes. This package may graduate into its own repo eventually, but the websites in this repo serve as its best test target currently.
 
-The [Recipe Editor](websites/recipe-editor) and [Recipe Website](websites/recipe-website) projects are the most complete implementations using the code in this monorepo, but more are planned in the future.
+The [Recipe Website](websites/recipe-website) project is the most complete implementation of a real-world project using the code in this monorepo, but more are planned in the future.

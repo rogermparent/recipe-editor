@@ -1,6 +1,7 @@
 packages:
-  - websites/recipe-website
-  - websites/recipe-editor
+  - websites/recipe-website/common
+  - websites/recipe-website/editor
+  - websites/recipe-website/export
   - packages/component-library
   - packages/next-static-image
   - packages/recipes-collection
