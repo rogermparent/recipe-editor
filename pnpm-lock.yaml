@@ -35,9 +35,6 @@ importers:
       markdown-to-jsx:
         specifier: ^7.4.7
         version: 7.4.7(react@18.2.0)
-      menus-collection:
-        specifier: ^1.0.0
-        version: link:../menus-collection
       next:
         specifier: 14.2.3
         version: 14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -55,7 +52,7 @@ importers:
         version: 2.1.1
       component-library:
         specifier: ^1.0.0
-        version: link:../component-library
+        version: link:../../websites/recipe-website/common
       content-engine:
         specifier: ^1.0.0
         version: link:../content-engine
@@ -123,7 +120,7 @@ importers:
         version: 2.1.1
       component-library:
         specifier: ^1.0.0
-        version: link:../component-library
+        version: link:../../websites/recipe-website/common
       content-engine:
         specifier: ^1.0.0
         version: link:../content-engine
@@ -172,7 +169,7 @@ importers:
         version: 2.1.1
       component-library:
         specifier: ^1.0.0
-        version: link:../component-library
+        version: link:../../websites/recipe-website/common
       content-engine:
         specifier: ^1.0.0
         version: link:../content-engine
@@ -211,7 +208,25 @@ importers:
         specifier: ^11.0.4
         version: 11.0.4
 
-  websites/recipe-editor:
+  websites/recipe-website/common:
+    dependencies:
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      content-engine:
+        specifier: ^1.0.0
+        version: link:../../../packages/content-engine
+      markdown-to-jsx:
+        specifier: ^7.4.7
+        version: 7.4.7(react@18.2.0)
+      menus-collection:
+        specifier: ^1.0.0
+        version: link:../../../packages/menus-collection
+      next:
+        specifier: 14.2.3
+        version: 14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+
+  websites/recipe-website/editor:
     dependencies:
       '@sindresorhus/slugify':
         specifier: ^2.2.1
@@ -227,10 +242,10 @@ importers:
         version: 2.1.1
       component-library:
         specifier: ^1.0.0
-        version: link:../../packages/component-library
+        version: link:../common
       content-engine:
         specifier: ^1.0.0
-        version: link:../../packages/content-engine
+        version: link:../../../packages/content-engine
       date-fns:
         specifier: ^3.6.0
         version: 3.6.0
@@ -263,7 +278,7 @@ importers:
         version: 7.4.7(react@18.2.0)
       menus-collection:
         specifier: ^1.0.0
-        version: link:../../packages/menus-collection
+        version: link:../../../packages/menus-collection
       next:
         specifier: 14.2.3
         version: 14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -272,10 +287,10 @@ importers:
         version: 5.0.0-beta.16(next@14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
       next-static-image:
         specifier: ^0.0.1
-        version: link:../../packages/next-static-image
+        version: link:../../../packages/next-static-image
       pages-collection:
         specifier: ^1.0.0
-        version: link:../../packages/pages-collection
+        version: link:../../../packages/pages-collection
       react:
         specifier: ^18
         version: 18.2.0
@@ -284,7 +299,7 @@ importers:
         version: 18.2.0(react@18.2.0)
       recipes-collection:
         specifier: ^1.0.0
-        version: link:../../packages/recipes-collection
+        version: link:../../../packages/recipes-collection
       sharp:
         specifier: 0.33.3
         version: 0.33.3
@@ -353,7 +368,7 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5
 
-  websites/recipe-website:
+  websites/recipe-website/export:
     dependencies:
       '@sindresorhus/slugify':
         specifier: ^2.2.1
@@ -366,10 +381,10 @@ importers:
         version: 2.1.1
       component-library:
         specifier: ^1.0.0
-        version: link:../../packages/component-library
+        version: link:../common
       content-engine:
         specifier: ^1.0.0
-        version: link:../../packages/content-engine
+        version: link:../../../packages/content-engine
       date-fns:
         specifier: ^3.6.0
         version: 3.6.0
@@ -393,7 +408,7 @@ importers:
         version: 7.4.7(react@18.2.0)
       menus-collection:
         specifier: ^1.0.0
-        version: link:../../packages/menus-collection
+        version: link:../../../packages/menus-collection
       netlify-cli:
         specifier: ^17.23.1
         version: 17.23.1(@types/node@20.12.7)(picomatch@2.3.1)
@@ -408,7 +423,7 @@ importers:
         version: 18.2.0(react@18.2.0)
       recipes-collection:
         specifier: ^1.0.0
-        version: link:../../packages/recipes-collection
+        version: link:../../../packages/recipes-collection
       sharp:
         specifier: 0.33.3
         version: 0.33.3
