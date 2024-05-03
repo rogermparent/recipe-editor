@@ -22,7 +22,7 @@
     "plaiceholder": "^3.0.0",
     "react": "^18",
     "sharp": "0.33.3",
-    "zod": "^3.23.5"
+    "zod": "^3.23.6"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",

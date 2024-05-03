@@ -35,7 +35,7 @@
     "react-dom": "^18",
     "recipes-collection": "^1.0.0",
     "sharp": "0.33.3",
-    "zod": "^3.23.5"
+    "zod": "^3.23.6"
   },
   "devDependencies": {
     "@testing-library/cypress": "^10.0.1",

@@ -41,7 +41,7 @@
     "react-dom": "^18",
     "recipes-collection": "^1.0.0",
     "sharp": "0.33.3",
-    "zod": "^3.23.5"
+    "zod": "^3.23.6"
   },
   "devDependencies": {
     "@testing-library/cypress": "^10.0.1",
@@ -55,7 +55,7 @@
     "cypress": "^13.8.1",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.3",
-    "eslint-plugin-cypress": "^3.0.2",
+    "eslint-plugin-cypress": "^3.1.1",
     "eslint-plugin-mocha": "^10.4.3",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.2",
