@@ -2,12 +2,19 @@ import { importRecipeData } from "recipes-collection/util/importRecipeData";
 import CreateForm from "./form";
 import { Button } from "component-library/components/Button";
 import { TextInput } from "component-library/components/Form/inputs/Text";
+import { auth, signIn } from "@/auth";
 
 export default async function NewRecipe({
   searchParams: { import: importURL },
 }: {
   searchParams: { import?: string };
 }) {
+  const user = await auth();
+  if (!user) {
+    return signIn(undefined, {
+      redirectTo: `/new-recipe`,
+    });
+  }
   const importedRecipe = importURL
     ? await importRecipeData(importURL)
     : undefined;
