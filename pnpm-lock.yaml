@@ -52,7 +52,7 @@ importers:
         version: 2.1.1
       component-library:
         specifier: ^1.0.0
-        version: link:../../websites/recipe-website/common
+        version: link:../component-library
       content-engine:
         specifier: ^1.0.0
         version: link:../content-engine
@@ -84,8 +84,8 @@ importers:
         specifier: 0.33.3
         version: 0.33.3
       zod:
-        specifier: ^3.23.5
-        version: 3.23.5
+        specifier: ^3.23.6
+        version: 3.23.6
     devDependencies:
       '@types/fs-extra':
         specifier: ^11.0.4
@@ -120,7 +120,7 @@ importers:
         version: 2.1.1
       component-library:
         specifier: ^1.0.0
-        version: link:../../websites/recipe-website/common
+        version: link:../component-library
       content-engine:
         specifier: ^1.0.0
         version: link:../content-engine
@@ -152,8 +152,8 @@ importers:
         specifier: 0.33.3
         version: 0.33.3
       zod:
-        specifier: ^3.23.5
-        version: 3.23.5
+        specifier: ^3.23.6
+        version: 3.23.6
     devDependencies:
       '@types/fs-extra':
         specifier: ^11.0.4
@@ -169,7 +169,7 @@ importers:
         version: 2.1.1
       component-library:
         specifier: ^1.0.0
-        version: link:../../websites/recipe-website/common
+        version: link:../component-library
       content-engine:
         specifier: ^1.0.0
         version: link:../content-engine
@@ -201,8 +201,8 @@ importers:
         specifier: 0.33.3
         version: 0.33.3
       zod:
-        specifier: ^3.23.5
-        version: 3.23.5
+        specifier: ^3.23.6
+        version: 3.23.6
     devDependencies:
       '@types/fs-extra':
         specifier: ^11.0.4
@@ -232,8 +232,8 @@ importers:
         specifier: ^2.2.1
         version: 2.2.1
       '@tanstack/react-query':
-        specifier: ^5.32.1
-        version: 5.32.1(react@18.2.0)
+        specifier: ^5.34.1
+        version: 5.34.1(react@18.2.0)
       bcrypt:
         specifier: ^5.1.1
         version: 5.1.1
@@ -242,7 +242,7 @@ importers:
         version: 2.1.1
       component-library:
         specifier: ^1.0.0
-        version: link:../common
+        version: link:../../../packages/component-library
       content-engine:
         specifier: ^1.0.0
         version: link:../../../packages/content-engine
@@ -283,8 +283,8 @@ importers:
         specifier: 14.2.3
         version: 14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       next-auth:
-        specifier: 5.0.0-beta.16
-        version: 5.0.0-beta.16(next@14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
+        specifier: 5.0.0-beta.17
+        version: 5.0.0-beta.17(next@14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
       next-static-image:
         specifier: ^0.0.1
         version: link:../../../packages/next-static-image
@@ -304,8 +304,8 @@ importers:
         specifier: 0.33.3
         version: 0.33.3
       zod:
-        specifier: ^3.23.5
-        version: 3.23.5
+        specifier: ^3.23.6
+        version: 3.23.6
     devDependencies:
       '@testing-library/cypress':
         specifier: ^10.0.1
@@ -317,8 +317,8 @@ importers:
         specifier: ^11.0.4
         version: 11.0.4
       '@types/lodash':
-        specifier: ^4.17.0
-        version: 4.17.0
+        specifier: ^4.17.1
+        version: 4.17.1
       '@types/node':
         specifier: ^20
         version: 20.12.7
@@ -341,8 +341,8 @@ importers:
         specifier: 14.2.3
         version: 14.2.3(eslint@8.57.0)(typescript@5.4.5)
       eslint-plugin-cypress:
-        specifier: ^3.0.2
-        version: 3.0.2(eslint@8.57.0)
+        specifier: ^3.1.1
+        version: 3.1.1(eslint@8.57.0)
       eslint-plugin-mocha:
         specifier: ^10.4.3
         version: 10.4.3(eslint@8.57.0)
@@ -374,14 +374,14 @@ importers:
         specifier: ^2.2.1
         version: 2.2.1
       '@tanstack/react-query':
-        specifier: ^5.32.1
-        version: 5.32.1(react@18.2.0)
+        specifier: ^5.34.1
+        version: 5.34.1(react@18.2.0)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
       component-library:
         specifier: ^1.0.0
-        version: link:../common
+        version: link:../../../packages/component-library
       content-engine:
         specifier: ^1.0.0
         version: link:../../../packages/content-engine
@@ -428,8 +428,8 @@ importers:
         specifier: 0.33.3
         version: 0.33.3
       zod:
-        specifier: ^3.23.5
-        version: 3.23.5
+        specifier: ^3.23.6
+        version: 3.23.6
     devDependencies:
       '@testing-library/cypress':
         specifier: ^10.0.1
@@ -438,8 +438,8 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2
       '@types/lodash':
-        specifier: ^4.17.0
-        version: 4.17.0
+        specifier: ^4.17.1
+        version: 4.17.1
       '@types/node':
         specifier: ^20
         version: 20.12.7
@@ -493,8 +493,8 @@ packages:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
 
-  '@auth/core@0.28.1':
-    resolution: {integrity: sha512-gvp74mypYZADpTlfGRp6HE0G3pIHWvtJpy+KZ+8FvY0cmlIpHog+jdMOdd29dQtLtN25kF2YbfHsesCFuGUQbg==}
+  '@auth/core@0.30.0':
+    resolution: {integrity: sha512-8AE4m/nk+4EIiVCJwxZAsJeAQuzpEC8M8768mmKVn60CGDdupKQkVhxbRlm5Qh7eNRCoFFME+0DvtaX2aXrYaA==}
     peerDependencies:
       '@simplewebauthn/browser': ^9.0.1
       '@simplewebauthn/server': ^9.0.2
@@ -1645,11 +1645,11 @@ packages:
     resolution: {integrity: sha512-+PmQX0PiAYPMeVYe237LJAYvOMYW1j2rH5YROyS3b4CTVJum34HfRvKvAzozHAQG0TnHNdUfY9nCeUyRAs//cw==}
     engines: {node: '>=14.16'}
 
-  '@tanstack/query-core@5.32.1':
-    resolution: {integrity: sha512-mCWa1wdGb1jiny4+qYegbSeadcFj+Nq65KFSs4A1DRveoIq7SrTwUhqu7hrB6d54cQH5x59DfJvxusn3w1Cj/g==}
+  '@tanstack/query-core@5.34.1':
+    resolution: {integrity: sha512-/a4yTnX525QUl8rFULrDLIogjqqcY/CiVvS/vWMgl477mO4WIIDxwQsLvEgb7vzlW8FqX/9CiCmaiAUnYVgB1w==}
 
-  '@tanstack/react-query@5.32.1':
-    resolution: {integrity: sha512-+nXLMB0JK0XwTJ+lQt49DPNLrbSppni9N5W5yMR085yW3YaRKRUFhfVTER3TvQd1UycHpoGPFnt1gHiijXERAg==}
+  '@tanstack/react-query@5.34.1':
+    resolution: {integrity: sha512-5DWzrK+ou5maZqVoIY0S26TYNpnA7re6JlviXVOe/4OBPtlvd4WEHJmyeLZhE43piJvrsKMxemp/f6Q2RPfebA==}
     peerDependencies:
       react: ^18.0.0
 
@@ -1720,8 +1720,8 @@ packages:
   '@types/jsonfile@6.1.4':
     resolution: {integrity: sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ==}
 
-  '@types/lodash@4.17.0':
-    resolution: {integrity: sha512-t7dhREVv6dbNj0q17X12j7yDG4bD/DHYX7o5/DbDxobP0HnGPgpRz2Ej77aL7TZT3DSw13fqUTj8J4mMnqa7WA==}
+  '@types/lodash@4.17.1':
+    resolution: {integrity: sha512-X+2qazGS3jxLAIz5JDXDzglAF3KpijdhFxlf/V1+hEsOUc+HnWi81L/uv/EvGuV90WY+7mPGFCUDGfQC3Gj95Q==}
 
   '@types/node@20.12.7':
     resolution: {integrity: sha512-wq0cICSkRLVaf3UGLMGItu/PtdY7oaXaI/RVU+xliKVOtRna3PRY57ZDfztpDL0n11vfymMUnXv8QwYCO7L1wg==}
@@ -3184,8 +3184,8 @@ packages:
       eslint-import-resolver-webpack:
         optional: true
 
-  eslint-plugin-cypress@3.0.2:
-    resolution: {integrity: sha512-5hIWc3SqXSuR+Sd7gmNMzx8yJ3LWQQS0e+qLvEVF4C1JfFtu1s9imtEm1KxlCBCcKb7+6CyR9KQYs0GiI02AlA==}
+  eslint-plugin-cypress@3.1.1:
+    resolution: {integrity: sha512-rsP/72X99KNOAq26o5VAb6SICvdfjwvvWjs9n5a9UD14B5kCzzE45NJR/yJYw3fsGXUUKiwkv6eU5wRthM8kPw==}
     peerDependencies:
       eslint: '>=7 <9'
 
@@ -4907,8 +4907,8 @@ packages:
     resolution: {integrity: sha512-6gZ2lMcjqiXqirwbxeXoNyQn1LcW18s8zdR9eTS8Dtuqg/h4JxI7y9ahV9fypfp0bdaTt8hkBoopBJXLQPsJmA==}
     engines: {node: ^14.16.0 || >=16.0.0}
 
-  next-auth@5.0.0-beta.16:
-    resolution: {integrity: sha512-dX2snB+ezN23tFzSes3n3uosT9iBf0eILPYWH/R2fd9n3ZzdMQlRzq7JIOPeS1aLc84IuRlyuyXyx9XmmZB6og==}
+  next-auth@5.0.0-beta.17:
+    resolution: {integrity: sha512-XA/7JtAjOgDfAeotJPFUsFZGGItZwzZrxLt9Gc9fE7EchLk6zydZfuZ22Vvwixs3IilkN644D5IoD5tEOAFGCQ==}
     peerDependencies:
       '@simplewebauthn/browser': ^9.0.1
       '@simplewebauthn/server': ^9.0.2
@@ -6875,8 +6875,8 @@ packages:
   zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
 
-  zod@3.23.5:
-    resolution: {integrity: sha512-fkwiq0VIQTksNNA131rDOsVJcns0pfVUjHzLrNBiF/O/Xxb5lQyEXkhZWcJ7npWsYlvs+h0jFWXXy4X46Em1JA==}
+  zod@3.23.6:
+    resolution: {integrity: sha512-RTHJlZhsRbuA8Hmp/iNL7jnfc4nZishjsanDAfEY1QpDQZCahUp3xDzl+zfweE9BklxMUcgBgS1b7Lvie/ZVwA==}
 
 snapshots:
 
@@ -6884,7 +6884,7 @@ snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
 
-  '@auth/core@0.28.1':
+  '@auth/core@0.30.0':
     dependencies:
       '@panva/hkdf': 1.1.1
       '@types/cookie': 0.6.0
@@ -8025,11 +8025,11 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
-  '@tanstack/query-core@5.32.1': {}
+  '@tanstack/query-core@5.34.1': {}
 
-  '@tanstack/react-query@5.32.1(react@18.2.0)':
+  '@tanstack/react-query@5.34.1(react@18.2.0)':
     dependencies:
-      '@tanstack/query-core': 5.32.1
+      '@tanstack/query-core': 5.34.1
       react: 18.2.0
 
   '@testing-library/cypress@10.0.1(cypress@13.8.1)':
@@ -8102,7 +8102,7 @@ snapshots:
     dependencies:
       '@types/node': 20.12.7
 
-  '@types/lodash@4.17.0': {}
+  '@types/lodash@4.17.1': {}
 
   '@types/node@20.12.7':
     dependencies:
@@ -9857,7 +9857,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-cypress@3.0.2(eslint@8.57.0):
+  eslint-plugin-cypress@3.1.1(eslint@8.57.0):
     dependencies:
       eslint: 8.57.0
       globals: 13.24.0
@@ -11981,9 +11981,9 @@ snapshots:
       p-wait-for: 4.1.0
       qs: 6.12.1
 
-  next-auth@5.0.0-beta.16(next@14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0):
+  next-auth@5.0.0-beta.17(next@14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0):
     dependencies:
-      '@auth/core': 0.28.1
+      '@auth/core': 0.30.0
       next: 14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
 
@@ -14114,4 +14114,4 @@ snapshots:
 
   zod@3.22.4: {}
 
-  zod@3.23.5: {}
+  zod@3.23.6: {}

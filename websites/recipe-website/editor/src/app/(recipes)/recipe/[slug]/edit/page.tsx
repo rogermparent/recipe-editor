@@ -2,12 +2,19 @@ import getRecipeBySlug from "recipes-collection/controller/data/read";
 import EditForm from "./form";
 import { notFound } from "next/navigation";
 import { getTransformedRecipeImageProps } from "recipes-collection/components/RecipeImage";
+import { auth, signIn } from "@/auth";
 
 export default async function Recipe({
   params: { slug },
 }: {
   params: { slug: string };
 }) {
+  const user = await auth();
+  if (!user) {
+    return signIn(undefined, {
+      redirectTo: `/recipe/${slug}/edit`,
+    });
+  }
   let recipe;
   try {
     recipe = await getRecipeBySlug(slug);
