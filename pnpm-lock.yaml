@@ -283,8 +283,8 @@ importers:
         specifier: 14.2.3
         version: 14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       next-auth:
-        specifier: 5.0.0-beta.16
-        version: 5.0.0-beta.16(next@14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
+        specifier: 5.0.0-beta.17
+        version: 5.0.0-beta.17(next@14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
       next-static-image:
         specifier: ^0.0.1
         version: link:../../../packages/next-static-image
@@ -493,8 +493,8 @@ packages:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
 
-  '@auth/core@0.28.1':
-    resolution: {integrity: sha512-gvp74mypYZADpTlfGRp6HE0G3pIHWvtJpy+KZ+8FvY0cmlIpHog+jdMOdd29dQtLtN25kF2YbfHsesCFuGUQbg==}
+  '@auth/core@0.30.0':
+    resolution: {integrity: sha512-8AE4m/nk+4EIiVCJwxZAsJeAQuzpEC8M8768mmKVn60CGDdupKQkVhxbRlm5Qh7eNRCoFFME+0DvtaX2aXrYaA==}
     peerDependencies:
       '@simplewebauthn/browser': ^9.0.1
       '@simplewebauthn/server': ^9.0.2
@@ -4907,8 +4907,8 @@ packages:
     resolution: {integrity: sha512-6gZ2lMcjqiXqirwbxeXoNyQn1LcW18s8zdR9eTS8Dtuqg/h4JxI7y9ahV9fypfp0bdaTt8hkBoopBJXLQPsJmA==}
     engines: {node: ^14.16.0 || >=16.0.0}
 
-  next-auth@5.0.0-beta.16:
-    resolution: {integrity: sha512-dX2snB+ezN23tFzSes3n3uosT9iBf0eILPYWH/R2fd9n3ZzdMQlRzq7JIOPeS1aLc84IuRlyuyXyx9XmmZB6og==}
+  next-auth@5.0.0-beta.17:
+    resolution: {integrity: sha512-XA/7JtAjOgDfAeotJPFUsFZGGItZwzZrxLt9Gc9fE7EchLk6zydZfuZ22Vvwixs3IilkN644D5IoD5tEOAFGCQ==}
     peerDependencies:
       '@simplewebauthn/browser': ^9.0.1
       '@simplewebauthn/server': ^9.0.2
@@ -6884,7 +6884,7 @@ snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
 
-  '@auth/core@0.28.1':
+  '@auth/core@0.30.0':
     dependencies:
       '@panva/hkdf': 1.1.1
       '@types/cookie': 0.6.0
@@ -11981,9 +11981,9 @@ snapshots:
       p-wait-for: 4.1.0
       qs: 6.12.1
 
-  next-auth@5.0.0-beta.16(next@14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0):
+  next-auth@5.0.0-beta.17(next@14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0):
     dependencies:
-      '@auth/core': 0.28.1
+      '@auth/core': 0.30.0
       next: 14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
 
