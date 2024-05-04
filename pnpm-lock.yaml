@@ -52,7 +52,7 @@ importers:
         version: 2.1.1
       component-library:
         specifier: ^1.0.0
-        version: link:../../websites/recipe-website/common
+        version: link:../component-library
       content-engine:
         specifier: ^1.0.0
         version: link:../content-engine
@@ -120,7 +120,7 @@ importers:
         version: 2.1.1
       component-library:
         specifier: ^1.0.0
-        version: link:../../websites/recipe-website/common
+        version: link:../component-library
       content-engine:
         specifier: ^1.0.0
         version: link:../content-engine
@@ -169,7 +169,7 @@ importers:
         version: 2.1.1
       component-library:
         specifier: ^1.0.0
-        version: link:../../websites/recipe-website/common
+        version: link:../component-library
       content-engine:
         specifier: ^1.0.0
         version: link:../content-engine
@@ -232,8 +232,8 @@ importers:
         specifier: ^2.2.1
         version: 2.2.1
       '@tanstack/react-query':
-        specifier: ^5.32.1
-        version: 5.32.1(react@18.2.0)
+        specifier: ^5.34.1
+        version: 5.34.1(react@18.2.0)
       bcrypt:
         specifier: ^5.1.1
         version: 5.1.1
@@ -242,7 +242,7 @@ importers:
         version: 2.1.1
       component-library:
         specifier: ^1.0.0
-        version: link:../common
+        version: link:../../../packages/component-library
       content-engine:
         specifier: ^1.0.0
         version: link:../../../packages/content-engine
@@ -317,8 +317,8 @@ importers:
         specifier: ^11.0.4
         version: 11.0.4
       '@types/lodash':
-        specifier: ^4.17.0
-        version: 4.17.0
+        specifier: ^4.17.1
+        version: 4.17.1
       '@types/node':
         specifier: ^20
         version: 20.12.7
@@ -374,14 +374,14 @@ importers:
         specifier: ^2.2.1
         version: 2.2.1
       '@tanstack/react-query':
-        specifier: ^5.32.1
-        version: 5.32.1(react@18.2.0)
+        specifier: ^5.34.1
+        version: 5.34.1(react@18.2.0)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
       component-library:
         specifier: ^1.0.0
-        version: link:../common
+        version: link:../../../packages/component-library
       content-engine:
         specifier: ^1.0.0
         version: link:../../../packages/content-engine
@@ -438,8 +438,8 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2
       '@types/lodash':
-        specifier: ^4.17.0
-        version: 4.17.0
+        specifier: ^4.17.1
+        version: 4.17.1
       '@types/node':
         specifier: ^20
         version: 20.12.7
@@ -1645,11 +1645,11 @@ packages:
     resolution: {integrity: sha512-+PmQX0PiAYPMeVYe237LJAYvOMYW1j2rH5YROyS3b4CTVJum34HfRvKvAzozHAQG0TnHNdUfY9nCeUyRAs//cw==}
     engines: {node: '>=14.16'}
 
-  '@tanstack/query-core@5.32.1':
-    resolution: {integrity: sha512-mCWa1wdGb1jiny4+qYegbSeadcFj+Nq65KFSs4A1DRveoIq7SrTwUhqu7hrB6d54cQH5x59DfJvxusn3w1Cj/g==}
+  '@tanstack/query-core@5.34.1':
+    resolution: {integrity: sha512-/a4yTnX525QUl8rFULrDLIogjqqcY/CiVvS/vWMgl477mO4WIIDxwQsLvEgb7vzlW8FqX/9CiCmaiAUnYVgB1w==}
 
-  '@tanstack/react-query@5.32.1':
-    resolution: {integrity: sha512-+nXLMB0JK0XwTJ+lQt49DPNLrbSppni9N5W5yMR085yW3YaRKRUFhfVTER3TvQd1UycHpoGPFnt1gHiijXERAg==}
+  '@tanstack/react-query@5.34.1':
+    resolution: {integrity: sha512-5DWzrK+ou5maZqVoIY0S26TYNpnA7re6JlviXVOe/4OBPtlvd4WEHJmyeLZhE43piJvrsKMxemp/f6Q2RPfebA==}
     peerDependencies:
       react: ^18.0.0
 
@@ -1720,8 +1720,8 @@ packages:
   '@types/jsonfile@6.1.4':
     resolution: {integrity: sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ==}
 
-  '@types/lodash@4.17.0':
-    resolution: {integrity: sha512-t7dhREVv6dbNj0q17X12j7yDG4bD/DHYX7o5/DbDxobP0HnGPgpRz2Ej77aL7TZT3DSw13fqUTj8J4mMnqa7WA==}
+  '@types/lodash@4.17.1':
+    resolution: {integrity: sha512-X+2qazGS3jxLAIz5JDXDzglAF3KpijdhFxlf/V1+hEsOUc+HnWi81L/uv/EvGuV90WY+7mPGFCUDGfQC3Gj95Q==}
 
   '@types/node@20.12.7':
     resolution: {integrity: sha512-wq0cICSkRLVaf3UGLMGItu/PtdY7oaXaI/RVU+xliKVOtRna3PRY57ZDfztpDL0n11vfymMUnXv8QwYCO7L1wg==}
@@ -8025,11 +8025,11 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
-  '@tanstack/query-core@5.32.1': {}
+  '@tanstack/query-core@5.34.1': {}
 
-  '@tanstack/react-query@5.32.1(react@18.2.0)':
+  '@tanstack/react-query@5.34.1(react@18.2.0)':
     dependencies:
-      '@tanstack/query-core': 5.32.1
+      '@tanstack/query-core': 5.34.1
       react: 18.2.0
 
   '@testing-library/cypress@10.0.1(cypress@13.8.1)':
@@ -8102,7 +8102,7 @@ snapshots:
     dependencies:
       '@types/node': 20.12.7
 
-  '@types/lodash@4.17.0': {}
+  '@types/lodash@4.17.1': {}
 
   '@types/node@20.12.7':
     dependencies:
