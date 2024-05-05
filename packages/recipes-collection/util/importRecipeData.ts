@@ -52,7 +52,7 @@ const findRecipeInObject = (jsonLDObject: UnknownLD): RecipeLD | undefined => {
 };
 
 function findRecipeObjectInText(text: string): RecipeLD | undefined {
-  const jsonLDRegex = /<script.*?ld\+json.*?>([\s\S]*?)<\/script>/gm;
+  const jsonLDRegex = /<script.*?ld\+json.*?>([\s\S]*?)<\/script>/gms;
 
   let jsonLDTextSearch;
   while ((jsonLDTextSearch = jsonLDRegex.exec(text)) !== null) {
@@ -88,6 +88,10 @@ function createStep({
   };
 }
 
+function getImageUrl(input: string | { url: string }) {
+  return typeof input === "string" ? input : input.url;
+}
+
 export async function importRecipeData(
   url: string,
 ): Promise<Partial<ImportedRecipe> | undefined> {
@@ -98,7 +102,8 @@ export async function importRecipeData(
     const { name, description, recipeIngredient, recipeInstructions, image } =
       recipeObject;
 
-    const imageURL = image?.[0];
+    const imageURL =
+      image && getImageUrl(Array.isArray(image) ? image[0] : image);
 
     const newDescriptionSegments = [`*Imported from [${url}](${url})*`];
     if (description) {
