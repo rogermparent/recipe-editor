@@ -209,19 +209,103 @@ describe("New Recipe View", () => {
         const processedImagePath =
           "/image/recipe/blackstone-griddle-grilled-nachos/uploads/2021-11-28_0107-scaled-720x720.png/2021-11-28_0107-scaled-720x720-w3840q75.webp";
 
+        cy.findByRole("img").should("have.attr", "src", processedImagePath);
+
         cy.request({
           url: processedImagePath,
         })
           .its("status")
           .should("equal", 200);
 
-        cy.findByRole("img").should("have.attr", "src", processedImagePath);
-
         // Ensure resulting edit page works
 
         cy.findByText("Edit").click();
 
         cy.findByText("Editing Recipe: Blackstone Griddle Grilled Nachos");
+
+        cy.findByRole("img").should("have.attr", "src", processedImagePath);
+      });
+
+      it("should be able to import a recipe with a singular image", () => {
+        const baseURL = Cypress.config().baseUrl;
+        const testURL = "/uploads/pork-carnitas.html";
+        const fullTestURL = new URL(testURL, baseURL);
+        cy.findByLabelText("Import from URL").type(fullTestURL.href);
+        cy.findByRole("button", { name: "Import" }).click();
+        cy.url().should(
+          "equal",
+          new URL(
+            "/new-recipe?import=http%3A%2F%2Flocalhost%3A3000%2Fuploads%2Fpork-carnitas.html",
+            baseURL,
+          ).href,
+        );
+
+        // Stay within the recipe form to minimize matching outside
+        cy.get("#recipe-form").within(() => {
+          // Verify top-level fields, i.e. name and description
+          cy.get('[name="name"]').should("have.value", "Pork Carnitas");
+          cy.get('[name="description"]').should(
+            "have.value",
+            `*Imported from [http://localhost:3000/uploads/pork-carnitas.html](http://localhost:3000/uploads/pork-carnitas.html)*
+
+---
+
+Carnitas, or Mexican pulled pork, is made by slow cooking pork until perfectly tender and juicy, then roasting the shredded pork for deliciously crisp edges.`,
+          );
+
+          // Verify first ingredient
+          cy.get('[name="ingredients[0].ingredient"]').should(
+            "have.value",
+            `<Multiplyable baseNumber="0.25" /> cup vegetable oil`,
+          );
+
+          // Verify last ingredient
+          cy.get('[name="ingredients[9].ingredient"]').should(
+            "have.value",
+            `<Multiplyable baseNumber="4" /> (<Multiplyable baseNumber="14.5" /> ounce) cans chicken broth`,
+          );
+
+          // Verify empty string ingredient from import was ignored
+          cy.get('[name="ingredients[10].ingredient"]').should("not.exist");
+
+          // Verify first instruction
+          cy.get('[name="instructions[0].type"]').should("have.value", "step");
+          cy.get('[name="instructions[0].name"]').should("have.value", "");
+          cy.get('[name="instructions[0].text"]').should(
+            "have.value",
+            "Gather all ingredients.",
+          );
+
+          // Image preview should be external link to image we will import
+          cy.findByRole("img").should(
+            "have.attr",
+            "src",
+            new URL("/uploads/pork-carnitas.webp", baseURL).href,
+          );
+        });
+
+        cy.findByText("Submit").click();
+
+        // Ensure we're on the view page and not the new-recipe page
+        cy.findByLabelText("Multiply");
+
+        // Image should be newly created from the import's source
+        const processedImagePath =
+          "/image/recipe/pork-carnitas/uploads/pork-carnitas.webp/pork-carnitas-w3840q75.webp";
+
+        cy.findByRole("img").should("have.attr", "src", processedImagePath);
+
+        cy.request({
+          url: processedImagePath,
+        })
+          .its("status")
+          .should("equal", 200);
+
+        // Ensure resulting edit page works
+
+        cy.findByText("Edit").click();
+
+        cy.findByText("Editing Recipe: Pork Carnitas");
 
         cy.findByRole("img").should("have.attr", "src", processedImagePath);
       });
