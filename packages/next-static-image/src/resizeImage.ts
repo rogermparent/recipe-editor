@@ -4,39 +4,25 @@ import { mkdir, stat } from "fs/promises";
 import { oraPromise } from "ora";
 
 // Simple method of avoiding running two of the same resize operation at once.
-const runningResizes = new Set();
+const runningResizes = new Map();
 
-function trackRunning(resultPath: string) {
-  runningResizes.add(resultPath);
-}
-
-function trackFinished(resultPath: string) {
-  runningResizes.delete(resultPath);
-}
-
-export async function queuePossibleImageResize({
-  sharp,
-  width,
-  quality,
-  resultPath,
-  resultFilename,
-  srcMtime,
-}: {
+interface ImageResizeProps {
   sharp: Sharp;
   width: number;
   quality: number;
   resultPath: string;
   resultFilename: string;
   srcMtime: Date;
-}) {
-  // Return early if this transform is currently running elsewhere
-  if (runningResizes.has(resultPath)) {
-    return;
-  }
+}
 
-  // Claim our spot in cache for currently running transforms.
-  trackRunning(resultPath);
-
+async function resizeImage({
+  resultPath,
+  srcMtime,
+  sharp,
+  width,
+  quality,
+  resultFilename,
+}: ImageResizeProps) {
   // Return early if the exact image we're creating exists on the filesystem and is newer than the source image
   try {
     const { mtime: outputMtime } = await stat(resultPath);
@@ -57,5 +43,18 @@ export async function queuePossibleImageResize({
   );
 
   // Release our spot in cache for currently running transforms.
-  trackFinished(resultPath);
+  runningResizes.delete(resultPath);
+}
+
+export async function queuePossibleImageResize(props: ImageResizeProps) {
+  const { resultPath } = props;
+  // If this same transform is currently running, await it and return.
+  const currentlyRunningTransform = runningResizes.get(resultPath);
+  if (currentlyRunningTransform) {
+    await currentlyRunningTransform;
+    return;
+  }
+
+  // Otherwise, claim our spot in cache and start the transform.
+  runningResizes.set(resultPath, resizeImage(props));
 }
