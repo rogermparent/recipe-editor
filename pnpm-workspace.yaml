@@ -1,9 +1,13 @@
 packages:
+  - websites/portfolio/common
+  - websites/portfolio/editor
+  - websites/portfolio/export
   - websites/recipe-website/common
   - websites/recipe-website/editor
   - websites/recipe-website/export
   - packages/component-library
   - packages/next-static-image
+  - packages/projects-collection
   - packages/recipes-collection
   - packages/pages-collection
   - packages/menus-collection

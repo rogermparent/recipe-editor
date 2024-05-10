@@ -1,0 +1,31 @@
+{
+  "name": "projects-collection",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "component-library": "^1.0.0",
+    "content-engine": "^1.0.0",
+    "format-quantity": "^3.0.0",
+    "fraction.js": "^4.3.7",
+    "fs-extra": "^11.2.0",
+    "lodash": "^4.17.21",
+    "next": "14.2.3",
+    "next-static-image": "^0.0.1",
+    "plaiceholder": "^3.0.0",
+    "react": "^18",
+    "sharp": "0.33.3",
+    "zod": "^3.23.6"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^20"
+  }
+}
