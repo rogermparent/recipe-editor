@@ -76,7 +76,8 @@ export default async function HomePage() {
       )}
 
       <section className="w-full container mx-auto px-4 py-12">
-        <ul>
+        <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Grid for responsive layout */}
           {projects
             ? await Promise.all(
                 projects.map(async ({ name, description, image, links }, i) => {
@@ -96,34 +97,38 @@ export default async function HomePage() {
                     : undefined;
 
                   return (
-                    <li key={i} className="w-full">
-                      <div className="border border-slate-300 m-2 flex flex-col md:flex-row bg-backgroundAlt-light dark:bg-backgroundAlt-dark">
+                    <li
+                      key={i}
+                      className="rounded-lg overflow-hidden shadow-md"
+                    >
+                      {/* Card styling */}
+                      <div className="relative">
+                        {/* Container for image and overlay */}
                         {imageProps && (
-                          <div className="md:w-1/3">
-                            <Image
-                              {...imageProps.props}
-                              alt="Project Image"
-                              unoptimized={true}
-                              className="w-full object-cover"
-                            />
-                          </div>
+                          <Image
+                            {...imageProps.props}
+                            alt="Project Image"
+                            unoptimized={true}
+                            className="w-full h-64 object-cover transition duration-300 hover:scale-110"
+                          />
                         )}
-                        <div className="m-2 md:w-2/3">
-                          <h3 className="font-bold text-xl my-1 text-primary-light dark:text-primary-dark">
-                            {name}
-                          </h3>
-                          {links &&
-                            links.map(({ link, label }, i) => (
-                              <Link
-                                href={link}
-                                key={i}
-                                className="font-bold p-1 underline text-secondary-light dark:text-secondary-dark"
-                              >
-                                {label}
-                              </Link>
-                            ))}
-                          <p>{description}</p>
-                        </div>
+                      </div>
+                      <div className="p-6">
+                        {/* Increased padding */}
+                        <h3 className="font-bold text-xl mb-2 text-primary-light dark:text-primary-dark">
+                          {name}
+                        </h3>
+                        {links &&
+                          links.map(({ link, label }, i) => (
+                            <Link
+                              href={link}
+                              key={i}
+                              className="font-bold p-1 underline text-secondary-light dark:text-secondary-dark"
+                            >
+                              {label}
+                            </Link>
+                          ))}
+                        <p className="mt-2">{description}</p>
                       </div>
                     </li>
                   );
@@ -132,7 +137,6 @@ export default async function HomePage() {
             : null}
         </ul>
       </section>
-
       <section className="py-6 bg-backgroundAlt-light dark:bg-backgroundAlt-dark">
         <div className="max-w-prose mx-auto">
           {contactSectionTitle && (
