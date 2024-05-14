@@ -18,15 +18,3 @@ svg {
   width: 100%;
   height: 100%;
 }
-
-:root {
-  --primary: #2563eb; /* Blue */
-  --secondary: #16a34a; /* Green */
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary-dark: #3b82f6; /* Lighter Blue */
-    --secondary-dark: #22c55e; /* Lighter Green */
-  }
-}

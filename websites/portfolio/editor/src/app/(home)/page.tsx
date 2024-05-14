@@ -66,10 +66,12 @@ export default async function HomePage() {
     homepageContent || {};
 
   return (
-    <div className="flex-1 w-full bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-100">
+    <div className="flex-1 w-full bg-background-light dark:bg-background-dark text-body-light dark:text-body-dark">
       {about && (
-        <section className="max-w-prose mx-auto py-12">
-          <Markdown options={{ forceWrapper: true }}>{about}</Markdown>
+        <section className="py-12 bg-backgroundAlt-light dark:bg-backgroundAlt-dark w-full">
+          <div className="max-w-prose mx-auto">
+            <Markdown options={{ forceWrapper: true }}>{about}</Markdown>
+          </div>
         </section>
       )}
 
@@ -95,7 +97,7 @@ export default async function HomePage() {
 
                   return (
                     <li key={i} className="w-full">
-                      <div className="border border-slate-300 m-2 flex flex-col md:flex-row bg-white dark:bg-slate-800">
+                      <div className="border border-slate-300 m-2 flex flex-col md:flex-row bg-backgroundAlt-light dark:bg-backgroundAlt-dark">
                         {imageProps && (
                           <div className="md:w-1/3">
                             <Image
@@ -107,7 +109,7 @@ export default async function HomePage() {
                           </div>
                         )}
                         <div className="m-2 md:w-2/3">
-                          <h3 className="font-bold text-xl my-1 text-primary dark:text-primary-dark">
+                          <h3 className="font-bold text-xl my-1 text-primary-light dark:text-primary-dark">
                             {name}
                           </h3>
                           {links &&
@@ -115,7 +117,7 @@ export default async function HomePage() {
                               <Link
                                 href={link}
                                 key={i}
-                                className="font-bold p-1 underline text-secondary dark:text-secondary-dark"
+                                className="font-bold p-1 underline text-secondary-light dark:text-secondary-dark"
                               >
                                 {label}
                               </Link>
@@ -131,17 +133,19 @@ export default async function HomePage() {
         </ul>
       </section>
 
-      <section className="py-6 max-w-prose mx-auto">
-        {contactSectionTitle && (
-          <h2 className="text-3xl font-bold my-4 text-center text-primary dark:text-primary-dark">
-            {contactSectionTitle}
-          </h2>
-        )}
-        <ul className="text-center flex flex-col flex-nowrap justify-center w-auto mx-auto text-2xl px-2 my-10">
-          {contactLinks?.map((contactLink, i) => {
-            return <ContactLinkComponent key={i} item={contactLink} />;
-          })}
-        </ul>
+      <section className="py-6 bg-backgroundAlt-light dark:bg-backgroundAlt-dark">
+        <div className="max-w-prose mx-auto">
+          {contactSectionTitle && (
+            <h2 className="text-3xl font-bold my-4 text-center text-primary-light dark:text-primary-dark">
+              {contactSectionTitle}
+            </h2>
+          )}
+          <ul className="text-center flex flex-col flex-nowrap justify-center w-auto mx-auto text-2xl px-2 my-10">
+            {contactLinks?.map((contactLink, i) => {
+              return <ContactLinkComponent key={i} item={contactLink} />;
+            })}
+          </ul>
+        </div>
       </section>
     </div>
   );
