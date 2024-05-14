@@ -66,7 +66,7 @@ export default async function HomePage() {
     homepageContent || {};
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex-1 w-full">
       {about && (
         <section className="max-w-prose mx-auto">
           <Markdown options={{ forceWrapper: true }}>{about}</Markdown>
