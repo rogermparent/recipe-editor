@@ -92,16 +92,26 @@ export default async function HomePage() {
                     : undefined;
                   return (
                     <li key={i} className="w-full">
-                      <div className="border border-slate-300 m-2">
+                      {/* Responsive Project Item Container */}
+                      <div className="border border-slate-300 m-2 flex flex-col md:flex-row">
+                        {/* Image Section */}
                         {imageProps && (
-                          <Image
-                            {...imageProps.props}
-                            alt="Project Image"
-                            unoptimized={true}
-                            className="w-full object-cover"
-                          />
+                          <div className="md:w-1/3">
+                            {" "}
+                            {/* Adjust width for medium breakpoint */}
+                            <Image
+                              {...imageProps.props}
+                              alt="Project Image"
+                              unoptimized={true}
+                              className="w-full object-cover"
+                            />
+                          </div>
                         )}
-                        <div className="m-2">
+
+                        {/* Content Section */}
+                        <div className="m-2 md:w-2/3">
+                          {" "}
+                          {/* Adjust width for medium breakpoint */}
                           <h3 className="font-bold text-xl my-1">{name}</h3>
                           {links &&
                             links.map(({ link, label }, i) => (
