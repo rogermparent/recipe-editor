@@ -68,7 +68,7 @@ export default async function HomePage() {
   return (
     <div className="flex-1 w-full bg-background-light dark:bg-background-dark text-body-light dark:text-body-dark">
       {about && (
-        <section className="py-12 bg-backgroundAlt-light dark:bg-backgroundAlt-dark w-full">
+        <section className="flex flex-col flex-nowrap py-12 px-3 bg-backgroundAlt-light dark:bg-backgroundAlt-dark w-full h-screen items-center justify-center">
           <div className="max-w-prose mx-auto">
             <Markdown options={{ forceWrapper: true }}>{about}</Markdown>
           </div>
