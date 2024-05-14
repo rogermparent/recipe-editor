@@ -66,13 +66,14 @@ export default async function HomePage() {
     homepageContent || {};
 
   return (
-    <div className="flex-1 w-full">
+    <div className="flex-1 w-full bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-100">
       {about && (
-        <section className="max-w-prose mx-auto">
+        <section className="max-w-prose mx-auto py-12">
           <Markdown options={{ forceWrapper: true }}>{about}</Markdown>
         </section>
       )}
-      <section className="w-full container mx-auto px-4">
+
+      <section className="w-full container mx-auto px-4 py-12">
         <ul>
           {projects
             ? await Promise.all(
@@ -91,9 +92,10 @@ export default async function HomePage() {
                         },
                       )
                     : undefined;
+
                   return (
                     <li key={i} className="w-full">
-                      <div className="border border-slate-300 m-2 flex flex-col md:flex-row">
+                      <div className="border border-slate-300 m-2 flex flex-col md:flex-row bg-white dark:bg-slate-800">
                         {imageProps && (
                           <div className="md:w-1/3">
                             <Image
@@ -105,13 +107,15 @@ export default async function HomePage() {
                           </div>
                         )}
                         <div className="m-2 md:w-2/3">
-                          <h3 className="font-bold text-xl my-1">{name}</h3>
+                          <h3 className="font-bold text-xl my-1 text-primary dark:text-primary-dark">
+                            {name}
+                          </h3>
                           {links &&
                             links.map(({ link, label }, i) => (
                               <Link
                                 href={link}
                                 key={i}
-                                className="font-bold p-1 underline"
+                                className="font-bold p-1 underline text-secondary dark:text-secondary-dark"
                               >
                                 {label}
                               </Link>
@@ -126,9 +130,10 @@ export default async function HomePage() {
             : null}
         </ul>
       </section>
+
       <section className="py-6 max-w-prose mx-auto">
         {contactSectionTitle && (
-          <h2 className="text-3xl font-bold my-4 text-center">
+          <h2 className="text-3xl font-bold my-4 text-center text-primary dark:text-primary-dark">
             {contactSectionTitle}
           </h2>
         )}
