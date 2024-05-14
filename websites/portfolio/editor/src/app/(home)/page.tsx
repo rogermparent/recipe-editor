@@ -67,29 +67,12 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col items-center">
-      {/* Other sections (About, Contact) */}
-      <div className="flex-1 w-full max-w-prose mx-auto">
-        {about && (
-          <section>
-            <Markdown options={{ forceWrapper: true }}>{about}</Markdown>
-          </section>
-        )}
-        <section className="py-6">
-          {contactSectionTitle && (
-            <h2 className="text-3xl font-bold my-4 text-center">
-              {contactSectionTitle}
-            </h2>
-          )}
-          <ul className="text-center flex flex-col flex-nowrap justify-center w-auto mx-auto text-2xl px-2 my-10">
-            {contactLinks?.map((contactLink, i) => {
-              return <ContactLinkComponent key={i} item={contactLink} />;
-            })}
-          </ul>
+      {about && (
+        <section className="max-w-prose mx-auto">
+          <Markdown options={{ forceWrapper: true }}>{about}</Markdown>
         </section>
-      </div>
-
-      {/* Projects Section (Wider) */}
-      <section className="w-full max-w-screen-xl px-4">
+      )}
+      <section className="w-full container mx-auto px-4">
         <ul>
           {projects
             ? await Promise.all(
@@ -110,13 +93,9 @@ export default async function HomePage() {
                     : undefined;
                   return (
                     <li key={i} className="w-full">
-                      {/* Responsive Project Item Container */}
                       <div className="border border-slate-300 m-2 flex flex-col md:flex-row">
-                        {/* Image Section */}
                         {imageProps && (
                           <div className="md:w-1/3">
-                            {" "}
-                            {/* Adjust width for medium breakpoint */}
                             <Image
                               {...imageProps.props}
                               alt="Project Image"
@@ -125,11 +104,7 @@ export default async function HomePage() {
                             />
                           </div>
                         )}
-
-                        {/* Content Section */}
                         <div className="m-2 md:w-2/3">
-                          {" "}
-                          {/* Adjust width for medium breakpoint */}
                           <h3 className="font-bold text-xl my-1">{name}</h3>
                           {links &&
                             links.map(({ link, label }, i) => (
@@ -149,6 +124,18 @@ export default async function HomePage() {
                 }),
               )
             : null}
+        </ul>
+      </section>
+      <section className="py-6 max-w-prose mx-auto">
+        {contactSectionTitle && (
+          <h2 className="text-3xl font-bold my-4 text-center">
+            {contactSectionTitle}
+          </h2>
+        )}
+        <ul className="text-center flex flex-col flex-nowrap justify-center w-auto mx-auto text-2xl px-2 my-10">
+          {contactLinks?.map((contactLink, i) => {
+            return <ContactLinkComponent key={i} item={contactLink} />;
+          })}
         </ul>
       </section>
     </div>
