@@ -2,13 +2,33 @@
 import Image from "next/image";
 import Link from "next/link";
 import { HomepageProjectItem } from "../(editor)/homepage/types"; // Assuming you have types defined
+import { getStaticImageProps } from "next-static-image/src";
+import { join } from "path";
+import {
+  transformedImageOutputDirectory,
+  uploadsDirectory,
+} from "../(editor)/homepage/paths";
 
 interface ProjectCardProps {
   project: HomepageProjectItem;
-  imageProps: any;
 }
 
-export default function ProjectCard({ project, imageProps }: ProjectCardProps) {
+export default async function ProjectCard({ project }: ProjectCardProps) {
+  const imageProps = project.image // assuming image is part of the project data
+    ? await getStaticImageProps(
+        {
+          srcPath: join(uploadsDirectory, project.image),
+          localOutputDirectory: transformedImageOutputDirectory,
+        },
+        {
+          src: `/uploads/${project.image}`,
+          alt: `Image for ${project.name}`,
+          width: 320,
+          height: 320,
+        },
+      )
+    : undefined;
+
   return (
     <li className="rounded-lg overflow-hidden shadow-md">
       <div className="relative overflow-hidden">

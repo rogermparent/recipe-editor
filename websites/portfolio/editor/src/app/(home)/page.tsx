@@ -1,10 +1,5 @@
 import { join } from "path";
 import { getHomepageContent } from "../(editor)/homepage/actions";
-import { getStaticImageProps } from "next-static-image/src";
-import {
-  transformedImageOutputDirectory,
-  uploadsDirectory,
-} from "../(editor)/homepage/paths";
 
 import Link from "next/link";
 import { readFile } from "fs/promises";
@@ -78,32 +73,9 @@ export default async function HomePage() {
       <section className="w-full container mx-auto px-4 py-12">
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects
-            ? await Promise.all(
-                projects.map(async (project, i) => {
-                  const imageProps = project.image // assuming image is part of the project data
-                    ? await getStaticImageProps(
-                        {
-                          srcPath: join(uploadsDirectory, project.image),
-                          localOutputDirectory: transformedImageOutputDirectory,
-                        },
-                        {
-                          src: `/uploads/${project.image}`,
-                          alt: `Image for ${project.name}`,
-                          width: 320,
-                          height: 320,
-                        },
-                      )
-                    : undefined;
-
-                  return (
-                    <ProjectCard
-                      key={i}
-                      project={project}
-                      imageProps={imageProps}
-                    />
-                  );
-                }),
-              )
+            ? projects.map(async (project, i) => {
+                return <ProjectCard key={i} project={project} />;
+              })
             : null}
         </ul>
       </section>
