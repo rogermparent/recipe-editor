@@ -64,14 +64,32 @@ export default async function HomePage() {
   const homepageContent = await getHomepageContent();
   const { projects, contactLinks, contactSectionTitle, about } =
     homepageContent || {};
+
   return (
-    <div className="flex-1 w-full max-w-prose mx-auto">
-      {about && (
-        <section>
-          <Markdown options={{ forceWrapper: true }}>{about}</Markdown>
+    <div className="flex flex-col items-center">
+      {/* Other sections (About, Contact) */}
+      <div className="flex-1 w-full max-w-prose mx-auto">
+        {about && (
+          <section>
+            <Markdown options={{ forceWrapper: true }}>{about}</Markdown>
+          </section>
+        )}
+        <section className="py-6">
+          {contactSectionTitle && (
+            <h2 className="text-3xl font-bold my-4 text-center">
+              {contactSectionTitle}
+            </h2>
+          )}
+          <ul className="text-center flex flex-col flex-nowrap justify-center w-auto mx-auto text-2xl px-2 my-10">
+            {contactLinks?.map((contactLink, i) => {
+              return <ContactLinkComponent key={i} item={contactLink} />;
+            })}
+          </ul>
         </section>
-      )}
-      <section>
+      </div>
+
+      {/* Projects Section (Wider) */}
+      <section className="w-full max-w-screen-xl px-4">
         <ul>
           {projects
             ? await Promise.all(
@@ -131,18 +149,6 @@ export default async function HomePage() {
                 }),
               )
             : null}
-        </ul>
-      </section>
-      <section className="py-6">
-        {contactSectionTitle && (
-          <h2 className="text-3xl font-bold my-4 text-center">
-            {contactSectionTitle}
-          </h2>
-        )}
-        <ul className="text-center flex flex-col flex-nowrap justify-center w-auto mx-auto text-2xl px-2 my-10">
-          {contactLinks?.map((contactLink, i) => {
-            return <ContactLinkComponent key={i} item={contactLink} />;
-          })}
         </ul>
       </section>
     </div>
