@@ -1,5 +1,5 @@
 import Markdown, { MarkdownToJSX } from "markdown-to-jsx";
-import styles from "./styles.module.css";
+import "github-markdown-css";
 import clsx from "clsx";
 import Link from "next/link";
 import { ReactNode } from "react";
@@ -25,14 +25,17 @@ function MarkdownLink({
 export default function StyledMarkdown({
   children,
   components,
+  forceWrapper,
 }: {
   children: string;
   components?: MarkdownToJSX.Overrides;
+  forceWrapper?: boolean;
 }) {
   return (
     <Markdown
-      className={clsx(styles.content)}
+      className="markdown-body"
       options={{
+        forceWrapper,
         overrides: {
           a: {
             component: MarkdownLink,

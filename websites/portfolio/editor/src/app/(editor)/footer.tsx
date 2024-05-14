@@ -4,9 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const settingsMenu = [
-  { href: "/settings", name: "Settings" },
+  { href: "/homepage", name: "Homepage" },
   { href: "/menus", name: "Menus" },
   { href: "/pages", name: "Pages" },
+  { href: "/projects", name: "Projects" },
   { href: "/export", name: "Export" },
 ];
 

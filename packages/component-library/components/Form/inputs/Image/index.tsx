@@ -2,18 +2,25 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { FileInput } from "component-library/components/Form/inputs/File";
-import { CheckboxInput } from "component-library/components/Form/inputs/Checkbox";
+import { FileInput } from "../File";
 import { StaticImageProps } from "next-static-image/src";
+import { CheckboxInput } from "../Checkbox";
 
 export function ImageInput({
   defaultImage,
   errors,
-  imageToImport,
+  label,
+  name,
+  id,
+  clearImageName = "clearImage",
 }: {
   defaultImage?: StaticImageProps;
-  errors: string[] | undefined;
+  errors?: string[] | undefined;
   imageToImport?: string;
+  label: string;
+  name: string;
+  clearImageName?: string;
+  id?: string;
 }) {
   const [imagePreviewURL, setImagePreviewURL] = useState<string>();
 
@@ -30,9 +37,9 @@ export function ImageInput({
   return (
     <div>
       <FileInput
-        label="Image"
-        name="image"
-        id="recipe-form-image"
+        label={label}
+        name={name}
+        id={id}
         errors={errors}
         ref={fileInputRef}
         onChange={(e) => {
@@ -70,28 +77,16 @@ export function ImageInput({
               Cancel upload
             </button>
           </div>
-        ) : imageToImport ? (
-          <div>
-            <div>Importing image:</div>
-            <Image
-              src={imageToImport}
-              unoptimized={true}
-              alt="Direct link to image which will be imported."
-              width={850}
-              height={475}
-            />
-            <input type="hidden" value={imageToImport} name="imageImportUrl" />
-          </div>
         ) : defaultImage ? (
           <Image
             {...defaultImage.props}
-            alt="Existing Recipe Image"
+            alt="Existing Image"
             unoptimized={true}
           />
         ) : null}
       </div>
       {defaultImage ? (
-        <CheckboxInput name="clearImage" label="Remove Image" />
+        <CheckboxInput name={clearImageName} label="Remove Image" />
       ) : null}
     </div>
   );

@@ -5,7 +5,7 @@ import Link from "next/link";
 import getMenuBySlug from "menus-collection/controller/data/read";
 
 export const metadata: Metadata = {
-  title: "Project Editor",
+  title: "Portfolio",
   description: "A project book app built with Next 14.",
 };
 
@@ -16,7 +16,7 @@ async function SiteHeader() {
   return (
     <header className="w-full bg-slate-800 print:hidden border-b border-slate-700">
       <Link href="/" className="block p-2">
-        <h1 className="text-xl font-bold text-center">Project Editor</h1>
+        <h1 className="text-xl font-bold text-center">Portfolio</h1>
       </Link>
       <nav className="text-center">
         {items?.map(({ href, name }) => {

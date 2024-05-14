@@ -13,3 +13,8 @@ body {
 body {
   color: rgb(var(--foreground-rgb));
 }
+
+svg {
+  width: 100%;
+  height: 100%;
+}

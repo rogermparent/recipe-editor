@@ -1,3 +1,5 @@
+"use client";
+
 import { Dispatch, useReducer } from "react";
 import clsx from "clsx";
 import { Button } from "../../../Button";
@@ -189,6 +191,52 @@ export function TextListInput({
         }}
       >
         {appendLabel}
+      </Button>
+    </FieldWrapper>
+  );
+}
+
+export interface ListItemProps<ValueType> {
+  name: string;
+  defaultValue?: ValueType;
+}
+
+export function ListInput<ValueType>({
+  name,
+  defaultValue,
+  Item,
+  label,
+}: {
+  name: string;
+  label: string;
+  defaultValue?: ValueType[];
+  Item: (props: ListItemProps<ValueType>) => ReactNode;
+}) {
+  const [{ values }, dispatch] = useKeyList<ValueType>(defaultValue);
+
+  return (
+    <FieldWrapper label={label}>
+      <ul>
+        {values.map(({ key, defaultValue }, index) => {
+          const itemName = `${name}[${index}]`;
+          return (
+            <li key={key}>
+              <div className="border-l-2 border-white pl-2 my-2">
+                <Item defaultValue={defaultValue} name={itemName} />
+                <div className="flex flex-row flex-nowrap justify-center">
+                  <InputListControls dispatch={dispatch} index={index} />
+                </div>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+      <Button
+        onClick={() => {
+          dispatch({ type: "APPEND" });
+        }}
+      >
+        Append
       </Button>
     </FieldWrapper>
   );

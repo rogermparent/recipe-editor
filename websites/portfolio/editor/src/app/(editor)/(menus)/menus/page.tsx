@@ -40,6 +40,11 @@ export default async function Menus() {
           slug="footer"
           description="Site footer navigation"
         />
+        <MenuLink
+          name="Homepage Projects"
+          slug="homepage-projects"
+          description="Projects listed on the homepage"
+        />
       </div>
     </main>
   );

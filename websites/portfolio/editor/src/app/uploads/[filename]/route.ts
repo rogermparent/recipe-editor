@@ -1,4 +1,4 @@
-import { getContentDirectory } from "content-engine/fs/getContentDirectory";
+import { uploadsDirectory } from "@/app/(editor)/homepage/paths";
 import { ReadStream } from "fs";
 import { open } from "fs/promises";
 import { notFound } from "next/navigation";
@@ -10,7 +10,7 @@ export async function GET(
   { params: { filename } }: { params: { filename: string } },
 ) {
   try {
-    const uploadFilePath = resolve(getContentDirectory(), "uploads", filename);
+    const uploadFilePath = resolve(uploadsDirectory, filename);
     const handle = await open(uploadFilePath);
     const stream = ReadStream.toWeb(
       handle.createReadStream(),

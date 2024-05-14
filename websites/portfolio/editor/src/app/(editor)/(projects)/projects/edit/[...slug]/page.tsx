@@ -1,18 +1,18 @@
 import getProjectBySlug from "projects-collection/controller/data/read";
 import EditForm from "./form";
 import { notFound } from "next/navigation";
-import { getTransformedProjectImageProps } from "projects-collection/components/ProjectImage";
 import { auth, signIn } from "@/auth";
 
 export default async function Project({
-  params: { slug },
+  params: { slug: slugSegments },
 }: {
-  params: { slug: string };
+  params: { slug: string[] };
 }) {
+  const slug = slugSegments.join("/");
   const user = await auth();
   if (!user) {
     return signIn(undefined, {
-      redirectTo: `/project/${slug}/edit`,
+      redirectTo: `/projects/edit/${slug}`,
     });
   }
   let project;
@@ -24,23 +24,11 @@ export default async function Project({
     }
     throw e;
   }
-  const { name, image } = project;
-  const defaultImage =
-    slug && image
-      ? await getTransformedProjectImageProps({
-          slug,
-          image,
-          alt: "Heading image",
-          width: 580,
-          height: 450,
-          className: "object-cover aspect-ratio-[16/10] h-96",
-          sizes: "100vw",
-        })
-      : undefined;
+  const { name } = project;
   return (
     <main className="flex flex-col items-center px-2 grow max-w-prose w-full h-full">
       <h1 className="text-2xl font-bold my-2">Editing Project: {name}</h1>
-      <EditForm project={project} slug={slug} defaultImage={defaultImage} />
+      <EditForm project={project} slug={slug} />
     </main>
   );
 }

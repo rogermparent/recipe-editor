@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import getProjectBySlug from "projects-collection/controller/data/read";
 import { ProjectView } from "projects-collection/components/View";
-import deleteProject from "@/actions/deleteProject";
+import deleteProject from "projects-collection/controller/actions/delete";
 
 export async function generateMetadata({
   params: { slug },
@@ -13,10 +13,11 @@ export async function generateMetadata({
 }
 
 export default async function Project({
-  params: { slug },
+  params: { slug: slugSegments },
 }: {
-  params: { slug: string };
+  params: { slug: string[] };
 }) {
+  const slug = slugSegments.join("/");
   let project;
   try {
     project = await getProjectBySlug(slug);
@@ -26,15 +27,13 @@ export default async function Project({
     }
     throw e;
   }
-  const { date } = project;
-
-  const deleteProjectWithId = deleteProject.bind(null, date, slug);
+  const deleteProjectWithId = deleteProject.bind(null, slug);
 
   return (
     <main className="flex flex-col items-center w-full h-full grow">
       <div className="flex flex-row grow w-full h-full">
         <div className="grow flex flex-col flex-nowrap items-center">
-          <ProjectView project={project} slug={slug} />
+          <ProjectView project={project} />
         </div>
       </div>
       <hr className="w-full border-slate-700 print:hidden" />
@@ -45,16 +44,10 @@ export default async function Project({
           </button>
         </form>
         <Link
-          href={`/project/${slug}/edit`}
+          href={`/projects/edit/${slug}`}
           className="underline bg-slate-700 rounded-md text-sm py-1 px-2 mx-1"
         >
           Edit
-        </Link>
-        <Link
-          href={`/project/${slug}/copy`}
-          className="underline bg-slate-700 rounded-md text-sm py-1 px-2 mx-1"
-        >
-          Copy
         </Link>
       </div>
     </main>
