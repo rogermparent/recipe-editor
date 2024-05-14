@@ -102,7 +102,7 @@ export default async function HomePage() {
                       className="rounded-lg overflow-hidden shadow-md"
                     >
                       {/* Card styling */}
-                      <div className="relative">
+                      <div className="relative overflow-hidden">
                         {/* Container for image and overlay */}
                         {imageProps && (
                           <Image
