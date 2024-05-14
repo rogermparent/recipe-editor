@@ -5,13 +5,13 @@ import {
   transformedImageOutputDirectory,
   uploadsDirectory,
 } from "../(editor)/homepage/paths";
-import Image from "next/image";
 
 import Link from "next/link";
 import { readFile } from "fs/promises";
 import { getContentDirectory } from "content-engine/fs/getContentDirectory";
 import { ContactLink } from "../(editor)/homepage/types";
 import Markdown from "markdown-to-jsx";
+import ProjectCard from "../components/ProjectCard";
 
 const baseLinkLabelStyle = "w-6 h-6 mr-2";
 
@@ -77,19 +77,18 @@ export default async function HomePage() {
 
       <section className="w-full container mx-auto px-4 py-12">
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Grid for responsive layout */}
           {projects
             ? await Promise.all(
-                projects.map(async ({ name, description, image, links }, i) => {
-                  const imageProps = image
+                projects.map(async (project, i) => {
+                  const imageProps = project.image // assuming image is part of the project data
                     ? await getStaticImageProps(
                         {
-                          srcPath: join(uploadsDirectory, image),
+                          srcPath: join(uploadsDirectory, project.image),
                           localOutputDirectory: transformedImageOutputDirectory,
                         },
                         {
-                          src: `/uploads/${image}`,
-                          alt: `Image for ${name}`,
+                          src: `/uploads/${project.image}`,
+                          alt: `Image for ${project.name}`,
                           width: 320,
                           height: 320,
                         },
@@ -97,40 +96,11 @@ export default async function HomePage() {
                     : undefined;
 
                   return (
-                    <li
+                    <ProjectCard
                       key={i}
-                      className="rounded-lg overflow-hidden shadow-md"
-                    >
-                      {/* Card styling */}
-                      <div className="relative overflow-hidden">
-                        {/* Container for image and overlay */}
-                        {imageProps && (
-                          <Image
-                            {...imageProps.props}
-                            alt="Project Image"
-                            unoptimized={true}
-                            className="w-full h-64 object-cover transition duration-300 hover:scale-110"
-                          />
-                        )}
-                      </div>
-                      <div className="p-6">
-                        {/* Increased padding */}
-                        <h3 className="font-bold text-xl mb-2 text-primary-light dark:text-primary-dark">
-                          {name}
-                        </h3>
-                        {links &&
-                          links.map(({ link, label }, i) => (
-                            <Link
-                              href={link}
-                              key={i}
-                              className="font-bold p-1 underline text-secondary-light dark:text-secondary-dark"
-                            >
-                              {label}
-                            </Link>
-                          ))}
-                        <p className="mt-2">{description}</p>
-                      </div>
-                    </li>
+                      project={project}
+                      imageProps={imageProps}
+                    />
                   );
                 }),
               )
