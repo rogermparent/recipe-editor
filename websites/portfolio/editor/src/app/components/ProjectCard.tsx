@@ -37,7 +37,7 @@ export default async function ProjectCard({ project }: ProjectCardProps) {
             {...imageProps.props}
             alt={`Image for ${project.name}`}
             unoptimized={true}
-            className="w-full h-64 object-cover transition duration-300 hover:scale-110"
+            className="w-full h-64 object-cover transition duration-300 hover:scale-105"
           />
         )}
       </div>
