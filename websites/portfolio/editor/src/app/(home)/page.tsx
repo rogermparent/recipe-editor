@@ -67,10 +67,26 @@ export default async function HomePage() {
           <div className="max-w-prose mx-auto">
             <Markdown options={{ forceWrapper: true }}>{about}</Markdown>
           </div>
+          <a href="#projects" className="scroll-button">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-12 h-12 animate-bounce"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+              />
+            </svg>
+          </a>
         </section>
       )}
 
-      <section className="w-full container mx-auto px-4 py-12">
+      <section className="w-full container mx-auto px-4 py-12" id="projects">
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects
             ? projects.map(async (project, i) => {
