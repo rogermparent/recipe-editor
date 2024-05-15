@@ -63,18 +63,21 @@ export default async function HomePage() {
   return (
     <div className="flex-1 w-full bg-background-light dark:bg-background-dark text-body-light dark:text-body-dark">
       {about && (
-        <section className="flex flex-col flex-nowrap py-12 px-3 bg-backgroundAlt-light dark:bg-backgroundAlt-dark w-full h-screen items-center justify-center">
+        <section className="flex flex-col flex-nowrap py-12 px-3 bg-backgroundAlt-light dark:bg-backgroundAlt-dark w-full min-h-96 h-screen items-center justify-center relative">
           <div className="max-w-prose mx-auto">
             <Markdown options={{ forceWrapper: true }}>{about}</Markdown>
           </div>
-          <a href="#projects" className="scroll-button">
+          <a
+            href="#projects"
+            className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center justify-center"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-12 h-12 animate-bounce"
+              className="w-12 h-12 text-gray-500 hover:text-gray-700 animate-bounce"
             >
               <path
                 strokeLinecap="round"

@@ -11,6 +11,22 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        bounce: {
+          "0%, 20%, 50%, 80%, 100%": {
+            transform: "translateY(0)" /* Initial and end positions */,
+          },
+          "40%": {
+            transform: "translateY(-10px)" /* Upward bounce */,
+          },
+          "60%": {
+            transform: "translateY(-5px)" /* Smaller bounce */,
+          },
+        },
+      },
+      animation: {
+        bounce: "bounce 2s ease infinite",
+      },
       colors: {
         body: {
           light: colors.gray[800],

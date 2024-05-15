@@ -14,7 +14,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body
         className={clsx(
           "bg-slate-950 flex flex-col flex-nowrap items-center min-w-fit",
