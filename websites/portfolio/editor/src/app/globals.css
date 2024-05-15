@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+.markdown-body {
+  ul {
+    list-style: disc;
+  }
+}
+
 html,
 body {
   @apply text-slate-100;

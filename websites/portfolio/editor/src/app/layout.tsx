@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "github-markdown-css";
 import "./globals.css";
 import clsx from "clsx";
 import { SiteFooter } from "@/components/SiteFooter";

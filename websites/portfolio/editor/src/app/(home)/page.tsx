@@ -7,6 +7,7 @@ import { getContentDirectory } from "content-engine/fs/getContentDirectory";
 import { ContactLink } from "../(editor)/homepage/types";
 import Markdown from "markdown-to-jsx";
 import ProjectCard from "../components/ProjectCard";
+import StyledMarkdown from "component-library/components/Markdown";
 
 const baseLinkLabelStyle = "w-6 h-6 mr-2";
 
@@ -65,7 +66,9 @@ export default async function HomePage() {
       {about && (
         <section className="flex flex-col flex-nowrap py-12 px-3 bg-backgroundAlt-light dark:bg-backgroundAlt-dark w-full min-h-96 h-screen items-center justify-center relative">
           <div className="max-w-prose mx-auto">
-            <Markdown options={{ forceWrapper: true }}>{about}</Markdown>
+            <StyledMarkdown forceWrapper={true} className="bg-inherit">
+              {about}
+            </StyledMarkdown>
           </div>
           <a
             href="#projects"

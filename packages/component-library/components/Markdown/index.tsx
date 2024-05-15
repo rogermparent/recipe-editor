@@ -26,14 +26,16 @@ export default function StyledMarkdown({
   children,
   components,
   forceWrapper,
+  className,
 }: {
   children: string;
   components?: MarkdownToJSX.Overrides;
   forceWrapper?: boolean;
+  className?: string;
 }) {
   return (
     <Markdown
-      className="markdown-body"
+      className={clsx("markdown-body", className)}
       options={{
         forceWrapper,
         overrides: {
