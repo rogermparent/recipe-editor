@@ -22,12 +22,14 @@ export const RecipeView = ({
     name,
     prepTime,
     cookTime,
-    totalTime,
     description,
     image,
     instructions,
     ingredients,
   } = recipe;
+
+  // Calculate the totalTime from prepTime and cookTime
+  const totalTime = (parseInt(prepTime) || 0) + (parseInt(cookTime) || 0);
 
   return (
     <MultiplierProvider>
@@ -57,7 +59,9 @@ export const RecipeView = ({
               <MultipliedServings recipe={recipe} />
               {prepTime && <InfoCard title="Prep Time">{prepTime}</InfoCard>}
               {cookTime && <InfoCard title="Cook Time">{cookTime}</InfoCard>}
-              {totalTime && <InfoCard title="Total Time">{totalTime}</InfoCard>}
+              {totalTime && (
+                <InfoCard title="Total Time">{totalTime.toString()}</InfoCard>
+              )}
             </div>
           </div>
         </div>
