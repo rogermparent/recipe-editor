@@ -79,7 +79,8 @@ export function MultiplyingView({ recipe }: { recipe: Recipe }) {
           />
         </InfoCard>
       </label>
-      <div className="my-3 marker:text-sm">
+      <div className="my-3 marker:text-sm lg:flex lg:flex-row lg:gap-4">
+        {/* Horizontal ingredients list on desktop */}
         <Ingredients ingredients={ingredients} />
       </div>
       <div className="m-2 flex flex-row flex-wrap items-center justify-center">
