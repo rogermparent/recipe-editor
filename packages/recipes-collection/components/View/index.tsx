@@ -59,7 +59,7 @@ export const RecipeView = ({
             {totalTime && <InfoCard title="Total Time">{totalTime}</InfoCard>}
           </div>
         </div>
-        <div className="lg:flex lg:flex-row flex-nowrap container mx-auto">
+        <div className="lg:flex lg:flex-row lg:px-2 flex-nowrap container mx-auto">
           <Ingredients ingredients={ingredients} />
           {instructions && (
             <div>
