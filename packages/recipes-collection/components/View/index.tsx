@@ -32,8 +32,8 @@ export const RecipeView = ({
   return (
     <MultiplierProvider>
       <div className="w-full h-full p-2 print:p-0 grow flex flex-col flex-nowrap">
-        <div className="max-w-prose mx-auto">
-          <h1 className="text-3xl font-bold mt-4 mb-6">{name}</h1>
+        <div className="max-w-prose mx-auto lg:flex lg:flex-row">
+          {/* Added flex container for lg screens */}
           {image && (
             <RecipeImage
               slug={slug}
@@ -46,17 +46,21 @@ export const RecipeView = ({
               loading="eager"
             />
           )}
-          {description && (
-            <div className="my-2">
-              <Markdown>{description}</Markdown>
+          <div className="lg:w-1/2 lg:pl-4">
+            {/* Added width and padding for lg screens */}
+            <h1 className="text-3xl font-bold mt-4 mb-6">{name}</h1>
+            {description && (
+              <div className="my-2">
+                <Markdown>{description}</Markdown>
+              </div>
+            )}
+            <div className="m-2 flex flex-row flex-wrap items-center justify-center">
+              <MultiplierInput />
+              <MultipliedServings recipe={recipe} />
+              {prepTime && <InfoCard title="Prep Time">{prepTime}</InfoCard>}
+              {cookTime && <InfoCard title="Cook Time">{cookTime}</InfoCard>}
+              {totalTime && <InfoCard title="Total Time">{totalTime}</InfoCard>}
             </div>
-          )}
-          <div className="m-2 flex flex-row flex-wrap items-center justify-center">
-            <MultiplierInput />
-            <MultipliedServings recipe={recipe} />
-            {prepTime && <InfoCard title="Prep Time">{prepTime}</InfoCard>}
-            {cookTime && <InfoCard title="Cook Time">{cookTime}</InfoCard>}
-            {totalTime && <InfoCard title="Total Time">{totalTime}</InfoCard>}
           </div>
         </div>
         <div className="lg:flex lg:flex-row lg:px-2 flex-nowrap container mx-auto">
