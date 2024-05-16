@@ -8,7 +8,7 @@ import { InfoCard } from "../shared";
 import { useMultiplier } from "./Provider";
 import StyledMarkdown from "component-library/components/Markdown";
 import { Multiplyable } from "./Multiplyable";
-import { Button, PaddedButton } from "component-library/components/Button";
+import { PaddedButton } from "component-library/components/Button";
 
 export const IngredientItem = ({ ingredient }: { ingredient?: string }) => {
   return (
