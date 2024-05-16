@@ -50,23 +50,21 @@ export function Ingredients({ ingredients }: { ingredients?: Ingredient[] }) {
   );
 }
 
+// Modify MultiplierInput to use InfoCard and remove label
 export function MultiplierInput() {
   const [{ input }, setMultiplier] = useMultiplier();
 
   return (
-    <label htmlFor="multiplier" className="w-24 mx-auto">
-      <InfoCard>
-        <TextInput
-          id="multiplier"
-          name="multiplier"
-          label="Multiply"
-          defaultValue={input}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            setMultiplier(e.target.value);
-          }}
-        />
-      </InfoCard>
-    </label>
+    <InfoCard title="Multiply">
+      <TextInput
+        id="multiplier"
+        name="multiplier"
+        defaultValue={input}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+          setMultiplier(e.target.value);
+        }}
+      />
+    </InfoCard>
   );
 }
 
