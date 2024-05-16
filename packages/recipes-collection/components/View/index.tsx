@@ -27,7 +27,6 @@ export const RecipeView = ({
     image,
     instructions,
     ingredients,
-    servings,
   } = recipe;
 
   return (
@@ -53,12 +52,11 @@ export const RecipeView = ({
             </div>
           )}
           <div className="m-2 flex flex-row flex-wrap items-center justify-center">
-            {/* Display InfoCards in a row, wrapping if needed */}
-            <InfoCard title="Prep Time">{prepTime}</InfoCard>
-            <InfoCard title="Cook Time">{cookTime}</InfoCard>
-            <InfoCard title="Servings">{servings}</InfoCard>
-            <InfoCard title="Total Time">{totalTime}</InfoCard>
-            <MultiplierInput /> {/* Use the modified MultiplierInput */}
+            <MultiplierInput />
+            <MultipliedServings recipe={recipe} />
+            {prepTime && <InfoCard title="Prep Time">{prepTime}</InfoCard>}
+            {cookTime && <InfoCard title="Cook Time">{cookTime}</InfoCard>}
+            {totalTime && <InfoCard title="Total Time">{totalTime}</InfoCard>}
           </div>
         </div>
         <div className="lg:flex lg:flex-row lg:px-2 flex-nowrap container mx-auto">
