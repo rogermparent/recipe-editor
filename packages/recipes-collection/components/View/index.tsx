@@ -32,8 +32,8 @@ export const RecipeView = ({
   return (
     <MultiplierProvider>
       <div className="w-full h-full p-2 print:p-0 grow flex flex-col flex-nowrap">
-        <div className="max-w-prose mx-auto lg:flex lg:flex-row">
-          {/* Added flex container for lg screens */}
+        {/* Added flex container for lg screens */}
+        <div className="container mx-auto lg:flex lg:flex-row">
           {image && (
             <RecipeImage
               slug={slug}
@@ -42,12 +42,12 @@ export const RecipeView = ({
               width={580}
               height={450}
               sizes="100vw"
-              className="object-cover aspect-ratio-[16/10] h-96"
+              className="object-cover aspect-ratio-[16/10] h-96 lg:max-w-96"
               loading="eager"
             />
           )}
-          <div className="lg:w-1/2 lg:pl-4">
-            {/* Added width and padding for lg screens */}
+          {/* Added width and padding for lg screens */}
+          <div className="lg:w-1/2 lg:pl-4 flex-1">
             <h1 className="text-3xl font-bold mt-4 mb-6">{name}</h1>
             {description && (
               <div className="my-2">
