@@ -54,12 +54,11 @@ export function MultiplierInput() {
   const [{ input }, setMultiplier] = useMultiplier();
 
   return (
-    <label htmlFor="multiplier" className="w-24 mx-auto">
-      <InfoCard>
+    <label htmlFor="multiplier" className="w-24">
+      <InfoCard title="Multiply">
         <TextInput
           id="multiplier"
           name="multiplier"
-          label="Multiply"
           defaultValue={input}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             setMultiplier(e.target.value);
@@ -81,13 +80,11 @@ export function MultipliedServings({ recipe }: { recipe: Recipe }) {
       : servings;
 
   return (
-    <div className="m-2 flex flex-row flex-wrap items-center justify-center">
-      {multipliedServings && (
-        <InfoCard title="Servings">
-          <span>{multipliedServings}</span>{" "}
-          {servingSize && <span>{servingSize}</span>}
-        </InfoCard>
-      )}
-    </div>
+    multipliedServings && (
+      <InfoCard title="Servings">
+        <span>{multipliedServings}</span>{" "}
+        {servingSize && <span>{servingSize}</span>}
+      </InfoCard>
+    )
   );
 }
