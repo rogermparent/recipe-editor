@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, useReducer } from "react";
+import { Dispatch, useReducer, ReactNode } from "react";
 import clsx from "clsx";
 import { Button } from "../../../Button";
 import { FieldWrapper, baseInputStyle } from "../..";

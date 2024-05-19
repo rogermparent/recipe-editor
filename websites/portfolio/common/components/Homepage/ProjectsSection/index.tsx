@@ -1,5 +1,5 @@
-import { HomepageContent } from "@/app/(editor)/homepage/types";
-import ProjectCard from "@/app/components/ProjectCard";
+import { HomepageContent } from "../../../homepage-controller/types";
+import ProjectCard from "../ProjectCard";
 
 export default function ProjectsSection({ projects }: HomepageContent) {
   return (

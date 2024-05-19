@@ -1,6 +1,7 @@
 "use server";
+
 import parseFormData from "content-engine/forms/parseFormData";
-import { createWriteStream, ensureDir, outputJson, readJson } from "fs-extra";
+import { createWriteStream, ensureDir, outputJson } from "fs-extra";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { homepageContentFilePath, uploadsDirectory } from "./paths";
@@ -8,7 +9,6 @@ import { join } from "node:path";
 import { Readable } from "node:stream";
 import { ReadableStream } from "node:stream/web";
 import { pipeline } from "node:stream/promises";
-import { HomepageContent } from "./types";
 
 const HomepageFormSchema = z.object({
   title: z.string(),
@@ -40,17 +40,6 @@ const HomepageFormSchema = z.object({
 });
 
 export type ParsedHomepageFormData = z.infer<typeof HomepageFormSchema>;
-
-export async function getHomepageContent(): Promise<
-  HomepageContent | undefined
-> {
-  try {
-    const homepageContent = await readJson(homepageContentFilePath);
-    return homepageContent;
-  } catch {
-    return undefined;
-  }
-}
 
 async function getImageValue({
   image,

@@ -1,31 +1,12 @@
-import { getHomepageContent } from "../(editor)/homepage/actions";
-
-import AboutSection from "./AboutSection";
-import ProjectsSection from "./ProjectsSection";
-import ContactSection from "./ContactSection";
+import HomePage from "portfolio-website-common/components/Homepage";
 import Link from "next/link";
 
-export async function generateMetadata() {
-  const homepageContent = await getHomepageContent();
-  const { title } = homepageContent || {};
-  return {
-    title,
-  };
-}
+export { generateMetadata } from "portfolio-website-common/components/Homepage";
 
-export default async function HomePage() {
-  const homepageContent = await getHomepageContent();
-  const { projects, contactLinks, contactSectionTitle, about } =
-    homepageContent || {};
-
+export default function EditorHomePage() {
   return (
-    <div className="flex-1 w-full bg-background-light dark:bg-background-dark text-body-light dark:text-body-dark">
-      <AboutSection about={about} />
-      <ProjectsSection projects={projects} />
-      <ContactSection
-        contactSectionTitle={contactSectionTitle}
-        contactLinks={contactLinks}
-      />
+    <>
+      <HomePage />
       <footer className="w-full bg-slate-800 print:hidden border-t border-slate-700">
         <nav className="flex flex-row flex-wrap justify-center">
           <Link href="/homepage" className="p-2">
@@ -33,6 +14,6 @@ export default async function HomePage() {
           </Link>
         </nav>
       </footer>
-    </div>
+    </>
   );
 }

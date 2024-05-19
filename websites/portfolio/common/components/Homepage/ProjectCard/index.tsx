@@ -1,20 +1,20 @@
 // components/ProjectCard.tsx
 import Image from "next/image";
 import Link from "next/link";
-import { HomepageProjectItem } from "../(editor)/homepage/types"; // Assuming you have types defined
 import { getStaticImageProps } from "next-static-image/src";
 import { join } from "path";
+import { HomepageProjectItem } from "../../../homepage-controller/types";
 import {
   transformedImageOutputDirectory,
   uploadsDirectory,
-} from "../(editor)/homepage/paths";
+} from "../../../homepage-controller/paths";
 
 interface ProjectCardProps {
   project: HomepageProjectItem;
 }
 
 export default async function ProjectCard({ project }: ProjectCardProps) {
-  const imageProps = project.image // assuming image is part of the project data
+  const imageProps = project.image
     ? await getStaticImageProps(
         {
           srcPath: join(uploadsDirectory, project.image),
@@ -23,8 +23,8 @@ export default async function ProjectCard({ project }: ProjectCardProps) {
         {
           src: `/uploads/${project.image}`,
           alt: `Image for ${project.name}`,
-          width: 320,
-          height: 320,
+          width: 600,
+          height: 400,
         },
       )
     : undefined;

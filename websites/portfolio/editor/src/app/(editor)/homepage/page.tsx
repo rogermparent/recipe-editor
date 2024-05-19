@@ -1,13 +1,17 @@
 import { TextInput } from "component-library/components/Form/inputs/Text";
 import { TextAreaInput } from "component-library/components/Form/inputs/TextArea";
-import HomepageProjectsInput from "./HomepageProjectsInput";
-import { getHomepageContent, writeHomepageContent } from "./actions";
+import HomepageProjectsInput from "portfolio-website-common/homepage-controller/HomepageProjectsInput";
+import { getHomepageContent } from "portfolio-website-common/homepage-controller/data";
+import { writeHomepageContent } from "portfolio-website-common/homepage-controller/actions";
 import { Button } from "component-library/components/Button";
-import HomepageContactLinksInput from "./HomepageContactLinksInput";
+import HomepageContactLinksInput from "portfolio-website-common/homepage-controller/HomepageContactLinksInput";
 import { getStaticImageProps } from "next-static-image/src";
 import { resolve } from "path";
-import { transformedImageOutputDirectory, uploadsDirectory } from "./paths";
-import { HomepageProjectItem } from "./types";
+import {
+  transformedImageOutputDirectory,
+  uploadsDirectory,
+} from "portfolio-website-common/homepage-controller/paths";
+import { HomepageProjectItem } from "portfolio-website-common/homepage-controller/types";
 
 export default async function HomepageEditor() {
   const homepageContent = await getHomepageContent();

@@ -44,6 +44,10 @@ importers:
       next-static-image:
         specifier: ^0.0.1
         version: link:../next-static-image
+    devDependencies:
+      '@types/react':
+        specifier: ^18
+        version: 18.2.79
 
   packages/content-engine:
     dependencies:
@@ -268,9 +272,15 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      component-library:
+        specifier: ^1.0.0
+        version: link:../../../packages/component-library
       content-engine:
         specifier: ^1.0.0
         version: link:../../../packages/content-engine
+      github-markdown-css:
+        specifier: ^5.5.1
+        version: 5.5.1
       markdown-to-jsx:
         specifier: ^7.4.7
         version: 7.4.7(react@18.2.0)
@@ -280,6 +290,16 @@ importers:
       next:
         specifier: 14.2.3
         version: 14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      next-static-image:
+        specifier: ^0.0.1
+        version: link:../../../packages/next-static-image
+      zod:
+        specifier: ^3.23.6
+        version: 3.23.6
+    devDependencies:
+      '@types/node':
+        specifier: ^20
+        version: 20.12.7
 
   websites/portfolio/editor:
     dependencies:
@@ -346,6 +366,9 @@ importers:
       pages-collection:
         specifier: ^1.0.0
         version: link:../../../packages/pages-collection
+      portfolio-website-common:
+        specifier: ^1.0.0
+        version: link:../common
       projects-collection:
         specifier: ^1.0.0
         version: link:../../../packages/projects-collection
@@ -452,6 +475,9 @@ importers:
       fraction.js:
         specifier: ^4.3.7
         version: 4.3.7
+      github-markdown-css:
+        specifier: ^5.5.1
+        version: 5.5.1
       lmdb:
         specifier: ^3.0.8
         version: 3.0.8
@@ -470,6 +496,9 @@ importers:
       next:
         specifier: 14.2.3
         version: 14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      portfolio-website-common:
+        specifier: ^1.0.0
+        version: link:../common
       projects-collection:
         specifier: ^1.0.0
         version: link:../../../packages/projects-collection

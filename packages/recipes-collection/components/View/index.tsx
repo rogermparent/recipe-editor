@@ -29,12 +29,12 @@ export const RecipeView = ({
   } = recipe;
 
   // Calculate the totalTime from prepTime and cookTime
-  const totalTime = (parseInt(prepTime) || 0) + (parseInt(cookTime) || 0);
+  const totalTime = (prepTime || 0) + (cookTime || 0);
 
   return (
     <MultiplierProvider>
       <div className="w-full h-full p-2 print:p-0 grow flex flex-col flex-nowrap">
-        <div className="container mx-auto lg:flex lg:flex-row">
+        <div className="container mx-auto lg:flex lg:flex-row justify-center">
           {image && (
             <RecipeImage
               slug={slug}
@@ -47,7 +47,7 @@ export const RecipeView = ({
               loading="eager"
             />
           )}
-          <div className="lg:pl-4 flex-1">
+          <div className="lg:pl-4 flex-1 max-w-prose mx-auto">
             <h1 className="text-3xl font-bold mt-4 mb-6">{name}</h1>
             {description && (
               <div className="my-2">
@@ -59,16 +59,16 @@ export const RecipeView = ({
               <MultipliedServings recipe={recipe} />
               {prepTime && <InfoCard title="Prep Time">{prepTime}</InfoCard>}
               {cookTime && <InfoCard title="Cook Time">{cookTime}</InfoCard>}
-              {totalTime && (
+              {totalTime ? (
                 <InfoCard title="Total Time">{totalTime.toString()}</InfoCard>
-              )}
+              ) : null}
             </div>
           </div>
         </div>
-        <div className="lg:flex lg:flex-row lg:px-2 flex-nowrap container mx-auto">
+        <div className="lg:flex lg:flex-row lg:px-2 justify-center flex-nowrap container mx-auto">
           <Ingredients ingredients={ingredients} />
           {instructions && (
-            <div>
+            <div className="max-w-prose mx-auto">
               <h2 className="text-xl font-bold my-3">Instructions</h2>
               <ol className="list-decimal pl-4">
                 {instructions.map((entry, i) => (

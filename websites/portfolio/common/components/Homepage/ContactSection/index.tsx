@@ -1,9 +1,11 @@
 import { join } from "path";
-import { HomepageContent } from "@/app/(editor)/homepage/types";
 import Link from "next/link";
 import { readFile } from "fs/promises";
 import { getContentDirectory } from "content-engine/fs/getContentDirectory";
-import { ContactLink } from "../../(editor)/homepage/types";
+import {
+  ContactLink,
+  HomepageContent,
+} from "../../../homepage-controller/types";
 
 const baseLinkLabelStyle = "w-6 h-6 mr-2";
 

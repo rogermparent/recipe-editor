@@ -1,4 +1,4 @@
-import { HomepageContent } from "@/app/(editor)/homepage/types";
+import { HomepageContent } from "../../../homepage-controller/types";
 import Markdown from "component-library/components/Markdown";
 
 export default function AboutSection({ about }: HomepageContent) {
@@ -6,7 +6,7 @@ export default function AboutSection({ about }: HomepageContent) {
     about && (
       <section className="flex flex-col flex-nowrap py-12 px-3 bg-backgroundAlt-light dark:bg-backgroundAlt-dark w-full min-h-96 h-screen items-center justify-center relative">
         <div className="max-w-prose mx-auto">
-          <Markdown forceWrapper={true} className="bg-inherit">
+          <Markdown forceWrapper={true} className="markdown-body bg-inherit">
             {about}
           </Markdown>
         </div>

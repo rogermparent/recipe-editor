@@ -1,4 +1,4 @@
-import { homepageContentFilePath } from "./src/app/(editor)/homepage/paths";
+import { homepageContentFilePath } from "portfolio-website-common/homepage-controller/paths";
 import type { Config } from "tailwindcss";
 import colors from "tailwindcss/colors";
 
@@ -6,6 +6,7 @@ const config: Config = {
   content: [
     "./node_modules/projects-collection/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/component-library/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/portfolio-website-common/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     homepageContentFilePath,
   ],
