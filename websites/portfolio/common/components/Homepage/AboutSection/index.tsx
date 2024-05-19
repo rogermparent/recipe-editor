@@ -1,12 +1,53 @@
+import { getStaticImageProps } from "next-static-image/src";
 import { HomepageContent } from "../../../homepage-controller/types";
 import Markdown from "component-library/components/Markdown";
+import { join } from "path";
+import {
+  transformedImageOutputDirectory,
+  uploadsDirectory,
+} from "../../../homepage-controller/paths";
+import Image from "next/image";
+
+async function HomepageStaticImage({
+  src,
+  alt,
+  width = 600,
+  height = 400,
+  className,
+}: {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  className?: string;
+}) {
+  const image = await getStaticImageProps(
+    {
+      srcPath: join(uploadsDirectory, src),
+      localOutputDirectory: transformedImageOutputDirectory,
+    },
+    {
+      src: `/image/${src}`,
+      alt,
+      width,
+      height,
+      className,
+    },
+  );
+
+  return <Image {...image.props} alt={alt} unoptimized={true} />;
+}
 
 export default function AboutSection({ about }: HomepageContent) {
   return (
     about && (
       <section className="flex flex-col flex-nowrap py-12 px-3 bg-backgroundAlt-light dark:bg-backgroundAlt-dark w-full min-h-96 h-screen lg:h-auto items-center justify-center relative">
         <div className="max-w-prose mx-auto">
-          <Markdown forceWrapper={true} className="markdown-body bg-inherit">
+          <Markdown
+            forceWrapper={true}
+            className="markdown-body bg-inherit"
+            components={{ img: HomepageStaticImage }}
+          >
             {about}
           </Markdown>
         </div>
