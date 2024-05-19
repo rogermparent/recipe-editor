@@ -13,13 +13,21 @@ export async function generateMetadata() {
 
 export default async function HomePage() {
   const homepageContent = await getHomepageContent();
-  const { projects, contactLinks, contactSectionTitle, about } =
-    homepageContent || {};
+  const {
+    projects,
+    contactLinks,
+    contactSectionTitle,
+    about,
+    projectSectionTitle,
+  } = homepageContent || {};
 
   return (
     <div className="flex-1 w-full bg-background-light dark:bg-background-dark text-body-light dark:text-body-dark">
       <AboutSection about={about} />
-      <ProjectsSection projects={projects} />
+      <ProjectsSection
+        projects={projects}
+        projectSectionTitle={projectSectionTitle}
+      />
       <ContactSection
         contactSectionTitle={contactSectionTitle}
         contactLinks={contactLinks}

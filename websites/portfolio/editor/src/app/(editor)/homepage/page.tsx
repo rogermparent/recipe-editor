@@ -15,8 +15,14 @@ import { HomepageProjectItem } from "portfolio-website-common/homepage-controlle
 
 export default async function HomepageEditor() {
   const homepageContent = await getHomepageContent();
-  const { projects, title, about, contactLinks, contactSectionTitle } =
-    homepageContent || {};
+  const {
+    projects,
+    title,
+    about,
+    contactLinks,
+    contactSectionTitle,
+    projectSectionTitle,
+  } = homepageContent || {};
   const projectsWithImagesPromise = projects?.map<Promise<HomepageProjectItem>>(
     async (project) => {
       const existingImage = project.image
@@ -44,10 +50,15 @@ export default async function HomepageEditor() {
       <form action={writeHomepageContent}>
         <TextInput name="title" label="Title" defaultValue={title || ""} />
         <TextAreaInput name="about" label="About" defaultValue={about || ""} />
+        <TextInput
+          name="projectSectionTitle"
+          label="Project Section Title"
+          defaultValue={projectSectionTitle || ""}
+        />
         <HomepageProjectsInput defaultValue={projectsWithImages} />
         <TextInput
           name="contactSectionTitle"
-          label="Contact Section Intro"
+          label="Contact Section Title"
           defaultValue={contactSectionTitle || ""}
         />
         <HomepageContactLinksInput defaultValue={contactLinks} />

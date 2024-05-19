@@ -26,4 +26,5 @@ export interface HomepageContent {
   projects?: HomepageProjectItem[];
   contactLinks?: ContactLink[];
   contactSectionTitle?: string;
+  projectSectionTitle?: string;
 }

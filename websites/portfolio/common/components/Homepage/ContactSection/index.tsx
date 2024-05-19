@@ -38,6 +38,8 @@ async function ContactLinkComponent({ item }: { item: ContactLink }) {
   return (
     <Link
       href={item.link}
+      target="_blank"
+      rel="noopener noreferrer"
       className="flex flex-row flex-nowrap items-center w-auto block py-2 my-2 leading-5"
     >
       <ContactLinkLabel item={item} />{" "}
@@ -54,7 +56,7 @@ export default async function ContactSection({
     <section className="py-6 bg-backgroundAlt-light dark:bg-backgroundAlt-dark">
       <div className="max-w-prose mx-auto">
         {contactSectionTitle && (
-          <h2 className="text-3xl font-bold my-4 text-center text-primary-light dark:text-primary-dark">
+          <h2 className="text-2xl md:text-3xl font-bold px-2 my-4 text-center text-primary-light dark:text-primary-dark">
             {contactSectionTitle}
           </h2>
         )}

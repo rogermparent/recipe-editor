@@ -23,21 +23,21 @@ export default async function ProjectCard({ project }: ProjectCardProps) {
         {
           src: `/uploads/${project.image}`,
           alt: `Image for ${project.name}`,
-          width: 600,
-          height: 400,
+          width: 640,
+          height: 384,
         },
       )
     : undefined;
 
   return (
-    <li className="rounded-lg overflow-hidden shadow-md">
+    <li className="rounded-lg overflow-hidden shadow-md max-w-screen-sm mx-auto">
       <div className="relative overflow-hidden">
         {imageProps && (
           <Image
             {...imageProps.props}
             alt={`Image for ${project.name}`}
             unoptimized={true}
-            className="w-full h-64 object-cover transition duration-300 hover:scale-105"
+            className="w-full h-96 object-cover transition duration-300 hover:scale-105"
           />
         )}
       </div>
@@ -50,6 +50,8 @@ export default async function ProjectCard({ project }: ProjectCardProps) {
             <Link
               href={link}
               key={i}
+              target="_blank"
+              rel="noopener noreferrer"
               className="font-bold p-1 underline text-secondary-light dark:text-secondary-dark"
             >
               {label}

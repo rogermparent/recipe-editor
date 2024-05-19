@@ -14,6 +14,7 @@ const HomepageFormSchema = z.object({
   title: z.string(),
   about: z.string(),
   contactSectionTitle: z.string(),
+  projectSectionTitle: z.string(),
   projects: z.optional(
     z.array(
       z.object({
@@ -69,7 +70,14 @@ export async function writeHomepageContent(formData: FormData) {
   );
 
   if (success) {
-    const { projects, contactLinks, title, about, contactSectionTitle } = data;
+    const {
+      projects,
+      contactLinks,
+      title,
+      about,
+      contactSectionTitle,
+      projectSectionTitle,
+    } = data;
     const processedProjects = projects
       ? await Promise.all(
           projects.map(async (project) => {
@@ -89,6 +97,7 @@ export async function writeHomepageContent(formData: FormData) {
       projects: processedProjects,
       contactLinks,
       contactSectionTitle,
+      projectSectionTitle,
     };
     await outputJson(homepageContentFilePath, processedData);
     redirect("/");

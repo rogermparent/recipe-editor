@@ -4,7 +4,7 @@ import Markdown from "component-library/components/Markdown";
 export default function AboutSection({ about }: HomepageContent) {
   return (
     about && (
-      <section className="flex flex-col flex-nowrap py-12 px-3 bg-backgroundAlt-light dark:bg-backgroundAlt-dark w-full min-h-96 h-screen items-center justify-center relative">
+      <section className="flex flex-col flex-nowrap py-12 px-3 bg-backgroundAlt-light dark:bg-backgroundAlt-dark w-full min-h-96 h-screen lg:h-auto items-center justify-center relative">
         <div className="max-w-prose mx-auto">
           <Markdown forceWrapper={true} className="markdown-body bg-inherit">
             {about}
@@ -12,7 +12,7 @@ export default function AboutSection({ about }: HomepageContent) {
         </div>
         <a
           href="#projects"
-          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center justify-center"
+          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center justify-center lg:hidden"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
