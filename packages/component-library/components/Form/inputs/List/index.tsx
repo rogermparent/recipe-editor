@@ -1,5 +1,3 @@
-"use client";
-
 import { Dispatch, useReducer, ReactNode } from "react";
 import clsx from "clsx";
 import { Button } from "../../../Button";
@@ -204,11 +202,11 @@ export interface ListItemProps<ValueType> {
 export function ListInput<ValueType>({
   name,
   defaultValue,
-  Item,
   label,
+  Item,
 }: {
   name: string;
-  label: string;
+  label?: string;
   defaultValue?: ValueType[];
   Item: (props: ListItemProps<ValueType>) => ReactNode;
 }) {

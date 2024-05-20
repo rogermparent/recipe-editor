@@ -1,5 +1,4 @@
 import { TextInput } from "component-library/components/Form/inputs/Text";
-import { TextAreaInput } from "component-library/components/Form/inputs/TextArea";
 import HomepageProjectsInput from "portfolio-website-common/homepage-controller/HomepageProjectsInput";
 import { getHomepageContent } from "portfolio-website-common/homepage-controller/data";
 import { writeHomepageContent } from "portfolio-website-common/homepage-controller/actions";
@@ -12,6 +11,9 @@ import {
   uploadsDirectory,
 } from "portfolio-website-common/homepage-controller/paths";
 import { HomepageProjectItem } from "portfolio-website-common/homepage-controller/types";
+import { TextAreaInput } from "component-library/components/Form/inputs/TextArea";
+import { HomepageUploadInputItem, UploadsListInput } from "./UploadsList";
+import { readdir } from "fs-extra";
 
 export default async function HomepageEditor() {
   const homepageContent = await getHomepageContent();
@@ -45,9 +47,16 @@ export default async function HomepageEditor() {
 
   const projectsWithImages =
     projectsWithImagesPromise && (await Promise.all(projectsWithImagesPromise));
+
+  const uploadNames = await readdir(uploadsDirectory);
+  const uploadsList = uploadNames.map<HomepageUploadInputItem>((name) => ({
+    name,
+  }));
+
   return (
     <div className="flex-1 flex flex-col flex-nowrap container p-2">
       <form action={writeHomepageContent}>
+        <UploadsListInput name="uploads" defaultValue={uploadsList} />
         <TextInput name="title" label="Title" defaultValue={title || ""} />
         <TextAreaInput name="about" label="About" defaultValue={about || ""} />
         <TextInput

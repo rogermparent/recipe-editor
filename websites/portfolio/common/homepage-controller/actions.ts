@@ -11,6 +11,15 @@ import { ReadableStream } from "node:stream/web";
 import { pipeline } from "node:stream/promises";
 
 const HomepageFormSchema = z.object({
+  uploads: z
+    .array(
+      z.object({
+        file: z.instanceof(File).optional(),
+        name: z.string().optional(),
+        originalName: z.string(),
+      }),
+    )
+    .optional(),
   title: z.string(),
   about: z.string(),
   contactSectionTitle: z.string(),

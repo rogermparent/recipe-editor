@@ -14,7 +14,7 @@ export function ImageInput({
   id,
   clearImageName = "clearImage",
 }: {
-  defaultImage?: StaticImageProps;
+  defaultImage?: StaticImageProps | string;
   errors?: string[] | undefined;
   imageToImport?: string;
   label: string;
@@ -78,11 +78,20 @@ export function ImageInput({
             </button>
           </div>
         ) : defaultImage ? (
-          <Image
-            {...defaultImage.props}
-            alt="Existing Image"
-            unoptimized={true}
-          />
+          typeof defaultImage === "string" ? (
+            <Image
+              src={defaultImage}
+              alt="Existing Image"
+              width={500}
+              height={500}
+            />
+          ) : (
+            <Image
+              {...defaultImage.props}
+              alt="Existing Image"
+              unoptimized={true}
+            />
+          )
         ) : null}
       </div>
       {defaultImage ? (

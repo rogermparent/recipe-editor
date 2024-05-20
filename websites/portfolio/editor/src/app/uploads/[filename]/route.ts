@@ -1,4 +1,4 @@
-import { uploadsDirectory } from "@/app/(editor)/homepage/paths";
+import { uploadsDirectory } from "portfolio-website-common/homepage-controller/paths";
 import { ReadStream } from "fs";
 import { open } from "fs/promises";
 import { notFound } from "next/navigation";
