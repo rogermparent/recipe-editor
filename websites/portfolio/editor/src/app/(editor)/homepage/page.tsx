@@ -11,7 +11,7 @@ import {
   uploadsDirectory,
 } from "portfolio-website-common/homepage-controller/paths";
 import { HomepageProjectItem } from "portfolio-website-common/homepage-controller/types";
-import { TextAreaInput } from "component-library/components/Form/inputs/TextArea";
+import { MarkdownInput } from "component-library/components/Form/inputs/Markdown";
 import { HomepageUploadInputItem, UploadsListInput } from "./UploadsList";
 import { readdir } from "fs-extra";
 
@@ -58,7 +58,7 @@ export default async function HomepageEditor() {
       <form action={writeHomepageContent}>
         <UploadsListInput name="uploads" defaultValue={uploadsList} />
         <TextInput name="title" label="Title" defaultValue={title || ""} />
-        <TextAreaInput name="about" label="About" defaultValue={about || ""} />
+        <MarkdownInput name="about" label="About" defaultValue={about || ""} />
         <TextInput
           name="projectSectionTitle"
           label="Project Section Title"
