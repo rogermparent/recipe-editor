@@ -54,7 +54,8 @@ export function UploadsListInput({
     useKeyList<HomepageUploadInputItem>(defaultValue);
 
   return (
-    <div>
+    <details>
+      <summary className="font-bold p-1">Uploads</summary>
       <ul>
         {values.map(({ key, defaultValue }, index) => {
           const itemName = `${name}[${index}]`;
@@ -87,6 +88,6 @@ export function UploadsListInput({
       >
         Append
       </Button>
-    </div>
+    </details>
   );
 }
