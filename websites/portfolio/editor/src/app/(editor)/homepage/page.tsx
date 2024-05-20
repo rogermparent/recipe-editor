@@ -58,7 +58,11 @@ export default async function HomepageEditor() {
       <form action={writeHomepageContent}>
         <UploadsListInput name="uploads" defaultValue={uploadsList} />
         <TextInput name="title" label="Title" defaultValue={title || ""} />
-        <MarkdownInput name="about" label="About" defaultValue={about || ""} />
+        <MarkdownInput
+          name="about"
+          label="About"
+          defaultValue={about?.replaceAll(/\r\n/g, "\n") || ""}
+        />
         <TextInput
           name="projectSectionTitle"
           label="Project Section Title"
