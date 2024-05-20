@@ -6,11 +6,31 @@ import {
   useState,
   useRef,
   useEffect,
+  ReactNode,
 } from "react";
 import { Errors, FieldWrapper, baseInputStyle } from "../..";
 import clsx from "clsx";
 import StyledMarkdown from "component-library/components/Markdown";
 import { Button } from "component-library/components/Button";
+
+function FormatButton({
+  children,
+  onClick,
+}: {
+  children: ReactNode;
+  onClick: MouseEventHandler<HTMLButtonElement>;
+}) {
+  return (
+    <Button
+      onClick={onClick}
+      overrideDefaultStyles={true}
+      className="w-6 h-6 leading-none text-center rounded bg-slate-700 hover:bg-slate-500 disabled:bg-gray-900"
+      type="button"
+    >
+      {children}
+    </Button>
+  );
+}
 
 export function MarkdownInput({
   name,
@@ -103,15 +123,16 @@ export function MarkdownInput({
           >
             Preview
           </Button>
+          <div className="grow shrink" />
         </div>
         <div className={activeTab === "edit" ? "" : "hidden"}>
           <div className="flex gap-2 border-b p-2">
-            <Button onClick={handleBoldClick} type="button">
-              B
-            </Button>
-            <Button onClick={handleItalicClick} type="button">
-              I
-            </Button>
+            <FormatButton onClick={handleBoldClick}>
+              <span className="font-bold">B</span>
+            </FormatButton>
+            <FormatButton onClick={handleItalicClick}>
+              <span className="italic">I</span>
+            </FormatButton>
           </div>
           <textarea
             name={name}
