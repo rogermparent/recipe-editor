@@ -1,7 +1,6 @@
-// packages/component-library/components/Form/inputs/Markdown/index.tsx
 "use client";
 
-import { ChangeEventHandler, useState } from "react";
+import { ChangeEventHandler, MouseEventHandler, useState, useRef } from "react";
 import { Errors, FieldWrapper, baseInputStyle } from "../..";
 import clsx from "clsx";
 import StyledMarkdown from "component-library/components/Markdown";
@@ -24,10 +23,42 @@ export function MarkdownInput({
 }) {
   const [activeTab, setActiveTab] = useState<"edit" | "preview">("edit");
   const [value, setValue] = useState(defaultValue || "");
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(event.target.value);
     onChange?.(event);
+  };
+
+  const wrapSelection = (prefix: string, suffix: string) => {
+    const textArea = textAreaRef.current;
+    if (textArea) {
+      const { selectionStart, selectionEnd } = textArea;
+      const selectedText = value.substring(selectionStart, selectionEnd);
+      const newValue =
+        value.substring(0, selectionStart) +
+        prefix +
+        selectedText +
+        suffix +
+        value.substring(selectionEnd);
+      setValue(newValue);
+      textArea.focus();
+      textArea.setSelectionRange(
+        selectionStart + prefix.length,
+        selectionEnd + prefix.length,
+      );
+      onChange?.({
+        target: { value: newValue },
+      } as React.ChangeEvent<HTMLTextAreaElement>);
+    }
+  };
+
+  const handleBoldClick: MouseEventHandler<HTMLButtonElement> = () => {
+    wrapSelection("**", "**");
+  };
+
+  const handleItalicClick: MouseEventHandler<HTMLButtonElement> = () => {
+    wrapSelection("*", "*");
   };
 
   return (
@@ -57,9 +88,26 @@ export function MarkdownInput({
           </Button>
         </div>
         <div className={activeTab === "edit" ? "" : "hidden"}>
+          <div className="flex gap-2 border-b p-2">
+            <Button
+              onClick={handleBoldClick}
+              className={defaultButtonStyles}
+              type="button"
+            >
+              B
+            </Button>
+            <Button
+              onClick={handleItalicClick}
+              className={defaultButtonStyles}
+              type="button"
+            >
+              I
+            </Button>
+          </div>
           <textarea
             name={name}
             id={id}
+            ref={textAreaRef}
             className={clsx(baseInputStyle, "px-1 h-40 grow w-full")}
             value={value}
             onChange={handleChange}
