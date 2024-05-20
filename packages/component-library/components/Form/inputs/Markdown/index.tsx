@@ -123,7 +123,6 @@ export function MarkdownInput({
           >
             Preview
           </Button>
-          <div className="grow shrink" />
         </div>
         <div className={activeTab === "edit" ? "" : "hidden"}>
           <div className="flex gap-2 border-b p-2">
