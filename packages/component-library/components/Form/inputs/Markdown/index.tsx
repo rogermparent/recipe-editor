@@ -36,6 +36,7 @@ export function MarkdownInput({
       <div className="flex flex-col border rounded">
         <div className="flex border-b">
           <Button
+            overrideDefaultStyles={true}
             className={clsx(
               activeTab === "edit" ? "bg-blue-500 text-white" : "",
               "px-4 py-2 rounded-tl",
@@ -45,6 +46,7 @@ export function MarkdownInput({
             Write
           </Button>
           <Button
+            overrideDefaultStyles={true}
             className={clsx(
               activeTab === "preview" ? "bg-blue-500 text-white" : "",
               "px-4 py-2 rounded-tr",
