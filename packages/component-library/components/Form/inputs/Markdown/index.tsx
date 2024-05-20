@@ -90,6 +90,14 @@ export function MarkdownInput({
     }
   }, [selectionRange]);
 
+  const handleBoldClick: MouseEventHandler<HTMLButtonElement> = () => {
+    wrapSelection("**", "**");
+  };
+
+  const handleItalicClick: MouseEventHandler<HTMLButtonElement> = () => {
+    wrapSelection("*", "*");
+  };
+
   const handleCodeClick: MouseEventHandler<HTMLButtonElement> = () => {
     const textArea = textAreaRef.current;
     if (textArea) {
@@ -98,20 +106,12 @@ export function MarkdownInput({
 
       if (selectedText.includes("\n")) {
         // Multiline code block
-        wrapSelection("`\n", "\n`");
+        wrapSelection("\n```\n", "\n```\n");
       } else {
         // Inline code
         wrapSelection("`", "`");
       }
     }
-  };
-
-  const handleBoldClick: MouseEventHandler<HTMLButtonElement> = () => {
-    wrapSelection("**", "**");
-  };
-
-  const handleItalicClick: MouseEventHandler<HTMLButtonElement> = () => {
-    wrapSelection("*", "*");
   };
 
   return (
@@ -149,9 +149,7 @@ export function MarkdownInput({
               <span className="italic">I</span>
             </FormatButton>
             <FormatButton onClick={handleCodeClick}>
-              <span className="bg-slate-500 text-white font-mono py-0.5 px-1 rounded-sm">
-                {"</>"}
-              </span>
+              <span className="font-mono text-xs">{"</>"}</span>
             </FormatButton>
           </div>
           <textarea
