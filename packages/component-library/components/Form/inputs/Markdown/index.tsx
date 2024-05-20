@@ -81,14 +81,21 @@ export function MarkdownInput({
     }
   };
 
-  useEffect(() => {
+  const handleCodeClick: MouseEventHandler<HTMLButtonElement> = () => {
     const textArea = textAreaRef.current;
-    if (textArea && selectionRange) {
-      const { selectionStart, selectionEnd } = selectionRange;
-      textArea.focus();
-      textArea.setSelectionRange(selectionStart, selectionEnd);
+    if (textArea) {
+      const { selectionStart, selectionEnd } = textArea;
+      const selectedText = value.substring(selectionStart, selectionEnd);
+
+      if (selectedText.includes("\n")) {
+        // Multiline code block
+        wrapSelection("`\n", "\n`");
+      } else {
+        // Inline code
+        wrapSelection("`", "`");
+      }
     }
-  }, [selectionRange]);
+  };
 
   const handleBoldClick: MouseEventHandler<HTMLButtonElement> = () => {
     wrapSelection("**", "**");
@@ -131,6 +138,11 @@ export function MarkdownInput({
             </FormatButton>
             <FormatButton onClick={handleItalicClick}>
               <span className="italic">I</span>
+            </FormatButton>
+            <FormatButton onClick={handleCodeClick}>
+              <span className="bg-slate-500 text-white font-mono py-0.5 px-1 rounded-sm">
+                {"</>"}
+              </span>
             </FormatButton>
           </div>
           <textarea
