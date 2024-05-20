@@ -114,6 +114,31 @@ export function MarkdownInput({
     }
   };
 
+  const handleLinkClick: MouseEventHandler<HTMLButtonElement> = () => {
+    const textArea = textAreaRef.current;
+    if (textArea) {
+      const { selectionStart, selectionEnd } = textArea;
+      const selectedText = value.substring(selectionStart, selectionEnd);
+
+      const newSelectionStart = selectionStart + 1; // After the opening bracket
+
+      let newSelectionEnd;
+      if (selectedText.length > 0) {
+        // Select the "url" part for pasting
+        newSelectionEnd = newSelectionStart + selectedText.length + 2; // After the closing parenthesis
+      } else {
+        // Place cursor in the label area for typing
+        newSelectionEnd = newSelectionStart;
+      }
+
+      wrapSelection("[", "](url)");
+      setSelectionRange({
+        selectionStart: newSelectionStart,
+        selectionEnd: newSelectionEnd,
+      });
+    }
+  };
+
   return (
     <FieldWrapper label={label} id={id}>
       <Errors errors={errors} />
@@ -150,6 +175,9 @@ export function MarkdownInput({
             </FormatButton>
             <FormatButton onClick={handleCodeClick}>
               <span className="font-mono text-xs">{"</>"}</span>
+            </FormatButton>
+            <FormatButton onClick={handleLinkClick}>
+              <span className="text-xs">🔗</span>
             </FormatButton>
           </div>
           <textarea
