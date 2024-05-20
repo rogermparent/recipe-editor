@@ -1,6 +1,12 @@
 "use client";
 
-import { ChangeEventHandler, MouseEventHandler, useState, useRef } from "react";
+import {
+  ChangeEventHandler,
+  MouseEventHandler,
+  useState,
+  useRef,
+  useEffect,
+} from "react";
 import { Errors, FieldWrapper, baseInputStyle } from "../..";
 import clsx from "clsx";
 import StyledMarkdown from "component-library/components/Markdown";
@@ -23,6 +29,9 @@ export function MarkdownInput({
 }) {
   const [activeTab, setActiveTab] = useState<"edit" | "preview">("edit");
   const [value, setValue] = useState(defaultValue || "");
+  const [selectionRange, setSelectionRange] = useState<
+    { selectionStart: number; selectionEnd: number } | undefined
+  >();
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -42,16 +51,24 @@ export function MarkdownInput({
         suffix +
         value.substring(selectionEnd);
       setValue(newValue);
-      textArea.focus();
-      textArea.setSelectionRange(
-        selectionStart + prefix.length,
-        selectionEnd + prefix.length,
-      );
+      setSelectionRange({
+        selectionStart: selectionStart + prefix.length,
+        selectionEnd: selectionEnd + prefix.length,
+      });
       onChange?.({
         target: { value: newValue },
       } as React.ChangeEvent<HTMLTextAreaElement>);
     }
   };
+
+  useEffect(() => {
+    const textArea = textAreaRef.current;
+    if (textArea && selectionRange) {
+      const { selectionStart, selectionEnd } = selectionRange;
+      textArea.focus();
+      textArea.setSelectionRange(selectionStart, selectionEnd);
+    }
+  }, [selectionRange]);
 
   const handleBoldClick: MouseEventHandler<HTMLButtonElement> = () => {
     wrapSelection("**", "**");
@@ -89,18 +106,10 @@ export function MarkdownInput({
         </div>
         <div className={activeTab === "edit" ? "" : "hidden"}>
           <div className="flex gap-2 border-b p-2">
-            <Button
-              onClick={handleBoldClick}
-              className={defaultButtonStyles}
-              type="button"
-            >
+            <Button onClick={handleBoldClick} type="button">
               B
             </Button>
-            <Button
-              onClick={handleItalicClick}
-              className={defaultButtonStyles}
-              type="button"
-            >
+            <Button onClick={handleItalicClick} type="button">
               I
             </Button>
           </div>
