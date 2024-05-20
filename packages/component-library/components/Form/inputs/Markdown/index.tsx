@@ -81,6 +81,15 @@ export function MarkdownInput({
     }
   };
 
+  useEffect(() => {
+    const textArea = textAreaRef.current;
+    if (textArea && selectionRange) {
+      const { selectionStart, selectionEnd } = selectionRange;
+      textArea.focus();
+      textArea.setSelectionRange(selectionStart, selectionEnd);
+    }
+  }, [selectionRange]);
+
   const handleCodeClick: MouseEventHandler<HTMLButtonElement> = () => {
     const textArea = textAreaRef.current;
     if (textArea) {
