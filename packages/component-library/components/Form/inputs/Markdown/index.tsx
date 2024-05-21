@@ -209,10 +209,19 @@ export function MarkdownInput({
 
       setValue(newValue);
 
-      setSelectionRange({
-        selectionStart,
-        selectionEnd: selectionStart + quotedSelection.length,
-      });
+      if (selectionStart === selectionEnd) {
+        const blockquoteContentIndex =
+          selectionStart + quotedSelection.indexOf("> ") + 2;
+        setSelectionRange({
+          selectionStart: blockquoteContentIndex,
+          selectionEnd: blockquoteContentIndex,
+        });
+      } else {
+        setSelectionRange({
+          selectionStart,
+          selectionEnd: selectionStart + quotedSelection.length,
+        });
+      }
 
       onChange?.({
         target: { value: newValue },
