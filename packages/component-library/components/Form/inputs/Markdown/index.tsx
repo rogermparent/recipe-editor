@@ -157,6 +157,10 @@ export function MarkdownInput({
     selectionEnd: number;
   }) {
     if (selectionStart === selectionEnd) {
+      if (selectionStart === value.length) {
+        // Empty selection at end of textarea
+        return { selectionStart, selectionEnd };
+      }
       const closestNewlineBefore = value.lastIndexOf(
         "\n",
         value[selectionStart] === "\n" ? selectionStart - 1 : selectionStart,
@@ -181,26 +185,33 @@ export function MarkdownInput({
         value,
       });
 
-      const selectedText = value.substring(selectionStart, selectionEnd);
+      let quotedSelection: string;
 
-      const selectedLines = selectedText.split("\n");
+      if (selectionStart === selectionEnd && selectionStart === value.length) {
+        // Empty selection at the end of the textarea
+        quotedSelection = "\n\n> ";
+      } else {
+        const selectedText = value.substring(selectionStart, selectionEnd);
 
-      const quotedSelectionContent = selectedLines
-        .map((line) => `> ${line}`)
-        .join("\n");
+        const selectedLines = selectedText.split("\n");
 
-      const characterBeforeSelection = value[selectionStart - 1];
-      const characterTwoBeforeSelection = value[selectionStart - 2];
-      const characterAfterSelection = value[selectionEnd];
-      const characterTwoAfterSelection = value[selectionEnd + 1];
+        const quotedSelectionContent = selectedLines
+          .map((line) => `> ${line}`)
+          .join("\n");
 
-      const quotedSelection = [
-        characterBeforeSelection === "\n" ? "" : "\n",
-        characterTwoBeforeSelection === "\n" ? "" : "\n",
-        quotedSelectionContent,
-        characterAfterSelection === "\n" ? "" : "\n",
-        characterTwoAfterSelection === "\n" ? "" : "\n",
-      ].join("");
+        const characterBeforeSelection = value[selectionStart - 1];
+        const characterTwoBeforeSelection = value[selectionStart - 2];
+        const characterAfterSelection = value[selectionEnd];
+        const characterTwoAfterSelection = value[selectionEnd + 1];
+
+        quotedSelection = [
+          characterBeforeSelection === "\n" ? "" : "\n",
+          characterTwoBeforeSelection === "\n" ? "" : "\n",
+          quotedSelectionContent,
+          characterAfterSelection === "\n" ? "" : "\n",
+          characterTwoAfterSelection === "\n" ? "" : "\n",
+        ].join("");
+      }
 
       const newValue =
         value.substring(0, selectionStart) +
@@ -210,8 +221,8 @@ export function MarkdownInput({
       setValue(newValue);
 
       setSelectionRange({
-        selectionStart,
-        selectionEnd: selectionStart + quotedSelection.length,
+        selectionStart: selectionStart + quotedSelection.lastIndexOf("> ") + 2, // Position after the last '> '
+        selectionEnd: selectionStart + quotedSelection.lastIndexOf("> ") + 2, // Position after the last '> '
       });
 
       onChange?.({
