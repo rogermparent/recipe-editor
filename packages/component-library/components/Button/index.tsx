@@ -1,4 +1,3 @@
-// packages/component-library/components/Button/index.tsx
 import clsx from "clsx";
 import { MouseEventHandler, ReactNode } from "react";
 

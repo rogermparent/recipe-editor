@@ -1,4 +1,3 @@
-// components/ProjectCard.tsx
 import Image from "next/image";
 import Link from "next/link";
 import { getStaticImageProps } from "next-static-image/src";
