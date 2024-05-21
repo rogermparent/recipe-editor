@@ -147,36 +147,65 @@ export function MarkdownInput({
     }
   };
 
-  const handleQuoteClick: MouseEventHandler<HTMLButtonElement> = () => {
+  function getBlockquoteSelection({
+    value,
+    selectionStart,
+    selectionEnd,
+  }: {
+    value: string;
+    selectionStart: number;
+    selectionEnd: number;
+  }) {
+    if (selectionStart === selectionEnd) {
+      const closestNewlineBefore = value.lastIndexOf(
+        "\n",
+        value[selectionStart] === "\n" ? selectionStart - 1 : selectionStart,
+      );
+      const closestNewlineAfter = value.indexOf("\n", selectionEnd);
+      const lineStart =
+        closestNewlineBefore === -1 ? 0 : closestNewlineBefore + 1;
+      const lineEnd =
+        closestNewlineAfter === -1 ? value.length : closestNewlineAfter;
+      return { selectionStart: lineStart, selectionEnd: lineEnd };
+    } else {
+      return { selectionStart, selectionEnd };
+    }
+  }
+
+  const handleBlockquoteClick: MouseEventHandler<HTMLButtonElement> = () => {
     const textArea = textAreaRef.current;
     if (textArea) {
-      const { selectionStart, selectionEnd } = textArea;
-      let startLineIndex = value.lastIndexOf("\n", selectionStart - 1) + 1;
-      let endLineIndex = value.indexOf("\n", selectionEnd);
-      if (endLineIndex === -1) {
-        endLineIndex = value.length;
-      }
-
-      let selectedText = value.substring(startLineIndex, endLineIndex);
-      if (selectedText.length === 0) {
-        // No content selected, use the current line as selection
-        selectedText = value.substring(startLineIndex, endLineIndex);
-      }
-
-      const lines = selectedText.split("\n");
-      const blockquoteText = lines.map((line) => `> ${line}`).join("\n");
-
-      // Insert newline above and below if not already present
-      const prefix =
-        startLineIndex > 0 && value[startLineIndex - 1] !== "\n" ? "\n" : "";
-      const suffix =
-        endLineIndex < value.length && value[endLineIndex] !== "\n" ? "\n" : "";
-
-      wrapSelection(prefix + blockquoteText, suffix, false);
-      setSelectionRange({
-        selectionStart: startLineIndex + 2, // After "> "
-        selectionEnd: endLineIndex + 2 * lines.length, // After "> " for each line
+      const { selectionStart, selectionEnd } = getBlockquoteSelection({
+        selectionStart: textArea.selectionStart,
+        selectionEnd: textArea.selectionEnd,
+        value,
       });
+
+      const selectedText = value.substring(selectionStart, selectionEnd);
+
+      const selectedLines = selectedText.split("\n");
+
+      const quotedSelectionContent = selectedLines
+        .map((line) => `> ${line}`)
+        .join("\n");
+
+      const quotedSelection = `\n${quotedSelectionContent}\n`;
+
+      const newValue =
+        value.substring(0, selectionStart) +
+        quotedSelection +
+        value.substring(selectionEnd);
+
+      setValue(newValue);
+
+      setSelectionRange({
+        selectionStart,
+        selectionEnd: selectionStart + quotedSelection.length,
+      });
+
+      onChange?.({
+        target: { value: newValue },
+      } as React.ChangeEvent<HTMLTextAreaElement>);
     }
   };
 
@@ -220,8 +249,8 @@ export function MarkdownInput({
             <FormatButton onClick={handleLinkClick}>
               <span className="text-xs">🔗</span>
             </FormatButton>
-            <FormatButton onClick={handleQuoteClick}>
-              <span className="text-xs">&ldquo;</span>
+            <FormatButton onClick={handleBlockquoteClick}>
+              <span className="text-xs">❝</span>
             </FormatButton>
           </div>
           <textarea
