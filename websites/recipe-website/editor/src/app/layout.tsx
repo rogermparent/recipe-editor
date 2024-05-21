@@ -101,7 +101,7 @@ export default async function RootLayout({
     <html lang="en">
       <body
         className={clsx(
-          "bg-slate-950 flex flex-col flex-nowrap items-center min-w-fit",
+          "bg-slate-950 flex flex-col flex-nowrap items-center min-w-fit w-full",
         )}
       >
         <SiteHeader />

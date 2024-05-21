@@ -13,7 +13,7 @@ import { PaddedButton } from "component-library/components/Button";
 export function IngredientItem({ ingredient }: { ingredient?: string }) {
   return (
     <li>
-      <label className="h-12 block flex flex-row flex-nowrap items-center text-lg">
+      <label className="my-2 block flex flex-row flex-nowrap items-center print:h-auto">
         <input
           type="checkbox"
           className="h-4 w-4 m-2 inline-block shrink-0 rounded-sm border border-primary shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
@@ -30,16 +30,19 @@ export function IngredientItem({ ingredient }: { ingredient?: string }) {
 
 export function Ingredients({ ingredients }: { ingredients?: Ingredient[] }) {
   return (
-    <form className="w-full lg:max-w-96 lg:mr-2">
+    <form className="w-full lg:max-w-96 lg:mr-4 print:text-sm print:w-96">
       {ingredients && (
         <div className="my-4">
           <h2 className="text-xl font-bold flex flex-row flex-nowrap items-center">
             Ingredients
-            <PaddedButton className="ml-2 h-12 text-base" type="reset">
+            <PaddedButton
+              className="ml-2 h-12 text-base print:hidden"
+              type="reset"
+            >
               Reset
             </PaddedButton>
           </h2>
-          <ul>
+          <ul className="text-lg print:text-sm">
             {ingredients.map(({ ingredient }, i) => (
               <IngredientItem key={i} ingredient={ingredient} />
             ))}
@@ -54,7 +57,7 @@ export function MultiplierInput() {
   const [{ input }, setMultiplier] = useMultiplier();
 
   return (
-    <label htmlFor="multiplier" className="w-24">
+    <label htmlFor="multiplier" className="w-24 print:hidden">
       <InfoCard title="Multiply">
         <TextInput
           id="multiplier"
