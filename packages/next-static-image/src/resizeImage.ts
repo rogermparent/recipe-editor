@@ -56,5 +56,7 @@ export async function queuePossibleImageResize(props: ImageResizeProps) {
   }
 
   // Otherwise, claim our spot in cache and start the transform.
-  runningResizes.set(resultPath, resizeImage(props));
+  const resizePromise = resizeImage(props);
+  runningResizes.set(resultPath, resizePromise);
+  await resizePromise;
 }

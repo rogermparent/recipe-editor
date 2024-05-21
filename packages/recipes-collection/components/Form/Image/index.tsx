@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { FileInput } from "component-library/components/Form/inputs/File";

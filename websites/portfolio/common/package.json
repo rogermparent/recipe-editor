@@ -1,0 +1,26 @@
+{
+  "name": "portfolio-website-common",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "component-library": "^1.0.0",
+    "content-engine": "^1.0.0",
+    "github-markdown-css": "^5.5.1",
+    "markdown-to-jsx": "^7.4.7",
+    "menus-collection": "^1.0.0",
+    "next": "14.2.3",
+    "next-static-image": "^0.0.1",
+    "zod": "^3.23.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20"
+  }
+}
