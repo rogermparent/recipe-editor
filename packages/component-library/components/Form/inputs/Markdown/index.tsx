@@ -261,7 +261,7 @@ export function MarkdownInput({
               <span className="text-xs">🔗</span>
             </FormatButton>
             <FormatButton onClick={handleBlockquoteClick}>
-              <span className="text-xs">❝</span>
+              <span className="text-xs font-bold">&ldquo;</span>
             </FormatButton>
           </div>
           <textarea
