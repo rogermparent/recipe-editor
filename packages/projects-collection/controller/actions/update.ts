@@ -5,7 +5,10 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import parseProjectFormData from "../parseFormData";
 import { ProjectFormState } from "../formState";
-import { getProjectDirectory, getProjectFilePath } from "../filesystemDirectories";
+import {
+  getProjectDirectory,
+  getProjectFilePath,
+} from "../filesystemDirectories";
 import { Project } from "../types";
 import createDefaultSlug from "../createSlug";
 import slugify from "@sindresorhus/slugify";
@@ -43,7 +46,10 @@ export default async function updateProject(
 
   if (willRename) {
     await rename(currentProjectDirectory, finalProjectDirectory);
-    await writeFile(`${finalProjectDirectory}/project.json`, JSON.stringify(data));
+    await writeFile(
+      `${finalProjectDirectory}/project.json`,
+      JSON.stringify(data),
+    );
   } else {
     await writeFile(currentProjectPath, JSON.stringify(data));
   }
