@@ -59,7 +59,11 @@ export function MarkdownInput({
     onChange?.(event);
   };
 
-  const wrapSelection = (prefix: string, suffix: string) => {
+  const wrapSelection = (
+    prefix: string,
+    suffix: string,
+    setSelection: boolean = true,
+  ) => {
     const textArea = textAreaRef.current;
     if (textArea) {
       const { selectionStart, selectionEnd } = textArea;
@@ -71,10 +75,12 @@ export function MarkdownInput({
         suffix +
         value.substring(selectionEnd);
       setValue(newValue);
-      setSelectionRange({
-        selectionStart: selectionStart + prefix.length,
-        selectionEnd: selectionEnd + prefix.length,
-      });
+      if (setSelection) {
+        setSelectionRange({
+          selectionStart: selectionStart + prefix.length,
+          selectionEnd: selectionEnd + prefix.length,
+        });
+      }
       onChange?.({
         target: { value: newValue },
       } as React.ChangeEvent<HTMLTextAreaElement>);
@@ -120,18 +126,20 @@ export function MarkdownInput({
       const { selectionStart, selectionEnd } = textArea;
       const selectedText = value.substring(selectionStart, selectionEnd);
 
-      const newSelectionStart = selectionStart + 1; // After the opening bracket
-
+      let newSelectionStart = selectionStart + 1; // After the opening bracket
       let newSelectionEnd;
+
       if (selectedText.length > 0) {
-        // Select the "url" part for pasting
-        newSelectionEnd = newSelectionStart + selectedText.length + 2; // After the closing parenthesis
+        // Text is selected, start selection after selected text and "]("
+        newSelectionStart += selectedText.length + 2;
+        // End selection after "url"
+        newSelectionEnd = newSelectionStart + 3;
       } else {
-        // Place cursor in the label area for typing
+        // No text is selected, place cursor in the label area for typing
         newSelectionEnd = newSelectionStart;
       }
 
-      wrapSelection("[", "](url)");
+      wrapSelection("[", "](url)", false);
       setSelectionRange({
         selectionStart: newSelectionStart,
         selectionEnd: newSelectionEnd,
