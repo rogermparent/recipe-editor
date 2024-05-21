@@ -189,7 +189,18 @@ export function MarkdownInput({
         .map((line) => `> ${line}`)
         .join("\n");
 
-      const quotedSelection = `\n${quotedSelectionContent}\n`;
+      const characterBeforeSelection = value[selectionStart - 1];
+      const characterTwoBeforeSelection = value[selectionStart - 2];
+      const characterAfterSelection = value[selectionEnd];
+      const characterTwoAfterSelection = value[selectionEnd + 1];
+
+      const quotedSelection = [
+        characterBeforeSelection === "\n" ? "" : "\n",
+        characterTwoBeforeSelection === "\n" ? "" : "\n",
+        quotedSelectionContent,
+        characterAfterSelection === "\n" ? "" : "\n",
+        characterTwoAfterSelection === "\n" ? "" : "\n",
+      ].join("");
 
       const newValue =
         value.substring(0, selectionStart) +
