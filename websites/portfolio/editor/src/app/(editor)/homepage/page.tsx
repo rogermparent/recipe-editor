@@ -11,7 +11,7 @@ import {
   uploadsDirectory,
 } from "portfolio-website-common/homepage-controller/paths";
 import { HomepageProjectItem } from "portfolio-website-common/homepage-controller/types";
-import { MarkdownInput } from "component-library/components/Form/inputs/Markdown";
+import MarkdownInput from "./HomepageInput";
 import { HomepageUploadInputItem, UploadsListInput } from "./UploadsList";
 import { readdir } from "fs-extra";
 
