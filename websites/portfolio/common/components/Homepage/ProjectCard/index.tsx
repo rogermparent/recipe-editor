@@ -44,18 +44,21 @@ export default async function ProjectCard({ project }: ProjectCardProps) {
         <h3 className="font-bold text-xl mb-2 text-primary-light dark:text-primary-dark">
           {project.name}
         </h3>
-        {project.links &&
-          project.links.map(({ link, label }, i) => (
-            <Link
-              href={link}
-              key={i}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-bold p-1 underline text-secondary-light dark:text-secondary-dark"
-            >
-              {label}
-            </Link>
-          ))}
+        {project.links && (
+          <div>
+            {project.links.map(({ link, label }, i) => (
+              <Link
+                href={link}
+                key={i}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold p-1 underline text-secondary-light dark:text-secondary-dark inline-block"
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+        )}
         <p className="mt-2">{project.description}</p>
       </div>
     </li>
