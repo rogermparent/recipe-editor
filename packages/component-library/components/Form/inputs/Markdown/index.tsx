@@ -12,14 +12,14 @@ import clsx from "clsx";
 import StyledMarkdown from "component-library/components/Markdown";
 import { Button } from "component-library/components/Button";
 
-interface MarkdownControlsProps {
+export interface MarkdownControlsProps {
   textAreaRef: RefObject<HTMLTextAreaElement | null>;
   setValue: (value: string) => void;
   setSelectionRange: (range: SelectionRange) => void;
   onChange?: ChangeEventHandler<HTMLTextAreaElement>;
 }
 
-interface SelectionRange {
+export interface SelectionRange {
   selectionStart: number;
   selectionEnd: number;
 }
@@ -34,7 +34,7 @@ export interface MarkdownInputProps {
   Controls?: (props: MarkdownControlsProps) => ReactNode;
 }
 
-function FormatButton({
+export function FormatButton({
   children,
   onClick,
 }: {
@@ -53,7 +53,7 @@ function FormatButton({
   );
 }
 
-const wrapSelection = ({
+export const wrapSelection = ({
   prefix,
   suffix,
   textArea,
