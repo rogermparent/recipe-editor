@@ -14,7 +14,6 @@ import { Button } from "component-library/components/Button";
 
 export interface MarkdownControlsProps {
   textArea: HTMLTextAreaElement | null;
-  setValue: (value: string) => void;
   setSelectionRange: (range: SelectionRange) => void;
 }
 
@@ -55,7 +54,6 @@ export const wrapSelection = ({
   prefix,
   suffix,
   textArea,
-  setValue,
   reselect = true,
   setSelectionRange,
 }: {
@@ -63,7 +61,6 @@ export const wrapSelection = ({
   suffix: string;
   reselect?: boolean;
   textArea: HTMLTextAreaElement | null;
-  setValue: (value: string) => void;
   setSelectionRange: (range: SelectionRange) => void;
 }) => {
   if (textArea) {
@@ -76,7 +73,7 @@ export const wrapSelection = ({
       selectedText +
       suffix +
       value.substring(selectionEnd);
-    setValue(newValue);
+    textArea.value = newValue;
     if (reselect) {
       setSelectionRange({
         selectionStart: selectionStart + prefix.length,
@@ -86,17 +83,12 @@ export const wrapSelection = ({
   }
 };
 
-function BoldControl({
-  textArea,
-  setValue,
-  setSelectionRange,
-}: MarkdownControlsProps) {
+function BoldControl({ textArea, setSelectionRange }: MarkdownControlsProps) {
   const handleBoldClick: MouseEventHandler<HTMLButtonElement> = () => {
     wrapSelection({
       prefix: "**",
       suffix: "**",
       textArea,
-      setValue,
       setSelectionRange,
     });
   };
@@ -108,17 +100,12 @@ function BoldControl({
   );
 }
 
-function ItalicControl({
-  textArea,
-  setValue,
-  setSelectionRange,
-}: MarkdownControlsProps) {
+function ItalicControl({ textArea, setSelectionRange }: MarkdownControlsProps) {
   const handleItalicClick: MouseEventHandler<HTMLButtonElement> = () => {
     wrapSelection({
       prefix: "*",
       suffix: "*",
       textArea,
-      setValue,
       setSelectionRange,
     });
   };
@@ -130,11 +117,7 @@ function ItalicControl({
   );
 }
 
-function LinkControl({
-  textArea,
-  setValue,
-  setSelectionRange,
-}: MarkdownControlsProps) {
+function LinkControl({ textArea, setSelectionRange }: MarkdownControlsProps) {
   const handleLinkClick: MouseEventHandler<HTMLButtonElement> = () => {
     if (textArea) {
       const value = textArea.value;
@@ -158,7 +141,6 @@ function LinkControl({
         prefix: "[",
         suffix: "](url)",
         textArea,
-        setValue,
         setSelectionRange,
         reselect: false,
       });
@@ -203,7 +185,6 @@ function getBlockquoteSelection({
 
 function BlockquoteControl({
   textArea,
-  setValue,
   setSelectionRange,
 }: MarkdownControlsProps) {
   const handleBlockquoteClick: MouseEventHandler<HTMLButtonElement> = () => {
@@ -241,7 +222,7 @@ function BlockquoteControl({
         quotedSelection +
         value.substring(selectionEnd);
 
-      setValue(newValue);
+      textArea.value = newValue;
 
       if (selectionStart === selectionEnd) {
         const blockquoteContentIndex =
@@ -266,11 +247,7 @@ function BlockquoteControl({
   );
 }
 
-function CodeControl({
-  textArea,
-  setValue,
-  setSelectionRange,
-}: MarkdownControlsProps) {
+function CodeControl({ textArea, setSelectionRange }: MarkdownControlsProps) {
   const handleCodeClick: MouseEventHandler<HTMLButtonElement> = () => {
     if (textArea) {
       const value = textArea.value;
@@ -283,7 +260,6 @@ function CodeControl({
           prefix: "\n```\n",
           suffix: "\n```\n",
           textArea,
-          setValue,
           setSelectionRange,
         });
       } else {
@@ -292,7 +268,6 @@ function CodeControl({
           prefix: "`",
           suffix: "`",
           textArea,
-          setValue,
           setSelectionRange,
         });
       }
@@ -308,34 +283,19 @@ function CodeControl({
 
 export function DefaultControls({
   textArea,
-  setValue,
   setSelectionRange,
 }: MarkdownControlsProps) {
   return (
     <>
-      <BoldControl
-        textArea={textArea}
-        setValue={setValue}
-        setSelectionRange={setSelectionRange}
-      />
+      <BoldControl textArea={textArea} setSelectionRange={setSelectionRange} />
       <ItalicControl
         textArea={textArea}
-        setValue={setValue}
         setSelectionRange={setSelectionRange}
       />
-      <CodeControl
-        textArea={textArea}
-        setValue={setValue}
-        setSelectionRange={setSelectionRange}
-      />
-      <LinkControl
-        textArea={textArea}
-        setValue={setValue}
-        setSelectionRange={setSelectionRange}
-      />
+      <CodeControl textArea={textArea} setSelectionRange={setSelectionRange} />
+      <LinkControl textArea={textArea} setSelectionRange={setSelectionRange} />
       <BlockquoteControl
         textArea={textArea}
-        setValue={setValue}
         setSelectionRange={setSelectionRange}
       />
     </>
@@ -351,7 +311,6 @@ export function MarkdownInput({
   Controls = DefaultControls,
 }: MarkdownInputProps) {
   const [activeTab, setActiveTab] = useState<"edit" | "preview">("edit");
-  const [value, setValue] = useState(defaultValue || "");
   const [selectionRange, setSelectionRange] = useState<
     SelectionRange | undefined
   >();
@@ -363,18 +322,18 @@ export function MarkdownInput({
       textArea.focus();
       textArea.setSelectionRange(selectionStart, selectionEnd);
     }
-  }, [selectionRange]);
+  }, [textArea, selectionRange]);
 
   return (
     <FieldWrapper label={label} id={id}>
       <Errors errors={errors} />
       <div className="flex flex-col border rounded">
-        <div className="flex border-b">
+        <div className="flex border-b overflow-hidden">
           <Button
             overrideDefaultStyles={true}
             className={clsx(
               activeTab === "edit" ? "bg-blue-500 text-white" : "",
-              "px-4 py-2 rounded-tl",
+              "px-4 py-2",
             )}
             onClick={() => setActiveTab("edit")}
           >
@@ -395,7 +354,6 @@ export function MarkdownInput({
           <div className="flex gap-2 border-b p-2">
             <Controls
               textArea={textArea}
-              setValue={setValue}
               setSelectionRange={setSelectionRange}
             />
           </div>
@@ -406,7 +364,7 @@ export function MarkdownInput({
               setTextArea(el);
             }}
             className={clsx(baseInputStyle, "px-1 h-40 grow w-full")}
-            value={value}
+            defaultValue={defaultValue}
           />
         </div>
         {activeTab === "preview" ? (

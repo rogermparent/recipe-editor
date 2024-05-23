@@ -10,9 +10,8 @@ import {
 } from "component-library/components/Form/inputs/Markdown";
 import { MouseEventHandler } from "react";
 
-export function HighlightControl({
+function HighlightControl({
   textArea,
-  setValue,
   setSelectionRange,
 }: MarkdownControlsProps) {
   const handleHighlightClick: MouseEventHandler<HTMLButtonElement> = () => {
@@ -20,21 +19,21 @@ export function HighlightControl({
       prefix: "<mark>",
       suffix: "</mark>",
       textArea,
-      setValue,
       setSelectionRange,
     });
   };
 
   return (
     <FormatButton onClick={handleHighlightClick}>
-      <mark className="bg-yellow-200">H</mark>
+      <mark className="text-sm block mx-auto h-4 w-4 leading-none rounded">
+        H
+      </mark>
     </FormatButton>
   );
 }
 
-export function DetailsControl({
+function DetailsControl({
   textArea,
-  setValue,
   setSelectionRange,
 }: MarkdownControlsProps) {
   const handleDetailsClick: MouseEventHandler<HTMLButtonElement> = () => {
@@ -50,7 +49,6 @@ export function DetailsControl({
         prefix,
         suffix,
         textArea,
-        setValue,
         setSelectionRange,
         reselect: false,
       });
@@ -68,26 +66,22 @@ export function DetailsControl({
   );
 }
 
-export function CustomControls({
+function CustomControls({
   textArea,
-  setValue,
   setSelectionRange,
 }: MarkdownControlsProps) {
   return (
     <>
       <DefaultControls
         textArea={textArea}
-        setValue={setValue}
         setSelectionRange={setSelectionRange}
       />
       <HighlightControl
         textArea={textArea}
-        setValue={setValue}
         setSelectionRange={setSelectionRange}
       />
       <DetailsControl
         textArea={textArea}
-        setValue={setValue}
         setSelectionRange={setSelectionRange}
       />
     </>
