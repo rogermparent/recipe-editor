@@ -54,6 +54,7 @@ export default function AboutSection({ about }: HomepageContent) {
         <a
           href="#projects"
           className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center justify-center lg:hidden"
+          aria-label="Scroll to next page"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

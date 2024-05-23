@@ -3,8 +3,28 @@
 @tailwind utilities;
 
 .markdown-body {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold;
+  }
+  h1 {
+    @apply text-3xl my-4;
+  }
+  h2 {
+    @apply text-2xl my-3;
+  }
+  h3 {
+    @apply text-xl my-2;
+  }
+  h4 {
+    @apply text-lg my-1;
+  }
   ul {
-    list-style: disc;
+    @apply list-disc pl-5 my-2;
   }
 }
 

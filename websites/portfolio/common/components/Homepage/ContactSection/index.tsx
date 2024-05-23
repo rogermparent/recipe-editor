@@ -36,15 +36,17 @@ async function ContactLinkLabel({
 
 async function ContactLinkComponent({ item }: { item: ContactLink }) {
   return (
-    <Link
-      href={item.link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex flex-row flex-nowrap items-center w-auto block py-2 my-2 leading-5"
-    >
-      <ContactLinkLabel item={item} />{" "}
-      <span className="underline">{item.label}</span>
-    </Link>
+    <li>
+      <Link
+        href={item.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex flex-row flex-nowrap items-center w-auto block py-2 my-2 leading-5"
+      >
+        <ContactLinkLabel item={item} />{" "}
+        <span className="underline">{item.label}</span>
+      </Link>
+    </li>
   );
 }
 
