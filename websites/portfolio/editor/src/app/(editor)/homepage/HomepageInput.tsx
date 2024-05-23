@@ -10,16 +10,12 @@ import {
 } from "component-library/components/Form/inputs/Markdown";
 import { MouseEventHandler } from "react";
 
-function HighlightControl({
-  textArea,
-  setSelectionRange,
-}: MarkdownControlsProps) {
+function HighlightControl({ textArea }: MarkdownControlsProps) {
   const handleHighlightClick: MouseEventHandler<HTMLButtonElement> = () => {
     wrapSelection({
       prefix: "<mark>",
       suffix: "</mark>",
       textArea,
-      setSelectionRange,
     });
   };
 
@@ -32,30 +28,24 @@ function HighlightControl({
   );
 }
 
-function DetailsControl({
-  textArea,
-  setSelectionRange,
-}: MarkdownControlsProps) {
+function DetailsControl({ textArea }: MarkdownControlsProps) {
   const handleDetailsClick: MouseEventHandler<HTMLButtonElement> = () => {
     if (textArea) {
       const { selectionStart } = textArea;
 
       const prefix = `<details>\n<summary></summary>\n`;
       const suffix = `\n</details>`;
-      const newSelectionStart = selectionStart + 19; // After <summary>
+      const newSelectionStart = selectionStart + 19;
       const newSelectionEnd = newSelectionStart;
 
       wrapSelection({
         prefix,
         suffix,
         textArea,
-        setSelectionRange,
         reselect: false,
       });
-      setSelectionRange({
-        selectionStart: newSelectionStart,
-        selectionEnd: newSelectionEnd,
-      });
+      textArea.focus();
+      textArea.setSelectionRange(newSelectionStart, newSelectionEnd);
     }
   };
 
@@ -66,24 +56,12 @@ function DetailsControl({
   );
 }
 
-function CustomControls({
-  textArea,
-  setSelectionRange,
-}: MarkdownControlsProps) {
+function CustomControls({ textArea }: MarkdownControlsProps) {
   return (
     <>
-      <DefaultControls
-        textArea={textArea}
-        setSelectionRange={setSelectionRange}
-      />
-      <HighlightControl
-        textArea={textArea}
-        setSelectionRange={setSelectionRange}
-      />
-      <DetailsControl
-        textArea={textArea}
-        setSelectionRange={setSelectionRange}
-      />
+      <DefaultControls textArea={textArea} />
+      <HighlightControl textArea={textArea} />
+      <DetailsControl textArea={textArea} />
     </>
   );
 }

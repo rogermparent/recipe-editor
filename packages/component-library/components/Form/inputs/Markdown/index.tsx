@@ -14,7 +14,6 @@ import { Button } from "component-library/components/Button";
 
 export interface MarkdownControlsProps {
   textArea: HTMLTextAreaElement | null;
-  setSelectionRange: (range: SelectionRange) => void;
 }
 
 export interface SelectionRange {
@@ -55,13 +54,11 @@ export const wrapSelection = ({
   suffix,
   textArea,
   reselect = true,
-  setSelectionRange,
 }: {
   prefix: string;
   suffix: string;
   reselect?: boolean;
   textArea: HTMLTextAreaElement | null;
-  setSelectionRange: (range: SelectionRange) => void;
 }) => {
   if (textArea) {
     const value = textArea.value;
@@ -75,21 +72,21 @@ export const wrapSelection = ({
       value.substring(selectionEnd);
     textArea.value = newValue;
     if (reselect) {
-      setSelectionRange({
-        selectionStart: selectionStart + prefix.length,
-        selectionEnd: selectionEnd + prefix.length,
-      });
+      textArea.focus();
+      textArea.setSelectionRange(
+        selectionStart + prefix.length,
+        selectionEnd + prefix.length,
+      );
     }
   }
 };
 
-function BoldControl({ textArea, setSelectionRange }: MarkdownControlsProps) {
+function BoldControl({ textArea }: MarkdownControlsProps) {
   const handleBoldClick: MouseEventHandler<HTMLButtonElement> = () => {
     wrapSelection({
       prefix: "**",
       suffix: "**",
       textArea,
-      setSelectionRange,
     });
   };
 
@@ -100,13 +97,12 @@ function BoldControl({ textArea, setSelectionRange }: MarkdownControlsProps) {
   );
 }
 
-function ItalicControl({ textArea, setSelectionRange }: MarkdownControlsProps) {
+function ItalicControl({ textArea }: MarkdownControlsProps) {
   const handleItalicClick: MouseEventHandler<HTMLButtonElement> = () => {
     wrapSelection({
       prefix: "*",
       suffix: "*",
       textArea,
-      setSelectionRange,
     });
   };
 
@@ -117,7 +113,7 @@ function ItalicControl({ textArea, setSelectionRange }: MarkdownControlsProps) {
   );
 }
 
-function LinkControl({ textArea, setSelectionRange }: MarkdownControlsProps) {
+function LinkControl({ textArea }: MarkdownControlsProps) {
   const handleLinkClick: MouseEventHandler<HTMLButtonElement> = () => {
     if (textArea) {
       const value = textArea.value;
@@ -141,13 +137,10 @@ function LinkControl({ textArea, setSelectionRange }: MarkdownControlsProps) {
         prefix: "[",
         suffix: "](url)",
         textArea,
-        setSelectionRange,
         reselect: false,
       });
-      setSelectionRange({
-        selectionStart: newSelectionStart,
-        selectionEnd: newSelectionEnd,
-      });
+      textArea.focus();
+      textArea.setSelectionRange(newSelectionStart, newSelectionEnd);
     }
   };
 
@@ -183,10 +176,7 @@ function getBlockquoteSelection({
   }
 }
 
-function BlockquoteControl({
-  textArea,
-  setSelectionRange,
-}: MarkdownControlsProps) {
+function BlockquoteControl({ textArea }: MarkdownControlsProps) {
   const handleBlockquoteClick: MouseEventHandler<HTMLButtonElement> = () => {
     if (textArea) {
       const value = textArea.value;
@@ -227,15 +217,17 @@ function BlockquoteControl({
       if (selectionStart === selectionEnd) {
         const blockquoteContentIndex =
           selectionStart + quotedSelection.indexOf("> ") + 2;
-        setSelectionRange({
-          selectionStart: blockquoteContentIndex,
-          selectionEnd: blockquoteContentIndex,
-        });
+        textArea.focus();
+        textArea.setSelectionRange(
+          blockquoteContentIndex,
+          blockquoteContentIndex,
+        );
       } else {
-        setSelectionRange({
+        textArea.focus();
+        textArea.setSelectionRange(
           selectionStart,
-          selectionEnd: selectionStart + quotedSelection.length,
-        });
+          selectionStart + quotedSelection.length,
+        );
       }
     }
   };
@@ -247,7 +239,7 @@ function BlockquoteControl({
   );
 }
 
-function CodeControl({ textArea, setSelectionRange }: MarkdownControlsProps) {
+function CodeControl({ textArea }: MarkdownControlsProps) {
   const handleCodeClick: MouseEventHandler<HTMLButtonElement> = () => {
     if (textArea) {
       const value = textArea.value;
@@ -260,7 +252,6 @@ function CodeControl({ textArea, setSelectionRange }: MarkdownControlsProps) {
           prefix: "\n```\n",
           suffix: "\n```\n",
           textArea,
-          setSelectionRange,
         });
       } else {
         // Inline code
@@ -268,7 +259,6 @@ function CodeControl({ textArea, setSelectionRange }: MarkdownControlsProps) {
           prefix: "`",
           suffix: "`",
           textArea,
-          setSelectionRange,
         });
       }
     }
@@ -281,23 +271,14 @@ function CodeControl({ textArea, setSelectionRange }: MarkdownControlsProps) {
   );
 }
 
-export function DefaultControls({
-  textArea,
-  setSelectionRange,
-}: MarkdownControlsProps) {
+export function DefaultControls({ textArea }: MarkdownControlsProps) {
   return (
     <>
-      <BoldControl textArea={textArea} setSelectionRange={setSelectionRange} />
-      <ItalicControl
-        textArea={textArea}
-        setSelectionRange={setSelectionRange}
-      />
-      <CodeControl textArea={textArea} setSelectionRange={setSelectionRange} />
-      <LinkControl textArea={textArea} setSelectionRange={setSelectionRange} />
-      <BlockquoteControl
-        textArea={textArea}
-        setSelectionRange={setSelectionRange}
-      />
+      <BoldControl textArea={textArea} />
+      <ItalicControl textArea={textArea} />
+      <CodeControl textArea={textArea} />
+      <LinkControl textArea={textArea} />
+      <BlockquoteControl textArea={textArea} />
     </>
   );
 }
@@ -311,18 +292,7 @@ export function MarkdownInput({
   Controls = DefaultControls,
 }: MarkdownInputProps) {
   const [activeTab, setActiveTab] = useState<"edit" | "preview">("edit");
-  const [selectionRange, setSelectionRange] = useState<
-    SelectionRange | undefined
-  >();
   const [textArea, setTextArea] = useState<HTMLTextAreaElement | null>(null);
-
-  useEffect(() => {
-    if (textArea && selectionRange) {
-      const { selectionStart, selectionEnd } = selectionRange;
-      textArea.focus();
-      textArea.setSelectionRange(selectionStart, selectionEnd);
-    }
-  }, [textArea, selectionRange]);
 
   return (
     <FieldWrapper label={label} id={id}>
@@ -343,19 +313,18 @@ export function MarkdownInput({
             overrideDefaultStyles={true}
             className={clsx(
               activeTab === "preview" ? "bg-blue-500 text-white" : "",
-              "px-4 py-2 rounded-tr",
+              "px-4 py-2",
             )}
-            onClick={() => setActiveTab("preview")}
+            onClick={() => {
+              setActiveTab("preview");
+            }}
           >
             Preview
           </Button>
         </div>
         <div className={activeTab === "edit" ? "" : "hidden"}>
           <div className="flex gap-2 border-b p-2">
-            <Controls
-              textArea={textArea}
-              setSelectionRange={setSelectionRange}
-            />
+            <Controls textArea={textArea} />
           </div>
           <textarea
             name={name}
@@ -369,7 +338,7 @@ export function MarkdownInput({
         </div>
         {activeTab === "preview" ? (
           <div className={"p-2 markdown-body"}>
-            <StyledMarkdown>{value}</StyledMarkdown>
+            <StyledMarkdown>{textArea?.value || ""}</StyledMarkdown>
           </div>
         ) : null}
       </div>
