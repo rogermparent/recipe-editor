@@ -46,17 +46,16 @@ export function DetailsControl({
 
   const handleDetailsClick: MouseEventHandler<HTMLButtonElement> = () => {
     if (textArea) {
-      const value = textArea.value;
-      const { selectionStart, selectionEnd } = textArea;
-      const selectedText = value.substring(selectionStart, selectionEnd);
+      const { selectionStart } = textArea;
 
-      const prefix = `<details>\n<summary></summary>\n${selectedText}\n</details>`;
-      const newSelectionStart = selectionStart + 10; // After <summary>
+      const prefix = `<details>\n<summary></summary>\n`;
+      const suffix = `\n</details>`;
+      const newSelectionStart = selectionStart + 19; // After <summary>
       const newSelectionEnd = newSelectionStart;
 
       wrapSelection({
         prefix,
-        suffix: "",
+        suffix,
         textArea,
         setValue,
         setSelectionRange,
