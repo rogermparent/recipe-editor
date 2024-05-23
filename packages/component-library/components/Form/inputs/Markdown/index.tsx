@@ -13,10 +13,9 @@ import StyledMarkdown from "component-library/components/Markdown";
 import { Button } from "component-library/components/Button";
 
 export interface MarkdownControlsProps {
-  textAreaRef: RefObject<HTMLTextAreaElement | null>;
+  textArea: HTMLTextAreaElement | null;
   setValue: (value: string) => void;
   setSelectionRange: (range: SelectionRange) => void;
-  onChange?: ChangeEventHandler<HTMLTextAreaElement>;
 }
 
 export interface SelectionRange {
@@ -29,7 +28,6 @@ export interface MarkdownInputProps {
   id?: string;
   label?: string;
   defaultValue?: string;
-  onChange?: ChangeEventHandler<HTMLTextAreaElement>;
   errors?: string[];
   Controls?: (props: MarkdownControlsProps) => ReactNode;
 }
@@ -60,7 +58,6 @@ export const wrapSelection = ({
   setValue,
   reselect = true,
   setSelectionRange,
-  onChange,
 }: {
   prefix: string;
   suffix: string;
@@ -68,7 +65,6 @@ export const wrapSelection = ({
   textArea: HTMLTextAreaElement | null;
   setValue: (value: string) => void;
   setSelectionRange: (range: SelectionRange) => void;
-  onChange?: ChangeEventHandler<HTMLTextAreaElement>;
 }) => {
   if (textArea) {
     const value = textArea.value;
@@ -87,20 +83,14 @@ export const wrapSelection = ({
         selectionEnd: selectionEnd + prefix.length,
       });
     }
-    onChange?.({
-      target: { value: newValue },
-    } as React.ChangeEvent<HTMLTextAreaElement>);
   }
 };
 
 function BoldControl({
-  textAreaRef,
+  textArea,
   setValue,
   setSelectionRange,
-  onChange,
 }: MarkdownControlsProps) {
-  const textArea = textAreaRef.current;
-
   const handleBoldClick: MouseEventHandler<HTMLButtonElement> = () => {
     wrapSelection({
       prefix: "**",
@@ -108,7 +98,6 @@ function BoldControl({
       textArea,
       setValue,
       setSelectionRange,
-      onChange,
     });
   };
 
@@ -120,13 +109,10 @@ function BoldControl({
 }
 
 function ItalicControl({
-  textAreaRef,
+  textArea,
   setValue,
   setSelectionRange,
-  onChange,
 }: MarkdownControlsProps) {
-  const textArea = textAreaRef.current;
-
   const handleItalicClick: MouseEventHandler<HTMLButtonElement> = () => {
     wrapSelection({
       prefix: "*",
@@ -134,7 +120,6 @@ function ItalicControl({
       textArea,
       setValue,
       setSelectionRange,
-      onChange,
     });
   };
 
@@ -146,13 +131,10 @@ function ItalicControl({
 }
 
 function LinkControl({
-  textAreaRef,
+  textArea,
   setValue,
   setSelectionRange,
-  onChange,
 }: MarkdownControlsProps) {
-  const textArea = textAreaRef.current;
-
   const handleLinkClick: MouseEventHandler<HTMLButtonElement> = () => {
     if (textArea) {
       const value = textArea.value;
@@ -178,7 +160,6 @@ function LinkControl({
         textArea,
         setValue,
         setSelectionRange,
-        onChange,
         reselect: false,
       });
       setSelectionRange({
@@ -221,14 +202,11 @@ function getBlockquoteSelection({
 }
 
 function BlockquoteControl({
-  textAreaRef,
+  textArea,
   setValue,
   setSelectionRange,
-  onChange,
 }: MarkdownControlsProps) {
   const handleBlockquoteClick: MouseEventHandler<HTMLButtonElement> = () => {
-    const textArea = textAreaRef.current;
-
     if (textArea) {
       const value = textArea.value;
       const { selectionStart, selectionEnd } = getBlockquoteSelection({
@@ -278,10 +256,6 @@ function BlockquoteControl({
           selectionEnd: selectionStart + quotedSelection.length,
         });
       }
-
-      onChange?.({
-        target: { value: newValue },
-      } as React.ChangeEvent<HTMLTextAreaElement>);
     }
   };
 
@@ -293,14 +267,11 @@ function BlockquoteControl({
 }
 
 function CodeControl({
-  textAreaRef,
+  textArea,
   setValue,
   setSelectionRange,
-  onChange,
 }: MarkdownControlsProps) {
   const handleCodeClick: MouseEventHandler<HTMLButtonElement> = () => {
-    const textArea = textAreaRef.current;
-
     if (textArea) {
       const value = textArea.value;
       const { selectionStart, selectionEnd } = textArea;
@@ -314,7 +285,6 @@ function CodeControl({
           textArea,
           setValue,
           setSelectionRange,
-          onChange,
         });
       } else {
         // Inline code
@@ -324,7 +294,6 @@ function CodeControl({
           textArea,
           setValue,
           setSelectionRange,
-          onChange,
         });
       }
     }
@@ -338,42 +307,36 @@ function CodeControl({
 }
 
 export function DefaultControls({
-  textAreaRef,
+  textArea,
   setValue,
   setSelectionRange,
-  onChange,
 }: MarkdownControlsProps) {
   return (
     <>
       <BoldControl
-        textAreaRef={textAreaRef}
+        textArea={textArea}
         setValue={setValue}
         setSelectionRange={setSelectionRange}
-        onChange={onChange}
       />
       <ItalicControl
-        textAreaRef={textAreaRef}
+        textArea={textArea}
         setValue={setValue}
         setSelectionRange={setSelectionRange}
-        onChange={onChange}
       />
       <CodeControl
-        textAreaRef={textAreaRef}
+        textArea={textArea}
         setValue={setValue}
         setSelectionRange={setSelectionRange}
-        onChange={onChange}
       />
       <LinkControl
-        textAreaRef={textAreaRef}
+        textArea={textArea}
         setValue={setValue}
         setSelectionRange={setSelectionRange}
-        onChange={onChange}
       />
       <BlockquoteControl
-        textAreaRef={textAreaRef}
+        textArea={textArea}
         setValue={setValue}
         setSelectionRange={setSelectionRange}
-        onChange={onChange}
       />
     </>
   );
@@ -383,7 +346,6 @@ export function MarkdownInput({
   name,
   id = name,
   defaultValue,
-  onChange,
   label,
   errors,
   Controls = DefaultControls,
@@ -393,15 +355,9 @@ export function MarkdownInput({
   const [selectionRange, setSelectionRange] = useState<
     SelectionRange | undefined
   >();
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
-
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(event.target.value);
-    onChange?.(event);
-  };
+  const [textArea, setTextArea] = useState<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
-    const textArea = textAreaRef.current;
     if (textArea && selectionRange) {
       const { selectionStart, selectionEnd } = selectionRange;
       textArea.focus();
@@ -438,19 +394,19 @@ export function MarkdownInput({
         <div className={activeTab === "edit" ? "" : "hidden"}>
           <div className="flex gap-2 border-b p-2">
             <Controls
-              textAreaRef={textAreaRef}
+              textArea={textArea}
               setValue={setValue}
               setSelectionRange={setSelectionRange}
-              onChange={onChange}
             />
           </div>
           <textarea
             name={name}
             id={id}
-            ref={textAreaRef}
+            ref={(el) => {
+              setTextArea(el);
+            }}
             className={clsx(baseInputStyle, "px-1 h-40 grow w-full")}
             value={value}
-            onChange={handleChange}
           />
         </div>
         {activeTab === "preview" ? (

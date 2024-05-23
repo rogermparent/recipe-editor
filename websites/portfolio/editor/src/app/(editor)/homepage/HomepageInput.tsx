@@ -11,13 +11,10 @@ import {
 import { MouseEventHandler } from "react";
 
 export function HighlightControl({
-  textAreaRef,
+  textArea,
   setValue,
   setSelectionRange,
-  onChange,
 }: MarkdownControlsProps) {
-  const textArea = textAreaRef.current;
-
   const handleHighlightClick: MouseEventHandler<HTMLButtonElement> = () => {
     wrapSelection({
       prefix: "<mark>",
@@ -25,7 +22,6 @@ export function HighlightControl({
       textArea,
       setValue,
       setSelectionRange,
-      onChange,
     });
   };
 
@@ -37,13 +33,10 @@ export function HighlightControl({
 }
 
 export function DetailsControl({
-  textAreaRef,
+  textArea,
   setValue,
   setSelectionRange,
-  onChange,
 }: MarkdownControlsProps) {
-  const textArea = textAreaRef.current;
-
   const handleDetailsClick: MouseEventHandler<HTMLButtonElement> = () => {
     if (textArea) {
       const { selectionStart } = textArea;
@@ -59,7 +52,6 @@ export function DetailsControl({
         textArea,
         setValue,
         setSelectionRange,
-        onChange,
         reselect: false,
       });
       setSelectionRange({
@@ -77,30 +69,26 @@ export function DetailsControl({
 }
 
 export function CustomControls({
-  textAreaRef,
+  textArea,
   setValue,
   setSelectionRange,
-  onChange,
 }: MarkdownControlsProps) {
   return (
     <>
       <DefaultControls
-        textAreaRef={textAreaRef}
+        textArea={textArea}
         setValue={setValue}
         setSelectionRange={setSelectionRange}
-        onChange={onChange}
       />
       <HighlightControl
-        textAreaRef={textAreaRef}
+        textArea={textArea}
         setValue={setValue}
         setSelectionRange={setSelectionRange}
-        onChange={onChange}
       />
       <DetailsControl
-        textAreaRef={textAreaRef}
+        textArea={textArea}
         setValue={setValue}
         setSelectionRange={setSelectionRange}
-        onChange={onChange}
       />
     </>
   );
@@ -111,7 +99,6 @@ export default function HomepageMarkdownInput({
   id,
   label,
   defaultValue,
-  onChange,
   errors,
 }: MarkdownInputProps) {
   return (
@@ -120,7 +107,6 @@ export default function HomepageMarkdownInput({
       id={id}
       label={label}
       defaultValue={defaultValue}
-      onChange={onChange}
       errors={errors}
       Controls={CustomControls}
     />
