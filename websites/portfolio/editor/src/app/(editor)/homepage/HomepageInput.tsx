@@ -36,6 +36,47 @@ export function HighlightControl({
   );
 }
 
+export function DetailsControl({
+  textAreaRef,
+  setValue,
+  setSelectionRange,
+  onChange,
+}: MarkdownControlsProps) {
+  const textArea = textAreaRef.current;
+
+  const handleDetailsClick: MouseEventHandler<HTMLButtonElement> = () => {
+    if (textArea) {
+      const value = textArea.value;
+      const { selectionStart, selectionEnd } = textArea;
+      const selectedText = value.substring(selectionStart, selectionEnd);
+
+      const prefix = `<details>\n<summary></summary>\n${selectedText}\n</details>`;
+      const newSelectionStart = selectionStart + 10; // After <summary>
+      const newSelectionEnd = newSelectionStart;
+
+      wrapSelection({
+        prefix,
+        suffix: "",
+        textArea,
+        setValue,
+        setSelectionRange,
+        onChange,
+        reselect: false,
+      });
+      setSelectionRange({
+        selectionStart: newSelectionStart,
+        selectionEnd: newSelectionEnd,
+      });
+    }
+  };
+
+  return (
+    <FormatButton onClick={handleDetailsClick}>
+      <span className="text-xs">Dtl</span>
+    </FormatButton>
+  );
+}
+
 export function CustomControls({
   textAreaRef,
   setValue,
@@ -51,6 +92,12 @@ export function CustomControls({
         onChange={onChange}
       />
       <HighlightControl
+        textAreaRef={textAreaRef}
+        setValue={setValue}
+        setSelectionRange={setSelectionRange}
+        onChange={onChange}
+      />
+      <DetailsControl
         textAreaRef={textAreaRef}
         setValue={setValue}
         setSelectionRange={setSelectionRange}
