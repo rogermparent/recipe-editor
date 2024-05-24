@@ -1,13 +1,13 @@
 "use client";
 
+import { InlineMarkdownInput } from "component-library/components/Form/inputs/Markdown/Inline";
 import {
   DefaultControls,
   FormatButton,
   MarkdownControlsProps,
-  MarkdownInput,
   MarkdownInputProps,
   wrapSelection,
-} from "component-library/components/Form/inputs/Markdown";
+} from "component-library/components/Form/inputs/Markdown/common";
 
 function MultiplyableControl({ textArea }: MarkdownControlsProps) {
   const handleMultiplyableClick = () => {
@@ -42,7 +42,7 @@ export default function IngredientInput({
   errors,
 }: MarkdownInputProps) {
   return (
-    <MarkdownInput
+    <InlineMarkdownInput
       name={name}
       id={id}
       label={label}

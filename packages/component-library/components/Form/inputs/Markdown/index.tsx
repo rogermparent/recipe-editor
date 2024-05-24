@@ -1,24 +1,9 @@
-import { useState, ReactNode } from "react";
+import { useState } from "react";
 import { Errors, FieldWrapper, baseInputStyle } from "../..";
 import clsx from "clsx";
 import StyledMarkdown from "component-library/components/Markdown";
 import { Button } from "component-library/components/Button";
-import {
-  DefaultControls,
-  MarkdownControlsProps,
-  SelectionRange,
-  wrapSelection,
-  FormatButton,
-} from "./common";
-
-export interface MarkdownInputProps {
-  name?: string;
-  id?: string;
-  label?: string;
-  defaultValue?: string;
-  errors?: string[];
-  Controls?: (props: MarkdownControlsProps) => ReactNode;
-}
+import { DefaultControls, MarkdownInputProps } from "./common";
 
 export function MarkdownInput({
   name,
