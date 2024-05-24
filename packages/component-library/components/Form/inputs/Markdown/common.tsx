@@ -113,6 +113,12 @@ function LinkControl({ textArea: textArea }: MarkdownControlsProps) {
     if (textArea) {
       const value = textArea.value;
       const { selectionStart, selectionEnd } = textArea;
+      if (
+        typeof selectionStart !== "number" ||
+        typeof selectionEnd !== "number"
+      ) {
+        return;
+      }
       const selectedText = value.substring(selectionStart, selectionEnd);
 
       let newSelectionStart = selectionStart + 1; // After the opening bracket
@@ -174,6 +180,12 @@ function getBlockquoteSelection({
 function BlockquoteControl({ textArea: textArea }: MarkdownControlsProps) {
   const handleBlockquoteClick: MouseEventHandler<HTMLButtonElement> = () => {
     if (textArea) {
+      if (
+        typeof textArea.selectionStart !== "number" ||
+        typeof textArea.selectionEnd !== "number"
+      ) {
+        return;
+      }
       const value = textArea.value;
       const { selectionStart, selectionEnd } = getBlockquoteSelection({
         selectionStart: textArea.selectionStart,
