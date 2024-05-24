@@ -239,6 +239,12 @@ function CodeControl({ textArea: textArea }: MarkdownControlsProps) {
     if (textArea) {
       const value = textArea.value;
       const { selectionStart, selectionEnd } = textArea;
+      if (
+        typeof selectionStart !== "number" ||
+        typeof selectionEnd !== "number"
+      ) {
+        return;
+      }
       const selectedText = value.substring(selectionStart, selectionEnd);
 
       if (selectedText.includes("\n")) {
