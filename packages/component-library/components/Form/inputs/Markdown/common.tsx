@@ -17,7 +17,6 @@ export interface MarkdownInputProps {
   defaultValue?: string;
   errors?: string[];
   Controls?: (props: MarkdownControlsProps) => ReactNode;
-  components?: { [key: string]: ReactNode };
 }
 
 export function FormatButton({

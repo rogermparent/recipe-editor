@@ -4,10 +4,6 @@ import { MouseEventHandler, useState } from "react";
 import { Errors, FieldWrapper, baseInputStyle } from "../../..";
 import StyledMarkdown from "component-library/components/Markdown";
 
-const DummyMultiplyable = ({ baseNumber }: { baseNumber: string }) => (
-  <span>{baseNumber}</span>
-);
-
 export function InlineMarkdownInput({
   name,
   id = name,
@@ -15,18 +11,12 @@ export function InlineMarkdownInput({
   label,
   errors,
   Controls = DefaultControls,
-  components = {},
 }: MarkdownInputProps) {
   const [preview, setPreview] = useState<boolean>(false);
   const [input, setInput] = useState<HTMLInputElement | null>(null);
 
   const togglePreview: MouseEventHandler<HTMLButtonElement> = () => {
     setPreview(!preview);
-  };
-
-  const allComponents = {
-    Multiplyable: DummyMultiplyable,
-    ...components,
   };
 
   return (
@@ -58,9 +48,7 @@ export function InlineMarkdownInput({
           />
           {preview ? (
             <div className="p-1 markdown-body h-8">
-              <StyledMarkdown components={allComponents}>
-                {input?.value || ""}
-              </StyledMarkdown>
+              <StyledMarkdown>{input?.value || ""}</StyledMarkdown>
             </div>
           ) : null}
         </div>

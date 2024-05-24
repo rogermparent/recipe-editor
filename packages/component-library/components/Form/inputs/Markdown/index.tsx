@@ -12,19 +12,9 @@ export function MarkdownInput({
   label,
   errors,
   Controls = DefaultControls,
-  components = {},
 }: MarkdownInputProps) {
   const [activeTab, setActiveTab] = useState<"edit" | "preview">("edit");
   const [textArea, setTextArea] = useState<HTMLTextAreaElement | null>(null);
-
-  const DummyMultiplyable = ({ baseNumber }: { baseNumber: string }) => (
-    <span>{baseNumber}</span>
-  );
-
-  const allComponents = {
-    Multiplyable: DummyMultiplyable,
-    ...components,
-  };
 
   return (
     <FieldWrapper label={label} id={id}>
@@ -70,9 +60,7 @@ export function MarkdownInput({
         </div>
         {activeTab === "preview" ? (
           <div className={"p-2 markdown-body"}>
-            <StyledMarkdown components={allComponents}>
-              {textArea?.value || ""}
-            </StyledMarkdown>
+            <StyledMarkdown>{textArea?.value || ""}</StyledMarkdown>
           </div>
         ) : null}
       </div>
