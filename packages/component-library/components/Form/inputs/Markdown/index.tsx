@@ -1,12 +1,4 @@
-import {
-  ChangeEventHandler,
-  MouseEventHandler,
-  useState,
-  useRef,
-  useEffect,
-  ReactNode,
-  RefObject,
-} from "react";
+import { MouseEventHandler, useState, ReactNode } from "react";
 import { Errors, FieldWrapper, baseInputStyle } from "../..";
 import clsx from "clsx";
 import StyledMarkdown from "component-library/components/Markdown";
