@@ -42,13 +42,13 @@ export function InlineMarkdownInput({
             }}
             className={clsx(
               baseInputStyle,
-              "px-1 grow w-full h-8",
+              "py-1 px-2 grow w-full h-8",
               preview ? "hidden" : "block",
             )}
             defaultValue={defaultValue}
           />
           {preview ? (
-            <div className="p-1 markdown-body h-8">
+            <div className="py-1 px-2 markdown-body h-8">
               <StyledMarkdown components={components}>
                 {input?.value || ""}
               </StyledMarkdown>
