@@ -12,6 +12,7 @@ export function MarkdownInput({
   label,
   errors,
   Controls = DefaultControls,
+  components,
 }: MarkdownInputProps) {
   const [activeTab, setActiveTab] = useState<"edit" | "preview">("edit");
   const [textArea, setTextArea] = useState<HTMLTextAreaElement | null>(null);
@@ -60,7 +61,9 @@ export function MarkdownInput({
         </div>
         {activeTab === "preview" ? (
           <div className={"p-2 markdown-body"}>
-            <StyledMarkdown>{textArea?.value || ""}</StyledMarkdown>
+            <StyledMarkdown components={components}>
+              {textArea?.value || ""}
+            </StyledMarkdown>
           </div>
         ) : null}
       </div>

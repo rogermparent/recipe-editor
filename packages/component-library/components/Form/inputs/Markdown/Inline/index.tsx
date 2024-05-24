@@ -11,6 +11,7 @@ export function InlineMarkdownInput({
   label,
   errors,
   Controls = DefaultControls,
+  components,
 }: MarkdownInputProps) {
   const [preview, setPreview] = useState<boolean>(false);
   const [input, setInput] = useState<HTMLInputElement | null>(null);
@@ -48,7 +49,9 @@ export function InlineMarkdownInput({
           />
           {preview ? (
             <div className="p-1 markdown-body h-8">
-              <StyledMarkdown>{input?.value || ""}</StyledMarkdown>
+              <StyledMarkdown components={components}>
+                {input?.value || ""}
+              </StyledMarkdown>
             </div>
           ) : null}
         </div>

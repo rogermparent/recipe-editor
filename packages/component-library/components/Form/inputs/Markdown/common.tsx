@@ -1,5 +1,6 @@
 import { MouseEventHandler, ReactNode } from "react";
 import { Button } from "component-library/components/Button";
+import { MarkdownToJSX } from "markdown-to-jsx";
 
 export interface MarkdownControlsProps {
   textArea: HTMLTextAreaElement | HTMLInputElement | null;
@@ -17,6 +18,7 @@ export interface MarkdownInputProps {
   defaultValue?: string;
   errors?: string[];
   Controls?: (props: MarkdownControlsProps) => ReactNode;
+  components?: MarkdownToJSX.Overrides;
 }
 
 export function FormatButton({

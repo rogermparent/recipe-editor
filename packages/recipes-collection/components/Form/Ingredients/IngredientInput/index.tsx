@@ -34,6 +34,14 @@ function CustomControls({ textArea }: MarkdownControlsProps) {
   );
 }
 
+export function DummyMultiplyable({
+  baseNumber,
+}: {
+  baseNumber: string | number;
+}) {
+  return <>{baseNumber}</>;
+}
+
 export default function IngredientInput({
   name,
   id,
@@ -49,6 +57,7 @@ export default function IngredientInput({
       defaultValue={defaultValue}
       errors={errors}
       Controls={CustomControls}
+      components={{ Multiplyable: DummyMultiplyable }}
     />
   );
 }
