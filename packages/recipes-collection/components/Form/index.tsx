@@ -9,7 +9,7 @@ import { IngredientsListInput } from "../../components/Form/Ingredients";
 import { InstructionsListInput } from "../../components/Form/Instructions";
 import { DateTimeInput } from "component-library/components/Form/inputs/DateTime";
 import { TextInput } from "component-library/components/Form/inputs/Text";
-import { TextAreaInput } from "component-library/components/Form/inputs/TextArea";
+import { MarkdownInput } from "component-library/components/Form/inputs/Markdown";
 import { ImageInput } from "./Image";
 import { StaticImageProps } from "next-static-image/src";
 
@@ -48,7 +48,7 @@ export default function RecipeFields({
         onChange={(e) => setCurrentName(e.target.value)}
         errors={state.errors?.name}
       />
-      <TextAreaInput
+      <MarkdownInput
         label="Description"
         name="description"
         id="recipe-form-description"
