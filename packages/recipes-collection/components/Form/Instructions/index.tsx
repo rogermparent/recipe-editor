@@ -12,9 +12,9 @@ import {
 import {
   InputListControls,
   KeyListAction,
+  ListInputButton,
   useKeyList,
 } from "component-library/components/Form/inputs/List";
-import { SelectInput } from "component-library/components/Form/inputs/Select";
 import { TextInput } from "component-library/components/Form/inputs/Text";
 import { TextAreaInput } from "component-library/components/Form/inputs/TextArea";
 import clsx from "clsx";
@@ -23,8 +23,6 @@ import { Dispatch, useEffect, useRef, useState } from "react";
 function InstructionInput({
   currentDefaultItem,
   itemKey,
-  index,
-  dispatch,
 }: {
   currentDefaultItem?: Instruction;
   itemKey: string;
@@ -45,9 +43,6 @@ function InstructionInput({
         defaultValue={currentDefaultItem?.text}
         key={currentDefaultItem?.text}
       />
-      <div className="flex flex-row flex-nowrap justify-center">
-        <InputListControls dispatch={dispatch} index={index} />
-      </div>
     </div>
   );
 }
@@ -55,8 +50,6 @@ function InstructionInput({
 function InstructionGroupInput({
   currentDefaultItem,
   itemKey,
-  index,
-  dispatch,
 }: {
   currentDefaultItem?: InstructionGroup;
   itemKey: string;
@@ -86,6 +79,9 @@ function InstructionGroupInput({
                     index={index}
                     dispatch={childDispatch}
                   />
+                  <div className="flex flex-row flex-nowrap justify-center">
+                    <InputListControls dispatch={childDispatch} index={index} />
+                  </div>
                 </li>
               );
             })}
@@ -100,9 +96,6 @@ function InstructionGroupInput({
           </Button>
         </div>
       </FieldWrapper>
-      <div className="flex flex-row flex-nowrap justify-center">
-        <InputListControls dispatch={dispatch} index={index} />
-      </div>
     </div>
   );
 }
@@ -126,17 +119,13 @@ function InstructionEntryInput({
   useEffect(() => {
     setIsGroup(entryIsGroup(defaultValue));
   }, [defaultValue]);
+
+  const toggleIsGroup = () => {
+    setIsGroup((prevIsGroup) => !prevIsGroup);
+  };
+
   return (
     <li className="flex flex-col my-1">
-      <SelectInput
-        name={`${itemKey}.type`}
-        label="Type"
-        onChange={(e) => setIsGroup(e.target.value === "group" ? true : false)}
-        defaultValue={isGroup ? "group" : undefined}
-      >
-        <option value="step">Step</option>
-        <option value="group">Group</option>
-      </SelectInput>
       {isGroup ? (
         <InstructionGroupInput
           currentDefaultItem={defaultValue as InstructionGroup}
@@ -152,6 +141,12 @@ function InstructionEntryInput({
           index={index}
         />
       )}
+      <div className="flex flex-row flex-nowrap justify-center">
+        <InputListControls dispatch={dispatch} index={index} />
+        <ListInputButton onClick={toggleIsGroup}>
+          {isGroup ? <>&#8213;</> : <>&#9776;</>}
+        </ListInputButton>
+      </div>
     </li>
   );
 }
