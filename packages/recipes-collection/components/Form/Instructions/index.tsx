@@ -16,7 +16,7 @@ import {
   useKeyList,
 } from "component-library/components/Form/inputs/List";
 import { TextInput } from "component-library/components/Form/inputs/Text";
-import { TextAreaInput } from "component-library/components/Form/inputs/TextArea";
+import InstructionTextInput from "./InstructionTextInput";
 import clsx from "clsx";
 import { Dispatch, useEffect, useRef, useState } from "react";
 
@@ -37,7 +37,7 @@ function InstructionInput({
         defaultValue={currentDefaultItem?.name}
         key={currentDefaultItem?.name}
       />
-      <TextAreaInput
+      <InstructionTextInput
         label="Text"
         name={`${itemKey}.text`}
         defaultValue={currentDefaultItem?.text}

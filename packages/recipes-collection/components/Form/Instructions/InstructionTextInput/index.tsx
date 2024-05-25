@@ -1,10 +1,10 @@
 "use client";
 
-import { InlineMarkdownInput } from "component-library/components/Form/inputs/Markdown/Inline";
+import { MarkdownInput } from "component-library/components/Form/inputs/Markdown";
 import { MarkdownInputProps } from "component-library/components/Form/inputs/Markdown/common";
 import { DummyMultiplyable, RecipeCustomControls } from "../../RecipeMarkdown";
 
-export default function IngredientInput({
+export default function InstructionTextInput({
   name,
   id,
   label,
@@ -12,7 +12,7 @@ export default function IngredientInput({
   errors,
 }: MarkdownInputProps) {
   return (
-    <InlineMarkdownInput
+    <MarkdownInput
       name={name}
       id={id}
       label={label}
