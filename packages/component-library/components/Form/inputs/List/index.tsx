@@ -20,8 +20,20 @@ export type KeyListAction<T = any> =
   | { type: "INSERT"; index: number }
   | { type: "RESET"; values: T[] };
 
-const inputListControlButtonStyle = "ml-0.5 w-10 h-10 sm:w-8 sm:h-8";
+// Reusable button component
+export const ListInputButton = ({
+  onClick,
+  children,
+}: {
+  onClick: () => void;
+  children: ReactNode;
+}) => (
+  <Button className="ml-0.5 w-10 h-10 sm:w-8 sm:h-8" onClick={onClick}>
+    {children}
+  </Button>
+);
 
+// Update InputListControls to use ListInputButton
 export function InputListControls({
   dispatch,
   index,
@@ -31,38 +43,34 @@ export function InputListControls({
 }) {
   return (
     <>
-      <Button
-        className={inputListControlButtonStyle}
+      <ListInputButton
         onClick={() => {
           dispatch({ type: "INSERT", index });
         }}
       >
         +
-      </Button>
-      <Button
-        className={inputListControlButtonStyle}
+      </ListInputButton>
+      <ListInputButton
         onClick={() => {
           dispatch({ type: "MOVE", from: index, to: index - 1 });
         }}
       >
         &uarr;
-      </Button>
-      <Button
-        className={inputListControlButtonStyle}
+      </ListInputButton>
+      <ListInputButton
         onClick={() => {
           dispatch({ type: "MOVE", from: index, to: index + 1 });
         }}
       >
         &darr;
-      </Button>
-      <Button
-        className={inputListControlButtonStyle}
+      </ListInputButton>
+      <ListInputButton
         onClick={() => {
           dispatch({ type: "DELETE", index });
         }}
       >
         &times;
-      </Button>
+      </ListInputButton>
     </>
   );
 }
