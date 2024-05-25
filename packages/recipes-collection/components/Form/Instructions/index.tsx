@@ -10,15 +10,13 @@ import {
   baseInputStyle,
 } from "component-library/components/Form";
 import {
-  InputListControls,
   KeyListAction,
-  ListInputButton,
   useKeyList,
 } from "component-library/components/Form/inputs/List";
-import { TextInput } from "component-library/components/Form/inputs/Text";
-import { TextAreaInput } from "component-library/components/Form/inputs/TextArea";
 import clsx from "clsx";
 import { Dispatch, useEffect, useRef, useState } from "react";
+import InstructionTextInput from "./InstructionTextInput";
+import { InstructionControls } from "../RecipeMarkdown";
 
 function InstructionInput({
   currentDefaultItem,
@@ -134,18 +132,20 @@ function InstructionEntryInput({
           index={index}
         />
       ) : (
-        <InstructionInput
+        <InstructionTextInput
           currentDefaultItem={defaultValue as Instruction}
           itemKey={itemKey}
           dispatch={dispatch}
           index={index}
+          toggleIsGroup={toggleIsGroup}
         />
       )}
       <div className="flex flex-row flex-nowrap justify-center">
-        <InputListControls dispatch={dispatch} index={index} />
-        <ListInputButton onClick={toggleIsGroup}>
-          {isGroup ? <>&#8213;</> : <>&#9776;</>}
-        </ListInputButton>
+        <InstructionControls
+          dispatch={dispatch}
+          index={index}
+          toggleIsGroup={toggleIsGroup}
+        />
       </div>
     </li>
   );
