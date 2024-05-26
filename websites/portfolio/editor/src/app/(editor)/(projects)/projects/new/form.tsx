@@ -1,7 +1,7 @@
 "use client";
 
 import CreateProjectFields from "projects-collection/components/Form/Create";
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 import { Button } from "component-library/components/Button";
 import { ProjectFormState } from "projects-collection/controller/formState";
 import createProject from "projects-collection/controller/actions/create";
@@ -9,7 +9,7 @@ import Link from "next/link";
 
 export default function NewProjectForm() {
   const initialState = { message: "", errors: {} } as ProjectFormState;
-  const [state, dispatch] = useFormState(createProject, initialState);
+  const [state, dispatch] = useActionState(createProject, initialState);
   return (
     <form
       id="project-form"

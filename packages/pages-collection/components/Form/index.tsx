@@ -2,7 +2,7 @@ import { Page } from "../../controller/types";
 import { PageFormState } from "../../controller/formState";
 import PageFields from "./fields";
 
-export default async function PageForm({
+export default function PageForm({
   page,
   slug,
   state,

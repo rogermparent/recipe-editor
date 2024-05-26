@@ -1,7 +1,7 @@
 "use client";
 
 import UpdateProjectFields from "projects-collection/components/Form/Update";
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 import { Button } from "component-library/components/Button";
 import { Project } from "projects-collection/controller/types";
 import { ProjectFormState } from "projects-collection/controller/formState";
@@ -17,7 +17,7 @@ export default function EditProjectForm({
 }) {
   const initialState = { message: "", errors: {} } as ProjectFormState;
   const updateThisProject = updateProject.bind(null, slug);
-  const [state, dispatch] = useFormState(updateThisProject, initialState);
+  const [state, dispatch] = useActionState(updateThisProject, initialState);
   return (
     <form
       id="project-form"

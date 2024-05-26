@@ -1,7 +1,7 @@
 "use client";
 
 import UpdateRecipeFields from "recipes-collection/components/Form/Update";
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 import { Button } from "component-library/components/Button";
 import { Recipe } from "recipes-collection/controller/types";
 import { RecipeFormState } from "recipes-collection/controller/formState";
@@ -9,7 +9,7 @@ import createRecipe from "recipes-collection/controller/actions/create";
 
 export default function CopyRecipeForm({ recipe }: { recipe: Recipe }) {
   const initialState = { message: "", errors: {} } as RecipeFormState;
-  const [state, dispatch] = useFormState(createRecipe, initialState);
+  const [state, dispatch] = useActionState(createRecipe, initialState);
   const { name, date, ...cleanedRecipe } = recipe;
   return (
     <form

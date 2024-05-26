@@ -1,7 +1,7 @@
 "use client";
 
 import CreateRecipeFields from "recipes-collection/components/Form/Create";
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 import { Button } from "component-library/components/Button";
 import { RecipeFormState } from "recipes-collection/controller/formState";
 import createRecipe from "recipes-collection/controller/actions/create";
@@ -15,7 +15,7 @@ export default function NewRecipeForm({
   recipe?: Partial<Recipe>;
 }) {
   const initialState = { message: "", errors: {} } as RecipeFormState;
-  const [state, dispatch] = useFormState(createRecipe, initialState);
+  const [state, dispatch] = useActionState(createRecipe, initialState);
   return (
     <form id="recipe-form" className="m-2 w-full" action={dispatch}>
       <h2 className="font-bold text-2xl mb-2">New Recipe</h2>

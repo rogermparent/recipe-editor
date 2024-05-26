@@ -1,7 +1,7 @@
 "use client";
 
 import UpdateMenuFields from "menus-collection/components/Form/Update";
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 import { Button } from "component-library/components/Button";
 import { Menu } from "menus-collection/controller/types";
 import { MenuFormState } from "menus-collection/controller/formState";
@@ -17,7 +17,7 @@ export default function EditMenuForm({
 }) {
   const initialState = { message: "", errors: {} } as MenuFormState;
   const updateThisMenu = updateMenu.bind(null, slug);
-  const [state, dispatch] = useFormState(updateThisMenu, initialState);
+  const [state, dispatch] = useActionState(updateThisMenu, initialState);
   return (
     <form
       id="menu-form"

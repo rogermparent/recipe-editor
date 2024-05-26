@@ -1,7 +1,7 @@
 "use client";
 
 import CreatePageFields from "pages-collection/components/Form/Create";
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 import { Button } from "component-library/components/Button";
 import { PageFormState } from "pages-collection/controller/formState";
 import createPage from "pages-collection/controller/actions/create";
@@ -9,7 +9,7 @@ import Link from "next/link";
 
 export default function NewPageForm() {
   const initialState = { message: "", errors: {} } as PageFormState;
-  const [state, dispatch] = useFormState(createPage, initialState);
+  const [state, dispatch] = useActionState(createPage, initialState);
   return (
     <form
       id="page-form"
