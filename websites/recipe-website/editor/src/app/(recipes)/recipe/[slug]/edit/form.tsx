@@ -1,7 +1,7 @@
 "use client";
 
 import UpdateRecipeFields from "recipes-collection/components/Form/Update";
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 import { Button } from "component-library/components/Button";
 import { Recipe } from "recipes-collection/controller/types";
 import { RecipeFormState } from "recipes-collection/controller/formState";
@@ -20,7 +20,7 @@ export default function EditRecipeForm({
   const { date } = recipe;
   const initialState = { message: "", errors: {} } as RecipeFormState;
   const updateThisRecipe = updateRecipe.bind(null, date, slug);
-  const [state, dispatch] = useFormState(updateThisRecipe, initialState);
+  const [state, dispatch] = useActionState(updateThisRecipe, initialState);
   return (
     <form
       id="recipe-form"

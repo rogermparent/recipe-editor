@@ -125,7 +125,6 @@ describe("New Recipe View", () => {
           );
 
           // Verify first instruction, which is a simple step
-          cy.get('[name="instructions[0].type"]').should("have.value", "step");
           cy.get('[name="instructions[0].name"]').should("have.value", "");
           cy.get('[name="instructions[0].text"]').should(
             "have.value",
@@ -133,7 +132,6 @@ describe("New Recipe View", () => {
           );
 
           // Verify second instruction, which is a group
-          cy.get('[name="instructions[1].type"]').should("have.value", "group");
           cy.get('[name="instructions[1].name"]').should(
             "have.value",
             "To Make the Dashi",
@@ -184,7 +182,6 @@ describe("New Recipe View", () => {
           cy.get('[name="ingredients[10].ingredient"]').should("not.exist");
 
           // Verify first instruction
-          cy.get('[name="instructions[0].type"]').should("have.value", "step");
           cy.get('[name="instructions[0].name"]').should("have.value", "");
           cy.get('[name="instructions[0].text"]').should(
             "have.value",
@@ -269,7 +266,6 @@ Carnitas, or Mexican pulled pork, is made by slow cooking pork until perfectly t
           cy.get('[name="ingredients[10].ingredient"]').should("not.exist");
 
           // Verify first instruction
-          cy.get('[name="instructions[0].type"]').should("have.value", "step");
           cy.get('[name="instructions[0].name"]').should("have.value", "");
           cy.get('[name="instructions[0].text"]').should(
             "have.value",

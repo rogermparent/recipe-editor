@@ -1,6 +1,5 @@
 import getMenuBySlug from "menus-collection/controller/data/read";
 import EditForm from "./form";
-import { notFound } from "next/navigation";
 import deleteMenu from "menus-collection/controller/actions/delete";
 import { Button } from "component-library/components/Button";
 import { auth, signIn } from "@/auth";

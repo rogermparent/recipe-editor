@@ -10,7 +10,7 @@ import {
   InputListControls,
   useKeyList,
 } from "component-library/components/Form/inputs/List";
-import { TextInput } from "component-library/components/Form/inputs/Text";
+import IngredientInput from "./IngredientInput";
 import clsx from "clsx";
 import { useRef } from "react";
 
@@ -64,7 +64,7 @@ export function IngredientsListInput({
           return (
             <li key={key} className="flex flex-col my-1">
               <div>
-                <TextInput
+                <IngredientInput
                   name={`${itemKey}.ingredient`}
                   defaultValue={defaultValue?.ingredient}
                 />

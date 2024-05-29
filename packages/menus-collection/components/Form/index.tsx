@@ -2,7 +2,7 @@ import { Menu } from "../../controller/types";
 import { MenuFormState } from "../../controller/formState";
 import MenuFields from "./fields";
 
-export default async function MenuForm({
+export default function MenuForm({
   menu,
   slug,
   state,

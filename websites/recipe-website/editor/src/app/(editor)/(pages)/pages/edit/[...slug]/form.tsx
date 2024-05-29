@@ -1,12 +1,12 @@
 "use client";
 
 import UpdatePageFields from "pages-collection/components/Form/Update";
-import { useFormState } from "react-dom";
 import { Button } from "component-library/components/Button";
 import { Page } from "pages-collection/controller/types";
 import { PageFormState } from "pages-collection/controller/formState";
 import updatePage from "pages-collection/controller/actions/update";
 import Link from "next/link";
+import { useActionState } from "react";
 
 export default function EditPageForm({
   page,
@@ -17,7 +17,7 @@ export default function EditPageForm({
 }) {
   const initialState = { message: "", errors: {} } as PageFormState;
   const updateThisPage = updatePage.bind(null, slug);
-  const [state, dispatch] = useFormState(updateThisPage, initialState);
+  const [state, dispatch] = useActionState(updateThisPage, initialState);
   return (
     <form
       id="page-form"
