@@ -18,6 +18,10 @@
     "next-static-image": "^0.0.1"
   },
   "devDependencies": {
-    "@types/react": "^18"
+    "@types/react": "npm:types-react@rc"
+  },
+  "overrides": {
+    "@types/react": "npm:types-react@rc",
+    "@types/react-dom": "npm:types-react-dom@rc"
   }
 }

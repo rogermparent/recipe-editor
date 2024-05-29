@@ -49,8 +49,8 @@
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.4",
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "npm:types-react@rc",
+    "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.19",
     "cypress": "^13.10.0",
     "eslint": "^8.57.0",
@@ -71,5 +71,9 @@
       "prettier --write",
       "eslint --fix"
     ]
+  },
+  "overrides": {
+    "@types/react": "npm:types-react@rc",
+    "@types/react-dom": "npm:types-react-dom@rc"
   }
 }
