@@ -65,7 +65,9 @@ export function ImageInput({
               width={850}
               height={475}
               unoptimized={true}
-            />
+            >
+              {null}
+            </Image>
             <button
               onClick={() => {
                 if (fileInputRef.current) {
@@ -84,13 +86,17 @@ export function ImageInput({
               alt="Existing Image"
               width={500}
               height={500}
-            />
+            >
+              {null}
+            </Image>
           ) : (
             <Image
               {...defaultImage.props}
               alt="Existing Image"
               unoptimized={true}
-            />
+            >
+              {null}
+            </Image>
           )
         ) : null}
       </div>

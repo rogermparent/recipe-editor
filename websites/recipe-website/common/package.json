@@ -9,11 +9,13 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "peerDependencies": {
+    "next": "15.0.0-rc.0"
+  },
   "dependencies": {
     "clsx": "^2.1.1",
     "content-engine": "^1.0.0",
     "markdown-to-jsx": "^7.4.7",
-    "menus-collection": "^1.0.0",
-    "next": "15.0.0-rc.0"
+    "menus-collection": "^1.0.0"
   }
 }

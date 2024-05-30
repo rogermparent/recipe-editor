@@ -35,7 +35,11 @@ async function HomepageStaticImage({
     },
   );
 
-  return <Image {...image.props} alt={alt} unoptimized={true} />;
+  return (
+    <Image {...image.props} alt={alt} unoptimized={true}>
+      {null}
+    </Image>
+  );
 }
 
 export default function AboutSection({ about }: HomepageContent) {
