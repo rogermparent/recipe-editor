@@ -58,7 +58,9 @@ export function ImageInput({
               width={850}
               height={475}
               unoptimized={true}
-            />
+            >
+              {null}
+            </Image>
             <button
               onClick={() => {
                 if (fileInputRef.current) {
@@ -79,7 +81,9 @@ export function ImageInput({
               alt="Direct link to image which will be imported."
               width={850}
               height={475}
-            />
+            >
+              {null}
+            </Image>
             <input type="hidden" value={imageToImport} name="imageImportUrl" />
           </div>
         ) : defaultImage ? (
@@ -87,7 +91,9 @@ export function ImageInput({
             {...defaultImage.props}
             alt="Existing Recipe Image"
             unoptimized={true}
-          />
+          >
+            {null}
+          </Image>
         ) : null}
       </div>
       {defaultImage ? (

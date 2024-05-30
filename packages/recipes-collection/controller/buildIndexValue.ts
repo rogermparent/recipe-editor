@@ -1,6 +1,8 @@
 import { Recipe, RecipeEntryValue } from "./types";
 import { compiler } from "markdown-to-jsx";
 
+import type { JSX } from "react";
+
 export function flattenMarkdown(input: string): string {
   const compiled = compiler(input, {
     wrapper: null,

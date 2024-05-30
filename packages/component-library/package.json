@@ -14,10 +14,16 @@
     "content-engine": "^1.0.0",
     "github-markdown-css": "^5.5.1",
     "markdown-to-jsx": "^7.4.7",
-    "next": "15.0.0-rc.0",
     "next-static-image": "^0.0.1"
   },
+  "peerDependencies": {
+    "next": "15.0.0-rc.0"
+  },
   "devDependencies": {
-    "@types/react": "^18"
+    "@types/react": "npm:types-react@rc"
+  },
+  "overrides": {
+    "@types/react": "npm:types-react@rc",
+    "@types/react-dom": "npm:types-react-dom@rc"
   }
 }

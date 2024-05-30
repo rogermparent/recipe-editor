@@ -26,7 +26,9 @@ export function getPureStaticImageProps({
   height,
   className,
 }: PureStaticImageProps) {
-  const { props } = getImageProps({
+  const {
+    props: { children, ...rest },
+  } = getImageProps({
     loader: pureLoader,
     src: `/recipe/${slug}/uploads/${image}`,
     alt,
@@ -35,12 +37,16 @@ export function getPureStaticImageProps({
     className,
   });
 
-  return { props };
+  return { props: rest };
 }
 
 export function PureStaticImage(inputProps: PureStaticImageProps) {
   if (inputProps.image) {
     const image = getPureStaticImageProps(inputProps);
-    return <Image {...image.props} alt={inputProps.alt} unoptimized={true} />;
+    return (
+      <Image {...image.props} alt={inputProps.alt} unoptimized={true}>
+        {null}
+      </Image>
+    );
   }
 }

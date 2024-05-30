@@ -44,6 +44,10 @@ export async function getTransformedRecipeImageProps({
 export async function RecipeImage(inputProps: TransformedRecipeImageProps) {
   if (inputProps.image) {
     const image = await getTransformedRecipeImageProps(inputProps);
-    return <Image {...image.props} alt={inputProps.alt} unoptimized={true} />;
+    return (
+      <Image {...image.props} alt={inputProps.alt} unoptimized={true}>
+        {null}
+      </Image>
+    );
   }
 }
