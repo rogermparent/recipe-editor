@@ -44,3 +44,7 @@ svg {
   width: 100%;
   height: 100%;
 }
+
+a {
+  @apply transition hover:text-cyan-700 visited:text-purple-950 dark:hover:text-cyan-100 dark:visited:text-purple-300;
+}
