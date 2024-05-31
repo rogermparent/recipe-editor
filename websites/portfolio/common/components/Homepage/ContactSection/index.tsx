@@ -7,7 +7,7 @@ import {
   HomepageContent,
 } from "../../../homepage-controller/types";
 
-const baseLinkLabelStyle = "w-6 h-6 mr-2";
+const baseLinkLabelStyle = "w-6 h-6 inline-block align-middle";
 
 async function ContactLinkLabel({
   item: { icon, iconType },
@@ -17,7 +17,9 @@ async function ContactLinkLabel({
   switch (iconType) {
     case "text":
       return (
-        <span className={`${baseLinkLabelStyle} text-3xl font-bold leading-6`}>
+        <span
+          className={`${baseLinkLabelStyle} text-3xl font-bold leading-0 font-mono text-center mb-2`}
+        >
           {icon}
         </span>
       );
@@ -41,7 +43,7 @@ async function ContactLinkComponent({ item }: { item: ContactLink }) {
         href={item.link}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex flex-row flex-nowrap items-center w-auto block py-2 my-2 leading-5"
+        className="items-center w-auto block py-2 my-2 leading-5"
       >
         <ContactLinkLabel item={item} />{" "}
         <span className="underline">{item.label}</span>
