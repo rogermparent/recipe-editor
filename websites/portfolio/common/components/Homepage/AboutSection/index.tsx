@@ -66,6 +66,8 @@ export default function AboutSection({ about }: HomepageContent) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
+            width={48}
+            height={48}
             className="w-12 h-12 text-gray-500 hover:text-gray-700 animate-bounce"
           >
             <path
