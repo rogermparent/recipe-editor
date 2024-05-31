@@ -43,7 +43,7 @@ async function ContactLinkComponent({ item }: { item: ContactLink }) {
         href={item.link}
         target="_blank"
         rel="noopener noreferrer"
-        className="items-center w-auto block py-2 my-2 leading-5"
+        className="items-center w-auto block py-2 my-2 leading-5 whitespace-nowrap"
       >
         <ContactLinkLabel item={item} />{" "}
         <span className="underline">{item.label}</span>
@@ -64,7 +64,7 @@ export default async function ContactSection({
             {contactSectionTitle}
           </h2>
         )}
-        <ul className="text-center flex flex-col flex-nowrap justify-center w-auto mx-auto text-2xl px-2 my-10">
+        <ul className="text-center flex flex-col flex-nowrap justify-center w-auto mx-auto text-xl sm:text-2xl px-2 my-10">
           {contactLinks?.map((contactLink, i) => {
             return <ContactLinkComponent key={i} item={contactLink} />;
           })}
