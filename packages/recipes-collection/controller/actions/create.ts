@@ -13,6 +13,16 @@ import createDefaultSlug from "../createSlug";
 import writeRecipeFiles, { getRecipeFileInfo } from "../writeUpload";
 import { outputJson } from "fs-extra";
 import { join } from "path";
+import simpleGit from "simple-git";
+
+async function commitChanges(baseDirectory: string) {
+  const git = simpleGit(baseDirectory);
+
+  await git.add("./*");
+  const result = await git.commit("Add new recipe");
+
+  console.log(result);
+}
 
 export default async function createRecipe(
   _prevState: RecipeFormState,
@@ -56,6 +66,7 @@ export default async function createRecipe(
   await outputJson(join(baseDirectory, "recipe.json"), data);
 
   await writeRecipeFiles(baseDirectory, imageData);
+  await commitChanges(baseDirectory); // Commit changes to Git
 
   const db = getRecipeDatabase();
   try {
@@ -65,6 +76,7 @@ export default async function createRecipe(
   } finally {
     db.close();
   }
+
   revalidatePath("/recipe/" + slug);
   revalidatePath("/recipes");
   revalidatePath("/recipes/[page]", "page");
