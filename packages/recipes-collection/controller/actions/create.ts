@@ -15,11 +15,11 @@ import { outputJson } from "fs-extra";
 import { join } from "path";
 import simpleGit from "simple-git";
 
-async function commitChanges(baseDirectory: string) {
+async function commitChanges(baseDirectory: string, recipeName: string) {
   const git = simpleGit(baseDirectory);
 
   await git.add("./*");
-  const result = await git.commit("Add new recipe");
+  const result = await git.commit(`Add new recipe: ${recipeName}`);
 
   console.log(result);
 }
@@ -66,7 +66,7 @@ export default async function createRecipe(
   await outputJson(join(baseDirectory, "recipe.json"), data);
 
   await writeRecipeFiles(baseDirectory, imageData);
-  await commitChanges(baseDirectory); // Commit changes to Git
+  await commitChanges(baseDirectory, name); // Commit changes to Git with recipe name
 
   const db = getRecipeDatabase();
   try {
