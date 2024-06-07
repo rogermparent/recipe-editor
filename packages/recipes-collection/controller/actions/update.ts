@@ -73,7 +73,7 @@ export default async function updateRecipe(
   });
 
   await writeRecipeFiles(finalRecipeDirectory, imageData);
-  await commitChanges(finalRecipeDirectory, name, "update"); // Commit changes to Git with recipe name and action
+  await commitChanges("update", finalSlug); // Commit changes to Git with action and slug
 
   const db = getRecipeDatabase();
 

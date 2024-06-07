@@ -6,15 +6,13 @@ import { redirect } from "next/navigation";
 import getRecipeDatabase from "../database";
 import { getRecipeDirectory } from "../filesystemDirectories";
 import { commitChanges } from "content-engine/git/commit";
-import getRecipeBySlug from "../data/read";
 
 export default async function deleteRecipe(date: number, slug: string) {
   const db = getRecipeDatabase();
   const recipeDirectory = getRecipeDirectory(slug);
-  const recipe = await getRecipeBySlug(slug);
   try {
     await rm(recipeDirectory, { recursive: true });
-    await commitChanges(recipeDirectory, recipe.name, "delete"); // Commit changes to Git with recipe name and action
+    await commitChanges("delete", slug); // Commit changes to Git with action and slug
     await db.remove([date, slug]);
     revalidatePath("/recipe/" + slug);
     revalidatePath("/");

@@ -1,23 +1,23 @@
+import { getContentDirectory } from "content-engine/fs/getContentDirectory";
 import simpleGit from "simple-git";
 
 export async function commitChanges(
-  baseDirectory: string,
-  recipeName: string,
   action: "create" | "update" | "delete",
+  slugOrName: string,
 ) {
-  const git = simpleGit(baseDirectory);
+  const git = simpleGit(getContentDirectory());
 
   await git.add("./*");
   let commitMessage;
   switch (action) {
     case "create":
-      commitMessage = `Add new recipe: ${recipeName}`;
+      commitMessage = `Add new recipe: ${slugOrName}`;
       break;
     case "update":
-      commitMessage = `Update recipe: ${recipeName}`;
+      commitMessage = `Update recipe: ${slugOrName}`;
       break;
     case "delete":
-      commitMessage = `Delete recipe: ${recipeName}`;
+      commitMessage = `Delete recipe: ${slugOrName}`;
       break;
     default:
       throw new Error("Invalid action provided");
