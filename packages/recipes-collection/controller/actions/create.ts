@@ -13,16 +13,7 @@ import createDefaultSlug from "../createSlug";
 import writeRecipeFiles, { getRecipeFileInfo } from "../writeUpload";
 import { outputJson } from "fs-extra";
 import { join } from "path";
-import simpleGit from "simple-git";
-
-async function commitChanges(baseDirectory: string, recipeName: string) {
-  const git = simpleGit(baseDirectory);
-
-  await git.add("./*");
-  const result = await git.commit(`Add new recipe: ${recipeName}`);
-
-  console.log(result);
-}
+import { commitChanges } from "content-engine/git/commit";
 
 export default async function createRecipe(
   _prevState: RecipeFormState,

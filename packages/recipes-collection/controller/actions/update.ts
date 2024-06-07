@@ -1,14 +1,10 @@
 "use server";
 
-import { rename, writeFile } from "fs/promises";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import parseRecipeFormData from "../parseFormData";
 import { RecipeFormState } from "../formState";
-import {
-  getRecipeDirectory,
-  getRecipeFilePath,
-} from "../filesystemDirectories";
+import { getRecipeDirectory } from "../filesystemDirectories";
 import { Recipe } from "../types";
 import getRecipeDatabase from "../database";
 import buildRecipeIndexValue from "../buildIndexValue";
