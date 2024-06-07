@@ -12,7 +12,7 @@ export default async function deleteRecipe(date: number, slug: string) {
   const recipeDirectory = getRecipeDirectory(slug);
   try {
     await rm(recipeDirectory, { recursive: true });
-    await commitChanges("delete", slug); // Commit changes to Git with action and slug
+    await commitChanges(`Delete recipe: ${slug}`); // Commit changes to Git with custom message
     await db.remove([date, slug]);
     revalidatePath("/recipe/" + slug);
     revalidatePath("/");

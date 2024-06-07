@@ -57,7 +57,7 @@ export default async function createRecipe(
   await outputJson(join(baseDirectory, "recipe.json"), data);
 
   await writeRecipeFiles(baseDirectory, imageData);
-  await commitChanges("create", slug); // Commit changes to Git with action and slug
+  await commitChanges(`Add new recipe: ${slug}`); // Commit changes to Git with custom message
 
   const db = getRecipeDatabase();
   try {
