@@ -13,6 +13,7 @@ import slugify from "@sindresorhus/slugify";
 import writeRecipeFiles, { getRecipeFileInfo } from "../writeUpload";
 import getRecipeBySlug from "../data/read";
 import updateContentFile from "content-engine/fs/updateContentFile";
+import { commitChanges } from "content-engine/git/commit";
 
 export default async function updateRecipe(
   currentDate: number,
@@ -72,6 +73,7 @@ export default async function updateRecipe(
   });
 
   await writeRecipeFiles(finalRecipeDirectory, imageData);
+  await commitChanges(finalRecipeDirectory, name, "update"); // Commit changes to Git with recipe name and action
 
   const db = getRecipeDatabase();
 
