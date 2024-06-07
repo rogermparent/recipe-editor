@@ -24,6 +24,9 @@ async function updateDatabase(
 ) {
   const db = getRecipeDatabase();
   try {
+    const willRename = currentSlug !== finalSlug;
+    const willChangeDate = currentDate !== finalDate;
+
     if (willRename || willChangeDate) {
       db.remove([currentDate, currentSlug]);
     }
@@ -103,7 +106,7 @@ export default async function updateRecipe(
     return { message: e.message };
   }
 
-  if (willRename) {
+  if (currentSlug !== finalSlug) {
     revalidatePath("/recipe/" + currentSlug);
   }
   revalidatePath("/recipe/" + finalSlug);
