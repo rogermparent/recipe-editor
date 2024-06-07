@@ -15,6 +15,26 @@ import getRecipeBySlug from "../data/read";
 import updateContentFile from "content-engine/fs/updateContentFile";
 import { commitChanges } from "content-engine/git/commit";
 
+async function updateDatabase(
+  currentDate: number,
+  currentSlug: string,
+  finalDate: number,
+  finalSlug: string,
+  data: Recipe,
+) {
+  const db = getRecipeDatabase();
+  try {
+    if (willRename || willChangeDate) {
+      db.remove([currentDate, currentSlug]);
+    }
+    db.put([finalDate, finalSlug], buildRecipeIndexValue(data));
+  } catch (e) {
+    throw new Error("Failed to write recipe to index");
+  } finally {
+    db.close();
+  }
+}
+
 export default async function updateRecipe(
   currentDate: number,
   currentSlug: string,
@@ -73,20 +93,16 @@ export default async function updateRecipe(
   });
 
   await writeRecipeFiles(finalRecipeDirectory, imageData);
-  await commitChanges(`Update recipe: ${finalSlug}`); // Commit changes to Git with custom message
-
-  const db = getRecipeDatabase();
 
   try {
-    if (willRename || willChangeDate) {
-      db.remove([currentDate, currentSlug]);
-    }
-    db.put([finalDate, finalSlug], buildRecipeIndexValue(data));
+    await Promise.all([
+      updateDatabase(currentDate, currentSlug, finalDate, finalSlug, data),
+      commitChanges(`Update recipe: ${finalSlug}`),
+    ]);
   } catch (e) {
-    return { message: "Failed to write recipe to index" };
-  } finally {
-    db.close();
+    return { message: e.message };
   }
+
   if (willRename) {
     revalidatePath("/recipe/" + currentSlug);
   }

@@ -7,19 +7,31 @@ import getRecipeDatabase from "../database";
 import { getRecipeDirectory } from "../filesystemDirectories";
 import { commitChanges } from "content-engine/git/commit";
 
-export default async function deleteRecipe(date: number, slug: string) {
+async function removeFromDatabase(date: number, slug: string) {
   const db = getRecipeDatabase();
+  try {
+    await db.remove([date, slug]);
+  } catch (e) {
+    throw new Error("Failed to remove recipe from index");
+  } finally {
+    db.close();
+  }
+}
+
+export default async function deleteRecipe(date: number, slug: string) {
   const recipeDirectory = getRecipeDirectory(slug);
   try {
     await rm(recipeDirectory, { recursive: true });
-    await commitChanges(`Delete recipe: ${slug}`); // Commit changes to Git with custom message
-    await db.remove([date, slug]);
+
+    await Promise.all([
+      removeFromDatabase(date, slug),
+      commitChanges(`Delete recipe: ${slug}`),
+    ]);
+
     revalidatePath("/recipe/" + slug);
     revalidatePath("/");
     redirect("/");
   } catch (e) {
     throw e;
-  } finally {
-    db.close();
   }
 }

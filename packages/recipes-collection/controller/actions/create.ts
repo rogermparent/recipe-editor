@@ -15,6 +15,17 @@ import { outputJson } from "fs-extra";
 import { join } from "path";
 import { commitChanges } from "content-engine/git/commit";
 
+async function writeToDatabase(data: Recipe, date: number, slug: string) {
+  const db = getRecipeDatabase();
+  try {
+    await db.put([date, slug], buildRecipeIndexValue(data));
+  } catch (e) {
+    throw new Error("Failed to write recipe to index");
+  } finally {
+    db.close();
+  }
+}
+
 export default async function createRecipe(
   _prevState: RecipeFormState,
   formData: FormData,
@@ -57,15 +68,14 @@ export default async function createRecipe(
   await outputJson(join(baseDirectory, "recipe.json"), data);
 
   await writeRecipeFiles(baseDirectory, imageData);
-  await commitChanges(`Add new recipe: ${slug}`); // Commit changes to Git with custom message
 
-  const db = getRecipeDatabase();
   try {
-    await db.put([date, slug], buildRecipeIndexValue(data));
+    await Promise.all([
+      writeToDatabase(data, date, slug),
+      commitChanges(`Add new recipe: ${slug}`),
+    ]);
   } catch (e) {
-    return { message: "Failed to write recipe" };
-  } finally {
-    db.close();
+    return { message: e.message };
   }
 
   revalidatePath("/recipe/" + slug);
