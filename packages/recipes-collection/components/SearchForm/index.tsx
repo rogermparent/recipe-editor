@@ -106,6 +106,20 @@ function SearchFormQuery({ firstPage }: { firstPage: ReadRecipeIndexResult }) {
     [store, searchedRecipeIds],
   );
 
+  const [seeking, setSeeking] = useState<number | undefined>();
+
+  useEffect(() => {
+    if (
+      seeking !== undefined &&
+      searchedRecipes &&
+      searchedRecipes.length <= seeking
+    ) {
+      fetchNextPage();
+    } else {
+      setSeeking(undefined);
+    }
+  }, [seeking, searchedRecipes, setSeeking, data.pages]);
+
   return (
     <>
       <form
@@ -116,6 +130,7 @@ function SearchFormQuery({ firstPage }: { firstPage: ReadRecipeIndexResult }) {
             query: { value: string };
           };
           setQuery(elements.query.value || undefined);
+          setSeeking(searchedRecipes?.length || 0);
         }}
       >
         <TextInput name="query" label="Query" />
@@ -131,7 +146,9 @@ function SearchFormQuery({ firstPage }: { firstPage: ReadRecipeIndexResult }) {
           )}
           <div>
             <Button
-              onClick={() => fetchNextPage()}
+              onClick={() => {
+                setSeeking(searchedRecipes?.length);
+              }}
               disabled={!hasNextPage || isFetchingNextPage}
             >
               {isFetchingNextPage
