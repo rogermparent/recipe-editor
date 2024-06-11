@@ -13,7 +13,5 @@ export async function commitContentChanges(message: string) {
   const git = simpleGit(contentDirectory);
 
   await git.add("./*");
-  const result = await git.commit(message);
-
-  console.log(result);
+  await git.commit(message);
 }

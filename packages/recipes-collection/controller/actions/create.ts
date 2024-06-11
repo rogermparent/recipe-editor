@@ -75,7 +75,7 @@ export default async function createRecipe(
       commitContentChanges(`Add new recipe: ${slug}`),
     ]);
   } catch (e) {
-    return { message: e.message };
+    throw e;
   }
 
   revalidatePath("/recipe/" + slug);

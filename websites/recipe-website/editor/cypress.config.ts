@@ -31,8 +31,7 @@ export default defineConfig({
           const log = await simpleGit(resolve("test-content")).log();
           return log.all.map((item) => item.message);
         },
-        async resetDataWithGit(fixture?: string) {
-          await resetData(fixture);
+        async initializeContentGit() {
           await simpleGit(resolve("test-content"))
             .init()
             .add(".")

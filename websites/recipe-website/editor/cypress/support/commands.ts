@@ -46,7 +46,7 @@ declare global {
   namespace Cypress {
     interface Chainable {
       resetData(fixture?: string): Chainable<void>;
-      resetDataWithGit(fixture?: string): Chainable<void>;
+      initializeContentGit(fixture?: string): Chainable<void>;
       getContentGitLog(): Chainable<string[]>;
       fillSignInForm(user?: SignInOptions): Chainable<void>;
       signIn(user?: SignInOptions): Chainable<void>;
@@ -64,8 +64,8 @@ Cypress.Commands.add("getContentGitLog", () => {
   return cy.task<string[]>("getContentGitLog");
 });
 
-Cypress.Commands.add("resetDataWithGit", (fixture) => {
-  cy.task("resetDataWithGit", fixture);
+Cypress.Commands.add("initializeContentGit", (fixture) => {
+  cy.task("initializeContentGit", fixture);
   fetch("http://localhost:3000/settings/invalidate-cache");
 });
 

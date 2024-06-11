@@ -70,9 +70,6 @@ export default async function updateRecipe(
   const finalDate = date || currentDate || Date.now();
   const finalRecipeDirectory = getRecipeDirectory(finalSlug);
 
-  const willRename = currentRecipeDirectory !== finalRecipeDirectory;
-  const willChangeDate = currentDate !== finalDate;
-
   const imageData = await getRecipeFileInfo(
     validatedFields.data,
     currentRecipeData,
@@ -103,7 +100,7 @@ export default async function updateRecipe(
       commitContentChanges(`Update recipe: ${finalSlug}`),
     ]);
   } catch (e) {
-    return { message: e.message };
+    throw e;
   }
 
   if (currentSlug !== finalSlug) {

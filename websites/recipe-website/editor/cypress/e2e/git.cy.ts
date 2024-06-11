@@ -3,7 +3,8 @@ import simpleGit from "simple-git";
 describe("Git content", () => {
   describe("when empty", () => {
     beforeEach(() => {
-      cy.resetDataWithGit();
+      cy.resetData();
+      cy.initializeContentGit();
       cy.visit("/");
     });
 
