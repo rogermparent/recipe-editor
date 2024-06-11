@@ -13,6 +13,18 @@ import createDefaultSlug from "../createSlug";
 import writeRecipeFiles, { getRecipeFileInfo } from "../writeUpload";
 import { outputJson } from "fs-extra";
 import { join } from "path";
+import { commitContentChanges } from "content-engine/git/commit";
+
+async function writeToDatabase(data: Recipe, date: number, slug: string) {
+  const db = getRecipeDatabase();
+  try {
+    await db.put([date, slug], buildRecipeIndexValue(data));
+  } catch (e) {
+    throw new Error("Failed to write recipe to index");
+  } finally {
+    db.close();
+  }
+}
 
 export default async function createRecipe(
   _prevState: RecipeFormState,
@@ -57,14 +69,15 @@ export default async function createRecipe(
 
   await writeRecipeFiles(baseDirectory, imageData);
 
-  const db = getRecipeDatabase();
   try {
-    await db.put([date, slug], buildRecipeIndexValue(data));
+    await Promise.all([
+      writeToDatabase(data, date, slug),
+      commitContentChanges(`Add new recipe: ${slug}`),
+    ]);
   } catch (e) {
     return { message: "Failed to write recipe" };
-  } finally {
-    db.close();
   }
+
   revalidatePath("/recipe/" + slug);
   revalidatePath("/recipes");
   revalidatePath("/recipes/[page]", "page");

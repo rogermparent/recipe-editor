@@ -1,14 +1,10 @@
 "use server";
 
-import { rename, writeFile } from "fs/promises";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import parseRecipeFormData from "../parseFormData";
 import { RecipeFormState } from "../formState";
-import {
-  getRecipeDirectory,
-  getRecipeFilePath,
-} from "../filesystemDirectories";
+import { getRecipeDirectory } from "../filesystemDirectories";
 import { Recipe } from "../types";
 import getRecipeDatabase from "../database";
 import buildRecipeIndexValue from "../buildIndexValue";
@@ -17,6 +13,30 @@ import slugify from "@sindresorhus/slugify";
 import writeRecipeFiles, { getRecipeFileInfo } from "../writeUpload";
 import getRecipeBySlug from "../data/read";
 import updateContentFile from "content-engine/fs/updateContentFile";
+import { commitContentChanges } from "content-engine/git/commit";
+
+async function updateDatabase(
+  currentDate: number,
+  currentSlug: string,
+  finalDate: number,
+  finalSlug: string,
+  data: Recipe,
+) {
+  const db = getRecipeDatabase();
+  try {
+    const willRename = currentSlug !== finalSlug;
+    const willChangeDate = currentDate !== finalDate;
+
+    if (willRename || willChangeDate) {
+      db.remove([currentDate, currentSlug]);
+    }
+    db.put([finalDate, finalSlug], buildRecipeIndexValue(data));
+  } catch (e) {
+    throw new Error("Failed to write recipe to index");
+  } finally {
+    db.close();
+  }
+}
 
 export default async function updateRecipe(
   currentDate: number,
@@ -50,9 +70,6 @@ export default async function updateRecipe(
   const finalDate = date || currentDate || Date.now();
   const finalRecipeDirectory = getRecipeDirectory(finalSlug);
 
-  const willRename = currentRecipeDirectory !== finalRecipeDirectory;
-  const willChangeDate = currentDate !== finalDate;
-
   const imageData = await getRecipeFileInfo(
     validatedFields.data,
     currentRecipeData,
@@ -77,19 +94,16 @@ export default async function updateRecipe(
 
   await writeRecipeFiles(finalRecipeDirectory, imageData);
 
-  const db = getRecipeDatabase();
-
   try {
-    if (willRename || willChangeDate) {
-      db.remove([currentDate, currentSlug]);
-    }
-    db.put([finalDate, finalSlug], buildRecipeIndexValue(data));
+    await Promise.all([
+      updateDatabase(currentDate, currentSlug, finalDate, finalSlug, data),
+      commitContentChanges(`Update recipe: ${finalSlug}`),
+    ]);
   } catch (e) {
-    return { message: "Failed to write recipe to index" };
-  } finally {
-    db.close();
+    return { message: "Failed to write recipe" };
   }
-  if (willRename) {
+
+  if (currentSlug !== finalSlug) {
     revalidatePath("/recipe/" + currentSlug);
   }
   revalidatePath("/recipe/" + finalSlug);
