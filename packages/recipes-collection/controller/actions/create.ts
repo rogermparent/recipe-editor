@@ -13,7 +13,7 @@ import createDefaultSlug from "../createSlug";
 import writeRecipeFiles, { getRecipeFileInfo } from "../writeUpload";
 import { outputJson } from "fs-extra";
 import { join } from "path";
-import { commitChanges } from "content-engine/git/commit";
+import { commitContentChanges } from "content-engine/git/commit";
 
 async function writeToDatabase(data: Recipe, date: number, slug: string) {
   const db = getRecipeDatabase();
@@ -72,7 +72,7 @@ export default async function createRecipe(
   try {
     await Promise.all([
       writeToDatabase(data, date, slug),
-      commitChanges(`Add new recipe: ${slug}`),
+      commitContentChanges(`Add new recipe: ${slug}`),
     ]);
   } catch (e) {
     return { message: e.message };

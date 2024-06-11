@@ -41,7 +41,6 @@
     "react-dom": "19.0.0-rc-38e3b23483-20240529",
     "recipes-collection": "^1.0.0",
     "sharp": "0.33.4",
-    "simple-git": "^3.24.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -62,6 +61,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "postcss": "^8",
     "prettier": "3.2.5",
+    "simple-git": "^3.24.0",
     "start-server-and-test": "^2.0.3",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.5"

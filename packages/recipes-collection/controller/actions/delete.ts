@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import getRecipeDatabase from "../database";
 import { getRecipeDirectory } from "../filesystemDirectories";
-import { commitChanges } from "content-engine/git/commit";
+import { commitContentChanges } from "content-engine/git/commit";
 
 async function removeFromDatabase(date: number, slug: string) {
   const db = getRecipeDatabase();
@@ -25,7 +25,7 @@ export default async function deleteRecipe(date: number, slug: string) {
 
     await Promise.all([
       removeFromDatabase(date, slug),
-      commitChanges(`Delete recipe: ${slug}`),
+      commitContentChanges(`Delete recipe: ${slug}`),
     ]);
 
     revalidatePath("/recipe/" + slug);

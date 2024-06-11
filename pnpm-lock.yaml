@@ -453,6 +453,9 @@ importers:
       prettier:
         specifier: 3.2.5
         version: 3.2.5
+      simple-git:
+        specifier: ^3.24.0
+        version: 3.24.0
       start-server-and-test:
         specifier: ^2.0.3
         version: 2.0.3
@@ -679,9 +682,6 @@ importers:
       sharp:
         specifier: 0.33.4
         version: 0.33.4
-      simple-git:
-        specifier: ^3.24.0
-        version: 3.24.0
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -737,6 +737,9 @@ importers:
       prettier:
         specifier: 3.2.5
         version: 3.2.5
+      simple-git:
+        specifier: ^3.24.0
+        version: 3.24.0
       start-server-and-test:
         specifier: ^2.0.3
         version: 2.0.3

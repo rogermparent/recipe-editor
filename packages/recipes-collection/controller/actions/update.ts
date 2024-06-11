@@ -13,7 +13,7 @@ import slugify from "@sindresorhus/slugify";
 import writeRecipeFiles, { getRecipeFileInfo } from "../writeUpload";
 import getRecipeBySlug from "../data/read";
 import updateContentFile from "content-engine/fs/updateContentFile";
-import { commitChanges } from "content-engine/git/commit";
+import { commitContentChanges } from "content-engine/git/commit";
 
 async function updateDatabase(
   currentDate: number,
@@ -100,7 +100,7 @@ export default async function updateRecipe(
   try {
     await Promise.all([
       updateDatabase(currentDate, currentSlug, finalDate, finalSlug, data),
-      commitChanges(`Update recipe: ${finalSlug}`),
+      commitContentChanges(`Update recipe: ${finalSlug}`),
     ]);
   } catch (e) {
     return { message: e.message };
