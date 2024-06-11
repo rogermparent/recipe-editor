@@ -100,7 +100,7 @@ export default async function updateRecipe(
       commitContentChanges(`Update recipe: ${finalSlug}`),
     ]);
   } catch (e) {
-    throw e;
+    return { message: "Failed to write recipe" };
   }
 
   if (currentSlug !== finalSlug) {
