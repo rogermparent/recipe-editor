@@ -1,5 +1,5 @@
 import { defineConfig } from "cypress";
-import { cp, rm } from "node:fs/promises";
+import { cp, rm, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import simpleGit from "simple-git";
 
@@ -32,10 +32,16 @@ export default defineConfig({
           return log.all.map((item) => item.message);
         },
         async initializeContentGit() {
-          await simpleGit(resolve("test-content"))
-            .init()
-            .add(".")
-            .commit("Initial Commit");
+          const git = simpleGit(resolve("test-content"));
+          await git.init();
+          await writeFile(
+            resolve("test-content", ".gitignore"),
+            `
+/transformed-images
+/recipes/index
+`,
+          );
+          await git.add(".").commit("Initial Commit");
           return null;
         },
         resetData,

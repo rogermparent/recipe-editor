@@ -31,7 +31,7 @@ async function createBranch(formData: FormData) {
 async function GitPageWithoutGit() {
   return (
     <>
-      <h2 className="text-lg font-bold my-3">
+      <h2 className="text-lg my-3">
         Content directory is not tracked with Git
       </h2>
     </>
@@ -84,7 +84,7 @@ export default async function GitPage() {
   const user = await auth();
   if (!user) {
     return signIn(undefined, {
-      redirectTo: `/settings`,
+      redirectTo: `/git`,
     });
   }
 
