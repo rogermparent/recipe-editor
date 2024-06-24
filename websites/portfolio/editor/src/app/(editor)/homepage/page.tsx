@@ -15,6 +15,18 @@ import MarkdownInput from "./HomepageInput";
 import { HomepageUploadInputItem, UploadsListInput } from "./UploadsList";
 import { readdir } from "fs-extra";
 
+async function getUploads() {
+  try {
+    const uploadNames = await readdir(uploadsDirectory);
+    const uploadsList = uploadNames.map<HomepageUploadInputItem>((name) => ({
+      name,
+    }));
+    return uploadsList;
+  } catch {
+    return undefined;
+  }
+}
+
 export default async function HomepageEditor() {
   const homepageContent = await getHomepageContent();
   const {
@@ -25,6 +37,7 @@ export default async function HomepageEditor() {
     contactSectionTitle,
     projectSectionTitle,
   } = homepageContent || {};
+
   const projectsWithImagesPromise = projects?.map<Promise<HomepageProjectItem>>(
     async (project) => {
       const existingImage = project.image
@@ -48,10 +61,7 @@ export default async function HomepageEditor() {
   const projectsWithImages =
     projectsWithImagesPromise && (await Promise.all(projectsWithImagesPromise));
 
-  const uploadNames = await readdir(uploadsDirectory);
-  const uploadsList = uploadNames.map<HomepageUploadInputItem>((name) => ({
-    name,
-  }));
+  const uploadsList = await getUploads();
 
   return (
     <div className="flex-1 flex flex-col flex-nowrap container p-2">
