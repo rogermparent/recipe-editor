@@ -118,7 +118,7 @@ function SearchFormQuery({ firstPage }: { firstPage: ReadRecipeIndexResult }) {
     } else {
       setSeeking(undefined);
     }
-  }, [seeking, searchedRecipes, setSeeking, data.pages]);
+  }, [seeking, searchedRecipes, setSeeking, data.pages, fetchNextPage]);
 
   return (
     <>
