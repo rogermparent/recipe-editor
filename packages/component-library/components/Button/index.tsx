@@ -11,6 +11,8 @@ export function Button({
   className,
   disabled,
   overrideDefaultStyles,
+  name,
+  value,
 }: {
   children: ReactNode;
   type?: HTMLButtonElement["type"];
@@ -18,6 +20,8 @@ export function Button({
   className?: string;
   disabled?: boolean;
   overrideDefaultStyles?: boolean;
+  name?: string;
+  value?: string;
 }) {
   return (
     <button
@@ -25,6 +29,8 @@ export function Button({
       onClick={onClick}
       type={type}
       disabled={disabled}
+      name={name}
+      value={value}
     >
       {children}
     </button>
