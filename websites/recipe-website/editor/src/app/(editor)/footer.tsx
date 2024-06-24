@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 const settingsMenu = [
   { href: "/settings", name: "Settings" },
+  { href: "/git", name: "Git" },
   { href: "/menus", name: "Menus" },
   { href: "/pages", name: "Pages" },
   { href: "/export", name: "Export" },

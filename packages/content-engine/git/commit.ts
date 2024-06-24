@@ -1,17 +1,26 @@
-import { getContentDirectory } from "content-engine/fs/getContentDirectory";
 import { join } from "path";
 import { access } from "fs-extra";
 import simpleGit from "simple-git";
+import { getContentDirectory } from "../fs/getContentDirectory";
+
+export async function directoryIsGitRepo(contentDirectory: string) {
+  try {
+    await access(join(contentDirectory, ".git"));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function commitChanges(contentDirectory: string, message: string) {
+  const git = simpleGit(contentDirectory);
+  await git.add("./*");
+  await git.commit(message);
+}
 
 export async function commitContentChanges(message: string) {
   const contentDirectory = getContentDirectory();
-  try {
-    await access(join(contentDirectory, ".git"));
-  } catch {
-    return undefined;
+  if (await directoryIsGitRepo(contentDirectory)) {
+    await commitChanges(contentDirectory, message);
   }
-  const git = simpleGit(contentDirectory);
-
-  await git.add("./*");
-  await git.commit(message);
 }
