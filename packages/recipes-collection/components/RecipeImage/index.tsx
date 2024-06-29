@@ -27,35 +27,38 @@ export async function getTransformedRecipeImageProps({
     image,
   );
 
-  return getStaticImageProps(
-    { srcPath, localOutputDirectory },
-    {
-      src: `/recipe/${slug}/uploads/${image}`,
-      alt,
-      width,
-      height,
-      className,
-      loading,
-      sizes,
-    },
-  );
+  try {
+    const transformedProps = await getStaticImageProps(
+      { srcPath, localOutputDirectory },
+      {
+        src: `/recipe/${slug}/uploads/${image}`,
+        alt,
+        width,
+        height,
+        className,
+        loading,
+        sizes,
+      },
+    );
+    return transformedProps;
+  } catch (e) {
+    const { code, message } = e as { code?: string; message?: string };
+    console.warn(
+      `RecipeImage "${image}" failed with error` +
+        (code ? `code ${code}` : "") +
+        (message ? `: ${message}` : ""),
+    );
+  }
 }
 
 export async function RecipeImage(inputProps: TransformedRecipeImageProps) {
   if (inputProps.image) {
-    try {
-      const image = await getTransformedRecipeImageProps(inputProps);
+    const image = await getTransformedRecipeImageProps(inputProps);
+    if (image) {
       return (
         <Image {...image.props} alt={inputProps.alt} unoptimized={true}>
           {null}
         </Image>
-      );
-    } catch (e) {
-      const { code, message } = e as { code?: string; message?: string };
-      console.warn(
-        `RecipeImage "${inputProps.image}" failed with error` +
-          (code ? `code ${code}` : "") +
-          (message ? `: ${message}` : ""),
       );
     }
   }
