@@ -43,11 +43,20 @@ export async function getTransformedRecipeImageProps({
 
 export async function RecipeImage(inputProps: TransformedRecipeImageProps) {
   if (inputProps.image) {
-    const image = await getTransformedRecipeImageProps(inputProps);
-    return (
-      <Image {...image.props} alt={inputProps.alt} unoptimized={true}>
-        {null}
-      </Image>
-    );
+    try {
+      const image = await getTransformedRecipeImageProps(inputProps);
+      return (
+        <Image {...image.props} alt={inputProps.alt} unoptimized={true}>
+          {null}
+        </Image>
+      );
+    } catch (e) {
+      const { code, message } = e as { code?: string; message?: string };
+      console.warn(
+        `RecipeImage "${inputProps.image}" failed with error` +
+          (code ? `code ${code}` : "") +
+          (message ? `: ${message}` : ""),
+      );
+    }
   }
 }
